@@ -16,6 +16,9 @@ okhttp = "4.10.0"
 retrofit = "2.9.0"
 moshi = "1.13.0"
 dagger = "2.43.2"
+hilt = "2.44"
+hilt-compiler = "2.28.1-alpha"
+orbit = "4.6.1"
 
 
 
@@ -54,16 +57,25 @@ retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", 
 google-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 google-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
 
+#hilt
+google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
+google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
+
+#orbit
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit"}
+orbit-compose = {module = "org.orbit-mvi:orbit-compose", version.ref = "orbit"}
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 android-library = { id = "com.android.library", version.ref = "android_gradle_plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
-
+dagger-hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
 
 [bundles]
 androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-matieral3"]
 androidx-compose-ui-debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
 squareup-okhttp = ["okhttp3", "okhttp-interceptor", "okhttp-url-connection"]
 squareup-retrofit = ["retrofit2", "moshi-kotlin", "retrofit-converter-moshi"]
+orbit = ["orbit-viewmodel", "orbit-compose"]
