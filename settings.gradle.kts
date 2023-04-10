@@ -13,7 +13,7 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "hongsam"
-include ':app'
-include ':domain'
-include ':presenter'
-include ':data'
+include (":app")
+include (":domain")
+include (":presenter")
+include (":data")
