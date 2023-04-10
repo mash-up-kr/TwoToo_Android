@@ -3,6 +3,7 @@ plugins {
     alias (libs.plugins.android.library)
     alias (libs.plugins.kotlin.android)
     alias (libs.plugins.kotlin.kapt)
+    alias (libs.plugins.dagger.hilt.plugin)
 }
 
 android {
@@ -42,7 +43,10 @@ dependencies {
     implementation (libs.material)
     implementation (libs.bundles.squareup.okhttp)
     implementation (libs.bundles.squareup.retrofit)
+    implementation (libs.google.dagger)
     kapt (libs.google.dagger.compiler)
+    implementation (libs.google.dagger.hilt)
+    kapt (libs.google.dagger.hilt.compiler)
     testImplementation (libs.test.junit)
     androidTestImplementation (libs.test.ext.junit)
     androidTestImplementation (libs.test.espresso.core)
