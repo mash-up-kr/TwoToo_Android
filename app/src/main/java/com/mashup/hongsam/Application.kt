@@ -5,6 +5,6 @@ import com.mashup.hongsam.di.DaggerApplicationComponent
 
 class Application : Application() {
     val applicationComponent: ApplicationComponent by lazy {
-        DaggerApplicationComponent.factory().create()
+        DaggerApplicationComponent.factory().create(applicationContext)
     }
 }

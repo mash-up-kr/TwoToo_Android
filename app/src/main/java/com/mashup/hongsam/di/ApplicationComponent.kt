@@ -1,5 +1,7 @@
 package com.mashup.hongsam.di
 
+import android.content.Context
+import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
 
@@ -9,6 +11,6 @@ interface ApplicationComponent {
 
     @Component.Factory
     interface Factory {
-        fun create(): ApplicationComponent
+        fun create(@BindsInstance context: Context): ApplicationComponent
     }
 }
