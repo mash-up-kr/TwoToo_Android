@@ -16,6 +16,7 @@ okhttp = "4.10.0"
 retrofit = "2.9.0"
 moshi = "1.13.0"
 dagger = "2.43.2"
+inject = "1"
 
 
 
@@ -53,6 +54,7 @@ retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", 
 #dagger
 google-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 google-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
+inject = { group = "javax.inject", name = "javax.inject", version.ref= "inject"}
 
 
 [plugins]
