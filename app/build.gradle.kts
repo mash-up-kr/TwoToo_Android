@@ -2,6 +2,7 @@
 plugins {
     alias (libs.plugins.android.application)
     alias (libs.plugins.kotlin.android)
+    alias (libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -51,6 +52,11 @@ dependencies {
     implementation (libs.core.ktx)
     implementation (libs.appcompat)
     implementation (libs.material)
+    implementation (libs.inject)
+    implementation (libs.bundles.squareup.okhttp)
+    implementation (libs.bundles.squareup.retrofit)
+    implementation (libs.google.dagger)
+    kapt (libs.google.dagger.compiler)
     testImplementation (libs.test.junit)
     androidTestImplementation (libs.test.ext.junit)
     androidTestImplementation (libs.test.espresso.core)
