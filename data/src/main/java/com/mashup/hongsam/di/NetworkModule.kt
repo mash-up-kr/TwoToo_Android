@@ -12,9 +12,7 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-    companion object {
-        const val URL = ""
-    }
+
 
     @Provides
     @Singleton
@@ -46,4 +44,9 @@ class NetworkModule {
                 moshiConverterFactory,
             ).build()
     }
+
+    companion object {
+        const val URL = ""
+    }
+
 }
