@@ -1,0 +1,21 @@
+package com.mashup.twotoo.presenter.onboarding
+
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+
+/**
+ * @Created by 김현국 2023/05/16
+ * @Time 5:31 PM
+ */
+
+@Composable
+fun OnBoardingScreen() {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Text("OnBoarding Screen")
+    }
+}
