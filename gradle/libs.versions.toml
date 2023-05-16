@@ -17,10 +17,8 @@ retrofit = "2.9.0"
 moshi = "1.13.0"
 dagger = "2.43.2"
 inject = "1"
-hilt = "2.44"
-hilt-compiler = "2.28.1-alpha"
 orbit = "4.6.1"
-
+navigation_compose = "2.5.3"
 
 
 [libraries]
@@ -38,6 +36,7 @@ androidx-compose-matieral3 = { module = "androidx.compose.material3:material3", 
 androidx-compose-ui-test-junit = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "compose" }
 androidx-compose-ui-tooling = { module = "androidx.compose.ui:ui-tooling", version.ref = "compose" }
 androidx-compose-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "compose" }
+androidx-compose-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation_compose" }
 
 #test
 test-junit = { module = "junit:junit", version.ref = "test_junit" }
@@ -57,23 +56,18 @@ retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", 
 #dagger
 google-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 google-dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-inject = { group = "javax.inject", name = "javax.inject", version.ref= "inject"}
-
-#hilt
-google-dagger-hilt = { module = "com.google.dagger:hilt-android", version.ref = "hilt"}
-google-dagger-hilt-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt"}
+inject = { group = "javax.inject", name = "javax.inject", version.ref = "inject" }
 
 #orbit
-orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit"}
-orbit-compose = {module = "org.orbit-mvi:orbit-compose", version.ref = "orbit"}
+orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
+orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
 
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 android-library = { id = "com.android.library", version.ref = "android_gradle_plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
-dagger-hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 [bundles]
 androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-matieral3"]
