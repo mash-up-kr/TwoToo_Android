@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.mashup.hongsam"
+    namespace = "com.mashup.twotoo"
     compileSdk = 33
 
     defaultConfig {
-        applicationId = "com.mashup.hongsam"
+        applicationId = "com.mashup.twotoo"
         minSdk = 24
         targetSdk = 33
         versionCode = 1
