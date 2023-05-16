@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.ui.theme
+package com.mashup.twotoo.presenter.designsystem.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

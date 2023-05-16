@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.ui.theme
+package com.mashup.twotoo.presenter.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
@@ -34,7 +34,7 @@ private val LightColorScheme = lightColorScheme(
 )
 
 @Composable
-fun MyApplicationTheme(
+fun TwoTooTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
