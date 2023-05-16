@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mashup.hongsam.data"
+    namespace = "com.mashup.twotoo.data"
     compileSdk = 33
 
     defaultConfig {

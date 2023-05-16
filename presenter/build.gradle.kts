@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.mashup.hongsam.presenter"
+    namespace = "com.mashup.twotoo.presenter"
     compileSdk = 33
 
     defaultConfig {
