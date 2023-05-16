@@ -12,7 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "hongsam"
+rootProject.name = "twotoo"
 include (":app")
 include (":domain")
 include (":presenter")
