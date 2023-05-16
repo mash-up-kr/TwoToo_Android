@@ -20,10 +20,6 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
 import com.mashup.twotoo.presenter.user.navigation.navigateToUser
 import com.mashup.twotoo.presenter.user.navigation.userNavigationRoute
 
-/**
- * @Created by 김현국 2023/05/16
- * @Time 3:35 PM
- */
 @Composable
 fun rememberTwoTooAppState(
     navController: NavHostController = rememberNavController(),

@@ -10,10 +10,6 @@ import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingRoute
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.user.navigation.userRoute
 
-/**
- * @Created by 김현국 2023/05/16
- * @Time 3:33 PM
- */
 @Composable
 fun TwoTooNavHost(
     appState: TwoTooAppState,

@@ -4,10 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.mashup.twotoo.presenter.R
 
-/**
- * @Created by 김현국 2023/05/16
- * @Time 3:17 PM
- */
 object TwoTooIcon {
     val GardenSelected = R.drawable.garden_selected
     val GardenUnSelected = R.drawable.garden_unselected

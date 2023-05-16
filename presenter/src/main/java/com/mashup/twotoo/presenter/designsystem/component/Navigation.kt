@@ -10,11 +10,6 @@ import androidx.compose.ui.graphics.Color
 import com.mashup.twotoo.presenter.designsystem.theme.SelectedIconColor
 import com.mashup.twotoo.presenter.designsystem.theme.UnSelectedIconColor
 
-/**
- * @Created by 김현국 2023/05/16
- * @Time 4:56 PM
- */
-
 @Composable
 fun TwoTooNavigationBar(
     modifier: Modifier = Modifier,

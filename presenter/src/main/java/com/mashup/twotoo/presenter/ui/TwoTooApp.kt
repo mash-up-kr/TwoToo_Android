@@ -21,11 +21,6 @@ import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 
-/**
- * @Created by 김현국 2023/05/16
- * @Time 4:19 PM
- */
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooApp(

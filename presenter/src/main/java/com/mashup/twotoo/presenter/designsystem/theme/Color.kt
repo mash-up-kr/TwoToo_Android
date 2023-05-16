@@ -11,4 +11,4 @@ val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
 
 val UnSelectedIconColor = Color(0xFF9E9E9E)
-val SelectedIconColor= Color(0xFF000000)
+val SelectedIconColor = Color(0xFF000000)
