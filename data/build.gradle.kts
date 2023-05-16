@@ -43,6 +43,7 @@ dependencies {
     implementation (libs.material)
     implementation (libs.bundles.squareup.okhttp)
     implementation (libs.bundles.squareup.retrofit)
+    implementation (libs.inject)
     implementation (libs.google.dagger)
     kapt (libs.google.dagger.compiler)
     implementation (libs.google.dagger.hilt)
