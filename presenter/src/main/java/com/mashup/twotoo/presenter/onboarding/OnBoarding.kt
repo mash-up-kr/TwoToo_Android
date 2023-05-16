@@ -7,6 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
+fun OnBoardingRoute() {
+    OnBoardingScreen()
+}
+
+@Composable
 fun OnBoardingScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),

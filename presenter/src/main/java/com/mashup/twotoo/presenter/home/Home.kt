@@ -7,6 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
+fun HomeRoute() {
+    HomeScreen()
+}
+
+@Composable
 fun HomeScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),

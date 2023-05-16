@@ -7,6 +7,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
+fun GardenRoute() {
+    GardenScreen()
+}
+
+@Composable
 fun GardenScreen() {
     Column(
         modifier = Modifier.fillMaxSize(),
