@@ -6,14 +6,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.user.UserRoute
 
-const val userNavigationRoute = "user_route"
+const val UserNavigationRoute = "user_route"
 
 fun NavController.navigateToUser(navOptions: NavOptions? = null) {
-    this.navigate(route = userNavigationRoute, navOptions = navOptions)
+    this.navigate(route = UserNavigationRoute, navOptions = navOptions)
 }
 
 fun NavGraphBuilder.userGraph() {
-    composable(route = userNavigationRoute) {
+    composable(route = UserNavigationRoute) {
         UserRoute()
     }
 }

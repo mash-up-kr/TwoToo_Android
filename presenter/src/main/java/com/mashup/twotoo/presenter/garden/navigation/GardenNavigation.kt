@@ -6,14 +6,14 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.garden.GardenRoute
 
-const val gardenNavigationRoute = "garden_route"
+const val GardenNavigationRoute = "garden_route"
 
 fun NavController.navigateToGarden(navOptions: NavOptions? = null) {
-    this.navigate(route = gardenNavigationRoute, navOptions = navOptions)
+    this.navigate(route = GardenNavigationRoute, navOptions = navOptions)
 }
 
 fun NavGraphBuilder.gardenGraph() {
-    composable(route = gardenNavigationRoute) {
+    composable(route = GardenNavigationRoute) {
         GardenRoute()
     }
 }

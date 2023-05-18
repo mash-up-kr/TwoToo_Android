@@ -9,16 +9,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import com.mashup.twotoo.presenter.garden.navigation.gardenNavigationRoute
+import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
-import com.mashup.twotoo.presenter.home.navigation.homeNavigationRoute
+import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
 import com.mashup.twotoo.presenter.user.navigation.navigateToUser
-import com.mashup.twotoo.presenter.user.navigation.userNavigationRoute
+import com.mashup.twotoo.presenter.user.navigation.UserNavigationRoute
 
 @Composable
 fun rememberTwoTooAppState(
@@ -41,9 +41,9 @@ class TwoTooAppState(
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
-            gardenNavigationRoute -> Garden
-            homeNavigationRoute -> Home
-            userNavigationRoute -> User
+            GardenNavigationRoute -> Garden
+            HomeNavigationRoute -> Home
+            UserNavigationRoute -> User
             else -> null
         }
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
