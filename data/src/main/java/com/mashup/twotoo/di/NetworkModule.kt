@@ -12,8 +12,6 @@ import javax.inject.Singleton
 @Module
 class NetworkModule {
 
-
-
     @Provides
     @Singleton
     fun provideInterceptor(): HttpLoggingInterceptor {
@@ -48,5 +46,4 @@ class NetworkModule {
     companion object {
         const val URL = ""
     }
-
 }
