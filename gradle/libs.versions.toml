@@ -19,7 +19,7 @@ dagger = "2.43.2"
 inject = "1"
 orbit = "4.6.1"
 navigation_compose = "2.5.3"
-
+landscapist-glide = "2.2.0"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -61,6 +61,9 @@ inject = { group = "javax.inject", name = "javax.inject", version.ref = "inject"
 #orbit
 orbit-viewmodel = { module = "org.orbit-mvi:orbit-viewmodel", version.ref = "orbit" }
 orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" }
+
+#glide
+landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist-glide" }
 
 
 [plugins]

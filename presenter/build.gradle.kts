@@ -53,6 +53,7 @@ dependencies {
     implementation (libs.bundles.squareup.retrofit)
     implementation (libs.google.dagger)
     implementation (libs.androidx.compose.navigation)
+    implementation (libs.landscapist.glide)
     kapt (libs.google.dagger.compiler)
     implementation (libs.bundles.orbit)
     testImplementation (libs.test.junit)
