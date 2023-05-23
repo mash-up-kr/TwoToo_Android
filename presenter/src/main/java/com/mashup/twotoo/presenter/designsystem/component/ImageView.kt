@@ -192,8 +192,24 @@ fun HasImageView() {
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
             model = null,
             previewPlaceholder = R.drawable.empty_image_placeholder,
-            loadingPlaceHolder = {
-            },
+            loadingPlaceHolder = {},
+            failurePlaceHolder = {},
+        )
+    }
+}
+
+@Preview(
+    name = "라운드 처리 없는 이미지",
+    showBackground = true,
+)
+@Composable
+fun ImageViewWithNoneRound() {
+    TwoTooTheme {
+        TwoTooImageView(
+            modifier = Modifier.size(250.dp),
+            model = null,
+            previewPlaceholder = R.drawable.empty_image_placeholder,
+            loadingPlaceHolder = {},
             failurePlaceHolder = {},
         )
     }
