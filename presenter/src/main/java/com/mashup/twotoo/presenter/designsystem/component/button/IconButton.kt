@@ -22,17 +22,17 @@ import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
 @Composable
 fun IconButton(
-    modifier: Modifier = Modifier,
-    @DrawableRes iconId: Int,
     text: String,
+    modifier: Modifier = Modifier
+        .fillMaxWidth()
+        .height(50.dp)
+        .padding(horizontal = 30.dp),
+    @DrawableRes iconId: Int,
     color: Color,
     onClick: () -> Unit
 ) {
     Button(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .then(modifier),
+        modifier = modifier,
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(8.dp),
         onClick = { onClick() }
@@ -62,9 +62,12 @@ fun IconButtonPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         IconButton(
-            Modifier.padding(horizontal = 30.dp),
-            R.drawable.kakaotalk,
             "카카오톡으로 로그인",
+            Modifier
+                .fillMaxWidth()
+                .height(50.dp)
+                .padding(horizontal = 10.dp),
+            R.drawable.kakaotalk,
             Yello
         ) {}
         Spacer(modifier = Modifier.height(10.dp))
