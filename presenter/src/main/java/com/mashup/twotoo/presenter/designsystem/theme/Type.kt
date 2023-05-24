@@ -11,6 +11,9 @@ import com.mashup.twotoo.presenter.R
 val Montserrat = FontFamily(
     Font(R.font.montserrat_medium, FontWeight.Bold),
 )
+val SpoqaHanSansNeo = FontFamily(
+    Font(R.font.spoqa_hansans_neo_medium)
+)
 
 // Set of Material typography styles to start with
 val Typography = Typography(
