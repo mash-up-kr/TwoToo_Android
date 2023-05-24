@@ -18,9 +18,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainToolbar(
-    onClickNaveIcon: () -> Unit,
-    onClickAction1Icon: () -> Unit,
-    onClickAction2Icon: () -> Unit
+    onClickBackIcon: () -> Unit,
+    onClickCalendarIcon: () -> Unit,
+    onClickAlarmIcon: () -> Unit
 ) {
     TopAppBar(
         title = {
@@ -37,7 +37,7 @@ fun MainToolbar(
         navigationIcon = {
             Box(modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
                 IconButton(onClick = {
-                    onClickNaveIcon()
+                    onClickBackIcon()
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.back_arrow),
@@ -50,13 +50,13 @@ fun MainToolbar(
             Row(
                 Modifier.fillMaxHeight(), verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = { onClickAction1Icon() }) {
+                IconButton(onClick = { onClickCalendarIcon() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.calendar),
                         contentDescription = null
                     )
                 }
-                IconButton(onClick = { onClickAction2Icon() }) {
+                IconButton(onClick = { onClickAlarmIcon() }) {
                     Icon(
                         painter = painterResource(id = R.drawable.alarm_tmp),
                         contentDescription = null
