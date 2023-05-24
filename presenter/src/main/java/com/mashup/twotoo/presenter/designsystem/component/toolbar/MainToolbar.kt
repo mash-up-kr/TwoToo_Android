@@ -28,7 +28,7 @@ fun MainToolbar(
                 Text(
                     text = "Twotoo",
                     color = FontBlack,
-                    fontFamily = Montserrat,
+                    fontFamily = Font.Montserrat,
                     fontSize = 26.sp,
                     textAlign = TextAlign.Center
                 )
@@ -80,7 +80,7 @@ fun MainToolbar() {
                 Text(
                     text = "Twotoo",
                     color = FontBlack,
-                    fontFamily = Montserrat,
+                    fontFamily = Font.Montserrat,
                     fontSize = 26.sp,
                     textAlign = TextAlign.Center
                 )

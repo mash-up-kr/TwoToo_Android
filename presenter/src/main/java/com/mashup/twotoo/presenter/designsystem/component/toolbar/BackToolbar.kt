@@ -31,7 +31,7 @@ fun BackToolbar(
                 Text(
                     text = title,
                     color = FontBlack,
-                    fontFamily = SpoqaHanSansNeo,
+                    fontFamily = Font.SpoqaHanSansNeo,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center
                 )
