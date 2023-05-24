@@ -41,7 +41,7 @@ fun MainToolbar(
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.back_arrow),
-                        contentDescription = null // 접근성 설명을 위한 문자열
+                        contentDescription = null
                     )
                 }
             }
@@ -67,7 +67,6 @@ fun MainToolbar(
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = BackGroundWhite,
-            titleContentColor = Purple40
         )
     )
 }

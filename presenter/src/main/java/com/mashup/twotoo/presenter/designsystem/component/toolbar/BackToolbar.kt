@@ -44,7 +44,7 @@ fun BackToolbar(
                 }) {
                     Icon(
                         painter = painterResource(id = backIconId),
-                        contentDescription = null // 접근성 설명을 위한 문자열
+                        contentDescription = null
                     )
                 }
             }
@@ -59,7 +59,6 @@ fun BackToolbar(
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = BackGroundWhite,
-            titleContentColor = Purple40
         )
     )
 }
