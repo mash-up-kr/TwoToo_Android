@@ -49,7 +49,10 @@ fun CommDialogScreen(
 ){
     Column(
         modifier = Modifier
-            .background(Color.White, shape = RoundedCornerShape(17.dp))
+            .background(
+                Color.White,
+                shape = RoundedCornerShape(17.dp)
+            )
             .padding(horizontal = 30.dp, vertical = 24.dp)
     ) {
         Text(
@@ -75,7 +78,7 @@ fun CommDialogScreen(
                 ) {
                     Text(
                         text = stringResource(id = btnCancel),
-                        textAlign = TextAlign.Center,
+                        textAlign = TextAlign.Center
                     )
                 }
             }
@@ -85,7 +88,7 @@ fun CommDialogScreen(
             ) {
                 Text(
                     text = stringResource(id = btnOk),
-                    textAlign = TextAlign.Center,
+                    textAlign = TextAlign.Center
                 )
             }
         }
