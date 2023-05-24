@@ -121,7 +121,7 @@ fun ShotSheet() {
  * 직접 실행하거나, Interactive Mode에서 확인이 가능합니다.
  */
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(name = "인증하기")
 @Composable
 fun OpenAuthenticate() {
     TwoTooTheme {
@@ -166,7 +166,7 @@ fun OpenAuthenticate() {
  * 직접 실행하거나, Interactive Mode에서 확인이 가능합니다.
  */
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(name = "벌로 콕 찌르기")
 @Composable
 fun OpenShot() {
     TwoTooTheme {
