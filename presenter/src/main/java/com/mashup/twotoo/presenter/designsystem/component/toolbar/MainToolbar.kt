@@ -70,12 +70,41 @@ fun MainToolbar(
             titleContentColor = Purple40
         )
     )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun MainToolbar() {
+    TopAppBar(
+        title = {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
+                Text(
+                    text = "Twotoo",
+                    color = FontBlack,
+                    fontFamily = Montserrat,
+                    fontSize = 26.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+        },
+        modifier = Modifier.height(56.dp),
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = BackGroundWhite,
+            titleContentColor = Purple40
+        )
+    )
 
 }
 
 
 @Composable
 @Preview
-fun mainToolbarPreview() {
+fun mainToolbarWithNavAndActionsPreview() {
     MainToolbar({},{},{})
+}
+
+@Composable
+@Preview
+fun mainToolbar(){
+    MainToolbar()
 }
