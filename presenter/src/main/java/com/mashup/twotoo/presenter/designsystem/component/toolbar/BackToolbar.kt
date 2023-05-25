@@ -20,20 +20,20 @@ fun BackToolbar(
     title: String = "",
     @DrawableRes backIconId: Int = R.drawable.back_arrow,
     onClickBackIcon: () -> Unit,
-    actionIconButton: @Composable () -> Unit = {}
+    actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(
         title = {
             Box(
                 modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
+                contentAlignment = Alignment.Center,
             ) {
                 Text(
                     text = title,
                     color = FontBlack,
                     fontFamily = Font.SpoqaHanSansNeo,
                     fontSize = 20.sp,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         },
@@ -44,14 +44,15 @@ fun BackToolbar(
                 }) {
                     Icon(
                         painter = painterResource(id = backIconId),
-                        contentDescription = null
+                        contentDescription = null,
                     )
                 }
             }
         },
         actions = {
             Row(
-                Modifier.fillMaxHeight(), verticalAlignment = Alignment.CenterVertically
+                Modifier.fillMaxHeight(),
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 actionIconButton()
             }
@@ -59,7 +60,7 @@ fun BackToolbar(
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = BackGroundWhite,
-        )
+        ),
     )
 }
 
@@ -71,12 +72,11 @@ fun BackToolbarWithNavTitleAndActionPreview() {
             IconButton(onClick = {}) {
                 Icon(
                     painter = painterResource(id = R.drawable.more),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }
     BackToolbar(title = "title", onClickBackIcon = {}, actionIconButton = moreIconButton)
-
 }
 
 @Composable
@@ -87,7 +87,7 @@ fun BackToolbarWithNavAndTitlePreview() {
             IconButton(onClick = {}) {
                 Icon(
                     painter = painterResource(id = R.drawable.more),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         }

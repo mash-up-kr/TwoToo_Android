@@ -22,7 +22,6 @@ fun TwoTooNavigationBar(
         contentColor = TwoTooNavigationDefaults.navigationContentColor(),
         content = content,
     )
-
 }
 
 @Composable

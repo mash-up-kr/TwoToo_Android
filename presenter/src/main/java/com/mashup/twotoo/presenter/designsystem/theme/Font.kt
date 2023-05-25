@@ -10,6 +10,6 @@ object Font {
         Font(R.font.montserrat_medium, FontWeight.Bold),
     )
     val SpoqaHanSansNeo = FontFamily(
-        Font(R.font.spoqa_hansans_neo_medium, FontWeight.Bold)
+        Font(R.font.spoqa_hansans_neo_medium, FontWeight.Bold),
     )
 }
