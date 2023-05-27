@@ -24,7 +24,6 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
 
-
 @Composable
 fun CommDialog(
     onDismissRequest: () -> Unit,
@@ -33,12 +32,11 @@ fun CommDialog(
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = properties
+        properties = properties,
     ) {
         content
     }
 }
-
 
 @Composable
 fun CommDialogScreen(
@@ -46,49 +44,49 @@ fun CommDialogScreen(
     @StringRes desc: Int,
     @StringRes btnOk: Int,
     @StringRes btnCancel: Int = 0,
-){
+) {
     Column(
         modifier = Modifier
             .background(
                 Color.White,
-                shape = RoundedCornerShape(17.dp)
+                shape = RoundedCornerShape(17.dp),
             )
-            .padding(horizontal = 30.dp, vertical = 24.dp)
+            .padding(horizontal = 30.dp, vertical = 24.dp),
     ) {
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(id = title),
             textAlign = TextAlign.Center,
-            fontSize = 14.sp
+            fontSize = 14.sp,
         )
         Spacer(modifier = Modifier.height(24.dp))
         Text(
             modifier = Modifier.align(Alignment.CenterHorizontally),
             text = stringResource(id = desc),
             textAlign = TextAlign.Center,
-            fontSize = 14.sp
+            fontSize = 14.sp,
         )
         Row(
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
         ) {
-            if(btnCancel != 0) {
+            if (btnCancel != 0) {
                 TextButton(
                     onClick = { },
                     contentPadding = PaddingValues(12.dp),
                 ) {
                     Text(
                         text = stringResource(id = btnCancel),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
             }
             TextButton(
                 onClick = { },
-                contentPadding = PaddingValues(12.dp)
+                contentPadding = PaddingValues(12.dp),
             ) {
                 Text(
                     text = stringResource(id = btnOk),
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
             }
         }
@@ -102,6 +100,6 @@ fun PreviewDialog() {
         R.string.all_auth_title,
         R.string.all_auth_desc,
         R.string.cheer_up,
-        R.string.cheer_up_cancel
+        R.string.cheer_up_cancel,
     )
 }
