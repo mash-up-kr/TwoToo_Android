@@ -20,6 +20,7 @@ inject = "1"
 orbit = "4.6.1"
 navigation_compose = "2.5.3"
 landscapist-glide = "2.2.0"
+kakao_login = "2.13.0"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -65,6 +66,8 @@ orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" 
 #glide
 landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist-glide" }
 
+#kakao
+kakao-login = { module = "com.kakao.sdk:v2-user", version.ref = "kakao_login"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
