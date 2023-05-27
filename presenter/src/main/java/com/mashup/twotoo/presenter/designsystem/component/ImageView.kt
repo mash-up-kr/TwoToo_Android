@@ -31,15 +31,13 @@ import com.skydoves.landscapist.glide.GlideImageState
 @Composable
 fun TwoTooImageView(
     model: Any?,
-    @DrawableRes previewPlaceholder: Int?,
-    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit)?,
-    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit)?,
     modifier: Modifier = Modifier,
+    @DrawableRes previewPlaceholder: Int? = null,
+    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
+    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
 ) {
     TwoTooImageViewImpl(
         model = model,
-        enableSetImage = false,
-        onClickSetImage = null,
         previewPlaceholder = previewPlaceholder,
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
@@ -49,10 +47,10 @@ fun TwoTooImageView(
 
 @Composable
 fun TwoTooImageViewWithSetter(
-    @DrawableRes previewPlaceholder: Int?,
-    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit)?,
-    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit)?,
     modifier: Modifier = Modifier,
+    @DrawableRes previewPlaceholder: Int? = null,
+    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
+    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
 ) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -69,9 +67,8 @@ fun TwoTooImageViewWithSetter(
         model = if (imageUri != null) {
             imageUri
         } else {
-            R.drawable.empty_image_color_placeholder
+            null
         },
-
         enableSetImage = true,
         onClickSetImage = {
             launcher.launch("image/*")
@@ -86,12 +83,13 @@ fun TwoTooImageViewWithSetter(
 @Composable
 fun TwoTooImageViewImpl(
     model: Any?,
-    enableSetImage: Boolean,
-    onClickSetImage: (() -> Unit)?,
-    @DrawableRes previewPlaceholder: Int?,
-    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit)?,
-    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit)?,
     modifier: Modifier = Modifier,
+    @DrawableRes previewPlaceholder: Int? = null,
+    onClickSetImage: (() -> Unit) = {},
+    enableSetImage: Boolean = false,
+    loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
+    failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
+
 ) {
     Box(
         modifier = modifier,
@@ -111,10 +109,9 @@ fun TwoTooImageViewImpl(
             PlusLine(
                 modifier = Modifier
                     .fillMaxSize(0.5f)
-                    .align(Alignment.Center).clickable {
-                        if (onClickSetImage != null) {
-                            onClickSetImage()
-                        }
+                    .align(Alignment.Center)
+                    .clickable {
+                        onClickSetImage.invoke()
                     },
 
             )
@@ -169,9 +166,6 @@ fun HasNoneImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
-            loadingPlaceHolder = {
-            },
-            failurePlaceHolder = {},
         )
     }
 }
@@ -191,9 +185,6 @@ fun HasImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
             model = null,
-            previewPlaceholder = R.drawable.empty_image_placeholder,
-            loadingPlaceHolder = {},
-            failurePlaceHolder = {},
         )
     }
 }
@@ -208,9 +199,6 @@ fun ImageViewWithNoneRound() {
         TwoTooImageView(
             modifier = Modifier.size(250.dp),
             model = null,
-            previewPlaceholder = R.drawable.empty_image_placeholder,
-            loadingPlaceHolder = {},
-            failurePlaceHolder = {},
         )
     }
 }
