@@ -45,7 +45,7 @@ fun ShotList(
     ) {
         Header(titleText = titleText)
         Spacer(modifier = Modifier.height(20.5.dp))
-        textMapList.forEachIndexed { index, textMap ->
+        textMapList.forEach { textMap ->
             Divider(modifier = Modifier.fillMaxWidth())
             ShotRow(
                 modifier = Modifier.fillMaxWidth().selectable(
@@ -59,10 +59,8 @@ fun ShotList(
                 selected = isSelectedRow(textMap.first),
                 onCheckedChange = onChangeState,
             )
-            if (index == textMapList.size - 1) {
-                Divider(modifier = Modifier.fillMaxWidth())
-            }
         }
+        Divider(modifier = Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(24.5.dp))
         button(Modifier)
     }
@@ -101,8 +99,6 @@ fun ShotRow(
                     R.drawable.ic_radio_unchecked
                 },
                 previewPlaceholder = R.drawable.ic_radio_unchecked,
-                failurePlaceHolder = null,
-                loadingPlaceHolder = null,
             )
         }
     }
