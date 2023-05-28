@@ -3,6 +3,7 @@
     <string name="garden">Garden</string>
     <string name="home">Home</string>
     <string name="user">User</string>
+    <string name= "login_tite">카카오톡으로 로그인</string>
 
 
     <string name="bottomSheetAuthenticate">인증하기</string>

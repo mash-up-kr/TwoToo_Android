@@ -26,19 +26,17 @@ fun TextButton(
     round: Int = 8,
     color: Color = SelectedIconColor,
     textStyle: TextStyle = TextStyle(fontSize = 18.sp, color = White),
-    onClick: () -> Unit = {}
+    onClick: () -> Unit = {},
 ) {
     Button(
         modifier = modifier,
         shape = RoundedCornerShape(round.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        onClick = { onClick() }
+        onClick = { onClick() },
     ) {
-        Text(text = text, style =textStyle)
+        Text(text = text, style = textStyle)
     }
-
 }
-
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
@@ -61,7 +59,7 @@ fun TextButtonGrayPreview() {
                 .height(74.dp),
             round = 0,
             text = "다음",
-            color = Gray
+            color = Gray,
         ) {}
         Spacer(modifier = Modifier.height(10.dp))
     }

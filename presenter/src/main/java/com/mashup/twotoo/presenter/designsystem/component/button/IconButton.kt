@@ -12,12 +12,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.theme.SelectedIconColor
 import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
 @Composable
@@ -28,32 +28,32 @@ fun IconButton(
         .height(50.dp)
         .padding(horizontal = 30.dp),
     @DrawableRes iconId: Int,
-    color: Color,
-    onClick: () -> Unit
+    ButtonColor: Color,
+    contentTintColor: Color = Color(0xFF000000),
+    onClick: () -> Unit,
 ) {
     Button(
         modifier = modifier,
-        colors = ButtonDefaults.buttonColors(containerColor = color),
+        colors = ButtonDefaults.buttonColors(containerColor = ButtonColor),
         shape = RoundedCornerShape(8.dp),
-        onClick = { onClick() }
+        onClick = { onClick() },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             Icon(
                 painter = painterResource(id = iconId),
                 contentDescription = null,
-                tint = SelectedIconColor
+                tint = contentTintColor,
             )
             Spacer(modifier = Modifier.width(10.dp))
             Text(
                 text = text,
-                style = TextStyle(color = SelectedIconColor, fontWeight = FontWeight.Bold)
+                style = TextStyle(color = contentTintColor, fontWeight = FontWeight.Bold),
             )
         }
     }
-
 }
 
 @Composable
@@ -62,13 +62,13 @@ fun IconButtonPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         IconButton(
-            "카카오톡으로 로그인",
+            stringResource(id = R.string.login_tite),
             Modifier
                 .fillMaxWidth()
                 .height(50.dp)
                 .padding(horizontal = 10.dp),
             R.drawable.kakaotalk,
-            Yello
+            Yello,
         ) {}
         Spacer(modifier = Modifier.height(10.dp))
     }
