@@ -3,4 +3,14 @@
     <string name="garden">Garden</string>
     <string name="home">Home</string>
     <string name="user">User</string>
+
+
+
+
+    <!-- Kakao Login -->
+    <string name="failureKakaoTalk">카카오톡으로 로그인 실패</string>
+    <string name="successKakaoTalk">카카오톡으로 로그인 성공</string>
+
+    <string name="failureKakaoAccount">카카오계정으로 로그인 실패</string>
+    <string name="successKakaoAccount">카카오계정으로 로그인 성공</string>
 </resources>
