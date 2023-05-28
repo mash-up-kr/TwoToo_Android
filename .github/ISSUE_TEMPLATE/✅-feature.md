@@ -16,7 +16,7 @@ assignees: ''
 - 
 
 ## Todo
-- [] todo
-- [] todo
+- [ ] todo
+- [ ] todo
 
 ## Etc
