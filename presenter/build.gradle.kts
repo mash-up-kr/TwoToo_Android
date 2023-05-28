@@ -1,8 +1,8 @@
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias (libs.plugins.android.library)
-    alias (libs.plugins.kotlin.android)
-    alias (libs.plugins.kotlin.kapt)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
 }
 
 android {
@@ -20,15 +20,15 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles (
+            proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
     compileOptions {
-        sourceCompatibility (JavaVersion.VERSION_1_8)
-        targetCompatibility (JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -39,27 +39,27 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.7"
     }
-
 }
 
 dependencies {
 
-    implementation (project(":domain"))
-    implementation (libs.core.ktx)
-    implementation (libs.androidx.lifecycle)
-    implementation (libs.androidx.activity.compose)
-    implementation (libs.bundles.androidx.compose)
-    implementation (libs.bundles.squareup.okhttp)
-    implementation (libs.bundles.squareup.retrofit)
-    implementation (libs.google.dagger)
-    implementation (libs.androidx.compose.navigation)
-    implementation (libs.landscapist.glide)
-    kapt (libs.google.dagger.compiler)
-    implementation (libs.bundles.orbit)
-    testImplementation (libs.test.junit)
-    androidTestImplementation (libs.test.ext.junit)
-    androidTestImplementation (libs.test.espresso.core)
-    androidTestImplementation (libs.androidx.compose.ui.test.junit)
-    debugImplementation (libs.bundles.androidx.compose.ui.debug)
-
+    implementation(project(":domain"))
+    implementation(libs.core.ktx)
+    implementation(libs.androidx.lifecycle)
+    implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.kotlin.collection.immutable)
+    implementation(libs.bundles.androidx.compose)
+    implementation(libs.bundles.squareup.okhttp)
+    implementation(libs.bundles.squareup.retrofit)
+    implementation(libs.google.dagger)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.landscapist.glide)
+    kapt(libs.google.dagger.compiler)
+    implementation(libs.bundles.orbit)
+    testImplementation(libs.test.junit)
+    androidTestImplementation(libs.test.ext.junit)
+    androidTestImplementation(libs.test.espresso.core)
+    androidTestImplementation(libs.androidx.compose.ui.test.junit)
+    debugImplementation(libs.bundles.androidx.compose.ui.debug)
 }

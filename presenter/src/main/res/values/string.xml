@@ -3,4 +3,14 @@
     <string name="garden">Garden</string>
     <string name="home">Home</string>
     <string name="user">User</string>
+
+
+    <string name="bottomSheetAuthenticate">인증하기</string>
+    <string name="bottomSheetShot">벌로 콕 찌르기</string>
+
+
+
+    <!-- contentDescription -->
+    <string name="selectShot">찌르기항목을 선택합니다</string>
+
 </resources>
