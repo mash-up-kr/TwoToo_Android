@@ -12,3 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val UnSelectedIconColor = Color(0xFF9E9E9E)
 val SelectedIconColor = Color(0xFF000000)
+
+val Yello = Color(0xFFFBE64F)
+val White = Color(0xFFFFFFFFF)
+val Gray = Color(0xFFD9D9D9)
