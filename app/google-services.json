@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1052810865754",
+    "project_id": "twotoo-2b7e7",
+    "storage_bucket": "twotoo-2b7e7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052810865754:android:f6413fec464a37f670fc63",
+        "android_client_info": {
+          "package_name": "com.mashup.twotoo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB1Hvw1C1NGKQiqRCZ_EyYmPwMh8t1-7Rs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
