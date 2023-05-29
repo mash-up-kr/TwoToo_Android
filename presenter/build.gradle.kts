@@ -15,7 +15,7 @@ android {
         targetSdk = 33
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
-        manifestPlaceholders["NATIVE_APP_KEY"] =  getApiKey("native_app_key")
+        manifestPlaceholders["NATIVE_APP_KEY"] = getApiKey("native_app_key")
     }
 
     buildTypes {
