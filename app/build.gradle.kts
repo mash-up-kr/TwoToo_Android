@@ -18,7 +18,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-        buildConfigField("String", "NATIVE_APP_KEY", gradleLocalProperties(rootDir).getProperty("native_app_key"))
+        buildConfigField("String", "NATIVE_APP_KEY", "\"${gradleLocalProperties(rootDir).getProperty("native_app_key")}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
