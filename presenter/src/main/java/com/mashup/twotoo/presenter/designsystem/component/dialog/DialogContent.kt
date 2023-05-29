@@ -9,5 +9,3 @@ data class DialogContent(
     @DrawableRes val image: Int?,
     val buttons: List<DialogButtonContent>
 )
-
-

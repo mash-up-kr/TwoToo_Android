@@ -33,7 +33,7 @@ fun TwoTooDialog(
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = properties
+        properties = properties,
     ) {
         Column(
             modifier = Modifier
@@ -42,7 +42,7 @@ fun TwoTooDialog(
                     shape = RoundedCornerShape(17.dp),
                 )
                 .padding(horizontal = 30.dp, vertical = 24.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(id = content.title),
@@ -51,7 +51,7 @@ fun TwoTooDialog(
             )
             Spacer(modifier = Modifier.height(24.dp))
 
-            content.image?.let {drawableRes ->
+            content.image?.let { drawableRes ->
                 TwoTooImageView(
                     model = drawableRes,
                     modifier = Modifier.size(100.dp),
@@ -66,10 +66,10 @@ fun TwoTooDialog(
             )
             Spacer(modifier = Modifier.height(45.dp))
 
-            Row{
+            Row {
                 content.buttons.forEach { btn ->
                     TextButton(
-                        onClick = {btn.action},
+                        onClick = { btn.action },
                         contentPadding = PaddingValues(12.dp),
                     ) {
                         Text(
@@ -90,14 +90,14 @@ fun PreviewDialog() {
     val content = DialogContent(
         title = R.string.all_auth_title,
         desc = R.string.all_auth_desc,
-        image =null,
+        image = null,
         buttons = listOf(
             DialogButtonContent(R.string.cheer_up_cancel),
-            DialogButtonContent(R.string.cheer_up)
-        )
+            DialogButtonContent(R.string.cheer_up),
+        ),
     )
     TwoTooDialog(
         onDismissRequest = {},
-        content = content
+        content = content,
     )
 }
