@@ -3,10 +3,13 @@ package com.mashup.twotoo.di
 import com.mashup.twotoo.data.BuildConfig
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.runBlocking
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import usecase.token.GetAccessTokenUseCase
 import javax.inject.Singleton
 
 @Module
@@ -20,10 +23,25 @@ class NetworkModule {
 
     @Provides
     @Singleton
-    fun provideOkHttpClient(httpLoggingInterceptor: HttpLoggingInterceptor): OkHttpClient {
+    fun provideOkHttpClient(
+        httpLoggingInterceptor: HttpLoggingInterceptor,
+        getAccessTokenUseCase: GetAccessTokenUseCase
+    ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
-        if (BuildConfig.DEBUG) {
-            okHttpClientBuilder.addInterceptor(httpLoggingInterceptor)
+        okHttpClientBuilder.apply {
+            addInterceptor(
+                Interceptor { chain ->
+                    val token = runBlocking { getAccessTokenUseCase() }
+                    val request = chain.request().newBuilder()
+                        .addHeader(AUTHORIZATION, token)
+                        .build()
+
+                    chain.proceed(request)
+                },
+            )
+            if (BuildConfig.DEBUG) {
+                addNetworkInterceptor(httpLoggingInterceptor)
+            }
         }
         return okHttpClientBuilder.build()
     }
@@ -45,5 +63,6 @@ class NetworkModule {
 
     companion object {
         const val URL = ""
+        const val AUTHORIZATION = "Authorization"
     }
 }
