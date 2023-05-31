@@ -26,7 +26,7 @@ val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
         Log.e(TAG, "카카오계정으로 로그인 실패 $error")
     } else if (token != null) {
         Log.d(TAG, "카카오계정으로 로그인 성공 access token :  ${token.accessToken}")
-        Log.d(TAG, "카카오계정으로 로그인 성공 refresh token : ${token.accessToken}")
+        Log.d(TAG, "카카오계정으로 로그인 성공 refresh token : ${token.refreshToken}")
     }
 }
 
