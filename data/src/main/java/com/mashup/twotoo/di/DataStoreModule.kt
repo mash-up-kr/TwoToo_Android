@@ -5,8 +5,10 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.dataStoreFile
 import androidx.datastore.preferences.core.PreferenceDataStoreFactory
 import androidx.datastore.preferences.core.Preferences
+import com.mashup.twotoo.di.qualifier.IoDispatcher
 import dagger.Module
 import dagger.Provides
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -18,10 +20,11 @@ class DataStoreModule {
     @Provides
     @Singleton
     fun provideUserPreferenceDataStore(
-        context: Context
+        context: Context,
+        @IoDispatcher ioDispatcher: CoroutineDispatcher,
     ): DataStore<Preferences> =
         PreferenceDataStoreFactory.create(
-            scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+            scope = CoroutineScope(ioDispatcher + SupervisorJob()),
         ) {
             context.dataStoreFile(USER_PREFERENCE)
         }
