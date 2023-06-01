@@ -2,6 +2,9 @@ package com.mashup.twotoo.presenter.designsystem.theme
 
 import androidx.compose.ui.graphics.Color
 
+val BackGroundWhite = Color(0xFFF5F5F5)
+val FontBlack = Color(0xFF161616)
+
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
