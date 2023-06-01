@@ -17,8 +17,8 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
-import com.mashup.twotoo.presenter.user.navigation.navigateToUser
 import com.mashup.twotoo.presenter.user.navigation.UserNavigationRoute
+import com.mashup.twotoo.presenter.user.navigation.navigateToUser
 
 @Composable
 fun rememberTwoTooAppState(
