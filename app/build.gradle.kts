@@ -56,6 +56,7 @@ dependencies {
     implementation(libs.bundles.squareup.okhttp)
     implementation(libs.bundles.squareup.retrofit)
     implementation(libs.google.dagger)
+    implementation(libs.androidx.datastore)
     kapt(libs.google.dagger.compiler)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.ext.junit)
