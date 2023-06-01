@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -61,4 +62,6 @@ dependencies {
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.test.espresso.core)
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.bundles.firebase)
 }
