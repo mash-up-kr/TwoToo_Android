@@ -1,24 +1,26 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
-import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Shot
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooBottomSheet(
     type: BottomSheetType,
-    button: @Composable (Modifier) -> Unit,
+    button: @Composable (Modifier, BottomSheetData) -> Unit,
     onDismiss: () -> Unit,
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
 ) {
@@ -38,23 +40,24 @@ fun TwoTooBottomSheetImpl(
     bottomSheetState: SheetState,
     type: BottomSheetType,
     onDismiss: () -> Unit,
-    button: @Composable (Modifier) -> Unit,
+    button: @Composable (Modifier, BottomSheetData) -> Unit,
 ) {
     ModalBottomSheet(
         sheetState = bottomSheetState,
         onDismissRequest = onDismiss,
+        containerColor = Color(0xFFFCF5E6),
     ) {
         when (type) {
             is Authenticate -> {
-                val titleText = stringResource(id = type.title)
-                AuthenticateContent(titleText = titleText, button = button)
-            }
-            is Shot -> {
-                val titleText = stringResource(id = type.title)
-                ShotList(
-                    titleText = titleText,
+                AuthenticateContent(
+                    type = type,
                     button = button,
-                    textList = type.shotTextList,
+                )
+            }
+            is SendType -> {
+                TextFieldWithSendingButton(
+                    type = type,
+                    button = button,
                 )
             }
         }
@@ -83,8 +86,8 @@ fun TestButton(
 fun AuthenticateSheet() {
     TwoTooTheme {
         TwoTooBottomSheet(
-            type = Authenticate(title = R.string.bottomSheetAuthenticate),
-            button = {
+            type = Authenticate(),
+            button = { _, _ ->
                 TestButton(Modifier, {})
             },
             onDismiss = {},
@@ -101,15 +104,8 @@ fun AuthenticateSheet() {
 fun ShotSheet() {
     TwoTooTheme {
         TwoTooBottomSheet(
-            type = Shot(
-                title = R.string.bottomSheetShot,
-                shotTextList = persistentListOf(
-                    "언제까지 쉬고 있을 거야? 얼른 해야지?",
-                    "잘하구 있어 좀만 더 화이팅하자!!!",
-                    "이거 보면 빨리 한다! 실시!",
-                ),
-            ),
-            button = {
+            type = Shot(),
+            button = { _, _ ->
                 TestButton(Modifier, {})
             },
             onDismiss = {},
@@ -143,10 +139,12 @@ fun OpenAuthenticate() {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
                     bottomSheetState = bottomSheetState,
-                    button = { modifier ->
-                        TestButton(modifier = Modifier.then(modifier), {})
+                    button = { modifier, bottomSheetData ->
+                        TestButton(modifier = Modifier.then(modifier)) {
+                            Log.d(TAG, "OpenAuthenticate($bottomSheetData)")
+                        }
                     },
-                    type = Authenticate(title = R.string.bottomSheetAuthenticate),
+                    type = Authenticate(),
                     onDismiss = {
                         coroutineScope.launch {
                             bottomSheetState.hide()
@@ -186,20 +184,60 @@ fun OpenShot() {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
                     bottomSheetState = bottomSheetState,
-                    button = {
+                    button = { modifier, bottomSheetData ->
                         /*
                         Custom Button Composable이 들어갑니다.
                          */
-                        TestButton(modifier = Modifier, {})
+                        TestButton(modifier = Modifier.then(modifier)) {
+                            Log.d(TAG, "OpenShot($bottomSheetData)")
+                        }
                     },
-                    type = Shot(
-                        title = R.string.bottomSheetShot,
-                        shotTextList = persistentListOf(
-                            "언제까지 쉬고 있을 거야? 얼른 해야지?",
-                            "잘하구 있어 좀만 더 화이팅하자!!!",
-                            "이거 보면 빨리 한다! 실시!",
-                        ),
-                    ),
+                    type = Shot(),
+                    onDismiss = {
+                        coroutineScope.launch {
+                            bottomSheetState.hide()
+                        }.invokeOnCompletion {
+                            if (!bottomSheetState.isVisible) {
+                                isBottomSheetVisible = !isBottomSheetVisible
+                            }
+                        }
+                    },
+                )
+            }
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Preview(name = "오늘의 응원 한마디")
+@Composable
+fun OpenCheer() {
+    TwoTooTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
+            var isBottomSheetVisible by rememberSaveable {
+                mutableStateOf(false)
+            }
+            val bottomSheetState = rememberModalBottomSheetState(true)
+            val coroutineScope = rememberCoroutineScope()
+            Button(
+                onClick = {
+                    isBottomSheetVisible = !isBottomSheetVisible
+                },
+            ) {
+                Text("열기 / 닫기")
+            }
+            if (isBottomSheetVisible) {
+                TwoTooBottomSheet(
+                    bottomSheetState = bottomSheetState,
+                    button = { modifier, bottomSheetData ->
+                        /*
+                        Custom Button Composable이 들어갑니다.
+                         */
+                        TestButton(modifier = Modifier.then(modifier)) {
+                            Log.d(TAG, "OpenShot($bottomSheetData)")
+                        }
+                    },
+                    type = Cheer(),
                     onDismiss = {
                         coroutineScope.launch {
                             bottomSheetState.hide()
