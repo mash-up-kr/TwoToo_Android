@@ -1,11 +1,24 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
 import androidx.annotation.StringRes
-import kotlinx.collections.immutable.ImmutableList
+import com.mashup.twotoo.presenter.R
 
 sealed class BottomSheetType {
     @get:StringRes
     abstract val title: Int
-    data class Authenticate(override val title: Int) : BottomSheetType()
-    data class Shot(override val title: Int, val shotTextList: ImmutableList<String>) : BottomSheetType()
+
+    @get:StringRes
+    abstract val textHint: Int
+    data class Authenticate(
+        override val title: Int = R.string.bottomSheetAuthenticate,
+        override val textHint: Int = R.string.bottomSheetAuthTextFieldHint,
+    ) : BottomSheetType()
+    data class Shot(
+        override val title: Int = R.string.bottomSheetShot,
+        override val textHint: Int = R.string.bottomSheetShotTextFieldHint,
+    ) : BottomSheetType()
+    data class Cheer(
+        override val title: Int = R.string.bottomSheetCheer,
+        override val textHint: Int = R.string.bottomSheetCheerTextFieldHint,
+    ) : BottomSheetType()
 }
