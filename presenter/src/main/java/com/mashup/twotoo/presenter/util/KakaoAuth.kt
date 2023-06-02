@@ -17,11 +17,11 @@ import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.common.model.KakaoSdkError
 import com.kakao.sdk.user.UserApiClient
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.string.getString
 
 val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-    val TAG = "TwoToo callback()"
     if (error != null) {
         Log.e(TAG, "카카오계정으로 로그인 실패 $error")
     } else if (token != null) {
@@ -30,44 +30,42 @@ val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
     }
 }
 
-fun login(context: Context) {
-    val TAG = "TwoToo login()"
-    if (UserApiClient.instance.isKakaoTalkLoginAvailable(context)) {
-        UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
-            if (error != null) {
-                Log.e(TAG, getString(context, R.string.failureKakaoTalkLogin) + error)
+fun login(context: Context) = with(UserApiClient.instance) {
+    if (!isKakaoTalkLoginAvailable(context)) {
+        loginWithKakaoAccount(context, callback = callback)
+        return
+    }
 
-                // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
-                // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
-                if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                    return@loginWithKakaoTalk
-                }
+    loginWithKakaoTalk(context) { token, error ->
+        if (error != null) {
+            Log.e(TAG, context.getString(R.string.failureKakaoTalkLogin) + error)
 
-                // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
-                UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
-            } else if (token != null) {
-                Log.d(TAG, getString(context, R.string.successKakaoTalkLogin) + " access Token : " + token.accessToken)
-                Log.d(TAG, getString(context, R.string.successKakaoTalkLogin) + " refresh Token : " + token.refreshToken)
+            // 사용자가 카카오톡 설치 후 디바이스 권한 요청 화면에서 로그인을 취소한 경우,
+            // 의도적인 로그인 취소로 보고 카카오계정으로 로그인 시도 없이 로그인 취소로 처리 (예: 뒤로 가기)
+            if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
+                return@loginWithKakaoTalk
             }
+
+            // 카카오톡에 연결된 카카오계정이 없는 경우, 카카오계정으로 로그인 시도
+            loginWithKakaoAccount(context, callback = callback)
+        } else if (token != null) {
+            Log.d(TAG, context.getString(R.string.successKakaoTalkLogin) + " access Token : " + token.accessToken)
+            Log.d(TAG, context.getString(R.string.successKakaoTalkLogin) + " refresh Token : " + token.refreshToken)
         }
-    } else {
-        UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
     }
 }
 
 fun logout(context: Context) {
-    val TAG = "TwoToo logout()"
     UserApiClient.instance.logout { error ->
         if (error != null) {
-            Log.e(TAG, getString(context, R.string.failureKakaoTalkLogout), error)
+            Log.e(TAG, context.getString(R.string.failureKakaoTalkLogout), error)
         } else {
-            Log.i(TAG, getString(context, R.string.successKakaoTalkLogout))
+            Log.i(TAG, context.getString(R.string.successKakaoTalkLogout))
         }
     }
 }
 
 fun leave(context: Context) {
-    val TAG = "TwoToo leave()"
     UserApiClient.instance.unlink { error ->
         if (error != null) {
             Log.e(TAG, context.getString(R.string.failureKakaoTalkUnlink), error)
@@ -78,27 +76,27 @@ fun leave(context: Context) {
 }
 
 fun isHasToken(context: Context) {
-    val TAG = "TwoToo isHasToken()"
-    if (AuthApiClient.instance.hasToken()) {
-        UserApiClient.instance.accessTokenInfo { accessTokenInfo, error ->
-            if (error != null) {
-                if (error is KakaoSdkError && error.isInvalidTokenError()) {
-                    // 로그인 필요
-                    Log.e(TAG, "isHasToken: inValidTokenError", error)
-                } else {
-                    // 기타 에러
-                    Log.e(TAG, "isHasToken: error = ", error)
-                }
+    if (!AuthApiClient.instance.hasToken()) {
+        // 로그인 필요
+        Log.e(TAG, "isHasToken: false")
+        return
+    }
+
+    UserApiClient.instance.accessTokenInfo { accessTokenInfo, error ->
+        if (error != null) {
+            if (error is KakaoSdkError && error.isInvalidTokenError()) {
+                // 로그인 필요
+                Log.e(TAG, "isHasToken: inValidTokenError", error)
             } else {
+                // 기타 에러
+                Log.e(TAG, "isHasToken: error = ", error)
+            }
+        } else {
                 /*
                 token 유효성 체크 성공
                 accessTokenInfo : 액세스 토큰이 만료된 경우 자동으로 갱신된 새로운 액세스 토큰 정보 반환.
                  */
-            }
         }
-    } else {
-        // 로그인 필요
-        Log.e(TAG, "isHasToken: false")
     }
 }
 
