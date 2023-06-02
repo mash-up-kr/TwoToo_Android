@@ -19,7 +19,6 @@ import com.kakao.sdk.user.UserApiClient
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.string.getString
 
 val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
     if (error != null) {
