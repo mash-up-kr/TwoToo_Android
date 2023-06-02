@@ -48,31 +48,16 @@ fun TwoTooImageView(
 @Composable
 fun TwoTooImageViewWithSetter(
     modifier: Modifier = Modifier,
+    imageUri: Uri? = null,
+    onClickSetImage: () -> Unit = {},
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
 ) {
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract =
-        ActivityResultContracts.GetContent(),
-    ) { uri: Uri? ->
-        imageUri = uri
-    }
-
     TwoTooImageViewImpl(
-        model = if (imageUri != null) {
-            imageUri
-        } else {
-            null
-        },
+        model = imageUri,
         enableSetImage = true,
-        onClickSetImage = {
-            launcher.launch("image/*")
-        },
+        onClickSetImage = onClickSetImage,
         previewPlaceholder = previewPlaceholder,
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
@@ -158,6 +143,17 @@ fun PlusLine(
 @Composable
 fun HasNoneImageView() {
     TwoTooTheme {
+        var imageUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
+
+        val launcher = rememberLauncherForActivityResult(
+            contract =
+            ActivityResultContracts.GetContent(),
+        ) { uri: Uri? ->
+            imageUri = uri
+        }
+
         TwoTooImageViewWithSetter(
             modifier = Modifier
                 .size(250.dp)
@@ -166,6 +162,10 @@ fun HasNoneImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
+            imageUri = imageUri,
+            onClickSetImage = {
+                launcher.launch("image/*")
+            },
         )
     }
 }
