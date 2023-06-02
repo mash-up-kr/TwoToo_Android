@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.application)
@@ -17,6 +19,7 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+        buildConfigField("String", "NATIVE_APP_KEY", "\"${gradleLocalProperties(rootDir).getProperty("native_app_key") ?: ""}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
@@ -58,6 +61,7 @@ dependencies {
     implementation(libs.bundles.squareup.retrofit)
     implementation(libs.google.dagger)
     implementation(libs.androidx.datastore)
+    implementation(libs.kakao.login)
     kapt(libs.google.dagger.compiler)
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.ext.junit)

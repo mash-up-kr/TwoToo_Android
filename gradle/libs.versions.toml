@@ -20,6 +20,7 @@ inject = "1"
 orbit = "4.6.1"
 navigation_compose = "2.5.3"
 landscapist-glide = "2.2.0"
+kakao_login = "2.13.0"
 constraintlayout = "1.0.1"
 immutable = "0.3.5"
 firebase = "22.0.0"
@@ -72,6 +73,9 @@ orbit-compose = { module = "org.orbit-mvi:orbit-compose", version.ref = "orbit" 
 
 #glide
 landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide", version.ref = "landscapist-glide" }
+
+#kakao
+kakao-login = { module = "com.kakao.sdk:v2-user", version.ref = "kakao_login"}
 
 #kotlin
 kotlin-collection-immutable = { module ="org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref ="immutable"}

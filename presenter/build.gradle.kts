@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.android.library)
@@ -8,13 +10,12 @@ plugins {
 android {
     namespace = "com.mashup.twotoo.presenter"
     compileSdk = 33
-
     defaultConfig {
         minSdk = 24
         targetSdk = 33
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+        manifestPlaceholders["NATIVE_APP_KEY"] = getApiKey("native_app_key")
     }
 
     buildTypes {
@@ -54,6 +55,7 @@ dependencies {
     implementation(libs.bundles.squareup.retrofit)
     implementation(libs.google.dagger)
     implementation(libs.androidx.compose.navigation)
+    implementation(libs.kakao.login)
     implementation(libs.landscapist.glide)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
@@ -63,4 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     debugImplementation(libs.bundles.androidx.compose.ui.debug)
     implementation(libs.bundles.firebase)
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey) ?: ""
 }
