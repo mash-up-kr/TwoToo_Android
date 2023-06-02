@@ -53,7 +53,7 @@ dependencies {
     implementation(libs.bundles.squareup.retrofit)
     implementation(libs.google.dagger)
     implementation(libs.androidx.compose.navigation)
-    implementation (libs.kakao.login)
+    implementation(libs.kakao.login)
     implementation(libs.landscapist.glide)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
@@ -65,5 +65,10 @@ dependencies {
 }
 
 fun getApiKey(propertyKey: String): String {
-    return gradleLocalProperties(rootDir).getProperty(propertyKey)
+    val apiKey = runCatching {
+        gradleLocalProperties(rootDir).getProperty(propertyKey)
+    }.onFailure { throwable ->
+        println("get ApiKey is failed by $throwable")
+    }
+    return apiKey.getOrDefault("")
 }
