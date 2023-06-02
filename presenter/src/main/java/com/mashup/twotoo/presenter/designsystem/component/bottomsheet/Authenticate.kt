@@ -115,7 +115,7 @@ fun AuthenticateContent(
         )
         button(
             Modifier.layoutId("button"),
-            BottomSheetData.Authenticate(
+            BottomSheetData.AuthenticateData(
                 image = imageUri,
                 text = textFieldState,
             ),
