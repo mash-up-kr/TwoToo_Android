@@ -33,16 +33,16 @@ sealed interface BottomSheetType {
 sealed class BottomSheetData {
 
     abstract val text: String
-    data class Authenticate(
+    data class AuthenticateData(
         val image: Uri?,
         override val text: String,
     ) : BottomSheetData()
 
-    data class Shot(
+    data class ShotData(
         override val text: String,
     ) : BottomSheetData()
 
-    data class Cheer(
+    data class CheerData(
         override val text: String,
     ) : BottomSheetData()
 }

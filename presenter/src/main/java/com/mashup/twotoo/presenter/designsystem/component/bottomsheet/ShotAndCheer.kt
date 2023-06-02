@@ -10,6 +10,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData.CheerData
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData.ShotData
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
@@ -48,12 +50,17 @@ fun TextFieldWithSendingButton(
         } else {
             Spacer(modifier = Modifier.height(24.5.dp))
         }
-
         button(
             Modifier,
-            BottomSheetData.Shot(
-                text = textFieldState,
-            ),
+            when (type) {
+                is Shot -> {
+                    ShotData(text = textFieldState)
+                }
+                is Cheer -> {
+                    CheerData(text = textFieldState)
+                }
+            },
+
         )
     }
 }
