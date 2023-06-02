@@ -65,14 +65,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     debugImplementation(libs.bundles.androidx.compose.ui.debug)
     implementation(libs.bundles.firebase)
-    
 }
 
 fun getApiKey(propertyKey: String): String {
-    val apiKey = runCatching {
-        gradleLocalProperties(rootDir).getProperty(propertyKey)
-    }.onFailure { throwable ->
-        println("get ApiKey is failed by $throwable")
-    }
-    return apiKey.getOrDefault("")
+    return gradleLocalProperties(rootDir).getProperty(propertyKey) ?: ""
 }
