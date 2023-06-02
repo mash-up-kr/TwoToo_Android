@@ -1,24 +1,48 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
+import android.net.Uri
 import androidx.annotation.StringRes
 import com.mashup.twotoo.presenter.R
 
-sealed class BottomSheetType {
-    @get:StringRes
-    abstract val title: Int
+sealed interface BottomSheetType {
 
     @get:StringRes
-    abstract val textHint: Int
+    val title: Int
+
+    @get:StringRes
+    val textHint: Int
+
     data class Authenticate(
         override val title: Int = R.string.bottomSheetAuthenticate,
         override val textHint: Int = R.string.bottomSheetAuthTextFieldHint,
-    ) : BottomSheetType()
+    ) : BottomSheetType
+
+    sealed class SendType : BottomSheetType {
+        data class Shot(
+            override val title: Int = R.string.bottomSheetShot,
+            override val textHint: Int = R.string.bottomSheetShotTextFieldHint,
+        ) : SendType()
+
+        data class Cheer(
+            override val title: Int = R.string.bottomSheetCheer,
+            override val textHint: Int = R.string.bottomSheetCheerTextFieldHint,
+        ) : SendType()
+    }
+}
+
+sealed class BottomSheetData {
+
+    abstract val text: String
+    data class Authenticate(
+        val image: Uri?,
+        override val text: String,
+    ) : BottomSheetData()
+
     data class Shot(
-        override val title: Int = R.string.bottomSheetShot,
-        override val textHint: Int = R.string.bottomSheetShotTextFieldHint,
-    ) : BottomSheetType()
+        override val text: String,
+    ) : BottomSheetData()
+
     data class Cheer(
-        override val title: Int = R.string.bottomSheetCheer,
-        override val textHint: Int = R.string.bottomSheetCheerTextFieldHint,
-    ) : BottomSheetType()
+        override val text: String,
+    ) : BottomSheetData()
 }
