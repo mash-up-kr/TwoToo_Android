@@ -32,7 +32,7 @@ val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
 fun login(context: Context) = with(UserApiClient.instance) {
     if (!isKakaoTalkLoginAvailable(context)) {
         loginWithKakaoAccount(context, callback = callback)
-        return
+        return@with
     }
 
     loginWithKakaoTalk(context) { token, error ->
