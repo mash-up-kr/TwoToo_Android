@@ -1,0 +1,205 @@
+{
+  "ConstraintSets": {
+    "start": {
+      "headerText": {
+        "width": "spread",
+        "height": "wrap",
+        "top": [
+          "parent",
+          "top",
+          0
+        ],
+        "start": [
+          "parent",
+          "start",
+          0
+        ],
+        "end": [
+          "parent",
+          "end",
+          0
+        ],
+        "bottom" : [
+          "imageView",
+          "top",
+          0
+        ],
+        "translationY": 0,
+        "alpha": 1
+      },
+      "imageView" : {
+        "width" : "wrap",
+        "height" : "wrap",
+        "top" : [
+          "headerText",
+          "bottom",
+          0
+        ],
+        "start" : [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "bottom" : [
+          "textField",
+          "top",
+          0
+        ],
+        "translationY" : 0,
+        "alpha" : 1
+      },
+      "textField" : {
+        "width" : "wrap",
+        "height" : "wrap",
+        "start": [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "top" : [
+          "imageView",
+          "bottom",
+          0
+        ],
+        "bottom" : [
+          "button",
+          "top",
+          0
+        ]
+      },
+      "button": {
+        "width":  "wrap",
+        "height" : "wrap",
+        "top" : [
+          "textField",
+          "bottom",
+          0
+        ],
+        "start" : [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "bottom": [
+          "parent",
+          "bottom",
+          0
+        ]
+      }
+
+    },
+    "end": {
+      "headerText": {
+        "width": "wrap",
+        "height": "wrap",
+        "top": [
+          "parent",
+          "top",
+          0
+        ],
+        "start": [
+          "parent",
+          "start",
+          0
+        ],
+        "end": [
+          "parent",
+          "end",
+          0
+        ],
+        "bottom" : [
+          "imageView",
+          "top",
+          0
+        ],
+        "translationY": 0,
+        "alpha": 1
+      },
+      "imageView" : {
+        "visibility" : "gone",
+        "width" : "wrap",
+        "height" : "wrap",
+        "top" : [
+          "headerText",
+          "bottom",
+          0
+        ],
+        "start" : [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "translationY" : 0,
+        "alpha" : 0.3
+      },
+      "textField" : {
+        "width" : "wrap",
+        "height" : "wrap",
+        "start": [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "top" : [
+          "imageView",
+          "bottom",
+          0
+        ],
+        "bottom" :[
+          "button",
+          "top",
+          0
+        ]
+      },
+      "button": {
+        "width":  "wrap",
+        "height" : "wrap",
+        "top" : [
+          "textField",
+          "bottom",
+          0
+        ],
+        "start" : [
+          "parent",
+          "start",
+          0
+        ],
+        "end" : [
+          "parent",
+          "end",
+          0
+        ],
+        "bottom": [
+          "parent",
+          "bottom",
+          0
+        ]
+      }
+    }
+  }
+}

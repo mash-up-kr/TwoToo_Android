@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.core.ktx)
     implementation(libs.androidx.lifecycle)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.constraintlayout)
+    implementation(libs.kotlin.collection.immutable)
     implementation(libs.bundles.androidx.compose)
     implementation(libs.bundles.squareup.okhttp)
     implementation(libs.bundles.squareup.retrofit)
@@ -62,6 +64,8 @@ dependencies {
     androidTestImplementation(libs.test.espresso.core)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     debugImplementation(libs.bundles.androidx.compose.ui.debug)
+    implementation(libs.bundles.firebase)
+    
 }
 
 fun getApiKey(propertyKey: String): String {

@@ -21,6 +21,12 @@ orbit = "4.6.1"
 navigation_compose = "2.5.3"
 landscapist-glide = "2.2.0"
 kakao_login = "2.13.0"
+constraintlayout = "1.0.1"
+immutable = "0.3.5"
+firebase = "22.0.0"
+workmanager = "2.8.1"
+google_services = "4.3.15"
+datastore = "1.0.0"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -29,6 +35,8 @@ material = { module = "com.google.android.material:material", version.ref = "mat
 
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle_runtime" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity_compose" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout-compose", version.ref = "constraintlayout" }
+androidx-datastore = { group = "androidx.datastore", name = "datastore-preferences", version.ref = "datastore"}
 
 #compose
 androidx-compose-ui = { module = "androidx.compose.ui:ui", version.ref = "compose" }
@@ -69,13 +77,25 @@ landscapist-glide = { group = "com.github.skydoves", name = "landscapist-glide",
 #kakao
 kakao-login = { module = "com.kakao.sdk:v2-user", version.ref = "kakao_login"}
 
+#kotlin
+kotlin-collection-immutable = { module ="org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref ="immutable"}
+
+#firbase
+firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebase"}
+firebase-messaging-ktx = { module="com.google.firebase:firebase-messaging-ktx", version.ref = "firebase"}
+
+#workmanager
+work-runtime-ktx = {module = "androidx.work:work-runtime-ktx", version.ref ="workmanager"}
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }
 android-library = { id = "com.android.library", version.ref = "android_gradle_plugin" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+google-services = { id = "com.google.gms.google-services", version.ref = "google_services"}
 
 [bundles]
+firebase = ["firebase-messaging", "firebase-messaging-ktx"]
 androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-matieral3"]
 androidx-compose-ui-debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
 squareup-okhttp = ["okhttp3", "okhttp-interceptor", "okhttp-url-connection"]

@@ -152,6 +152,9 @@ crashlytics.properties
 crashlytics-build.properties
 fabric.properties
 
+# Json
+app/google-services.json
+
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar

@@ -2,9 +2,10 @@ import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
-    alias (libs.plugins.android.application)
-    alias (libs.plugins.kotlin.android)
-    alias (libs.plugins.kotlin.kapt)
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -28,15 +29,15 @@ android {
     buildTypes {
         release {
             isMinifyEnabled = false
-            proguardFiles (
+            proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
+                "proguard-rules.pro",
             )
         }
     }
     compileOptions {
-        sourceCompatibility (JavaVersion.VERSION_1_8)
-        targetCompatibility (JavaVersion.VERSION_1_8)
+        sourceCompatibility(JavaVersion.VERSION_1_8)
+        targetCompatibility(JavaVersion.VERSION_1_8)
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -49,19 +50,22 @@ android {
 }
 
 dependencies {
-    implementation (project(":presenter"))
-    implementation (project(":data"))
-    implementation (project(":domain"))
-    implementation (libs.core.ktx)
-    implementation (libs.appcompat)
-    implementation (libs.material)
-    implementation (libs.inject)
-    implementation (libs.bundles.squareup.okhttp)
-    implementation (libs.bundles.squareup.retrofit)
-    implementation (libs.google.dagger)
+    implementation(project(":presenter"))
+    implementation(project(":data"))
+    implementation(project(":domain"))
+    implementation(libs.core.ktx)
+    implementation(libs.appcompat)
+    implementation(libs.material)
+    implementation(libs.inject)
+    implementation(libs.bundles.squareup.okhttp)
+    implementation(libs.bundles.squareup.retrofit)
+    implementation(libs.google.dagger)
+    implementation(libs.androidx.datastore)
     implementation (libs.kakao.login)
-    kapt (libs.google.dagger.compiler)
-    testImplementation (libs.test.junit)
-    androidTestImplementation (libs.test.ext.junit)
-    androidTestImplementation (libs.test.espresso.core)
+    kapt(libs.google.dagger.compiler)
+    testImplementation(libs.test.junit)
+    androidTestImplementation(libs.test.ext.junit)
+    androidTestImplementation(libs.test.espresso.core)
+    implementation(libs.work.runtime.ktx)
+    implementation(libs.bundles.firebase)
 }
