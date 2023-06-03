@@ -22,3 +22,5 @@ val Gray = Color(0xFFD9D9D9)
 
 val TwotooPink = Color(0xFFF07C4B)
 val TwotooBackground = Color(0xFFFCF5E6)
+val TwotooBrown = Color(0xFF443018)
+val TwotooGray = Color(0xFFD9D8D7)

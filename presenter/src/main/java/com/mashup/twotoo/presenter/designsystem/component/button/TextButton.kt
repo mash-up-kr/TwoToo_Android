@@ -1,19 +1,24 @@
 package com.mashup.twotoo.presenter.designsystem.component.button
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.mashup.twotoo.presenter.designsystem.theme.Gray
-import com.mashup.twotoo.presenter.designsystem.theme.SelectedIconColor
+import com.mashup.twotoo.presenter.designsystem.theme.Font
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooBrown
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooGray
 import com.mashup.twotoo.presenter.designsystem.theme.White
 
 @Composable
@@ -21,26 +26,31 @@ fun TextButton(
     text: String,
     modifier: Modifier = Modifier
         .fillMaxWidth()
-        .height(50.dp)
+        .height(57.dp)
         .padding(horizontal = 30.dp),
-    round: Int = 8,
-    color: Color = SelectedIconColor,
-    textStyle: TextStyle = TextStyle(fontSize = 18.sp, color = White),
+    enabled: Boolean = true,
     onClick: () -> Unit = {},
 ) {
     Button(
         modifier = modifier,
-        shape = RoundedCornerShape(round.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = color),
+        shape = RoundedCornerShape(20.dp),
+        colors = if (enabled) {
+            ButtonDefaults.buttonColors(containerColor = TwotooBrown)
+        } else {
+            ButtonDefaults.buttonColors(containerColor = TwotooGray)
+        },
         onClick = { onClick() },
     ) {
-        Text(text = text, style = textStyle)
+        Text(
+            text = text,
+            style = TextStyle(fontFamily = Font.Omyuda, fontSize = 20.sp, color = White),
+        )
     }
 }
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun TextButtonPreview() {
+fun TextButtonEnablePreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         TextButton(text = "확인", onClick = {})
@@ -50,16 +60,12 @@ fun TextButtonPreview() {
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun TextButtonGrayPreview() {
+fun TextButtonDisabledPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         TextButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(74.dp),
-            round = 0,
-            text = "다음",
-            color = Gray,
+            text = "인증하기",
+            enabled = false,
         ) {}
         Spacer(modifier = Modifier.height(10.dp))
     }
