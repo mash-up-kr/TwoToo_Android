@@ -5,6 +5,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -17,32 +18,19 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainToolbar(
-    onClickBackIcon: () -> Unit,
-    onClickCalendarIcon: () -> Unit,
-    onClickAlarmIcon: () -> Unit,
+    text: String = stringResource(id = R.string.app_name),
+    onClickHelpIcon: () -> Unit,
 ) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
                 Text(
-                    text = stringResource(id = R.string.app_name),
-                    color = FontBlack,
-                    fontFamily = Font.Montserrat,
-                    fontSize = 26.sp,
+                    text = text,
+                    color = TwotooPink,
+                    fontFamily = Font.Omyuda,
+                    fontSize = 28.sp,
                     textAlign = TextAlign.Center,
                 )
-            }
-        },
-        navigationIcon = {
-            Box(modifier = Modifier.fillMaxHeight(), contentAlignment = Alignment.CenterStart) {
-                IconButton(onClick = {
-                    onClickBackIcon()
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.back_arrow),
-                        contentDescription = null,
-                    )
-                }
             }
         },
         actions = {
@@ -50,23 +38,18 @@ fun MainToolbar(
                 Modifier.fillMaxHeight(),
                 verticalAlignment = Alignment.CenterVertically,
             ) {
-                IconButton(onClick = { onClickCalendarIcon() }) {
+                IconButton(onClick = { onClickHelpIcon() }) {
                     Icon(
-                        painter = painterResource(id = R.drawable.calendar),
+                        painter = painterResource(id = R.drawable.help),
                         contentDescription = null,
-                    )
-                }
-                IconButton(onClick = { onClickAlarmIcon() }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.alarm_tmp),
-                        contentDescription = null,
+                        tint = Color.Unspecified,
                     )
                 }
             }
         },
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = BackGroundWhite,
+            containerColor = TwotooBackground,
         ),
     )
 }
@@ -79,17 +62,16 @@ fun MainToolbar() {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
                 Text(
                     text = stringResource(id = R.string.app_name),
-                    color = FontBlack,
-                    fontFamily = Font.Montserrat,
-                    fontSize = 26.sp,
+                    color = TwotooPink,
+                    fontFamily = Font.Omyuda,
+                    fontSize = 28.sp,
                     textAlign = TextAlign.Center,
                 )
             }
         },
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = BackGroundWhite,
-            titleContentColor = Purple40,
+            containerColor = TwotooBackground,
         ),
     )
 }
@@ -97,7 +79,7 @@ fun MainToolbar() {
 @Composable
 @Preview
 fun mainToolbarWithNavAndActionsPreview() {
-    MainToolbar({}, {}, {})
+    MainToolbar("공주", {})
 }
 
 @Composable

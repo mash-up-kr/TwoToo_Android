@@ -19,3 +19,6 @@ val SelectedIconColor = Color(0xFF000000)
 val Yello = Color(0xFFFBE64F)
 val White = Color(0xFFFFFFFFF)
 val Gray = Color(0xFFD9D9D9)
+
+val TwotooPink = Color(0xFFF07C4B)
+val TwotooBackground = Color(0xFFFCF5E6)

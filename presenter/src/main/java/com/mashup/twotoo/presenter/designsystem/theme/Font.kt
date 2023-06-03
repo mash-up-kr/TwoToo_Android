@@ -6,10 +6,11 @@ import androidx.compose.ui.text.font.FontWeight
 import com.mashup.twotoo.presenter.R
 
 object Font {
-    val Montserrat = FontFamily(
-        Font(R.font.montserrat_medium, FontWeight.Bold),
-    )
     val SpoqaHanSansNeo = FontFamily(
         Font(R.font.spoqa_hansans_neo_medium, FontWeight.Bold),
+    )
+
+    val Omyuda = FontFamily(
+        Font(R.font.omyuda_ippeum),
     )
 }
