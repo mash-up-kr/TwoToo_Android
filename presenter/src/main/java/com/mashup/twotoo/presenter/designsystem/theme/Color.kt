@@ -17,5 +17,17 @@ val UnSelectedIconColor = Color(0xFF9E9E9E)
 val SelectedIconColor = Color(0xFF000000)
 
 val Yello = Color(0xFFFBE64F)
-val White = Color(0xFFFFFFFFF)
+val White = Color(0xFFFFFFFF)
 val Gray = Color(0xFFD9D9D9)
+
+// design system colors
+val MainBrown = Color(0xFF443018)
+val MainPink = Color(0xFFF3A989)
+val MainYellow = Color(0xFFFFE6AF)
+val MainWhite = Color(0xFFFFFFFF)
+val BackgroundYellow = Color(0xFFFCF5E6)
+val Gray600 = Color(0xFF898784)
+val Gray500 = Color(0xFFA09E9C)
+val Gray400 = Color(0xFFD9D8D7)
+val Gray300 = Color(0xFFE9E8E8)
+val Gray200 = Color(0xFFF2F1F0)
