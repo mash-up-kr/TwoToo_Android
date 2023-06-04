@@ -35,7 +35,10 @@ fun TwoTooTextField(
         value = text,
         onValueChange = updateText,
         placeholder = {
-            Text(text = textHint)
+            Text(
+                text = textHint,
+                color = Color(0xFFD9D8D7),
+            )
         },
     )
 }
