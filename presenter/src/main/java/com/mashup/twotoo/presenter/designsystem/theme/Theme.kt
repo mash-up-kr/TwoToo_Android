@@ -62,3 +62,13 @@ fun TwoTooTheme(
         content = content,
     )
 }
+
+object TwoTooTheme {
+    val color: ColorScheme
+        @Composable
+        get() = LocalTwoTooColor.current
+
+    val typography: OmyudaTypography
+        @Composable
+        get() = LocalTwoTooTypography.current
+}
