@@ -20,6 +20,7 @@ val Yello = Color(0xFFFBE64F)
 val White = Color(0xFFFFFFFF)
 val Gray = Color(0xFFD9D9D9)
 
+// design system colors
 val MainBrown = Color(0xFF443018)
 val MainPink = Color(0xFFF3A989)
 val MainYellow = Color(0xFFFFE6AF)
