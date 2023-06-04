@@ -71,4 +71,8 @@ object TwoTooTheme {
     val typography: OmyudaTypography
         @Composable
         get() = LocalTwoTooTypography.current
+
+    val shape: Shapes
+        @Composable
+        get() = LocalTwoTooShape.current
 }
