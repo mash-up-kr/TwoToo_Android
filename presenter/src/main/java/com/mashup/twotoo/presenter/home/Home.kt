@@ -17,11 +17,14 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun HomeRoute() {
-    HomeScreen()
+    HomeScreen(
+        onBeeButtonClick = {},
+    )
 }
 
 @Composable
 fun HomeScreen(
+    onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -70,15 +73,18 @@ fun HomeScreen(
                 previewPlaceholder = R.drawable.home_background,
                 model = R.drawable.home_background,
             )
-            BeeButton(
+            HomeBeeButton(
                 modifier = Modifier.constrainAs(beeButton) {
                     top.linkTo(homeBackground.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
                 }.clickable {
-                    // Todo
+                    onBeeButtonClick()
                 },
+            )
+            HomeShotCountText(
+                homeShotCountTextData = HomeShotCountTextData(),
             )
         }
     }
@@ -88,6 +94,8 @@ fun HomeScreen(
 @Composable
 private fun PreviewgHomeScreen() {
     TwoTooTheme {
-        HomeScreen()
+        HomeScreen(
+            onBeeButtonClick = {},
+        )
     }
 }
