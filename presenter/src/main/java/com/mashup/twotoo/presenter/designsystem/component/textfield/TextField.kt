@@ -30,6 +30,8 @@ fun TwoTooTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
+            focusedTextColor = Color(0xFF443018),
+            unfocusedTextColor = Color(0xFF443018),
         ),
         shape = RoundedCornerShape(10.dp),
         value = text,
