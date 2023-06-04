@@ -57,7 +57,7 @@ dependencies {
     implementation(libs.androidx.compose.navigation)
     implementation(libs.kakao.login)
     implementation(libs.landscapist.glide)
-    implementation(libs.accompanist.pager)
+    implementation(libs.bundles.pager)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
     testImplementation(libs.test.junit)
