@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
@@ -47,7 +46,8 @@ fun TwoTooDialog(
             Text(
                 text = stringResource(id = content.title),
                 textAlign = TextAlign.Center,
-                fontSize = 14.sp,
+                style = TwoTooTheme.typography.headLineNormal24,
+                color = TwoTooTheme.color.mainBrown,
             )
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -62,7 +62,8 @@ fun TwoTooDialog(
             Text(
                 text = stringResource(id = content.desc),
                 textAlign = TextAlign.Center,
-                fontSize = 14.sp,
+                style = TwoTooTheme.typography.bodyNormal16,
+                color = TwoTooTheme.color.gray500,
             )
             Spacer(modifier = Modifier.height(45.dp))
 
@@ -74,8 +75,8 @@ fun TwoTooDialog(
                     ) {
                         Text(
                             text = stringResource(id = btn.text),
-                            color = Color.Black,
-                            textAlign = TextAlign.Center,
+                            style = TwoTooTheme.typography.headLineNormal20,
+                            color = btn.color,
                         )
                     }
                 }

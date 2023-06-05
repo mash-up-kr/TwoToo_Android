@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -30,16 +29,18 @@ fun TwoTooTextField(
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
             disabledIndicatorColor = Color.Transparent,
-            focusedTextColor = Color(0xFF443018),
-            unfocusedTextColor = Color(0xFF443018),
+            focusedTextColor = TwoTooTheme.color.mainBrown,
+            unfocusedTextColor = TwoTooTheme.color.mainBrown,
         ),
-        shape = RoundedCornerShape(10.dp),
+        textStyle = TwoTooTheme.typography.bodyNormal16,
+        shape = TwoTooTheme.shape.extraSmall,
         value = text,
         onValueChange = updateText,
         placeholder = {
             Text(
                 text = textHint,
-                color = Color(0xFFD9D8D7),
+                style = TwoTooTheme.typography.bodyNormal16,
+                color = TwoTooTheme.color.gray500,
             )
         },
     )
@@ -49,7 +50,7 @@ fun TwoTooTextField(
 @Composable
 fun PreviewTwoTooTextField() {
     TwoTooTheme {
-        Box(modifier = Modifier.fillMaxSize().background(color = Color(0xFFFCF5E6))) {
+        Box(modifier = Modifier.fillMaxSize().background(color = TwoTooTheme.color.backgroundYellow)) {
             var text by remember { mutableStateOf("") }
             TwoTooTextField(
                 modifier = Modifier.width(329.dp).height(297.dp),
