@@ -25,7 +25,6 @@
     <string name="all_auth_desc">서로 인증을 완료했어요!\n짝꿍에게 응원 한마디를 남겨요.</string>
     <string name="cheer_up">응원하기</string>
     <string name="cheer_up_cancel">괜찮아요</string>
-    <string name= "login_tite">카카오톡으로 로그인</string>
     <string name="bottomSheetAuthenticate">인증하기</string>
     <string name="bottomSheetShot">벌로 콕 찌르기</string>
 
