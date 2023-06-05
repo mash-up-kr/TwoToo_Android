@@ -2,7 +2,6 @@ package com.mashup.twotoo.presenter.designsystem.component.button
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
@@ -18,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooBlack
 import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
@@ -36,7 +36,7 @@ fun TwoTooIconButton(
     Button(
         modifier = modifier,
         colors = ButtonDefaults.buttonColors(containerColor = ButtonColor),
-        shape = RoundedCornerShape(8.dp),
+        shape = TwoTooTheme.shape.medium,
         onClick = { onClick() },
     ) {
         Row(

@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import com.mashup.twotoo.presenter.designsystem.theme.SelectedIconColor
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.UnSelectedIconColor
 
 @Composable
@@ -59,5 +60,5 @@ object TwoTooNavigationDefaults {
     fun navigationSelectedItemColor() = SelectedIconColor
 
     @Composable
-    fun navigationIndicatorColor() = Color.White
+    fun navigationIndicatorColor() = TwoTooTheme.color.mainWhite
 }
