@@ -10,7 +10,7 @@ object KakaoLoginButtonTheme {
     val ContainerColor = Color(0xFFFEE500)
     val ContentColor = Color(0xFF000000)
     val Radius = RoundedCornerShape(12.dp)
-    val Text = "카카오톡 로그인"
+    val Text = "카카오 로그인"
 
     @DrawableRes val iconId: Int = R.drawable.kakaotalk
 }
