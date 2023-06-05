@@ -8,9 +8,6 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.runtime.structuralEqualityPolicy
 import androidx.compose.ui.graphics.Color
 
-val BackGroundWhite = Color(0xFFF5F5F5)
-val FontBlack = Color(0xFF161616)
-
 val Purple80 = Color(0xFFD0BCFF)
 val PurpleGrey80 = Color(0xFFCCC2DC)
 val Pink80 = Color(0xFFEFB8C8)
@@ -23,14 +20,10 @@ val UnSelectedIconColor = Color(0xFF9E9E9E)
 val SelectedIconColor = Color(0xFF000000)
 
 val Yello = Color(0xFFFBE64F)
-val White = Color(0xFFFFFFFF)
-val Gray = Color(0xFFD9D9D9)
 
+// Todo 디자인 시스템에 등록해야하는지 디자인팀에게 질문해야하는 컬러들
 val TwotooBlack = Color(0xFF000000)
 val TwotooPink = Color(0xFFF07C4B)
-val TwotooBackground = Color(0xFFFCF5E6)
-val TwotooBrown = Color(0xFF443018)
-val TwotooGray = Color(0xFFD9D8D7)
 
 // design system colors
 val MainBrown = Color(0xFF443018)
