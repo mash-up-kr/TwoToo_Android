@@ -31,7 +31,7 @@ fun TwoTooBackToolbar(
                 Text(
                     text = title,
                     color = FontBlack,
-                    fontFamily = Font.SpoqaHanSansNeo,
+                    fontFamily = Font.Omyuda,
                     fontSize = 20.sp,
                     textAlign = TextAlign.Center,
                 )
