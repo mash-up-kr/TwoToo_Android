@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,11 +18,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun TwoTooDialog(
@@ -39,7 +38,7 @@ fun TwoTooDialog(
             modifier = Modifier
                 .background(
                     Color.White,
-                    shape = RoundedCornerShape(17.dp),
+                    shape = TwoTooTheme.shape.medium,
                 )
                 .padding(horizontal = 30.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -47,7 +46,8 @@ fun TwoTooDialog(
             Text(
                 text = stringResource(id = content.title),
                 textAlign = TextAlign.Center,
-                fontSize = 14.sp,
+                style = TwoTooTheme.typography.headLineNormal24,
+                color = TwoTooTheme.color.mainBrown,
             )
             Spacer(modifier = Modifier.height(24.dp))
 
@@ -62,7 +62,8 @@ fun TwoTooDialog(
             Text(
                 text = stringResource(id = content.desc),
                 textAlign = TextAlign.Center,
-                fontSize = 14.sp,
+                style = TwoTooTheme.typography.bodyNormal16,
+                color = TwoTooTheme.color.gray500,
             )
             Spacer(modifier = Modifier.height(45.dp))
 
@@ -74,8 +75,8 @@ fun TwoTooDialog(
                     ) {
                         Text(
                             text = stringResource(id = btn.text),
-                            color = Color.Black,
-                            textAlign = TextAlign.Center,
+                            style = TwoTooTheme.typography.headLineNormal20,
+                            color = btn.color,
                         )
                     }
                 }
