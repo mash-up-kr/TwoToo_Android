@@ -12,14 +12,16 @@ import androidx.compose.ui.unit.dp
 
 @Immutable
 data class Shapes(
+    val extraSmall: CornerBasedShape = ShapeDefaults.ExtraSmall,
     val small: CornerBasedShape = ShapeDefaults.Small,
     val medium: CornerBasedShape = ShapeDefaults.Medium,
     val large: CornerBasedShape = ShapeDefaults.Large,
 )
 
 object ShapeDefaults {
-    val Small: CornerBasedShape = RoundedCornerShape(10.dp)
-    val Medium: CornerBasedShape = RoundedCornerShape(15.dp)
+    val ExtraSmall: CornerBasedShape = RoundedCornerShape(10.dp)
+    val Small: CornerBasedShape = RoundedCornerShape(15.dp)
+    val Medium: CornerBasedShape = RoundedCornerShape(20.dp)
     val Large: CornerBasedShape = RoundedCornerShape(22.dp)
 }
 

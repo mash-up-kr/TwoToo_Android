@@ -26,7 +26,7 @@ val Yello = Color(0xFFFBE64F)
 val White = Color(0xFFFFFFFF)
 val Gray = Color(0xFFD9D9D9)
 
-
+val TwotooBlack = Color(0xFF000000)
 val TwotooPink = Color(0xFFF07C4B)
 val TwotooBackground = Color(0xFFFCF5E6)
 val TwotooBrown = Color(0xFF443018)
@@ -129,4 +129,3 @@ fun lightColors(
 val LocalTwoTooColor = staticCompositionLocalOf {
     lightColors()
 }
-

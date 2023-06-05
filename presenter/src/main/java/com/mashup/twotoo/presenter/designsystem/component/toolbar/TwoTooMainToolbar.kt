@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.*
 
@@ -28,8 +27,7 @@ fun TwoTooMainToolbar(
                 Text(
                     text = text,
                     color = TwotooPink,
-                    fontFamily = Font.Omyuda,
-                    fontSize = 28.sp,
+                    style = TwoTooTheme.typography.headLineNormal28,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -50,7 +48,7 @@ fun TwoTooMainToolbar(
         },
         modifier = modifier.then(Modifier.height(56.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = TwotooBackground,
+            containerColor = TwoTooTheme.color.backgroundYellow,
         ),
     )
 }
@@ -64,15 +62,14 @@ fun TwoTooMainToolbar() {
                 Text(
                     text = stringResource(id = R.string.app_name),
                     color = TwotooPink,
-                    fontFamily = Font.Omyuda,
-                    fontSize = 28.sp,
+                    style = TwoTooTheme.typography.headLineNormal28,
                     textAlign = TextAlign.Center,
                 )
             }
         },
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = TwotooBackground,
+            containerColor = TwoTooTheme.color.backgroundYellow,
         ),
     )
 }

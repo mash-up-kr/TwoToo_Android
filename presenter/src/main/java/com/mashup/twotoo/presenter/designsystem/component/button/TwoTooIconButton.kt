@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooBlack
 import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
 @Composable
@@ -29,7 +30,7 @@ fun TwoTooIconButton(
         .padding(horizontal = 30.dp),
     @DrawableRes iconId: Int,
     ButtonColor: Color,
-    contentTintColor: Color = Color(0xFF000000),
+    contentTintColor: Color = TwotooBlack,
     onClick: () -> Unit,
 ) {
     Button(
