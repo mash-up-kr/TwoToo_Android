@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -24,6 +23,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun TwoTooDialog(
@@ -39,7 +39,7 @@ fun TwoTooDialog(
             modifier = Modifier
                 .background(
                     Color.White,
-                    shape = RoundedCornerShape(17.dp),
+                    shape = TwoTooTheme.shape.medium,
                 )
                 .padding(horizontal = 30.dp, vertical = 24.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
