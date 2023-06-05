@@ -9,15 +9,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.R
 
-object Font {
-    // Todo 제거 되어야합니다.
-    val Montserrat = FontFamily(
-        Font(R.font.montserrat_medium, FontWeight.Bold),
-    )
-    val SpoqaHanSansNeo = FontFamily(
-        Font(R.font.spoqa_hansans_neo_medium, FontWeight.Bold),
-    )
-}
 val omyuda = FontFamily(
     Font(R.font.omyuda_font),
 )
