@@ -1,5 +1,7 @@
 package com.mashup.twotoo.presenter.designsystem.theme
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -11,6 +13,7 @@ val omyuda = FontFamily(
     Font(R.font.omyuda_font),
 )
 
+@Immutable
 data class OmyudaTypography(
     val headLineNormal28: TextStyle,
     val headLineNormal24: TextStyle,
@@ -18,7 +21,7 @@ data class OmyudaTypography(
     val headLineNormal18: TextStyle,
     val bodyNormal16: TextStyle,
     val bodyNormal14: TextStyle,
-    val bodyNormal12: TextStyle
+    val bodyNormal12: TextStyle,
 )
 
 val omyudaTextStyle = OmyudaTypography(
@@ -58,3 +61,15 @@ val omyudaTextStyle = OmyudaTypography(
         fontSize = 12.sp,
     ),
 )
+
+val LocalTwoTooTypography = staticCompositionLocalOf {
+    OmyudaTypography(
+        headLineNormal28 = omyudaTextStyle.headLineNormal28,
+        headLineNormal24 = omyudaTextStyle.headLineNormal24,
+        headLineNormal20 = omyudaTextStyle.headLineNormal20,
+        headLineNormal18 = omyudaTextStyle.headLineNormal18,
+        bodyNormal16 = omyudaTextStyle.bodyNormal16,
+        bodyNormal14 = omyudaTextStyle.bodyNormal14,
+        bodyNormal12 = omyudaTextStyle.bodyNormal12,
+    )
+}
