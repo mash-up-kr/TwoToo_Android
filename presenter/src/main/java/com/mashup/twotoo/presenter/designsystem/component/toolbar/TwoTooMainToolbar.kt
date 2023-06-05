@@ -17,7 +17,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainToolbar(
+fun TwoTooMainToolbar(
     text: String = stringResource(id = R.string.app_name),
     onClickHelpIcon: () -> Unit,
 ) {
@@ -56,7 +56,7 @@ fun MainToolbar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainToolbar() {
+fun TwoTooMainToolbar() {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
@@ -79,11 +79,11 @@ fun MainToolbar() {
 @Composable
 @Preview
 fun mainToolbarWithNavAndActionsPreview() {
-    MainToolbar("공주", {})
+    TwoTooMainToolbar("공주", {})
 }
 
 @Composable
 @Preview
 fun mainToolbar() {
-    MainToolbar()
+    TwoTooMainToolbar()
 }

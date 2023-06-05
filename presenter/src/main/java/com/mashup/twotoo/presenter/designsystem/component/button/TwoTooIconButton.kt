@@ -21,7 +21,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
 @Composable
-fun IconButton(
+fun TwoTooIconButton(
     text: String,
     modifier: Modifier = Modifier
         .fillMaxWidth()
@@ -61,7 +61,7 @@ fun IconButton(
 fun IconButtonPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
-        IconButton(
+        TwoTooIconButton(
             stringResource(id = R.string.login_tite),
             Modifier
                 .fillMaxWidth()

@@ -22,7 +22,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwotooGray
 import com.mashup.twotoo.presenter.designsystem.theme.White
 
 @Composable
-fun TextButton(
+fun TwoTooTextButton(
     text: String,
     modifier: Modifier = Modifier
         .fillMaxWidth()
@@ -53,7 +53,7 @@ fun TextButton(
 fun TextButtonEnablePreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
-        TextButton(text = "확인", onClick = {})
+        TwoTooTextButton(text = "확인", onClick = {})
         Spacer(modifier = Modifier.height(10.dp))
     }
 }
@@ -63,7 +63,7 @@ fun TextButtonEnablePreview() {
 fun TextButtonDisabledPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
-        TextButton(
+        TwoTooTextButton(
             text = "인증하기",
             enabled = false,
         ) {}

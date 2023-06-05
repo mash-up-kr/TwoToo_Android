@@ -16,7 +16,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BackToolbar(
+fun TwoTooBackToolbar(
     title: String = "",
     @DrawableRes backIconId: Int = R.drawable.back_arrow,
     onClickBackIcon: () -> Unit,
@@ -76,7 +76,7 @@ fun BackToolbarWithNavTitleAndActionPreview() {
                 )
             }
         }
-    BackToolbar(title = "title", onClickBackIcon = {}, actionIconButton = moreIconButton)
+    TwoTooBackToolbar(title = "title", onClickBackIcon = {}, actionIconButton = moreIconButton)
 }
 
 @Composable
@@ -91,11 +91,11 @@ fun BackToolbarWithNavAndTitlePreview() {
                 )
             }
         }
-    BackToolbar(onClickBackIcon = {}, actionIconButton = moreIconButton)
+    TwoTooBackToolbar(onClickBackIcon = {}, actionIconButton = moreIconButton)
 }
 
 @Composable
 @Preview
-fun BackToolbar() {
-    BackToolbar(onClickBackIcon = {})
+fun TwoTooBackToolbar() {
+    TwoTooBackToolbar(onClickBackIcon = {})
 }
