@@ -16,7 +16,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooBlack
 
 @Composable
-fun TwoTooOutLineTextButton(
+fun TwoTooOutlineTextButton(
     text: String,
     modifier: Modifier = Modifier
         .fillMaxWidth()
@@ -47,6 +47,6 @@ fun TwoTooOutLineTextButton(
 
 @Preview
 @Composable
-private fun OutLineTextButtonPreview() {
-    TwoTooOutLineTextButton(text = "인증하기")
+private fun OutlineTextButtonPreview() {
+    TwoTooOutlineTextButton(text = "인증하기")
 }
