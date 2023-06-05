@@ -45,7 +45,7 @@ fun TwoTooTextButton(
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun TextButtonEnablePreview() {
+private fun TextButtonEnablePreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         TwoTooTextButton(text = "확인", onClick = {})
@@ -55,7 +55,7 @@ fun TextButtonEnablePreview() {
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun TextButtonDisabledPreview() {
+private fun TextButtonDisabledPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         TwoTooTextButton(

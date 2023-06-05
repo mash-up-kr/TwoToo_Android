@@ -47,6 +47,6 @@ fun TwoTooOutLineTextButton(
 
 @Preview
 @Composable
-fun OutLineTextButtonPreview() {
+private fun OutLineTextButtonPreview() {
     TwoTooOutLineTextButton(text = "인증하기")
 }

@@ -59,7 +59,7 @@ fun TwoTooIconButton(
 
 @Composable
 @Preview(showBackground = true, showSystemUi = true)
-fun IconButtonPreview() {
+private fun IconButtonPreview() {
     Column(modifier = Modifier.fillMaxSize()) {
         Spacer(modifier = Modifier.weight(1.0f))
         TwoTooIconButton(

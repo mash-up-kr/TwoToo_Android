@@ -76,12 +76,12 @@ fun TwoTooMainToolbar() {
 
 @Composable
 @Preview
-fun MainToolbarWithNavAndActionsPreview() {
+private fun MainToolbarWithNavAndActionsPreview() {
     TwoTooMainToolbar(text = "공주", onClickHelpIcon = {})
 }
 
 @Composable
 @Preview
-fun MainToolbarPreview() {
+private fun MainToolbarPreview() {
     TwoTooMainToolbar()
 }

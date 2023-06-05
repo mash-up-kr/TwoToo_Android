@@ -65,7 +65,7 @@ fun TwoTooBackToolbar(
 
 @Composable
 @Preview
-fun BackToolbarWithNavTitleAndActionPreview() {
+private fun BackToolbarWithNavTitleAndActionPreview() {
     val moreIconButton: @Composable () -> Unit =
         {
             IconButton(onClick = {}) {
@@ -80,7 +80,7 @@ fun BackToolbarWithNavTitleAndActionPreview() {
 
 @Composable
 @Preview
-fun BackToolbarWithNavAndTitlePreview() {
+private fun BackToolbarWithNavAndTitlePreview() {
     val moreIconButton: @Composable () -> Unit =
         {
             IconButton(onClick = {}) {
@@ -95,6 +95,6 @@ fun BackToolbarWithNavAndTitlePreview() {
 
 @Composable
 @Preview
-fun TwoTooBackToolbar() {
+private fun TwoTooBackToolbar() {
     TwoTooBackToolbar(onClickBackIcon = {})
 }
