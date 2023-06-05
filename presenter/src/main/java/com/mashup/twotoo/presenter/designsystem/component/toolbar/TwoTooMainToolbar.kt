@@ -18,8 +18,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooMainToolbar(
-    text: String = stringResource(id = R.string.app_name),
     onClickHelpIcon: () -> Unit,
+    modifier: Modifier = Modifier,
+    text: String = stringResource(id = R.string.app_name),
 ) {
     TopAppBar(
         title = {
@@ -47,7 +48,7 @@ fun TwoTooMainToolbar(
                 }
             }
         },
-        modifier = Modifier.height(56.dp),
+        modifier = modifier.then(Modifier.height(56.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = TwotooBackground,
         ),
@@ -78,12 +79,12 @@ fun TwoTooMainToolbar() {
 
 @Composable
 @Preview
-fun mainToolbarWithNavAndActionsPreview() {
-    TwoTooMainToolbar("공주", {})
+fun MainToolbarWithNavAndActionsPreview() {
+    TwoTooMainToolbar(text = "공주", onClickHelpIcon = {})
 }
 
 @Composable
 @Preview
-fun mainToolbar() {
+fun MainToolbarPreview() {
     TwoTooMainToolbar()
 }

@@ -17,9 +17,10 @@ import com.mashup.twotoo.presenter.designsystem.theme.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooBackToolbar(
+    onClickBackIcon: () -> Unit,
+    modifier: Modifier = Modifier,
     title: String = "",
     @DrawableRes backIconId: Int = R.drawable.back_arrow,
-    onClickBackIcon: () -> Unit,
     actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(
@@ -57,7 +58,7 @@ fun TwoTooBackToolbar(
                 actionIconButton()
             }
         },
-        modifier = Modifier.height(56.dp),
+        modifier = modifier.then(Modifier.height(56.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = BackGroundWhite,
         ),
