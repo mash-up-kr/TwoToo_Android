@@ -1,8 +1,6 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
@@ -33,7 +31,9 @@ import com.mashup.twotoo.presenter.util.keyboardAsState
 @Composable
 fun AuthenticateContent(
     type: Authenticate,
+    onClickPlusButton: () -> Unit,
     button: @Composable (Modifier, BottomSheetData) -> Unit,
+    imageUri: Uri? = null,
 ) {
     val titleText = stringResource(id = type.title)
     val textHint = stringResource(id = type.textHint)
@@ -61,17 +61,6 @@ fun AuthenticateContent(
         }
     }
 
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract =
-        ActivityResultContracts.GetContent(),
-    ) { uri: Uri? ->
-        imageUri = uri
-    }
-
     MotionLayout(
         motionScene = MotionScene(content = motionScene),
         progress = progress,
@@ -94,7 +83,7 @@ fun AuthenticateContent(
                 ),
             imageUri = imageUri,
             onClickPlusButton = {
-                launcher.launch("image/*")
+                onClickPlusButton()
             },
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
             failurePlaceHolder = {},
