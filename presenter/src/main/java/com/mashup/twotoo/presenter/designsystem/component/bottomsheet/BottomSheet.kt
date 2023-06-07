@@ -1,6 +1,9 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
+import android.net.Uri
 import android.util.Log
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -42,22 +45,54 @@ fun TwoTooBottomSheetImpl(
     onDismiss: () -> Unit,
     button: @Composable (Modifier, BottomSheetData) -> Unit,
 ) {
-    ModalBottomSheet(
-        sheetState = bottomSheetState,
-        onDismissRequest = onDismiss,
-        containerColor = Color(0xFFFCF5E6),
-    ) {
-        when (type) {
-            is Authenticate -> {
-                AuthenticateContent(
-                    type = type,
-                    button = button,
-                )
+    var imageUri by remember {
+        mutableStateOf<Uri?>(null)
+    }
+
+    var setImageDialogVisible by remember { mutableStateOf(false) }
+
+    val launcher = rememberLauncherForActivityResult(
+        contract =
+        ActivityResultContracts.GetContent(),
+    ) { uri: Uri? ->
+        imageUri = uri
+    }
+
+    Box {
+        ModalBottomSheet(
+            sheetState = bottomSheetState,
+            onDismissRequest = onDismiss,
+            containerColor = Color(0xFFFCF5E6),
+        ) {
+            when (type) {
+                is Authenticate -> {
+                    AuthenticateContent(
+                        type = type,
+                        button = button,
+                        imageUri = imageUri,
+                        onClickPlusButton = {
+                            setImageDialogVisible = true
+                        },
+                    )
+                }
+                is SendType -> {
+                    SendMsgBottomSheetContent(
+                        type = type,
+                        button = button,
+                    )
+                }
             }
-            is SendType -> {
-                SendMsgBottomSheetContent(
-                    type = type,
-                    button = button,
+        }
+
+        if (type is Authenticate) {
+            if (setImageDialogVisible) {
+                SetImageOptionDialog(
+                    onDismissRequest = { setImageDialogVisible = false },
+                    onClickCameraButton = { /*TODO*/ },
+                    onClickAlbumButton = {
+                        launcher.launch("image/*")
+                    },
+                    onClickDismissButton = { setImageDialogVisible = false },
                 )
             }
         }
