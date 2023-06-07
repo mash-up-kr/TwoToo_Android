@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,6 +20,7 @@ import androidx.constraintlayout.compose.MotionScene
 import androidx.constraintlayout.compose.layoutId
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageViewWithSetter
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.addFocusCleaner
 import com.mashup.twotoo.presenter.util.keyboardAsState
 
@@ -71,7 +71,7 @@ fun AuthenticateContent(
                 .layoutId("imageView")
                 .aspectRatio(1f)
                 .clip(
-                    RoundedCornerShape(10.dp),
+                    TwoTooTheme.shape.extraSmall,
                 ),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
             failurePlaceHolder = {},
