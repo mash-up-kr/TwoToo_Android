@@ -93,7 +93,7 @@ fun AuthenticateContent(
                     TwoTooTheme.shape.extraSmall,
                 ),
             imageUri = imageUri,
-            onClickSetImage = {
+            onClickPlusButton = {
                 launcher.launch("image/*")
             },
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
