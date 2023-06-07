@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.otherapp.component
+package com.mashup.twotoo.presenter.sdk.component
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,7 +10,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButtonImpl
-import com.mashup.twotoo.presenter.otherapp.theme.KakaoLoginButtonTheme
+import com.mashup.twotoo.presenter.sdk.theme.KakaoLoginButtonTheme
 
 @Composable
 fun KakaoLoginButton(onClick: () -> Unit) {

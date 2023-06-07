@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.otherapp.theme
+package com.mashup.twotoo.presenter.sdk.theme
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.shape.RoundedCornerShape
