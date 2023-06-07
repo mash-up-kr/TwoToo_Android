@@ -1,50 +1,53 @@
 package com.mashup.twotoo.presenter.home
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.home.UserType.ME
+import com.mashup.twotoo.presenter.home.UserType.PARTNER
 
 @Composable
 fun HomeFlowerOwnerText(
     name: String,
-    fontColor: Color,
+    userType: UserType,
     modifier: Modifier = Modifier,
 ) {
     Text(
         modifier = modifier.background(
-            color = Color(0xFFFCF5E6),
-            shape = RoundedCornerShape(35.dp),
+            color = TwoTooTheme.color.backgroundYellow,
+            shape = TwoTooTheme.shape.small,
         ),
-        color = fontColor,
-        fontSize = 14.sp,
+        color = when (userType) {
+            PARTNER -> {
+                TwoTooTheme.color.mainBrown
+            }
+            ME -> {
+                TwotooPink
+            }
+        },
         text = name,
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewFlowerOwerColoredText() {
+private fun PreviewFlowerOwerPartnerText() {
     TwoTooTheme {
-        HomeFlowerOwnerText(name = "공주", Color(0xFFF07C4B))
+        HomeFlowerOwnerText(name = "공주", userType = PARTNER)
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewFlowerOwerText() {
+private fun PreviewFlowerOwnerText() {
     TwoTooTheme {
         HomeFlowerOwnerText(
             name = "공주",
-            Color(
-                0xFF443018,
-            ),
+            userType = ME,
         )
     }
 }

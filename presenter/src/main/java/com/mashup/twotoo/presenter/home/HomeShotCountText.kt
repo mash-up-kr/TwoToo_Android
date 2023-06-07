@@ -10,9 +10,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
  * @Created by 김현국 2023/06/04
  */
 
-data class HomeShotCountTextData(
-    val count: Int = 4,
-)
+
 
 @Composable
 fun HomeShotCountText(

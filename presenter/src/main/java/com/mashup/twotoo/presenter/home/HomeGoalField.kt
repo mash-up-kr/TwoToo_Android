@@ -15,10 +15,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 
-data class HomeGoalFieldData(
-    val goal: String = "30분 이상 운동하기",
-    val dDay: Int = 24,
-)
 
 @Composable
 fun HomeGoalField(

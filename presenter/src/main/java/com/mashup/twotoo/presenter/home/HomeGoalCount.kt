@@ -1,20 +1,22 @@
 package com.mashup.twotoo.presenter.home
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
+import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 data class HomeGoalCountData(
@@ -33,15 +35,20 @@ fun HomeGoalCount(
         horizontalAlignment = Alignment.End,
     ) {
         CompositionLocalProvider(
-            LocalTextStyle provides TextStyle(
-                color = Color(0xFFF07C4B),
-                fontSize = 14.sp,
-            ),
+            LocalTextStyle provides TwoTooTheme.typography.bodyNormal14,
+            LocalContentColor provides TwoTooTheme.color.mainPink,
         ) {
-            Row {
-                Text(homeGoalCountData.myName)
-                Text("♥")
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(9.dp),
+            ) {
                 Text(homeGoalCountData.partnerName)
+                TwoTooImageView(
+                    modifier = Modifier.width(10.5.dp).height(9.16.dp),
+                    model = R.drawable.ic_heart,
+                    previewPlaceholder = R.drawable.ic_heart,
+                )
+                Text(homeGoalCountData.myName)
             }
             Spacer(modifier = Modifier.height(2.dp))
             Text(text = "${homeGoalCountData.count}번째 꽃 피우는 중")
