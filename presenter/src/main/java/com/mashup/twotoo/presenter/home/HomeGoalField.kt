@@ -13,6 +13,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 
 data class HomeGoalFieldData(
     val goal: String = "30분 이상 운동하기",
@@ -26,8 +27,8 @@ fun HomeGoalField(
 ) {
     ConstraintLayout(
         modifier = modifier.padding(vertical = 16.dp).background(
-            color = Color(0xFFFFE6AF),
-            shape = RoundedCornerShape(15.dp),
+            color = TwoTooTheme.color.mainYellow,
+            shape = TwoTooTheme.shape.small,
         ),
     ) {
         val (goalText, dDayText) = createRefs()
@@ -39,7 +40,8 @@ fun HomeGoalField(
                 bottom.linkTo(parent.bottom, margin = 48.dp)
             },
             text = homeGoalFieldData.goal,
-            color = Color(0xFFF07C4B),
+            color = TwotooPink,
+            style = TwoTooTheme.typography.headLineNormal28
         )
         Text(
             modifier = Modifier
@@ -52,7 +54,9 @@ fun HomeGoalField(
                 .background(color = Color.White, shape = RoundedCornerShape(4.dp))
                 .padding(vertical = 4.dp, horizontal = 10.dp),
             text = "D-${homeGoalFieldData.dDay}",
-            color = Color(0xFFA09C9C),
+            color = TwoTooTheme.color.gray500,
+            style = TwoTooTheme.typography.bodyNormal16
+
         )
     }
 }
