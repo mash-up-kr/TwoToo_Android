@@ -30,5 +30,8 @@
 
     <!-- contentDescription -->
     <string name="selectShot">찌르기항목을 선택합니다</string>
+
+    <!-- kakao login -->
+    <string name= "kakaoLogin">카카오 로그인</string>
     
 </resources>

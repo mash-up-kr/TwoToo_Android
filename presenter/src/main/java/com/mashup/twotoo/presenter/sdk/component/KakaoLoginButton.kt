@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButtonImpl
@@ -15,8 +16,13 @@ import com.mashup.twotoo.presenter.sdk.theme.KakaoLoginButtonTheme
 @Composable
 fun KakaoLoginButton(onClick: () -> Unit) {
     TwoTooIconButtonImpl(
-        text = { Text(KakaoLoginButtonTheme.Text, color = KakaoLoginButtonTheme.ContentColor) },
-        iconId = KakaoLoginButtonTheme.iconId,
+        text = {
+            Text(
+                stringResource(id = KakaoLoginButtonTheme.TextId),
+                color = KakaoLoginButtonTheme.ContentColor,
+            )
+        },
+        iconId = KakaoLoginButtonTheme.IconId,
         buttonColor = KakaoLoginButtonTheme.ContainerColor,
         buttonRadius = KakaoLoginButtonTheme.Radius,
     ) { onClick() }
