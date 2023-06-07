@@ -134,7 +134,7 @@ fun TestButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "인증하기 프리뷰")
 @Composable
-fun AuthenticateSheet() {
+private fun AuthenticateSheet() {
     TwoTooTheme {
         TwoTooBottomSheet(
             type = Authenticate(),
@@ -152,7 +152,7 @@ fun AuthenticateSheet() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "찌르기 프리뷰")
 @Composable
-fun ShotSheet() {
+private fun ShotSheet() {
     TwoTooTheme {
         TwoTooBottomSheet(
             type = Shot(),
@@ -170,7 +170,7 @@ fun ShotSheet() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "인증하기")
 @Composable
-fun OpenAuthenticate() {
+private fun OpenAuthenticate() {
     TwoTooTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -217,7 +217,7 @@ fun OpenAuthenticate() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "벌로 콕 찌르기")
 @Composable
-fun OpenShot() {
+private fun OpenShot() {
     TwoTooTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             var isBottomSheetVisible by rememberSaveable {
@@ -262,7 +262,7 @@ fun OpenShot() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "오늘의 응원 한마디")
 @Composable
-fun OpenCheer() {
+private fun OpenCheer() {
     TwoTooTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             var isBottomSheetVisible by rememberSaveable {

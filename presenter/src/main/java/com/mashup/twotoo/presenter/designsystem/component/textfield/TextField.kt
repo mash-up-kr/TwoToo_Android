@@ -48,7 +48,7 @@ fun TwoTooTextField(
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewTwoTooTextField() {
+private fun PreviewTwoTooTextField() {
     TwoTooTheme {
         Box(modifier = Modifier.fillMaxSize().background(color = TwoTooTheme.color.backgroundYellow)) {
             var text by remember { mutableStateOf("") }

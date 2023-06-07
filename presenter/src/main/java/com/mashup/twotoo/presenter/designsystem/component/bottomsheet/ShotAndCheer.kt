@@ -67,7 +67,7 @@ fun SendMsgBottomSheetContent(
 
 @Preview
 @Composable
-fun PreviewShotList() {
+private fun PreviewShotList() {
     TwoTooTheme {
         SendMsgBottomSheetContent(
             type = Shot(),

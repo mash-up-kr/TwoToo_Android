@@ -140,7 +140,7 @@ fun PlusLine(
     showBackground = true,
 )
 @Composable
-fun HasNoneImageView() {
+private fun HasNoneImageView() {
     TwoTooTheme {
         var imageUri by remember {
             mutableStateOf<Uri?>(null)
@@ -174,7 +174,7 @@ fun HasNoneImageView() {
     showBackground = true,
 )
 @Composable
-fun HasImageView() {
+private fun HasImageView() {
     TwoTooTheme {
         TwoTooImageView(
             modifier = Modifier
@@ -193,7 +193,7 @@ fun HasImageView() {
     showBackground = true,
 )
 @Composable
-fun ImageViewWithNoneRound() {
+private fun ImageViewWithNoneRound() {
     TwoTooTheme {
         TwoTooImageView(
             modifier = Modifier.size(250.dp),
@@ -204,7 +204,7 @@ fun ImageViewWithNoneRound() {
 
 @Preview("플러스 버튼")
 @Composable
-fun PlusButton() {
+private fun PlusButton() {
     TwoTooTheme {
         PlusLine(
             modifier = Modifier.size(200.dp),
