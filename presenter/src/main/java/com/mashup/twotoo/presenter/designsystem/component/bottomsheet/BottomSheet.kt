@@ -55,7 +55,7 @@ fun TwoTooBottomSheetImpl(
                 )
             }
             is SendType -> {
-                TextFieldWithSendingButton(
+                SendMsgBottomSheetContent(
                     type = type,
                     button = button,
                 )

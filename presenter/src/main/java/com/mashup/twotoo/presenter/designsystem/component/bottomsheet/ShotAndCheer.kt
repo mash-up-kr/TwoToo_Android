@@ -19,7 +19,7 @@ import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextFi
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun TextFieldWithSendingButton(
+fun SendMsgBottomSheetContent(
     type: SendType,
     button: @Composable (Modifier, BottomSheetData) -> Unit,
     modifier: Modifier = Modifier,
@@ -69,7 +69,7 @@ fun TextFieldWithSendingButton(
 @Composable
 fun PreviewShotList() {
     TwoTooTheme {
-        TextFieldWithSendingButton(
+        SendMsgBottomSheetContent(
             type = Shot(),
             button = { _, _ -> },
         )
