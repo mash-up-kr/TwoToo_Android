@@ -2,9 +2,8 @@ package com.mashup.twotoo.presenter.home
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 /**
@@ -18,11 +17,13 @@ data class HomeShotCountTextData(
 @Composable
 fun HomeShotCountText(
     homeShotCountTextData: HomeShotCountTextData,
+    modifier: Modifier = Modifier,
 ) {
     Text(
-        "콕 찌르기 (${homeShotCountTextData.count}/5",
-        color = Color(0xFF4A2B00),
-        fontSize = 14.sp,
+        modifier = modifier,
+        text = "콕 찌르기 (${homeShotCountTextData.count}/5)",
+        color = TwoTooTheme.color.mainBrown,
+        style = TwoTooTheme.typography.bodyNormal14,
     )
 }
 
