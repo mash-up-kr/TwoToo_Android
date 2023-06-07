@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -158,9 +157,9 @@ fun HasNoneImageView() {
             modifier = Modifier
                 .size(250.dp)
                 .clip(
-                    RoundedCornerShape(10.dp),
+                    TwoTooTheme.shape.extraSmall,
                 )
-                .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
+                .border(width = 1.dp, color = Color.LightGray, shape = TwoTooTheme.shape.extraSmall),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
             imageUri = imageUri,
             onClickSetImage = {
@@ -181,9 +180,9 @@ fun HasImageView() {
             modifier = Modifier
                 .size(250.dp)
                 .clip(
-                    RoundedCornerShape(10.dp),
+                    TwoTooTheme.shape.extraSmall,
                 )
-                .border(width = 1.dp, color = Color.LightGray, shape = RoundedCornerShape(10.dp)),
+                .border(width = 1.dp, color = Color.LightGray, shape = TwoTooTheme.shape.extraSmall),
             model = null,
         )
     }
