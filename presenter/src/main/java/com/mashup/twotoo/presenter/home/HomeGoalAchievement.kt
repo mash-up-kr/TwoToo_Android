@@ -29,6 +29,9 @@ fun HomeGoalAchievement(
             modifier = Modifier.fillMaxWidth(),
             homeGoalAchieveData = goalAchieveDataList[0],
         )
+        Spacer(
+            modifier = Modifier.height(4.dp),
+        )
         GoalAchievementRow(
             modifier = Modifier.fillMaxWidth(),
             homeGoalAchieveData = goalAchieveDataList[1],
