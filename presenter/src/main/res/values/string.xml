@@ -35,5 +35,6 @@
 
     <!--Home-->
     <string name="homeFirstCreatedChallenge">내 씨앗을 눌러 인증 해보세요!</string>
+    <string name="homeAuthOnlyPartener">완료!</string>
     
 </resources>
