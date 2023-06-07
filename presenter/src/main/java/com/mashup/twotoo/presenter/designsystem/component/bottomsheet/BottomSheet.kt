@@ -1,9 +1,11 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
+import android.graphics.Bitmap
 import android.net.Uri
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.result.launch
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -51,11 +53,23 @@ fun TwoTooBottomSheetImpl(
 
     var setImageDialogVisible by remember { mutableStateOf(false) }
 
-    val launcher = rememberLauncherForActivityResult(
+    val takePhotoFromCameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview(),
+    ) { photo: Bitmap? ->
+        photo?.let {
+            // TODO Bitmap to Uri or 따로 변환이 필요함
+            setImageDialogVisible = false
+        }
+    }
+
+    val takePhotoFromAlbumLauncher = rememberLauncherForActivityResult(
         contract =
         ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
-        imageUri = uri
+        uri?.let {
+            imageUri = it
+        }
+        setImageDialogVisible = false
     }
 
     Box {
@@ -88,9 +102,11 @@ fun TwoTooBottomSheetImpl(
             if (setImageDialogVisible) {
                 SetImageOptionDialog(
                     onDismissRequest = { setImageDialogVisible = false },
-                    onClickCameraButton = { /*TODO*/ },
+                    onClickCameraButton = {
+                        takePhotoFromCameraLauncher.launch()
+                    },
                     onClickAlbumButton = {
-                        launcher.launch("image/*")
+                        takePhotoFromAlbumLauncher.launch("image/*")
                     },
                     onClickDismissButton = { setImageDialogVisible = false },
                 )
