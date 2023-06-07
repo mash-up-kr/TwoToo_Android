@@ -24,7 +24,13 @@ fun TwoTooIconButton(
     onClick: () -> Unit,
 ) {
     TwoTooIconButtonImpl(
-        text = { Text(text = text, style = TwoTooTheme.typography.headLineNormal18, color = TwotooBlack) },
+        text = {
+            Text(
+                text = text,
+                style = TwoTooTheme.typography.headLineNormal18,
+                color = TwotooBlack,
+            )
+        },
         modifier = modifier,
         iconId = iconId,
         buttonColor = buttonColor,
