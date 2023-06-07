@@ -28,6 +28,7 @@ fun HomeRoute() {
 fun HomeScreen(
     onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
+    homeModel: HomeModel = HomeModel(),
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         TwoTooImageView(
@@ -39,7 +40,7 @@ fun HomeScreen(
         ConstraintLayout(modifier = Modifier.fillMaxSize()) {
             val (
                 topBar, homeGoalField, goalAchievement, goalCount,
-                homeBackground, beeButton, shotCount, myFlower, partnerFlower,
+                homeBackground, beeButton, shotCount, homeFlower,
             ) = createRefs()
 
             TwoTooMainToolbar(
@@ -86,6 +87,14 @@ fun HomeScreen(
                 previewPlaceholder = R.drawable.image_home_background,
                 model = R.drawable.image_home_background,
             )
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.constrainAs(homeFlower) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(beeButton.top, margin = 26.29.dp)
+                },
+                meAndPartner = homeModel.homeFlower,
+            )
             HomeBeeButton(
                 modifier = Modifier.constrainAs(beeButton) {
                     top.linkTo(homeBackground.top)
@@ -110,10 +119,76 @@ fun HomeScreen(
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewgHomeScreen() {
+private fun PreviewHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewFirstChallengeHomeScreen() {
+    TwoTooTheme {
+        HomeScreen(
+            onBeeButtonClick = {},
+            homeModel = HomeModel().copy(
+                homeFlower = HomeFlower.firstChallengeList,
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewAuthOnlyPartnerHomeScreen() {
+    TwoTooTheme {
+        HomeScreen(
+            onBeeButtonClick = {},
+            homeModel = HomeModel().copy(
+                homeFlower = HomeFlower.authOnlyPartnerList,
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewAuthOnlyMeHomeScreen() {
+    TwoTooTheme {
+        HomeScreen(
+            onBeeButtonClick = {},
+            homeModel = HomeModel().copy(
+                homeFlower = HomeFlower.authOnlyMeList,
+
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewAuthBothHomeScreen() {
+    TwoTooTheme {
+        HomeScreen(
+            onBeeButtonClick = {},
+            homeModel = HomeModel().copy(
+                homeFlower = HomeFlower.authBoth,
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewDoNotAuthBothHomeScreen() {
+    TwoTooTheme {
+        HomeScreen(
+            onBeeButtonClick = {},
+            homeModel = HomeModel().copy(
+                homeFlower = HomeFlower.doNotAuthBoth,
+            ),
         )
     }
 }
