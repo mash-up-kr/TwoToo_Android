@@ -43,17 +43,18 @@ fun TwoTooIconButton(
 @Composable
 fun TwoTooIconButtonImpl(
     text: @Composable () -> Unit,
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .height(50.dp)
-        .padding(horizontal = 30.dp),
+    modifier: Modifier = Modifier,
     @DrawableRes iconId: Int,
     buttonColor: Color,
     buttonRadius: CornerBasedShape,
     onClick: () -> Unit,
 ) {
     Button(
-        modifier = modifier,
+        modifier = modifier.then(
+            Modifier.fillMaxWidth()
+                .height(42.dp)
+                .padding(horizontal = 30.dp),
+        ),
         colors = ButtonDefaults.buttonColors(containerColor = buttonColor),
         shape = buttonRadius,
         onClick = { onClick() },
