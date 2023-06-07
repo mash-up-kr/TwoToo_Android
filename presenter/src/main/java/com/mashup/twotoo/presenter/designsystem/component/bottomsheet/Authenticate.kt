@@ -48,6 +48,7 @@ fun AuthenticateContent(
     val progress by animateFloatAsState(
         targetValue = if (animateSwitch) 1f else 0f,
         animationSpec = tween(),
+        label = stringResource(id = R.string.bottomSheetAuthenticateAnimation),
     )
     val focusRequester by remember { mutableStateOf(FocusRequester()) }
     val focusManager = LocalFocusManager.current
