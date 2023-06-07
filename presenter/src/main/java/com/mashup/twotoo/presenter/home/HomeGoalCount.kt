@@ -19,12 +19,6 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
-data class HomeGoalCountData(
-    val partnerName: String = "공주",
-    val myName: String = "나",
-    val count: Int = 1,
-)
-
 @Composable
 fun HomeGoalCount(
     homeGoalCountData: HomeGoalCountData,

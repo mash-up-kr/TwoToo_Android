@@ -41,6 +41,12 @@ data class HomeShotCountTextData(
     val count: Int = 4,
 )
 
+data class HomeGoalCountData(
+    val partnerName: String = "공주",
+    val myName: String = "나",
+    val count: Int = 1,
+)
+
 data class HomeFlower(
     val name: String = "왕자",
     val userType: UserType = UserType.PARTNER,
