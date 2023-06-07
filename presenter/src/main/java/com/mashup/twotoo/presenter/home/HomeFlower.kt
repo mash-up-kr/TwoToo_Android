@@ -1,13 +1,11 @@
 package com.mashup.twotoo.presenter.home
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,6 +19,7 @@ import androidx.constraintlayout.compose.Visibility
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 
 /**
  * @Created by 김현국 2023/06/07
@@ -48,11 +47,11 @@ fun HomeFlowerMeAndPartner(
                 }
             },
         )
-
         Row(
             modifier = Modifier.constrainAs(partnerText) {
-                bottom.linkTo(partner.top)
-                start.linkTo(parent.start)
+                bottom.linkTo(partner.top, margin = 15.dp)
+                start.linkTo(partner.start)
+                end.linkTo(partner.end)
                 visibility = if (meAndPartner[0].authType == AuthType.AuthOnlyPartner ||
                     meAndPartner[0].authType == AuthType.AuthBoth
                 ) {
@@ -61,11 +60,14 @@ fun HomeFlowerMeAndPartner(
                     Visibility.Invisible
                 }
             },
-            horizontalArrangement = Arrangement.spacedBy(4.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = stringResource(id = R.string.homeAuthOnlyPartener),
+                style = TwoTooTheme.typography.bodyNormal14,
+                color = TwotooPink,
             )
+            Spacer(modifier = Modifier.width(4.dp))
             TwoTooImageView(
                 modifier = Modifier.width(14.dp).height(12.dp),
                 model = R.drawable.ic_heart,
@@ -102,8 +104,8 @@ fun HomeFlowerMeAndPartner(
 
         HomeFlowerMe(
             modifier = Modifier.constrainAs(me) {
-                start.linkTo(partner.end)
                 end.linkTo(parent.end)
+                start.linkTo(partner.end)
                 bottom.linkTo(parent.bottom)
             },
             homeFlower = meAndPartner[1],
@@ -120,10 +122,12 @@ fun HomeFlowerPartner(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TwoTooImageView(
-            modifier = Modifier.size(12.dp),
-            model = homeFlower.growType.growImage,
-        )
+        with(homeFlower.growType) {
+            TwoTooImageView(
+                modifier = Modifier.width(width).height(height),
+                model = growImage,
+            )
+        }
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
             name = homeFlower.name,
@@ -141,10 +145,12 @@ fun HomeFlowerMe(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TwoTooImageView(
-            modifier = Modifier.size(12.dp),
-            model = homeFlower.growType.growImage,
-        )
+        with(homeFlower.growType) {
+            TwoTooImageView(
+                modifier = Modifier.width(width).height(height),
+                model = growImage,
+            )
+        }
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
             name = homeFlower.name,
@@ -188,7 +194,7 @@ private fun PreviewFirstChallengeHomeFlower() {
     }
 }
 
-@Preview("상대방만 인증 완료헀을 때")
+@Preview("상대방만 인증 완료헀을 때", showBackground = true)
 @Composable
 private fun PreviewAuthOnlyPartnerHomeFlower() {
     TwoTooTheme {
@@ -213,7 +219,7 @@ private fun PreviewAuthOnlyPartnerHomeFlower() {
     }
 }
 
-@Preview("나만 인증 완료했을 때")
+@Preview("나만 인증 완료했을 때", showBackground = true)
 @Composable
 private fun PreviewAuthOnlyMeHomeFlower() {
     TwoTooTheme {
@@ -238,7 +244,7 @@ private fun PreviewAuthOnlyMeHomeFlower() {
     }
 }
 
-@Preview("둘다 인증 완료했을 때")
+@Preview("둘다 인증 완료했을 때", showBackground = true)
 @Composable
 private fun PreviewAuthBothHomeFlower() {
     TwoTooTheme {
@@ -263,7 +269,7 @@ private fun PreviewAuthBothHomeFlower() {
     }
 }
 
-@Preview("둘다 인증 완료하지 않았을 때")
+@Preview("둘다 인증 완료하지 않았을 때", showBackground = true)
 @Composable
 private fun PreviewDoNotAuthBothHomeFlower() {
     TwoTooTheme {
