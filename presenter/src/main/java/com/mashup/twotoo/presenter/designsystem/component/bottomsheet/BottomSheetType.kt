@@ -30,19 +30,19 @@ sealed interface BottomSheetType {
     }
 }
 
-sealed class BottomSheetData {
+sealed interface BottomSheetData {
 
-    abstract val text: String
+    val text: String
     data class AuthenticateData(
         val image: Uri?,
         override val text: String,
-    ) : BottomSheetData()
+    ) : BottomSheetData
 
     data class ShotData(
         override val text: String,
-    ) : BottomSheetData()
+    ) : BottomSheetData
 
     data class CheerData(
         override val text: String,
-    ) : BottomSheetData()
+    ) : BottomSheetData
 }
