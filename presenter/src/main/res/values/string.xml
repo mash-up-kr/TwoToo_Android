@@ -35,7 +35,7 @@
     <string name="onboarding_pager_2">상대방에게 귀여운\n찌르기로 푸시해보세요.</string>
     <string name="onboarding_pager_3">서로 인증하고 응원하며\n목표를 달성해보세요.</string>
     <string name="nickname_setting">투투에서 사용할\n닉네임을 입력해주세요</string>
-    <string name="nickname_setting_hint">20자 이내 닉네임을 입력해주세요</string>
+    <string name="nickname_setting_hint">4글자 이내 닉네임을 입력해주세요</string>
     <string name="nickname">닉네임</string>
 
     <!-- invite -->

@@ -72,6 +72,7 @@ fun NickNameSetting(
 @Composable
 fun InputUserNickName() {
     var text by remember { mutableStateOf("") }
+    val nickNameMaxLength = 4
 
     Column(
         modifier = Modifier.padding(horizontal = 24.dp),
@@ -87,7 +88,7 @@ fun InputUserNickName() {
             modifier = Modifier.fillMaxWidth().height(46.dp),
             text = text,
             textHint = stringResource(id = R.string.nickname_setting_hint),
-            updateText = { text = it },
+            updateText = { if(it.length <= nickNameMaxLength) text = it },
         )
     }
 }
