@@ -21,7 +21,6 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun SendInvitation() {
-    TwoTooMainToolbar()
     Column(
         modifier = Modifier.fillMaxSize().background(TwoTooTheme.color.backgroundYellow),
         horizontalAlignment = Alignment.CenterHorizontally,
