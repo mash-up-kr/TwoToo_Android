@@ -40,6 +40,7 @@ fun OnBoardingScreen() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .padding(padding)
                 .paint(
                     painterResource(id = R.drawable.image_background),
                     contentScale = ContentScale.FillBounds,
@@ -47,8 +48,7 @@ fun OnBoardingScreen() {
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding),
+                    .fillMaxSize(),
                 verticalArrangement = Arrangement.SpaceBetween,
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {

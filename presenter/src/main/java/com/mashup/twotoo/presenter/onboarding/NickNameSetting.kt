@@ -1,13 +1,14 @@
 package com.mashup.twotoo.presenter.onboarding
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -17,7 +18,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.draw.paint
 import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -28,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -36,30 +41,43 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 fun NickNameSetting(
     otherNickName: String?
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(TwoTooTheme.color.backgroundYellow),
-        verticalArrangement = Arrangement.SpaceBetween,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        otherNickName?.let { nickname ->
-            InviteGuide(nickname)
+    Scaffold(
+        topBar = { TwoTooMainToolbar() },
+    ) { padding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+                .paint(
+                    painterResource(id = R.drawable.image_background),
+                    contentScale = ContentScale.FillBounds,
+                ),
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxSize(),
+                verticalArrangement = Arrangement.SpaceBetween,
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                otherNickName?.let { nickname ->
+                    InviteGuide(nickname)
+                }
+                Text(
+                    modifier = Modifier.padding(top = 78.dp),
+                    text = stringResource(id = R.string.nickname_setting),
+                    textAlign = TextAlign.Center,
+                    style = TwoTooTheme.typography.headLineNormal28,
+                    color = TwoTooTheme.color.mainBrown,
+                )
+                InputUserNickName()
+                Spacer(modifier = Modifier.weight(1f))
+                TwoTooTextButton(
+                    text = stringResource(id = R.string.button_confirm),
+                    enabled = false,
+                ) {}
+                Spacer(modifier = Modifier.height(55.dp))
+            }
         }
-        Text(
-            modifier = Modifier.padding(top = 78.dp),
-            text = stringResource(id = R.string.nickname_setting),
-            textAlign = TextAlign.Center,
-            style = TwoTooTheme.typography.headLineNormal28,
-            color = TwoTooTheme.color.mainBrown,
-        )
-        InputUserNickName()
-        Spacer(modifier = Modifier.weight(1f))
-        TwoTooTextButton(
-            text = stringResource(id = R.string.button_confirm),
-            enabled = false,
-        ) {}
-        Spacer(modifier = Modifier.height(55.dp))
     }
 }
 
