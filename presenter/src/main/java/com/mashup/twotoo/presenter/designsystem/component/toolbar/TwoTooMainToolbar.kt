@@ -48,7 +48,7 @@ fun TwoTooMainToolbar(
         },
         modifier = modifier.then(Modifier.height(56.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = TwoTooTheme.color.backgroundYellow,
+            containerColor = Color.Transparent,
         ),
     )
 }
@@ -69,7 +69,7 @@ fun TwoTooMainToolbar() {
         },
         modifier = Modifier.height(56.dp),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = TwoTooTheme.color.backgroundYellow,
+            containerColor = Color.Transparent,
         ),
     )
 }
