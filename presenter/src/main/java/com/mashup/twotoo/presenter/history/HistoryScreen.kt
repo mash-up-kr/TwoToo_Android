@@ -27,6 +27,7 @@ fun HistoryScreen() {
         val historyItemUiModels: List<HistoryItemUiModel> = generateDummyHistoryItemsToPreView()
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
             ChallengeInfo(
+                "24",
                 "30분 이상 운동하기",
                 "운동 사진으로 인증하기\n 인증 실패하는지 확인",
             )

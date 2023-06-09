@@ -5,6 +5,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -14,6 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
@@ -29,15 +31,15 @@ fun OwnerNickNames(partnerNickname: String, myNickname: String) {
         modifier = Modifier.fillMaxWidth().padding(horizontal = 67.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        OwnerNickName(text = partnerNickname)
-        OwnerNickName(text = myNickname, MainPink)
+        CardText(text = partnerNickname)
+        CardText(text = myNickname, MainPink)
     }
 }
 
 @Composable
-private fun OwnerNickName(text: String, fontColor: Color = TwoTooTheme.color.mainBrown) {
+private fun CardText(text: String, fontColor: Color = TwoTooTheme.color.mainBrown, textStyle: TextStyle = TwoTooTheme.typography.bodyNormal14, shape: CornerBasedShape = TwoTooTheme.shape.medium) {
     Card(
-        shape = TwoTooTheme.shape.medium,
+        shape = shape,
         colors = CardDefaults.cardColors(containerColor = TwoTooTheme.color.mainWhite),
     ) {
         Text(
@@ -45,7 +47,7 @@ private fun OwnerNickName(text: String, fontColor: Color = TwoTooTheme.color.mai
             modifier = Modifier
                 .padding(10.dp),
             color = fontColor,
-            style = TwoTooTheme.typography.bodyNormal14,
+            style = textStyle,
         )
     }
 }
@@ -70,11 +72,28 @@ fun DottedLine() {
 }
 
 @Composable
-fun ChallengeInfo(name: String, detail: String) {
+fun ChallengeInfo(day: String, name: String, detail: String) {
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-        Text(text = name, style = TwoTooTheme.typography.headLineNormal24, color = TwoTooTheme.color.mainBrown)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            CardText(
+                text = "D-$day",
+                fontColor = TwoTooTheme.color.gray500,
+                shape = RoundedCornerShape(4.dp),
+                textStyle = TwoTooTheme.typography.bodyNormal16,
+            )
+            Text(
+                modifier = Modifier.padding(start = 11.dp),
+                text = name,
+                style = TwoTooTheme.typography.headLineNormal24,
+                color = TwoTooTheme.color.mainBrown,
+            )
+        }
         Spacer(modifier = Modifier.height(12.dp))
-        Text(text = detail, style = TwoTooTheme.typography.bodyNormal16, color = TwoTooTheme.color.gray500)
+        Text(
+            text = detail,
+            style = TwoTooTheme.typography.bodyNormal16,
+            color = TwoTooTheme.color.gray500,
+        )
     }
 }
 
@@ -140,7 +159,7 @@ fun PreviewDottedLine() {
 @Preview
 @Composable
 fun PreviewChallengeInfo() {
-    ChallengeInfo(name = "30분 이상 운동하기", detail = "운동 사진으로 인증하기\n인증 실패하는지 확인")
+    ChallengeInfo(day = "24", name = "30분 이상 운동하기", detail = "운동 사진으로 인증하기\n인증 실패하는지 확인")
 }
 
 @Preview
