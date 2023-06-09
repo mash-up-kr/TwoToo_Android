@@ -34,7 +34,7 @@ fun HorizontalPagerContent(pagerState: PagerState) {
     }
 
     HorizontalPager(
-        modifier = Modifier.padding(top = 100.dp),
+        modifier = Modifier.padding(top = 150.dp),
         count = MAX_COUNT,
         state = pagerState,
     ) { page ->
