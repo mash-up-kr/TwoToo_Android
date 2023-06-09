@@ -2,29 +2,39 @@ package com.mashup.twotoo.presenter.history
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 
 @Composable
-fun HistoryScreen() {
+fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = emptyList()) {
     Scaffold(
         topBar = {
             TwoTooBackToolbar(
                 modifier = Modifier.height(56.dp),
                 onClickBackIcon = { },
-            )
+            ) {
+                IconButton(onClick = {}) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.more),
+                        contentDescription = null,
+                    )
+                }
+            }
         },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
-        val historyItemUiModels: List<HistoryItemUiModel> = generateDummyHistoryItemsToPreView()
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
             ChallengeInfo(
                 "24",
@@ -50,10 +60,17 @@ fun HistoryScreen() {
 @Composable
 fun PreviewHistoryScreen() {
     TwoTooTheme {
-        HistoryScreen()
+        HistoryScreen(generateDummyHistoryItemsToPreView())
     }
 }
 
+@Preview(name = "비어있을때")
+@Composable
+fun PreviewHistoryScreenEmpty() {
+    TwoTooTheme {
+        HistoryScreen()
+    }
+}
 fun generateDummyHistoryItemsToPreView(): List<HistoryItemUiModel> {
     return listOf(
         HistoryItemUiModel(
