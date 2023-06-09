@@ -4,11 +4,9 @@
     <string name="garden">Garden</string>
     <string name="home">Home</string>
     <string name="user">User</string>
-
-
-
-
+    
     <!-- Kakao Login -->
+    <string name= "login_tite">카카오톡으로 로그인</string>
     <string name="failureKakaoTalkLogin">카카오톡으로 로그인 실패</string>
     <string name="successKakaoTalkLogin">카카오톡으로 로그인 성공</string>
     <string name= "kakaoLogin">카카오 로그인</string>
@@ -21,10 +19,13 @@
     <string name="failureKakaoTalkUnlink">연결 끊기 실패</string>
     <string name="successKakaoTalkUnlink">연결 끊기 성공. SDK에서 토큰 삭제됨</string>
   
+    <!-- dialog -->
     <string name="all_auth_title">모두 인증 완료</string>
     <string name="all_auth_desc">서로 인증을 완료했어요!\n짝꿍에게 응원 한마디를 남겨요.</string>
     <string name="cheer_up">응원하기</string>
     <string name="cheer_up_cancel">괜찮아요</string>
+
+    <!-- bottom sheet -->
     <string name="bottomSheetAuthenticate">인증하기</string>
     <string name="bottomSheetAuthenticateAnimation">인증하기 애니메이션</string>
     <string name="bottomSheetShot">찌르기 문구 보내기</string>
@@ -37,10 +38,47 @@
     <!-- contentDescription -->
     <string name="selectShot">찌르기항목을 선택합니다</string>
 
-
     <!--Home-->
     <string name="homeFirstCreatedChallenge">내 씨앗을 눌러 인증 해보세요!</string>
     <string name="homeAuthOnlyPartener">완료!</string>
+    
+    
+    <!--onboarding -->
+    <string name="onboarding_pager_1">연인과 함께 달성할\n목표를 세워보세요.</string>
+    <string name="onboarding_pager_2">상대방에게 귀여운\n찌르기로 푸시해보세요.</string>
+    <string name="onboarding_pager_3">서로 인증하고 응원하며\n목표를 달성해보세요.</string>
+    <string name="nickname_setting">투투에서 사용할\n닉네임을 입력해주세요</string>
+    <string name="nickname_setting_hint">4글자 이내 닉네임을 입력해주세요</string>
+    <string name="nickname">닉네임</string>
+
+    <!-- invite -->
+    <string name="other">%s님</string>
+    <string name="invite_someone">의 짝꿍으로 초대가 되었습니다.</string>
+    <string name="invite_title">상대방에게 초대장을 보내\n투투를 시작해보세요</string>
+    <string name="invite_desc">상대방이 수락하면 투투를 시작할 수 있습니다</string>
+    <string name="invite_waiting_other">상대방의 수락을\n기다리고 있습니다.</string>
+    <string name="invite_refresh">새로고침을 눌러주세요</string>
+    <string name="invite_resend_desc">*만약 초대링크를 잃어버리셨다면, 초대장 다시보내기를 해보세요</string>
+
+    <!--create challenge -->
+    <string name="create_challenge_step">%d/3\n챌린지 정보를 작성해주세요</string>
+    <string name="create_challenge_desc_1">시작일을 기준으로 22일동안 진행되는 챌린지 입니다</string>
+    <string name="create_challenge_desc_2">(선택) 목표를 달성하기 위한 둘만의 룰을 작성해보세요</string>
+    <string name="create_challenge_desc_3">생성한 챌린지는 수정이 어려우니 한번 더 확인해주세요</string>
+    <string name="challenge_name">챌린지 이름</string>
+    <string name="input_challenge_name_placeholder">챌린지 이름을 입력해주세요</string>
+    <string name="input_challenge_info_placeholder">구체적인 챌린지 룰, 벌칙등을 입력해주세요</string>
+    <string name="recommend_challenge">챌린지 추천 ></string>
+    <string name="challenge_start_date">시작일</string>
+    <string name="challenge_end_date">종료일</string>
+    <string name="twotoo_challenge">Twotoo challenge</string>
+
+
+    <!-- button -->
+    <string name="button_confirm">확인</string>
+    <string name="refresh">새로고침</string>
+    <string name="send_invite">초대장 보내기</string>
+    <string name="resend_invite">초대장 다시 보내기</string>
     
     
 </resources>

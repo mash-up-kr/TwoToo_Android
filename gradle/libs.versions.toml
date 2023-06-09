@@ -27,11 +27,14 @@ firebase = "22.0.0"
 workmanager = "2.8.1"
 google_services = "4.3.15"
 datastore = "1.0.0"
+accompanist_pager = "0.25.1"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
 appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
 material = { module = "com.google.android.material:material", version.ref = "material" }
+accompanist-pager = { module = "com.google.accompanist:accompanist-pager", version.ref = "accompanist_pager"}
+accompanist-pager-indicator = { module = "com.google.accompanist:accompanist-pager-indicators", version.ref = "accompanist_pager"}
 
 androidx-lifecycle = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle_runtime" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity_compose" }
@@ -101,3 +104,4 @@ androidx-compose-ui-debug = ["androidx-compose-ui-tooling", "androidx-compose-ui
 squareup-okhttp = ["okhttp3", "okhttp-interceptor", "okhttp-url-connection"]
 squareup-retrofit = ["retrofit2", "moshi-kotlin", "retrofit-converter-moshi"]
 orbit = ["orbit-viewmodel", "orbit-compose"]
+pager = ["accompanist-pager", "accompanist-pager-indicator"]

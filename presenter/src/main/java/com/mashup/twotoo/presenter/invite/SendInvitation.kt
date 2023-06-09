@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.onboarding
+package com.mashup.twotoo.presenter.invite
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -16,24 +16,16 @@ import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.rememberPagerState
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButtonImpl
+import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
-import com.mashup.twotoo.presenter.sdk.theme.KakaoLoginButtonTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun OnBoardingRoute() {
-    OnBoardingScreen()
-}
-
-@OptIn(ExperimentalPagerApi::class)
-@Composable
-fun OnBoardingScreen() {
-    val pagerState = rememberPagerState()
+fun SendInvitation() {
     Scaffold(
         topBar = { TwoTooMainToolbar() },
     ) { padding ->
@@ -47,40 +39,35 @@ fun OnBoardingScreen() {
                 ),
         ) {
             Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                verticalArrangement = Arrangement.SpaceBetween,
+                modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceAround,
             ) {
-                HorizontalPagerContent(pagerState = pagerState)
-
+                Text(
+                    text = stringResource(id = R.string.invite_title),
+                    modifier = Modifier.padding(top = 137.dp, bottom = 24.dp),
+                    style = TwoTooTheme.typography.headLineNormal28,
+                    color = TwoTooTheme.color.mainBrown,
+                    textAlign = TextAlign.Center,
+                )
+                Text(
+                    text = stringResource(id = R.string.invite_desc),
+                    style = TwoTooTheme.typography.bodyNormal16,
+                    color = TwoTooTheme.color.gray600,
+                    textAlign = TextAlign.Center,
+                )
                 Spacer(modifier = Modifier.weight(1f))
-                if (pagerState.currentPage == MAX_COUNT - 1) {
-                    KakaoLoginButton()
-                    Spacer(modifier = Modifier.height(56.dp))
-                }
+                TwoTooTextButton(
+                    text = stringResource(id = R.string.send_invite),
+                ) {}
+                Spacer(modifier = Modifier.height(55.dp))
             }
         }
     }
 }
 
-@Composable
-fun KakaoLoginButton() {
-    TwoTooIconButtonImpl(
-        text = {
-            Text(
-                stringResource(id = KakaoLoginButtonTheme.TextId),
-                color = KakaoLoginButtonTheme.ContentColor,
-            )
-        },
-        iconId = KakaoLoginButtonTheme.IconId,
-        buttonColor = KakaoLoginButtonTheme.ContainerColor,
-        buttonRadius = KakaoLoginButtonTheme.Radius,
-    ) {}
-}
-
 @Preview
 @Composable
-private fun OnBoardingPagerPreview() {
-    OnBoardingScreen()
+private fun SendInvitationPreview() {
+    SendInvitation()
 }
