@@ -33,7 +33,6 @@ fun HomeGoalField(
                 top.linkTo(parent.top, margin = 16.dp)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom, margin = 48.dp)
             },
             text = homeGoalFieldData.goal,
             color = TwotooPink,
