@@ -28,7 +28,6 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -41,24 +40,19 @@ fun NickNameSetting(
         modifier = Modifier
             .fillMaxSize()
             .background(TwoTooTheme.color.backgroundYellow),
-        verticalArrangement = Arrangement.SpaceAround,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TwoTooMainToolbar()
-        Spacer(modifier = Modifier.height(35.dp))
-
         otherNickName?.let { nickname ->
             InviteGuide(nickname)
         }
-        Spacer(modifier = Modifier.height(78.dp))
         Text(
+            modifier = Modifier.padding(top = 78.dp),
             text = stringResource(id = R.string.nickname_setting),
             textAlign = TextAlign.Center,
             style = TwoTooTheme.typography.headLineNormal28,
             color = TwoTooTheme.color.mainBrown,
         )
-        Spacer(modifier = Modifier.height(32.dp))
-
         InputUserNickName()
         Spacer(modifier = Modifier.weight(1f))
         TwoTooTextButton(
@@ -75,20 +69,20 @@ fun InputUserNickName() {
     val nickNameMaxLength = 4
 
     Column(
-        modifier = Modifier.padding(horizontal = 24.dp),
+        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 32.dp),
     ) {
         Text(
+            modifier = Modifier.padding(bottom = 8.dp),
             text = stringResource(id = R.string.nickname),
             style = TwoTooTheme.typography.bodyNormal16,
             color = TwoTooTheme.color.mainBrown,
         )
-        Spacer(modifier = Modifier.height(8.dp))
 
         TwoTooTextField(
             modifier = Modifier.fillMaxWidth().height(46.dp),
             text = text,
             textHint = stringResource(id = R.string.nickname_setting_hint),
-            updateText = { if(it.length <= nickNameMaxLength) text = it },
+            updateText = { if (it.length <= nickNameMaxLength) text = it },
         )
     }
 }
@@ -96,7 +90,7 @@ fun InputUserNickName() {
 @Composable
 fun InviteGuide(otherNickName: String) {
     Text(
-        modifier = Modifier
+        modifier = Modifier.padding(top = 27.dp)
             .drawBehind {
                 drawRoundRect(
                     color = MainYellow,
