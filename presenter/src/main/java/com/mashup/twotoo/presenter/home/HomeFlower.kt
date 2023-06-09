@@ -20,6 +20,15 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
+import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
+import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
+import com.mashup.twotoo.presenter.home.model.AuthType.DoNotAuthBoth
+import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.GrowType.SEED
+import com.mashup.twotoo.presenter.home.model.HomeFlower
+import com.mashup.twotoo.presenter.home.model.UserType.ME
+import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 /**
  * @Created by 김현국 2023/06/07
@@ -40,7 +49,7 @@ fun HomeFlowerMeAndPartner(
                 end.linkTo(waterImage.end)
                 top.linkTo(parent.top)
                 bottom.linkTo(waterImage.top, margin = 15.dp)
-                visibility = if (meAndPartner[1].authType == AuthType.FirstCreateChallenge) {
+                visibility = if (meAndPartner[1].authType == FirstCreateChallenge) {
                     Visibility.Visible
                 } else {
                     Visibility.Invisible
@@ -52,8 +61,8 @@ fun HomeFlowerMeAndPartner(
                 bottom.linkTo(partner.top, margin = 15.dp)
                 start.linkTo(partner.start)
                 end.linkTo(partner.end)
-                visibility = if (meAndPartner[0].authType == AuthType.AuthOnlyPartner ||
-                    meAndPartner[0].authType == AuthType.AuthBoth
+                visibility = if (meAndPartner[0].authType == AuthOnlyPartner ||
+                    meAndPartner[0].authType == AuthBoth
                 ) {
                     Visibility.Visible
                 } else {
@@ -90,9 +99,9 @@ fun HomeFlowerMeAndPartner(
                 bottom.linkTo(me.top, margin = 22.dp)
                 start.linkTo(me.start)
                 end.linkTo(me.end)
-                visibility = if (meAndPartner[1].authType == AuthType.AuthOnlyPartner ||
-                    meAndPartner[1].authType == AuthType.FirstCreateChallenge ||
-                    meAndPartner[1].authType == AuthType.DoNotAuthBoth
+                visibility = if (meAndPartner[1].authType == AuthOnlyPartner ||
+                    meAndPartner[1].authType == FirstCreateChallenge ||
+                    meAndPartner[1].authType == DoNotAuthBoth
                 ) {
                     Visibility.Visible
                 } else {
@@ -131,7 +140,7 @@ fun HomeFlowerPartner(
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
             name = homeFlower.name,
-            userType = UserType.PARTNER,
+            userType = PARTNER,
         )
     }
 }
@@ -154,7 +163,7 @@ fun HomeFlowerMe(
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
             name = homeFlower.name,
-            userType = UserType.ME,
+            userType = ME,
         )
     }
 }
@@ -180,13 +189,13 @@ private fun PreviewFirstChallengeHomeFlower() {
                 listOf(
                     HomeFlower(
                         name = "공주",
-                        growType = GrowType.SEED,
-                        authType = AuthType.FirstCreateChallenge,
+                        growType = SEED,
+                        authType = FirstCreateChallenge,
                     ),
                     HomeFlower(
                         name = "왕자",
-                        growType = GrowType.SEED,
-                        authType = AuthType.FirstCreateChallenge,
+                        growType = SEED,
+                        authType = FirstCreateChallenge,
                     ),
                 ),
             )
@@ -205,13 +214,13 @@ private fun PreviewAuthOnlyPartnerHomeFlower() {
                 listOf(
                     HomeFlower(
                         name = "공주",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthOnlyPartner,
+                        growType = SEED,
+                        authType = AuthOnlyPartner,
                     ),
                     HomeFlower(
                         name = "왕자",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthOnlyPartner,
+                        growType = SEED,
+                        authType = AuthOnlyPartner,
                     ),
                 ),
             )
@@ -230,13 +239,13 @@ private fun PreviewAuthOnlyMeHomeFlower() {
                 listOf(
                     HomeFlower(
                         name = "공주",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthOnlyMe,
+                        growType = SEED,
+                        authType = AuthOnlyMe,
                     ),
                     HomeFlower(
                         name = "왕자",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthOnlyMe,
+                        growType = SEED,
+                        authType = AuthOnlyMe,
                     ),
                 ),
             )
@@ -255,13 +264,13 @@ private fun PreviewAuthBothHomeFlower() {
                 listOf(
                     HomeFlower(
                         name = "공주",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthBoth,
+                        growType = SEED,
+                        authType = AuthBoth,
                     ),
                     HomeFlower(
                         name = "왕자",
-                        growType = GrowType.SEED,
-                        authType = AuthType.AuthBoth,
+                        growType = SEED,
+                        authType = AuthBoth,
                     ),
                 ),
             )
@@ -280,13 +289,13 @@ private fun PreviewDoNotAuthBothHomeFlower() {
                 listOf(
                     HomeFlower(
                         name = "공주",
-                        growType = GrowType.SEED,
-                        authType = AuthType.DoNotAuthBoth,
+                        growType = SEED,
+                        authType = DoNotAuthBoth,
                     ),
                     HomeFlower(
                         name = "왕자",
-                        growType = GrowType.SEED,
-                        authType = AuthType.DoNotAuthBoth,
+                        growType = SEED,
+                        authType = DoNotAuthBoth,
                     ),
                 ),
             )
