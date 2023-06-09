@@ -21,7 +21,7 @@ fun HomeBeeButton(
 ) {
     Box(
         modifier = modifier.background(
-            color = Color(0xFFFFE6AF),
+            color = TwoTooTheme.color.mainYellow,
             shape = CircleShape,
         ).clip(CircleShape),
         contentAlignment = Alignment.Center,
