@@ -14,8 +14,14 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.home.UserType.ME
-import com.mashup.twotoo.presenter.home.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.HomeFlower
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveData
+import com.mashup.twotoo.presenter.home.model.HomeGoalCountData
+import com.mashup.twotoo.presenter.home.model.HomeGoalFieldData
+import com.mashup.twotoo.presenter.home.model.HomeModel
+import com.mashup.twotoo.presenter.home.model.HomeShotCountTextData
+import com.mashup.twotoo.presenter.home.model.UserType.ME
+import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeRoute() {
@@ -79,7 +85,7 @@ fun HomeScreen(
                 homeGoalCountData = HomeGoalCountData(),
             )
             TwoTooImageView(
-                modifier = Modifier.width(380.dp).height(244.dp).constrainAs(homeBackground) {
+                modifier = Modifier.fillMaxWidth().height(244.dp).constrainAs(homeBackground) {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
