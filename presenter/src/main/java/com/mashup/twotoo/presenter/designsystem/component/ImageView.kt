@@ -47,31 +47,16 @@ fun TwoTooImageView(
 @Composable
 fun TwoTooImageViewWithSetter(
     modifier: Modifier = Modifier,
+    imageUri: Uri? = null,
+    onClickPlusButton: () -> Unit = {},
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
 ) {
-    var imageUri by remember {
-        mutableStateOf<Uri?>(null)
-    }
-
-    val launcher = rememberLauncherForActivityResult(
-        contract =
-        ActivityResultContracts.GetContent(),
-    ) { uri: Uri? ->
-        imageUri = uri
-    }
-
     TwoTooImageViewImpl(
-        model = if (imageUri != null) {
-            imageUri
-        } else {
-            null
-        },
+        model = imageUri,
         enableSetImage = true,
-        onClickSetImage = {
-            launcher.launch("image/*")
-        },
+        onClickPlusButton = onClickPlusButton,
         previewPlaceholder = previewPlaceholder,
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
@@ -84,7 +69,7 @@ fun TwoTooImageViewImpl(
     model: Any?,
     modifier: Modifier = Modifier,
     @DrawableRes previewPlaceholder: Int? = null,
-    onClickSetImage: (() -> Unit) = {},
+    onClickPlusButton: (() -> Unit) = {},
     enableSetImage: Boolean = false,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
@@ -110,7 +95,7 @@ fun TwoTooImageViewImpl(
                     .fillMaxSize(0.5f)
                     .align(Alignment.Center)
                     .clickable {
-                        onClickSetImage.invoke()
+                        onClickPlusButton.invoke()
                     },
 
             )
@@ -155,8 +140,19 @@ fun PlusLine(
     showBackground = true,
 )
 @Composable
-fun HasNoneImageView() {
+private fun HasNoneImageView() {
     TwoTooTheme {
+        var imageUri by remember {
+            mutableStateOf<Uri?>(null)
+        }
+
+        val launcher = rememberLauncherForActivityResult(
+            contract =
+            ActivityResultContracts.GetContent(),
+        ) { uri: Uri? ->
+            imageUri = uri
+        }
+
         TwoTooImageViewWithSetter(
             modifier = Modifier
                 .size(250.dp)
@@ -165,6 +161,10 @@ fun HasNoneImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = TwoTooTheme.shape.extraSmall),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
+            imageUri = imageUri,
+            onClickPlusButton = {
+                launcher.launch("image/*")
+            },
         )
     }
 }
@@ -174,7 +174,7 @@ fun HasNoneImageView() {
     showBackground = true,
 )
 @Composable
-fun HasImageView() {
+private fun HasImageView() {
     TwoTooTheme {
         TwoTooImageView(
             modifier = Modifier
@@ -193,7 +193,7 @@ fun HasImageView() {
     showBackground = true,
 )
 @Composable
-fun ImageViewWithNoneRound() {
+private fun ImageViewWithNoneRound() {
     TwoTooTheme {
         TwoTooImageView(
             modifier = Modifier.size(250.dp),
@@ -204,7 +204,7 @@ fun ImageViewWithNoneRound() {
 
 @Preview("플러스 버튼")
 @Composable
-fun PlusButton() {
+private fun PlusButton() {
     TwoTooTheme {
         PlusLine(
             modifier = Modifier.size(200.dp),
