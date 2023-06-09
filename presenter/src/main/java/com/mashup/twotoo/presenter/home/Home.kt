@@ -10,6 +10,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
@@ -59,10 +60,11 @@ fun HomeScreen(
             )
 
             HomeGoalField(
-                modifier = Modifier.width(327.dp).constrainAs(homeGoalField) {
+                modifier = Modifier.constrainAs(homeGoalField) {
                     top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
+                    start.linkTo(parent.start, margin = 24.dp)
+                    end.linkTo(parent.end, margin = 24.dp)
+                    width = Dimension.fillToConstraints
                 },
                 homeGoalFieldData = HomeGoalFieldData(),
             )
