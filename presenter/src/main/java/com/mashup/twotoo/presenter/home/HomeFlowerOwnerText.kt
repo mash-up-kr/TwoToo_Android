@@ -11,8 +11,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.home.UserType.ME
-import com.mashup.twotoo.presenter.home.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.UserType
+import com.mashup.twotoo.presenter.home.model.UserType.ME
+import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeFlowerOwnerText(

@@ -5,12 +5,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.home.model.HomeShotCountTextData
 
 /**
  * @Created by 김현국 2023/06/04
  */
-
-
 
 @Composable
 fun HomeShotCountText(

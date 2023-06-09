@@ -13,8 +13,9 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.home.UserType.ME
-import com.mashup.twotoo.presenter.home.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveData
+import com.mashup.twotoo.presenter.home.model.UserType.ME
+import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeGoalAchievement(

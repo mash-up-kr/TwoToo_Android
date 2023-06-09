@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-
+import com.mashup.twotoo.presenter.home.model.HomeGoalFieldData
 
 @Composable
 fun HomeGoalField(
@@ -37,7 +37,7 @@ fun HomeGoalField(
             },
             text = homeGoalFieldData.goal,
             color = TwotooPink,
-            style = TwoTooTheme.typography.headLineNormal28
+            style = TwoTooTheme.typography.headLineNormal28,
         )
         Text(
             modifier = Modifier
@@ -51,7 +51,7 @@ fun HomeGoalField(
                 .padding(vertical = 4.dp, horizontal = 10.dp),
             text = "D-${homeGoalFieldData.dDay}",
             color = TwoTooTheme.color.gray500,
-            style = TwoTooTheme.typography.bodyNormal16
+            style = TwoTooTheme.typography.bodyNormal16,
 
         )
     }
