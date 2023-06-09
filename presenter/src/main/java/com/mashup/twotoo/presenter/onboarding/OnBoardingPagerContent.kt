@@ -1,8 +1,7 @@
 package com.mashup.twotoo.presenter.onboarding
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -35,6 +34,7 @@ fun HorizontalPagerContent(pagerState: PagerState) {
     }
 
     HorizontalPager(
+        modifier = Modifier.padding(top = 100.dp),
         count = MAX_COUNT,
         state = pagerState,
     ) { page ->
@@ -59,18 +59,17 @@ fun HorizontalPagerContent(pagerState: PagerState) {
                 model = pageImage.value,
                 modifier = Modifier.size(200.dp),
             )
-            Spacer(modifier = Modifier.height(30.dp))
             Text(
                 text = stringResource(id = pageDescription.value),
+                modifier = Modifier.padding(top = 30.dp, bottom = 58.dp),
                 textAlign = TextAlign.Center,
                 style = TwoTooTheme.typography.headLineNormal28,
                 color = TwoTooTheme.color.mainBrown,
             )
-            Spacer(modifier = Modifier.height(58.dp))
         }
     }
     HorizontalPagerIndicator(
         pagerState = pagerState,
+        modifier = Modifier.padding(bottom = 40.dp),
     )
-    Spacer(modifier = Modifier.height(40.dp))
 }

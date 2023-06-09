@@ -18,7 +18,6 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButton
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.Yello
 
@@ -38,9 +37,6 @@ fun OnBoardingScreen() {
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        TwoTooMainToolbar()
-        Spacer(modifier = Modifier.height(100.dp))
-
         HorizontalPagerContent(pagerState = pagerState)
 
         Spacer(modifier = Modifier.weight(1f))
@@ -58,7 +54,7 @@ fun KakaoLoginButton() {
         Modifier
             .fillMaxWidth()
             .height(50.dp)
-            .padding(horizontal = 10.dp),
+            .padding(horizontal = 30.dp),
         R.drawable.kakaotalk,
         Yello,
     ) {}
