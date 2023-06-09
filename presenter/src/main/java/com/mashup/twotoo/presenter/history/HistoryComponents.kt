@@ -52,12 +52,6 @@ private fun CardText(text: String, fontColor: Color = TwoTooTheme.color.mainBrow
     }
 }
 
-@Preview
-@Composable
-fun PreviewOwnerNickNames() {
-    OwnerNickNames(partnerNickname = "왕자", myNickname = "공주")
-}
-
 @Composable
 fun DottedLine() {
     val pathEffect = PathEffect.dashPathEffect(floatArrayOf(20f, 20f), 0f)
@@ -148,6 +142,12 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel) {
             color = TwoTooTheme.color.mainWhite,
         )
     }
+}
+
+@Preview
+@Composable
+fun PreviewOwnerNickNames() {
+    OwnerNickNames(partnerNickname = "왕자", myNickname = "공주")
 }
 
 @Preview(showBackground = true)
