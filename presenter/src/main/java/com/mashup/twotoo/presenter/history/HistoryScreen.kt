@@ -18,7 +18,7 @@ import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 
 @Composable
-fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = emptyList()) {
+fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf()) {
     Scaffold(
         topBar = {
             TwoTooBackToolbar(
@@ -68,10 +68,10 @@ fun PreviewHistoryScreen() {
 @Composable
 fun PreviewHistoryScreenEmpty() {
     TwoTooTheme {
-        HistoryScreen()
+        HistoryScreen(generateDummyEmptyHistoryItemsToPreView())
     }
 }
-fun generateDummyHistoryItemsToPreView(): List<HistoryItemUiModel> {
+private fun generateDummyHistoryItemsToPreView(): List<HistoryItemUiModel> {
     return listOf(
         HistoryItemUiModel(
             partnerInfo = HistoryInfoUiModel(
@@ -94,6 +94,22 @@ fun generateDummyHistoryItemsToPreView(): List<HistoryItemUiModel> {
                 "20:35",
             ),
             createDate = "4/9",
+        ),
+    )
+}
+
+fun generateDummyEmptyHistoryItemsToPreView(): List<HistoryItemUiModel> {
+    return listOf(
+        HistoryItemUiModel(
+            partnerInfo = HistoryInfoUiModel(
+                "",
+                "",
+            ),
+            myInfo = HistoryInfoUiModel(
+                "",
+                "",
+            ),
+            createDate = "4/10",
         ),
     )
 }

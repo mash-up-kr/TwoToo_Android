@@ -1,7 +1,9 @@
 package com.mashup.twotoo.presenter.history
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
@@ -15,9 +17,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -32,15 +36,23 @@ fun OwnerNickNames(partnerNickname: String, myNickname: String) {
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         CardText(text = partnerNickname)
-        CardText(text = myNickname, MainPink)
+        CardText(text = myNickname, fontColor = MainPink)
     }
 }
 
 @Composable
-private fun CardText(text: String, fontColor: Color = TwoTooTheme.color.mainBrown, textStyle: TextStyle = TwoTooTheme.typography.bodyNormal14, shape: CornerBasedShape = TwoTooTheme.shape.medium) {
+private fun CardText(
+    modifier: Modifier = Modifier,
+    text: String,
+    backGroundColor: Color = TwoTooTheme.color.mainWhite,
+    fontColor: Color = TwoTooTheme.color.mainBrown,
+    textStyle: TextStyle = TwoTooTheme.typography.bodyNormal14,
+    shape: CornerBasedShape = TwoTooTheme.shape.medium,
+) {
     Card(
+        modifier = modifier,
         shape = shape,
-        colors = CardDefaults.cardColors(containerColor = TwoTooTheme.color.mainWhite),
+        colors = CardDefaults.cardColors(containerColor = backGroundColor),
     ) {
         Text(
             text = text,
@@ -107,7 +119,7 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false)
         Box(
             modifier = Modifier
                 .padding(horizontal = 13.dp)
@@ -122,25 +134,59 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
                 color = TwotooPink,
             )
         }
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true)
     }
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel) {
-    Box(modifier = Modifier.size(127.dp).clip(TwoTooTheme.shape.large)) {
-        TwoTooImageView(
-            model = { historyInfoUiModel.photoUrl },
-            modifier = Modifier.fillMaxSize().clip(
-                RoundedCornerShape(10.dp),
-            ),
+private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean) {
+    Box(
+        modifier = Modifier.size(127.dp).clip(TwoTooTheme.shape.large).background(TwoTooTheme.color.mainWhite),
+    ) {
+        if (historyInfoUiModel.photoUrl.isEmpty()) {
+            EmptyHistoryInfo(isMyHistoryInfo)
+        } else {
+            TwoTooImageView(
+                model = { historyInfoUiModel.photoUrl },
+                modifier = Modifier.fillMaxSize().clip(
+                    RoundedCornerShape(10.dp),
+                ),
+            )
+            Text(
+                text = historyInfoUiModel.createdTime,
+                modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp),
+                style = TwoTooTheme.typography.bodyNormal14,
+                color = TwoTooTheme.color.mainWhite,
+            )
+        }
+    }
+}
+
+@Composable
+private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
+    if (isMyHistoryInfo) {
+        CardText(
+            modifier = Modifier.align(Alignment.Center).clickable {
+            },
+            text = "인증하기",
+            fontColor = TwoTooTheme.color.mainWhite,
+            backGroundColor = TwoTooTheme.color.mainBrown,
         )
-        Text(
-            text = historyInfoUiModel.createdTime,
-            modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp),
-            style = TwoTooTheme.typography.bodyNormal14,
-            color = TwoTooTheme.color.mainWhite,
-        )
+    } else {
+        Column(
+            modifier = Modifier.align(Alignment.Center),
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Image(
+                painter = painterResource(id = R.drawable.cloud),
+                contentDescription = null,
+            )
+            Text(
+                text = "기다리는 중",
+                style = TwoTooTheme.typography.bodyNormal14,
+                color = TwoTooTheme.color.gray400,
+            )
+        }
     }
 }
 
@@ -171,4 +217,16 @@ private fun PreviewHistoryItem() {
         createDate = "4/10",
     )
     HistoryItem(historyItemUiModel = historyItemUiModel)
+}
+
+@Preview("내 히스토리에 인증 안했을 때")
+@Composable
+private fun PreviewHistoryItemEmpty() {
+    HistoryInfo(HistoryInfoUiModel("", ""), true)
+}
+
+@Preview("연인이 히스토리에 인증 안했을 때")
+@Composable
+private fun PreviewHistoryItemPartnerEmpty() {
+    HistoryInfo(HistoryInfoUiModel("", ""), false)
 }
