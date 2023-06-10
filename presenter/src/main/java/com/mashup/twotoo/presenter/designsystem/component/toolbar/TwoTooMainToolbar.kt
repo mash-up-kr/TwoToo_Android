@@ -55,12 +55,12 @@ fun TwoTooMainToolbar(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TwoTooMainToolbar() {
+fun TwoTooMainToolbar(title: String = stringResource(id = R.string.app_name)) {
     TopAppBar(
         title = {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.CenterStart) {
                 Text(
-                    text = stringResource(id = R.string.app_name),
+                    text = title,
                     color = TwotooPink,
                     style = TwoTooTheme.typography.headLineNormal28,
                     textAlign = TextAlign.Center,
