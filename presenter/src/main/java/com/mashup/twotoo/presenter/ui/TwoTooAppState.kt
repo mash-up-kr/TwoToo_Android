@@ -54,7 +54,7 @@ class TwoTooAppState(
         @Composable get() = if (currentTopLevelDestination == Home) {
             TwoTooTheme.color.mainPink
         } else {
-            TwoTooTheme.color.mainYellow
+            TwoTooTheme.color.backgroundYellow
         }
 
     val getUnSelectedColorByDestination: Color

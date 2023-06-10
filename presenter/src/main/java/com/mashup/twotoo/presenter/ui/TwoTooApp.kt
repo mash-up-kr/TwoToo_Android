@@ -3,19 +3,23 @@ package com.mashup.twotoo.presenter.twotoo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBarItem
 import com.mashup.twotoo.presenter.designsystem.icon.Icon
 import com.mashup.twotoo.presenter.designsystem.icon.Icon.ImageVectorIcon
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
@@ -65,6 +69,7 @@ fun TwoTooBottomBar(
         modifier = modifier,
         containerColor = containerColor,
     ) {
+        Spacer(modifier = Modifier.fillMaxWidth(0.07f))
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination = destination)
             TwoTooNavigationBarItem(
@@ -89,6 +94,7 @@ fun TwoTooBottomBar(
                 unSelectedColor = unSelectedColor,
             )
         }
+        Spacer(modifier = Modifier.fillMaxWidth(0.07f))
     }
 }
 
@@ -96,3 +102,11 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
     this?.hierarchy?.any {
         it.route?.contains(destination.name, true) ?: false
     } ?: false
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewTwoTooApp() {
+    TwoTooTheme {
+        TwoTooApp()
+    }
+}
