@@ -21,7 +21,6 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf()) {
     Scaffold(
         topBar = {
             TwoTooBackToolbar(
-                modifier = Modifier.height(56.dp),
                 onClickBackIcon = { },
             ) {
                 IconButton(onClick = {}) {
