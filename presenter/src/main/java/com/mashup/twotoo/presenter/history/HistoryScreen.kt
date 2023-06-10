@@ -14,7 +14,6 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 
 @Composable
@@ -60,7 +59,7 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf()) {
 @Composable
 fun PreviewHistoryScreen() {
     TwoTooTheme {
-        HistoryScreen(generateDummyHistoryItemsToPreView())
+        HistoryScreen(HistoryItemUiModel.generateDummyHistoryItemsToPreView())
     }
 }
 
@@ -68,48 +67,6 @@ fun PreviewHistoryScreen() {
 @Composable
 fun PreviewHistoryScreenEmpty() {
     TwoTooTheme {
-        HistoryScreen(generateDummyEmptyHistoryItemsToPreView())
+        HistoryScreen(HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView())
     }
-}
-private fun generateDummyHistoryItemsToPreView(): List<HistoryItemUiModel> {
-    return listOf(
-        HistoryItemUiModel(
-            partnerInfo = HistoryInfoUiModel(
-                "https://shop.biumfood.com/upload/1623296512image_product044.jpg",
-                "20:35",
-            ),
-            myInfo = HistoryInfoUiModel(
-                "https://shop.biumfood.com/upload/1623296512image_product044.jpg",
-                "20:35",
-            ),
-            createDate = "4/10",
-        ),
-        HistoryItemUiModel(
-            partnerInfo = HistoryInfoUiModel(
-                "https://shop.biumfood.com/upload/1623296512image_product044.jpg",
-                "20:35",
-            ),
-            myInfo = HistoryInfoUiModel(
-                "https://shop.biumfood.com/upload/1623296512image_product044.jpg",
-                "20:35",
-            ),
-            createDate = "4/9",
-        ),
-    )
-}
-
-fun generateDummyEmptyHistoryItemsToPreView(): List<HistoryItemUiModel> {
-    return listOf(
-        HistoryItemUiModel(
-            partnerInfo = HistoryInfoUiModel(
-                "",
-                "",
-            ),
-            myInfo = HistoryInfoUiModel(
-                "",
-                "",
-            ),
-            createDate = "4/10",
-        ),
-    )
 }
