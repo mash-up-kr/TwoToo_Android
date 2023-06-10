@@ -21,7 +21,6 @@ import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooApp(
     appState: TwoTooAppState = rememberTwoTooAppState(),
@@ -33,7 +32,8 @@ fun TwoTooApp(
                 destinations = appState.topLevelDestinations,
                 onNavigateToDestination = appState::navigationToTopLevelDestination,
                 currentDestination = appState.currentDestination,
-                containerColor = Color.White,
+                containerColor = appState.getContainerColorByDestination,
+                unSelectedColor = appState.getUnSelectedColorByDestination,
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -58,6 +58,7 @@ fun TwoTooBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     containerColor: Color,
+    unSelectedColor: Color,
     modifier: Modifier = Modifier,
 ) {
     TwoTooNavigationBar(
@@ -72,12 +73,7 @@ fun TwoTooBottomBar(
                     onNavigateToDestination(destination)
                 },
                 icon = {
-                    val icon = if (selected) {
-                        destination.selectedIcon
-                    } else {
-                        destination.unselectedIcon
-                    }
-                    when (icon) {
+                    when (val icon = destination.icon) {
                         is ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
                             contentDescription = null,
@@ -89,6 +85,8 @@ fun TwoTooBottomBar(
                     }
                 },
                 label = null,
+                contentColor = containerColor,
+                unSelectedColor = unSelectedColor,
             )
         }
     }
