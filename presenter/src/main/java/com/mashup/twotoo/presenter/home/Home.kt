@@ -17,7 +17,7 @@ import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainTool
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
-import com.mashup.twotoo.presenter.home.model.HomeUiModel
+import com.mashup.twotoo.presenter.home.model.AfterChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
@@ -32,7 +32,7 @@ fun HomeRoute() {
 fun HomeScreen(
     onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    homeModel: HomeUiModel = HomeUiModel(),
+    homeModel: AfterChallengeUiModel = AfterChallengeUiModel.default,
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         TwoTooImageView(
@@ -138,7 +138,7 @@ private fun PreviewFirstChallengeHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeUiModel().copy(
+            homeModel = AfterChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerUiModel.firstChallengeList,
             ),
         )
@@ -151,7 +151,7 @@ private fun PreviewAuthOnlyPartnerHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeUiModel().copy(
+            homeModel = AfterChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerUiModel.authOnlyPartnerList,
             ),
         )
@@ -164,7 +164,7 @@ private fun PreviewAuthOnlyMeHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeUiModel().copy(
+            homeModel = AfterChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerUiModel.authOnlyMeList,
 
             ),
@@ -178,7 +178,7 @@ private fun PreviewAuthBothHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeUiModel().copy(
+            homeModel = AfterChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerUiModel.authBoth,
             ),
         )
@@ -191,7 +191,7 @@ private fun PreviewDoNotAuthBothHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeUiModel().copy(
+            homeModel = AfterChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerUiModel.doNotAuthBoth,
             ),
         )
