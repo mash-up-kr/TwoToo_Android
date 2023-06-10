@@ -189,19 +189,19 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
 
 @Preview
 @Composable
-fun PreviewOwnerNickNames() {
+private fun PreviewOwnerNickNames() {
     OwnerNickNames(partnerNickname = "왕자", myNickname = "공주")
 }
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewDottedLine() {
+private fun PreviewDottedLine() {
     DottedLine()
 }
 
 @Preview
 @Composable
-fun PreviewChallengeInfo() {
+private fun PreviewChallengeInfo() {
     ChallengeInfo(day = "24", name = "30분 이상 운동하기", detail = "운동 사진으로 인증하기\n인증 실패하는지 확인")
 }
 

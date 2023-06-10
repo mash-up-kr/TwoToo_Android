@@ -57,7 +57,7 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf()) {
 
 @Preview
 @Composable
-fun PreviewHistoryScreen() {
+private fun PreviewHistoryScreen() {
     TwoTooTheme {
         HistoryScreen(HistoryItemUiModel.generateDummyHistoryItemsToPreView())
     }
@@ -65,7 +65,7 @@ fun PreviewHistoryScreen() {
 
 @Preview(name = "비어있을때")
 @Composable
-fun PreviewHistoryScreenEmpty() {
+private fun PreviewHistoryScreenEmpty() {
     TwoTooTheme {
         HistoryScreen(HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView())
     }
