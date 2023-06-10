@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home
+package com.mashup.twotoo.presenter.home.ongoing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

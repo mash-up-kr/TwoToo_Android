@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home
+package com.mashup.twotoo.presenter.home.ongoing
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.LinearProgressIndicator
