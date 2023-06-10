@@ -4,9 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -39,8 +37,8 @@ fun HomeBeforeChallenge(
         val (homeGoalCount, homeBeforeChallengeTitle, homeBeforeChallengeImage, textButton) = createRefs()
         HomeGoalCount(
             modifier = Modifier.constrainAs(homeGoalCount) {
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)
+                top.linkTo(parent.top, margin = 11.dp)
+                end.linkTo(parent.end, margin = 22.dp)
             },
             homeGoalCountUiModel = beforeChallengeUiModel.homeGoalCountUiModel,
         )
@@ -62,10 +60,14 @@ fun HomeBeforeChallenge(
                 .height(109.dp),
             stateImage = beforeChallengeUiModel.stateImage,
         )
-//        TwoTooTextButton(
-//            modifier = Modifier.padding(horizontal = ),
-//            text = stringResource(id = beforeChallengeUiModel.buttonText),
-//        )
+        TwoTooTextButton(
+            modifier = Modifier.width(177.dp).height(57.dp).constrainAs(textButton) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom, margin = 51.dp)
+            },
+            text = stringResource(id = beforeChallengeUiModel.buttonText),
+        )
     }
 }
 
