@@ -17,49 +17,61 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound6
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 
 @Composable
-fun ChallengeCard(text: String) {
+fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
     Box(
         modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite),
     ) {
-        CompositionLocalProvider(
-            LocalTextStyle provides TwoTooTheme.typography.bodyNormal14,
-        ) {
-            Column(
-                modifier = Modifier.padding(start = 14.dp, top = 19.dp).fillMaxWidth(),
-            ) {
-                Text("6번째 챌린지", color = TwoTooTheme.color.mainPink)
-                Text(text, color = TwoTooTheme.color.mainBrown)
-                Text("2023/05/01 ~ 05/22", color = TwoTooTheme.color.gray500)
-            }
-        }
+        ChallengeInfo(challengeCardInfoUiModel)
         Image(
             modifier = Modifier.height(58.dp).fillMaxWidth().align(Alignment.BottomStart),
             painter = painterResource(id = R.drawable.challenge_card_ground),
             contentDescription = null,
             contentScale = ContentScale.Crop,
         )
-        Row(
-            modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 46.dp),
+        // Todo 꽃 선택하는 ui에서 사용하는 model 공통으로 사용하도록 해야함
+        Flowers()
+    }
+}
+
+@Composable
+private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
+    CompositionLocalProvider(
+        LocalTextStyle provides TwoTooTheme.typography.bodyNormal14,
+    ) {
+        Column(
+            modifier = Modifier.padding(start = 14.dp, top = 19.dp).fillMaxWidth(),
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.tulip),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-            )
-            Image(
-                modifier = Modifier.padding(start = 15.dp),
-                painter = painterResource(id = R.drawable.lose),
-                contentDescription = null,
-                contentScale = ContentScale.Fit,
-            )
+            Text(challengeCardInfoUiModel.attempts, color = TwoTooTheme.color.mainPink)
+            Text(challengeCardInfoUiModel.name, color = TwoTooTheme.color.mainBrown)
+            Text(challengeCardInfoUiModel.period, color = TwoTooTheme.color.gray500)
         }
+    }
+}
+
+@Composable
+private fun BoxScope.Flowers() {
+    Row(
+        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 46.dp),
+    ) {
+        Image(
+            painter = painterResource(id = R.drawable.tulip),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+        )
+        Image(
+            modifier = Modifier.padding(start = 15.dp),
+            painter = painterResource(id = R.drawable.lose),
+            contentDescription = null,
+            contentScale = ContentScale.Fit,
+        )
     }
 }
 
 @Preview
 @Composable
 fun PreviewChallengeCardView() {
-    ChallengeCard("하루 운동 30분 이상 하기")
+    ChallengeCard(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()[0])
 }
