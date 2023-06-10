@@ -21,22 +21,25 @@ import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 fun HomeGoalAchievement(
     goalAchieveDataList: List<HomeGoalAchieveData>,
     modifier: Modifier = Modifier,
+    isShow: Boolean = true,
 ) {
-    Column(
-        modifier = modifier,
-        verticalArrangement = Arrangement.Center,
-    ) {
-        GoalAchievementRow(
-            modifier = Modifier.fillMaxWidth(),
-            homeGoalAchieveData = goalAchieveDataList[0],
-        )
-        Spacer(
-            modifier = Modifier.height(4.dp),
-        )
-        GoalAchievementRow(
-            modifier = Modifier.fillMaxWidth(),
-            homeGoalAchieveData = goalAchieveDataList[1],
-        )
+    if (isShow) {
+        Column(
+            modifier = modifier,
+            verticalArrangement = Arrangement.Center,
+        ) {
+            GoalAchievementRow(
+                modifier = Modifier.fillMaxWidth(),
+                homeGoalAchieveData = goalAchieveDataList[0],
+            )
+            Spacer(
+                modifier = Modifier.height(4.dp),
+            )
+            GoalAchievementRow(
+                modifier = Modifier.fillMaxWidth(),
+                homeGoalAchieveData = goalAchieveDataList[1],
+            )
+        }
     }
 }
 
