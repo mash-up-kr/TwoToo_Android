@@ -68,7 +68,7 @@ fun HomeScreen(
                 },
                 homeGoalFieldData = HomeGoalFieldData(),
             )
-            HomeGoalAchievement(
+            TwoTooGoalAchievementProgressbar(
                 modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
                     start.linkTo(homeGoalField.start)
                     top.linkTo(homeGoalField.bottom)

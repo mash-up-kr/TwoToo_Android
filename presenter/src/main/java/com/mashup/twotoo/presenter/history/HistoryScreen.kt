@@ -17,7 +17,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
-import com.mashup.twotoo.presenter.home.HomeGoalAchievement
+import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveData
 import com.mashup.twotoo.presenter.home.model.UserType
 
@@ -45,7 +45,7 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf(), isHo
                 "30분 이상 운동하기",
                 "운동 사진으로 인증하기\n인증 실패하는지 확인",
             )
-            HomeGoalAchievement(
+            TwoTooGoalAchievementProgressbar(
                 modifier = Modifier.padding(top = 12.dp, start = 24.dp).width(210.dp).height(59.dp).background(color = Color.White, shape = RoundedCornerShape(15.dp)),
                 goalAchieveDataList = listOf(
                     HomeGoalAchieveData(name = "공주", type = UserType.PARTNER, progress = 0.7f),
