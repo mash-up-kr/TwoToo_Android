@@ -21,7 +21,6 @@ import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooApp(
     appState: TwoTooAppState = rememberTwoTooAppState(),

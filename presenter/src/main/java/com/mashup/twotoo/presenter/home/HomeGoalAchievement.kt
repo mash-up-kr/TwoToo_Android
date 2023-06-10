@@ -13,13 +13,13 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveData
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeGoalAchievement(
-    goalAchieveDataList: List<HomeGoalAchieveData>,
+    goalAchieveDataList: List<HomeGoalAchieveUiModel>,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -28,21 +28,21 @@ fun HomeGoalAchievement(
     ) {
         GoalAchievementRow(
             modifier = Modifier.fillMaxWidth(),
-            homeGoalAchieveData = goalAchieveDataList[0],
+            homeGoalAchieveUiModel = goalAchieveDataList[0],
         )
         Spacer(
             modifier = Modifier.height(4.dp),
         )
         GoalAchievementRow(
             modifier = Modifier.fillMaxWidth(),
-            homeGoalAchieveData = goalAchieveDataList[1],
+            homeGoalAchieveUiModel = goalAchieveDataList[1],
         )
     }
 }
 
 @Composable
 fun GoalAchievementRow(
-    homeGoalAchieveData: HomeGoalAchieveData,
+    homeGoalAchieveUiModel: HomeGoalAchieveUiModel,
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(modifier) {
@@ -55,8 +55,8 @@ fun GoalAchievementRow(
                 start.linkTo(parent.start)
             },
             style = TwoTooTheme.typography.bodyNormal14,
-            text = homeGoalAchieveData.name,
-            color = when (homeGoalAchieveData.type) {
+            text = homeGoalAchieveUiModel.name,
+            color = when (homeGoalAchieveUiModel.type) {
                 ME -> {
                     TwotooPink
                 }
@@ -75,7 +75,7 @@ fun GoalAchievementRow(
         ) {
             LinearProgressIndicator(
                 modifier = Modifier.width(111.dp).height(9.dp),
-                progress = homeGoalAchieveData.progress,
+                progress = homeGoalAchieveUiModel.progress,
                 color = TwoTooTheme.color.mainPink,
                 trackColor = Color(0xFFF5DBD0),
                 strokeCap = StrokeCap.Round,
@@ -83,7 +83,7 @@ fun GoalAchievementRow(
             Spacer(modifier = Modifier.width(11.dp))
             Text(
                 modifier = Modifier,
-                text = "${(homeGoalAchieveData.progress * 100).toInt()}%",
+                text = "${(homeGoalAchieveUiModel.progress * 100).toInt()}%",
                 color = Color(0xFFA4A4A4),
                 style = TwoTooTheme.typography.bodyNormal12,
             )
@@ -98,7 +98,7 @@ private fun PreviewHomeGoalAchieveRow() {
     TwoTooTheme() {
         GoalAchievementRow(
             modifier = Modifier,
-            homeGoalAchieveData = HomeGoalAchieveData("공주", type = PARTNER, 0.7f),
+            homeGoalAchieveUiModel = HomeGoalAchieveUiModel.default,
         )
     }
 }
@@ -110,8 +110,8 @@ private fun PreviewHomeGoalAchievement() {
         HomeGoalAchievement(
             modifier = Modifier.width(203.dp).height(59.dp),
             goalAchieveDataList = listOf(
-                HomeGoalAchieveData("공주", type = PARTNER, 0.7f),
-                HomeGoalAchieveData("나", type = ME, 0.6f),
+                HomeGoalAchieveUiModel("공주", type = PARTNER, 0.7f),
+                HomeGoalAchieveUiModel("나", type = ME, 0.6f),
             ),
         )
     }

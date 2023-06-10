@@ -21,12 +21,10 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
-import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.DoNotAuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
-import com.mashup.twotoo.presenter.home.model.GrowType.SEED
-import com.mashup.twotoo.presenter.home.model.HomeFlower
+import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
@@ -36,7 +34,7 @@ import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeFlowerMeAndPartner(
-    meAndPartner: List<HomeFlower>,
+    meAndPartner: List<HomeFlowerUiModel>,
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(
@@ -90,7 +88,7 @@ fun HomeFlowerMeAndPartner(
                 end.linkTo(me.start)
                 bottom.linkTo(parent.bottom)
             },
-            homeFlower = meAndPartner[0],
+            homeFlowerUiModel = meAndPartner[0],
         )
 
         TwoTooImageView(
@@ -117,21 +115,21 @@ fun HomeFlowerMeAndPartner(
                 start.linkTo(partner.end)
                 bottom.linkTo(parent.bottom)
             },
-            homeFlower = meAndPartner[1],
+            homeFlowerUiModel = meAndPartner[1],
         )
     }
 }
 
 @Composable
 fun HomeFlowerPartner(
-    homeFlower: HomeFlower,
+    homeFlowerUiModel: HomeFlowerUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlower.growType) {
+        with(homeFlowerUiModel.growType) {
             TwoTooImageView(
                 modifier = Modifier.width(width).height(height),
                 model = growImage,
@@ -139,7 +137,7 @@ fun HomeFlowerPartner(
         }
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
-            name = homeFlower.name,
+            name = homeFlowerUiModel.name,
             userType = PARTNER,
         )
     }
@@ -147,14 +145,14 @@ fun HomeFlowerPartner(
 
 @Composable
 fun HomeFlowerMe(
-    homeFlower: HomeFlower,
+    homeFlowerUiModel: HomeFlowerUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlower.growType) {
+        with(homeFlowerUiModel.growType) {
             TwoTooImageView(
                 modifier = Modifier.width(width).height(height),
                 model = growImage,
@@ -162,7 +160,7 @@ fun HomeFlowerMe(
         }
         Spacer(modifier = Modifier.height(26.dp))
         HomeFlowerOwnerText(
-            name = homeFlower.name,
+            name = homeFlowerUiModel.name,
             userType = ME,
         )
     }
@@ -186,18 +184,7 @@ private fun PreviewFirstChallengeHomeFlower() {
     TwoTooTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             HomeFlowerMeAndPartner(
-                listOf(
-                    HomeFlower(
-                        name = "공주",
-                        growType = SEED,
-                        authType = FirstCreateChallenge,
-                    ),
-                    HomeFlower(
-                        name = "왕자",
-                        growType = SEED,
-                        authType = FirstCreateChallenge,
-                    ),
-                ),
+                meAndPartner = HomeFlowerUiModel.firstChallengeList,
             )
         }
     }
@@ -211,18 +198,7 @@ private fun PreviewAuthOnlyPartnerHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                listOf(
-                    HomeFlower(
-                        name = "공주",
-                        growType = SEED,
-                        authType = AuthOnlyPartner,
-                    ),
-                    HomeFlower(
-                        name = "왕자",
-                        growType = SEED,
-                        authType = AuthOnlyPartner,
-                    ),
-                ),
+                meAndPartner = HomeFlowerUiModel.authOnlyPartnerList,
             )
         }
     }
@@ -236,18 +212,7 @@ private fun PreviewAuthOnlyMeHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                listOf(
-                    HomeFlower(
-                        name = "공주",
-                        growType = SEED,
-                        authType = AuthOnlyMe,
-                    ),
-                    HomeFlower(
-                        name = "왕자",
-                        growType = SEED,
-                        authType = AuthOnlyMe,
-                    ),
-                ),
+                meAndPartner = HomeFlowerUiModel.authOnlyMeList,
             )
         }
     }
@@ -261,18 +226,7 @@ private fun PreviewAuthBothHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                listOf(
-                    HomeFlower(
-                        name = "공주",
-                        growType = SEED,
-                        authType = AuthBoth,
-                    ),
-                    HomeFlower(
-                        name = "왕자",
-                        growType = SEED,
-                        authType = AuthBoth,
-                    ),
-                ),
+                meAndPartner = HomeFlowerUiModel.authBoth,
             )
         }
     }
@@ -286,18 +240,7 @@ private fun PreviewDoNotAuthBothHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                listOf(
-                    HomeFlower(
-                        name = "공주",
-                        growType = SEED,
-                        authType = DoNotAuthBoth,
-                    ),
-                    HomeFlower(
-                        name = "왕자",
-                        growType = SEED,
-                        authType = DoNotAuthBoth,
-                    ),
-                ),
+                meAndPartner = HomeFlowerUiModel.doNotAuthBoth,
             )
         }
     }

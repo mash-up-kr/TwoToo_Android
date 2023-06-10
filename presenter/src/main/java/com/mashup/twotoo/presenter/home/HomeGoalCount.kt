@@ -18,11 +18,11 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.home.model.HomeGoalCountData
+import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 
 @Composable
 fun HomeGoalCount(
-    homeGoalCountData: HomeGoalCountData,
+    homeGoalCountUiModel: HomeGoalCountUiModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -37,16 +37,16 @@ fun HomeGoalCount(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(9.dp),
             ) {
-                Text(homeGoalCountData.partnerName)
+                Text(homeGoalCountUiModel.partnerName)
                 TwoTooImageView(
                     modifier = Modifier.width(14.dp).height(14.dp),
                     model = R.drawable.ic_heart,
                     previewPlaceholder = R.drawable.ic_heart,
                 )
-                Text(homeGoalCountData.myName)
+                Text(homeGoalCountUiModel.myName)
             }
             Spacer(modifier = Modifier.height(2.dp))
-            Text(text = "${homeGoalCountData.count}번째 꽃 피우는 중")
+            Text(text = "${homeGoalCountUiModel.count}번째 꽃 피우는 중")
         }
     }
 }
@@ -56,11 +56,7 @@ fun HomeGoalCount(
 private fun PreviewGoalCount() {
     TwoTooTheme {
         HomeGoalCount(
-            homeGoalCountData = HomeGoalCountData(
-                partnerName = "공주",
-                myName = "나",
-                count = 1,
-            ),
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
         )
     }
 }

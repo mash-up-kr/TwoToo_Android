@@ -14,11 +14,11 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.home.model.HomeGoalFieldData
+import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
 
 @Composable
 fun HomeGoalField(
-    homeGoalFieldData: HomeGoalFieldData,
+    homeGoalFieldUiModel: HomeGoalFieldUiModel,
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(
@@ -34,7 +34,7 @@ fun HomeGoalField(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            text = homeGoalFieldData.goal,
+            text = homeGoalFieldUiModel.goal,
             color = TwotooPink,
             style = TwoTooTheme.typography.headLineNormal28,
         )
@@ -48,7 +48,7 @@ fun HomeGoalField(
                 }
                 .background(color = Color.White, shape = RoundedCornerShape(4.dp))
                 .padding(vertical = 4.dp, horizontal = 10.dp),
-            text = "D-${homeGoalFieldData.dDay}",
+            text = "D-${homeGoalFieldUiModel.dDay}",
             color = TwoTooTheme.color.gray500,
             style = TwoTooTheme.typography.bodyNormal16,
 
@@ -65,7 +65,7 @@ private fun PreviewHomeGoalField() {
                 .width(327.dp)
                 .wrapContentHeight()
                 .background(color = Color(0xFFFFE6AF), shape = RoundedCornerShape(15.dp)),
-            homeGoalFieldData = HomeGoalFieldData("30분 이상 운동하기", 24),
+            homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
         )
     }
 }

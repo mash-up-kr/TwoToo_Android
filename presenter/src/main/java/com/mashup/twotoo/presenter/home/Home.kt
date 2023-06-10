@@ -15,12 +15,9 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.home.model.HomeFlower
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveData
-import com.mashup.twotoo.presenter.home.model.HomeGoalCountData
-import com.mashup.twotoo.presenter.home.model.HomeGoalFieldData
-import com.mashup.twotoo.presenter.home.model.HomeModel
-import com.mashup.twotoo.presenter.home.model.HomeShotCountTextData
+import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
+import com.mashup.twotoo.presenter.home.model.HomeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
@@ -35,7 +32,7 @@ fun HomeRoute() {
 fun HomeScreen(
     onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
-    homeModel: HomeModel = HomeModel(),
+    homeModel: HomeUiModel = HomeUiModel(),
 ) {
     Box(modifier = modifier.fillMaxSize()) {
         TwoTooImageView(
@@ -66,7 +63,7 @@ fun HomeScreen(
                     end.linkTo(parent.end, margin = 24.dp)
                     width = Dimension.fillToConstraints
                 },
-                homeGoalFieldData = HomeGoalFieldData(),
+                homeGoalFieldUiModel = homeModel.homeGoalFieldUiModel,
             )
             HomeGoalAchievement(
                 modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
@@ -74,8 +71,8 @@ fun HomeScreen(
                     top.linkTo(homeGoalField.bottom)
                 }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
                 goalAchieveDataList = listOf(
-                    HomeGoalAchieveData(name = "공주", type = PARTNER, progress = 0.7f),
-                    HomeGoalAchieveData(name = "나", type = ME, progress = 0.6f),
+                    HomeGoalAchieveUiModel(name = "공주", type = PARTNER, progress = 0.7f),
+                    HomeGoalAchieveUiModel(name = "나", type = ME, progress = 0.6f),
                 ),
             )
             HomeGoalCount(
@@ -84,7 +81,7 @@ fun HomeScreen(
                     top.linkTo(goalAchievement.top)
                     bottom.linkTo(goalAchievement.bottom)
                 },
-                homeGoalCountData = HomeGoalCountData(),
+                homeGoalCountUiModel = homeModel.homeGoalCountUiModel,
             )
             TwoTooImageView(
                 modifier = Modifier.fillMaxWidth().height(244.dp).constrainAs(homeBackground) {
@@ -101,7 +98,7 @@ fun HomeScreen(
                     end.linkTo(parent.end)
                     bottom.linkTo(beeButton.top, margin = 26.29.dp)
                 },
-                meAndPartner = homeModel.homeFlower,
+                meAndPartner = homeModel.homeFlowerUiModels,
             )
             HomeBeeButton(
                 modifier = Modifier.constrainAs(beeButton) {
@@ -119,7 +116,7 @@ fun HomeScreen(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
-                homeShotCountTextData = HomeShotCountTextData(),
+                homeShotCountTextUiModel = homeModel.homeShotCountTextUiModel,
             )
         }
     }
@@ -141,8 +138,8 @@ private fun PreviewFirstChallengeHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeModel().copy(
-                homeFlower = HomeFlower.firstChallengeList,
+            homeModel = HomeUiModel().copy(
+                homeFlowerUiModels = HomeFlowerUiModel.firstChallengeList,
             ),
         )
     }
@@ -154,8 +151,8 @@ private fun PreviewAuthOnlyPartnerHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeModel().copy(
-                homeFlower = HomeFlower.authOnlyPartnerList,
+            homeModel = HomeUiModel().copy(
+                homeFlowerUiModels = HomeFlowerUiModel.authOnlyPartnerList,
             ),
         )
     }
@@ -167,8 +164,8 @@ private fun PreviewAuthOnlyMeHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeModel().copy(
-                homeFlower = HomeFlower.authOnlyMeList,
+            homeModel = HomeUiModel().copy(
+                homeFlowerUiModels = HomeFlowerUiModel.authOnlyMeList,
 
             ),
         )
@@ -181,8 +178,8 @@ private fun PreviewAuthBothHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeModel().copy(
-                homeFlower = HomeFlower.authBoth,
+            homeModel = HomeUiModel().copy(
+                homeFlowerUiModels = HomeFlowerUiModel.authBoth,
             ),
         )
     }
@@ -194,8 +191,8 @@ private fun PreviewDoNotAuthBothHomeScreen() {
     TwoTooTheme {
         HomeScreen(
             onBeeButtonClick = {},
-            homeModel = HomeModel().copy(
-                homeFlower = HomeFlower.doNotAuthBoth,
+            homeModel = HomeUiModel().copy(
+                homeFlowerUiModels = HomeFlowerUiModel.doNotAuthBoth,
             ),
         )
     }
