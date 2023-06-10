@@ -1,11 +1,11 @@
 package com.mashup.twotoo.presenter.garden
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,10 +26,15 @@ fun GardenScreen() {
         },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
-        val challenges: List<String> = listOf("하루 30분 운동하기")
-        LazyVerticalGrid(modifier = Modifier.padding(paddingValues = it), columns = GridCells.Adaptive(minSize = 157.dp)) {
+        val challenges: List<String> = listOf("하루 30분 운동하기", "아침 밥 먹기", "하루 2시간 공부하기", "하루 책 20page 읽기")
+        LazyVerticalGrid(
+            modifier = Modifier.padding(paddingValues = it).padding(horizontal = 24.dp, vertical = 30.dp),
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(13.dp),
+            verticalArrangement = Arrangement.spacedBy(13.dp),
+        ) {
             items(challenges) { challenge ->
-                Text(challenge)
+                ChallengeCard(challenge)
             }
         }
     }
