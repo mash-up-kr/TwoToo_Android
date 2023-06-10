@@ -5,12 +5,9 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import com.mashup.twotoo.presenter.R
 
 object TwoTooIcon {
-    val GardenSelected = R.drawable.garden_selected
-    val GardenUnSelected = R.drawable.garden_unselected
-    val HomeSelected = R.drawable.home_selected
-    val HomeUnSelected = R.drawable.home_unselected
-    val UserSelected = R.drawable.user_selected
-    val UserUnSelected = R.drawable.user_unselected
+    val GardenIcon = R.drawable.ic_garden
+    val HomeIcon = R.drawable.ic_home
+    val UserIcon = R.drawable.ic_user
 }
 sealed class Icon {
     data class ImageVectorIcon(val imageVector: ImageVector) : Icon()

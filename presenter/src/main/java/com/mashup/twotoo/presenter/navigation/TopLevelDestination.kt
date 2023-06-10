@@ -6,26 +6,22 @@ import com.mashup.twotoo.presenter.designsystem.icon.Icon.DrawableResourceIcon
 import com.mashup.twotoo.presenter.designsystem.icon.TwoTooIcon
 
 enum class TopLevelDestination(
-    val selectedIcon: Icon,
-    val unselectedIcon: Icon,
+    val icon: Icon,
     val iconTextId: Int,
     val titleTextId: Int,
 ) {
     Garden(
-        selectedIcon = DrawableResourceIcon(TwoTooIcon.GardenSelected),
-        unselectedIcon = DrawableResourceIcon(TwoTooIcon.GardenUnSelected),
+        icon = DrawableResourceIcon(TwoTooIcon.GardenIcon),
         iconTextId = R.string.garden,
         titleTextId = R.string.garden,
     ),
     Home(
-        selectedIcon = DrawableResourceIcon(TwoTooIcon.HomeSelected),
-        unselectedIcon = DrawableResourceIcon(TwoTooIcon.HomeUnSelected),
+        icon = DrawableResourceIcon(TwoTooIcon.HomeIcon),
         iconTextId = R.string.home,
         titleTextId = R.string.home,
     ),
     User(
-        selectedIcon = DrawableResourceIcon(TwoTooIcon.UserSelected),
-        unselectedIcon = DrawableResourceIcon(TwoTooIcon.UserUnSelected),
+        icon = DrawableResourceIcon(TwoTooIcon.UserIcon),
         iconTextId = R.string.user,
         titleTextId = R.string.user,
     ),
