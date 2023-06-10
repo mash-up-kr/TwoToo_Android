@@ -10,10 +10,10 @@ data class HomeGoalCountUiModel(
     val count: Int,
 ) {
     companion object {
-        val default = HomeGoalCountUiModel(
+        val empty = HomeGoalCountUiModel(
             partnerName = "공주",
             myName = "나",
-            count = 1,
+            count = 0,
         )
     }
 }

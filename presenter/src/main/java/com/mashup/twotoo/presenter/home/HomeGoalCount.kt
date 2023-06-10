@@ -56,7 +56,7 @@ fun HomeGoalCount(
 private fun PreviewGoalCount() {
     TwoTooTheme {
         HomeGoalCount(
-            homeGoalCountUiModel = HomeGoalCountUiModel.default,
+            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
         )
     }
 }
