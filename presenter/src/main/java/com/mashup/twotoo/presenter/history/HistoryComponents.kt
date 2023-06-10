@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CornerBasedShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,9 +22,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
-import com.mashup.twotoo.presenter.designsystem.theme.MainPink
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.designsystem.theme.*
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 
@@ -84,7 +81,7 @@ fun ChallengeInfo(day: String, name: String, detail: String) {
             CardText(
                 text = "D-$day",
                 fontColor = TwoTooTheme.color.gray500,
-                shape = RoundedCornerShape(4.dp),
+                shape = TwoTooRound4,
                 textStyle = TwoTooTheme.typography.bodyNormal16,
             )
             Text(
@@ -124,7 +121,7 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
             modifier = Modifier
                 .padding(horizontal = 13.dp)
                 .height(45.dp).width(47.dp)
-                .clip(RoundedCornerShape(15.dp))
+                .clip(TwoTooTheme.shape.small)
                 .background(TwoTooTheme.color.mainYellow),
             contentAlignment = Alignment.Center,
         ) {
@@ -149,7 +146,7 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo:
             TwoTooImageView(
                 model = { historyInfoUiModel.photoUrl },
                 modifier = Modifier.fillMaxSize().clip(
-                    RoundedCornerShape(10.dp),
+                    TwoTooRound10,
                 ),
             )
             Text(
