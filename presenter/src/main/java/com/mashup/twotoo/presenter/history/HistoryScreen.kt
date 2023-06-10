@@ -38,7 +38,7 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf()) {
             ChallengeInfo(
                 "24",
                 "30분 이상 운동하기",
-                "운동 사진으로 인증하기\n 인증 실패하는지 확인",
+                "운동 사진으로 인증하기\n인증 실패하는지 확인",
             )
             Spacer(modifier = Modifier.height(37.dp))
             OwnerNickNames("왕자", "공주")
