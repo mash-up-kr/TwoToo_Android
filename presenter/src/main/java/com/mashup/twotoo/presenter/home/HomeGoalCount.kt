@@ -39,7 +39,7 @@ fun HomeGoalCount(
             ) {
                 Text(homeGoalCountData.partnerName)
                 TwoTooImageView(
-                    modifier = Modifier.width(10.5.dp).height(9.16.dp),
+                    modifier = Modifier.width(14.dp).height(14.dp),
                     model = R.drawable.ic_heart,
                     previewPlaceholder = R.drawable.ic_heart,
                 )

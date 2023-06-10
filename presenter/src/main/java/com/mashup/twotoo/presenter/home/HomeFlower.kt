@@ -78,7 +78,7 @@ fun HomeFlowerMeAndPartner(
             )
             Spacer(modifier = Modifier.width(4.dp))
             TwoTooImageView(
-                modifier = Modifier.width(14.dp).height(12.dp),
+                modifier = Modifier.width(14.dp).height(14.dp),
                 model = R.drawable.ic_heart,
                 previewPlaceholder = R.drawable.ic_heart,
             )
