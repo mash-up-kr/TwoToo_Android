@@ -9,6 +9,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
@@ -21,13 +22,19 @@ import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 @Composable
 fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
     Scaffold(
-        topBar = { TwoTooMainToolbar(title = "${historyDetailInfoUiModel.ownerNickName}의 기록") },
+        topBar = {
+            TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickName))
+        },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
         CompositionLocalProvider(
             LocalContentColor provides TwoTooTheme.color.mainBrown,
         ) {
-            Column(modifier = Modifier.padding(paddingValues = it).padding(horizontal = 24.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(paddingValues = it)
+                    .padding(horizontal = 24.dp),
+            ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
@@ -40,7 +47,11 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                 }
                 TwoTooImageView(
                     model = historyDetailInfoUiModel.infoUiModel.photoUrl,
-                    modifier = Modifier.fillMaxWidth().height(327.dp).padding(vertical = 24.dp).clip(TwoTooTheme.shape.extraSmall),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(327.dp)
+                        .padding(vertical = 24.dp)
+                        .clip(TwoTooTheme.shape.extraSmall),
                 )
                 Text(
                     text = historyDetailInfoUiModel.challengeName,
@@ -52,27 +63,34 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     style = TwoTooTheme.typography.headLineNormal18,
                 )
                 Text(
-                    text = "입력 시간: ${historyDetailInfoUiModel.infoUiModel.createdTime}",
+                    text = stringResource(id = R.string.historyDetailCreatedTime, historyDetailInfoUiModel.infoUiModel.createdTime),
                     modifier = Modifier.padding(top = 20.dp),
                     style = TwoTooTheme.typography.headLineNormal18,
                     color = TwoTooTheme.color.mainPink,
                 )
 
                 Text(
-                    text = "${historyDetailInfoUiModel.partnerNickname}가 보낸 칭찬",
+                    text = stringResource(id = R.string.complimentFromPartner, historyDetailInfoUiModel.partnerNickname),
                     modifier = Modifier.padding(top = 33.dp),
                     style = TwoTooTheme.typography.bodyNormal16,
                     color = TwotooPink,
                 )
 
                 Box(
-                    modifier = Modifier.padding(top = 8.dp).fillMaxWidth().height(46.dp).clip(TwoTooTheme.shape.extraSmall).background(TwoTooTheme.color.mainWhite),
+                    modifier = Modifier
+                        .padding(top = 8.dp)
+                        .fillMaxWidth()
+                        .height(46.dp)
+                        .clip(TwoTooTheme.shape.extraSmall)
+                        .background(TwoTooTheme.color.mainWhite),
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = historyDetailInfoUiModel.complimentFromPartner,
                         style = TwoTooTheme.typography.bodyNormal16,
-                        modifier = Modifier.padding(horizontal = 10.dp).fillMaxWidth(),
+                        modifier = Modifier
+                            .padding(horizontal = 10.dp)
+                            .fillMaxWidth(),
                     )
                 }
             }

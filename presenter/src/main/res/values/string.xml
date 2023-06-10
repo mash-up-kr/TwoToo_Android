@@ -73,6 +73,10 @@
     <string name="challenge_end_date">종료일</string>
     <string name="twotoo_challenge">Twotoo challenge</string>
 
+    <!-- history detail-->
+    <string name="historyDetailTitle">%s의 기록</string>
+    <string name="historyDetailCreatedTime">입력 시간 : %s</string>
+    <string name="complimentFromPartner">%s가 보낸 칭찬</string>
 
     <!-- button -->
     <string name="button_confirm">확인</string>
