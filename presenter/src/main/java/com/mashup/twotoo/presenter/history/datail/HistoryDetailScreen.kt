@@ -39,7 +39,10 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
-                    Text(text = historyDetailInfoUiModel.createdDate, style = TwoTooTheme.typography.headLineNormal24)
+                    Text(
+                        text = historyDetailInfoUiModel.createdDate,
+                        style = TwoTooTheme.typography.headLineNormal24,
+                    )
                     Icon(
                         painter = painterResource(id = R.drawable.ic_cancel),
                         contentDescription = null,
@@ -63,35 +66,43 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     style = TwoTooTheme.typography.headLineNormal18,
                 )
                 Text(
-                    text = stringResource(id = R.string.historyDetailCreatedTime, historyDetailInfoUiModel.infoUiModel.createdTime),
+                    text = stringResource(
+                        id = R.string.historyDetailCreatedTime,
+                        historyDetailInfoUiModel.infoUiModel.createdTime,
+                    ),
                     modifier = Modifier.padding(top = 20.dp),
                     style = TwoTooTheme.typography.headLineNormal18,
                     color = TwoTooTheme.color.mainPink,
                 )
 
-                Text(
-                    text = stringResource(id = R.string.complimentFromPartner, historyDetailInfoUiModel.partnerNickname),
-                    modifier = Modifier.padding(top = 33.dp),
-                    style = TwoTooTheme.typography.bodyNormal16,
-                    color = TwotooPink,
-                )
-
-                Box(
-                    modifier = Modifier
-                        .padding(top = 8.dp)
-                        .fillMaxWidth()
-                        .height(46.dp)
-                        .clip(TwoTooTheme.shape.extraSmall)
-                        .background(TwoTooTheme.color.mainWhite),
-                    contentAlignment = Alignment.Center,
-                ) {
+                if (historyDetailInfoUiModel.complimentFromPartner.isNotEmpty()) {
                     Text(
-                        text = historyDetailInfoUiModel.complimentFromPartner,
+                        text = stringResource(
+                            id = R.string.complimentFromPartner,
+                            historyDetailInfoUiModel.partnerNickname,
+                        ),
+                        modifier = Modifier.padding(top = 33.dp),
                         style = TwoTooTheme.typography.bodyNormal16,
-                        modifier = Modifier
-                            .padding(horizontal = 10.dp)
-                            .fillMaxWidth(),
+                        color = TwotooPink,
                     )
+
+                    Box(
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .fillMaxWidth()
+                            .height(46.dp)
+                            .clip(TwoTooTheme.shape.extraSmall)
+                            .background(TwoTooTheme.color.mainWhite),
+                        contentAlignment = Alignment.Center,
+                    ) {
+                        Text(
+                            text = historyDetailInfoUiModel.complimentFromPartner,
+                            style = TwoTooTheme.typography.bodyNormal16,
+                            modifier = Modifier
+                                .padding(horizontal = 10.dp)
+                                .fillMaxWidth(),
+                        )
+                    }
                 }
             }
         }
@@ -102,4 +113,10 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
 @Composable
 private fun PreviewHistoryDetailScreen() {
     HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
+}
+
+@Preview("파트너가 칭찬 하지 않았을 때")
+@Composable
+private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
+    HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview().copy(complimentFromPartner = ""))
 }
