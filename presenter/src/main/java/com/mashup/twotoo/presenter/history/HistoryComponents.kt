@@ -6,7 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CornerBasedShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -103,7 +103,7 @@ fun ChallengeInfo(day: String, name: String, detail: String) {
 @Composable
 fun HistoryItems(items: List<HistoryItemUiModel>) {
     LazyColumn {
-        itemsIndexed(items) { index, item ->
+        items(items) { item ->
             HistoryItem(item)
         }
     }
