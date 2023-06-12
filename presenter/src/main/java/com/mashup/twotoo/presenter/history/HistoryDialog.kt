@@ -14,7 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TextContainer
+import com.mashup.twotoo.presenter.designsystem.component.common.TextContainer
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRed
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
