@@ -37,9 +37,9 @@ class TwoTooAppKtTest {
 
     @Before
     fun setupAppNavHost() {
-        context = InstrumentationRegistry.getInstrumentation().targetContext
         composeTestRule.setContent {
-            navController = TestNavHostController(LocalContext.current)
+            context = LocalContext.current
+            navController = TestNavHostController(context)
             twoTooAppState = rememberTwoTooAppState(
                 navController = navController,
             )
