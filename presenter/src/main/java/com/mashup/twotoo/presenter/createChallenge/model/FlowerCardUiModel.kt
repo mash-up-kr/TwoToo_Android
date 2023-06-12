@@ -1,15 +1,15 @@
 package com.mashup.twotoo.presenter.createChallenge.model
 
-data class FlowerCardModel(
+data class FlowerCardUiModel(
     val name: String,
     val desc: String
 ) {
     companion object {
-        fun getFlowerCardModelToPreview(): ArrayList<FlowerCardModel> {
-            val list = arrayListOf<FlowerCardModel>()
+        fun getFlowerCardModelToPreview(): ArrayList<FlowerCardUiModel> {
+            val list = arrayListOf<FlowerCardUiModel>()
             for (i in 0..10) {
                 list.add(
-                    FlowerCardModel(
+                    FlowerCardUiModel(
                         name = "장미",
                         desc = "행복한 사랑을 이루고 싶어요",
                     ),

@@ -21,14 +21,14 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardModel
+import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardUiModel
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun SelectFlowerLazyColumn() {
-    val list = FlowerCardModel.getFlowerCardModelToPreview()
+    val list = FlowerCardUiModel.getFlowerCardModelToPreview()
 
     LazyVerticalGrid(
         contentPadding = PaddingValues(horizontal = 8.dp),
@@ -45,7 +45,7 @@ fun SelectFlowerLazyColumn() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlowerCardItem(
-    flowerCardModel: FlowerCardModel
+    flowerCardModel: FlowerCardUiModel
 ) {
     var color by remember { mutableStateOf(Color.White) }
 
@@ -87,7 +87,7 @@ fun FlowerCardItem(
 @Preview
 @Composable
 private fun PreviewFlowerCardItem() {
-    val model = FlowerCardModel(
+    val model = FlowerCardUiModel(
         name = "장미",
         desc = "행복한 사랑을 이루고 싶어요",
     )
