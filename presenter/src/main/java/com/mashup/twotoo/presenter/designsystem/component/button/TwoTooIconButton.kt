@@ -19,7 +19,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwotooBlack
 fun TwoTooIconButton(
     text: String,
     modifier: Modifier = Modifier,
-    @DrawableRes iconId: Int,
+    @DrawableRes iconId: Int?,
     buttonColor: Color,
     onClick: () -> Unit,
 ) {
@@ -44,7 +44,7 @@ fun TwoTooIconButton(
 fun TwoTooIconButtonImpl(
     text: @Composable () -> Unit,
     modifier: Modifier = Modifier,
-    @DrawableRes iconId: Int,
+    @DrawableRes iconId: Int?,
     buttonColor: Color,
     buttonRadius: CornerBasedShape,
     onClick: () -> Unit,
@@ -63,11 +63,13 @@ fun TwoTooIconButtonImpl(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            Icon(
-                painter = painterResource(id = iconId),
-                tint = Color.Unspecified,
-                contentDescription = null,
-            )
+            iconId?.let {
+                Icon(
+                    painter = painterResource(id = iconId),
+                    tint = Color.Unspecified,
+                    contentDescription = null,
+                )
+            }
             Spacer(modifier = Modifier.width(10.dp))
             text()
         }
