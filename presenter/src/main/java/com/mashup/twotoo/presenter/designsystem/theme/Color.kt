@@ -22,6 +22,7 @@ val SelectedIconColor = Color(0xFF000000)
 // Todo 디자인 시스템에 등록해야하는지 디자인팀에게 질문해야하는 컬러들
 val TwotooBlack = Color(0xFF000000)
 val TwotooPink = Color(0xFFF07C4B)
+val TwoTooRed = Color(0xFFFF3800)
 
 // design system colors
 val MainBrown = Color(0xFF443018)
