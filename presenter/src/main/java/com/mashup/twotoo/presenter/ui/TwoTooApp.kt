@@ -9,9 +9,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -25,12 +28,15 @@ import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TwoTooApp(
     appState: TwoTooAppState = rememberTwoTooAppState(),
 ) {
     Scaffold(
-        modifier = Modifier,
+        modifier = Modifier.semantics {
+            testTagsAsResourceId = true
+        },
         bottomBar = {
             TwoTooBottomBar(
                 destinations = appState.topLevelDestinations,
@@ -73,7 +79,7 @@ fun TwoTooBottomBar(
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination = destination)
             TwoTooNavigationBarItem(
-                selected,
+                selected = selected,
                 onClick = {
                     onNavigateToDestination(destination)
                 },
