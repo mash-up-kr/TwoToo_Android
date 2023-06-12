@@ -10,6 +10,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.twotoo.presenter.designsystem.theme.BackgroundYellow
+import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
@@ -49,6 +51,22 @@ class TwoTooAppState(
             else -> null
         }
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+
+    fun getContainerColorByDestinationForTest(): Color {
+        return if (navController.currentBackStackEntry?.destination?.route == HomeNavigationRoute) {
+            MainPink
+        } else {
+            BackgroundYellow
+        }
+    }
+
+    fun getUnSelectedColorByDestinationForTest(): Color {
+        return if (navController.currentBackStackEntry?.destination?.route == HomeNavigationRoute) {
+            BackgroundYellow
+        } else {
+            MainPink
+        }
+    }
 
     val getContainerColorByDestination: Color
         @Composable get() = if (currentTopLevelDestination == Home) {
