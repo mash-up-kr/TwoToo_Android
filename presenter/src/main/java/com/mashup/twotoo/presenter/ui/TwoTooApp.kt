@@ -29,6 +29,7 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
+import com.mashup.twotoo.presenter.R
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -74,7 +75,9 @@ fun TwoTooBottomBar(
     modifier: Modifier = Modifier,
 ) {
     TwoTooNavigationBar(
-        modifier = modifier,
+        modifier = modifier.testTag(
+            stringResource(id = R.string.bottom_navigation_bar),
+        ),
         containerColor = containerColor,
     ) {
         Spacer(modifier = Modifier.fillMaxWidth(0.07f))

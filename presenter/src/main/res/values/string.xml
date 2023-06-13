@@ -8,6 +8,7 @@
     <string name="home_nav_button">홈 네비게이션 버튼</string>
     <string name="garden_nav_button">가든 네비게이션 버튼</string>
     <string name="user_nav_button">유저 네비게이션 버튼</string>
+    <string name="bottom_navigation_bar">바텀 네비게이션</string>
     
     <!-- Kakao Login -->
     <string name= "login_tite">카카오톡으로 로그인</string>

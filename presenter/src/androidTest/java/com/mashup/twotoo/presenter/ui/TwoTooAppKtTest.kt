@@ -1,7 +1,9 @@
 package com.mashup.twotoo.presenter.ui
 
 import android.content.Context
+import androidx.compose.ui.graphics.colorspace.ColorSpaces
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.test.captureToImage
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -40,6 +42,7 @@ class TwoTooAppKtTest {
         composeTestRule.setContent {
             TwoTooTheme {
                 context = LocalContext.current
+
                 navController = TestNavHostController(context)
                 navController.navigatorProvider.addNavigator(ComposeNavigator())
 
@@ -56,6 +59,7 @@ class TwoTooAppKtTest {
             context.getString(R.string.home_nav_button),
         ).performClick()
     }
+
     private fun gardenNavButtonClick() {
         composeTestRule.onNodeWithTag(
             context.getString(R.string.garden_nav_button),
@@ -83,7 +87,14 @@ class TwoTooAppKtTest {
         homeNavButtonClick()
 
         // 현재 Destination인 TwoTooBottomBar Background 색상 검증
-        assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(MainPink)
+        val array = IntArray(20)
+
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.bottom_navigation_bar),
+        ).captureToImage().readPixels(array, startY = 0, startX = 0, width = 5, height = 4)
+        array.forEach {
+            assertThat(it).isEqualTo(MainPink.convert(ColorSpaces.Srgb).hashCode())
+        }
     }
 
     @Test
@@ -91,7 +102,10 @@ class TwoTooAppKtTest {
         homeNavButtonClick()
 
         // 현재 Destination이 아닌 아이콘의 색상 검증
-        assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(BackgroundYellow)
+
+        assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(
+            BackgroundYellow,
+        )
     }
 
     @Test
@@ -121,7 +135,14 @@ class TwoTooAppKtTest {
     fun 경로가_가든일때_바텀네비게이션색상이_노랑색상인가() {
         gardenNavButtonClick()
 
-        assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(BackgroundYellow)
+        val array = IntArray(20)
+
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.bottom_navigation_bar),
+        ).captureToImage().readPixels(array, startY = 0, startX = 0, width = 5, height = 4)
+        array.forEach {
+            assertThat(it).isEqualTo(BackgroundYellow.convert(ColorSpaces.Srgb).hashCode())
+        }
     }
 
     @Test
@@ -151,7 +172,14 @@ class TwoTooAppKtTest {
     fun 경로가_유저일때_바텀네비게이션_색상이_노랑인가() {
         userNavButtonClick()
 
-        assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(BackgroundYellow)
+        val array = IntArray(20)
+
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.bottom_navigation_bar),
+        ).captureToImage().readPixels(array, startY = 0, startX = 0, width = 5, height = 4)
+        array.forEach {
+            assertThat(it).isEqualTo(BackgroundYellow.convert(ColorSpaces.Srgb).hashCode())
+        }
     }
 
     @Test
