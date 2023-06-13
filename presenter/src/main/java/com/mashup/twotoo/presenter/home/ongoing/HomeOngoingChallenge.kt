@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.ongoing
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,6 +12,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -19,7 +21,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
+import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
@@ -48,13 +50,14 @@ fun HomeOngoingChallenge(
             ) = createRefs()
 
             TwoTooImageView(
-                modifier = Modifier.fillMaxWidth().height(244.dp).constrainAs(homeBackground) {
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(homeBackground) {
                     bottom.linkTo(parent.bottom)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                 },
                 previewPlaceholder = R.drawable.image_home_background,
                 model = R.drawable.image_home_background,
+                contentScale = ContentScale.FillBounds,
             )
             TwoTooMainToolbar(
                 modifier = Modifier.constrainAs(topBar) {
@@ -92,14 +95,17 @@ fun HomeOngoingChallenge(
                 },
                 homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
             )
+
+            val barrier = createTopBarrier(homeBackground, margin = 60.dp)
             HomeFlowerMeAndPartner(
-                modifier = Modifier.constrainAs(homeFlower) {
+                modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                    bottom.linkTo(beeButton.top, margin = 26.29.dp)
+                    bottom.linkTo(barrier)
                 },
                 meAndPartner = ongoingChallengeUiModel.homeFlowerUiModels,
             )
+
             HomeBeeButton(
                 modifier = Modifier.constrainAs(beeButton) {
                     top.linkTo(homeBackground.top)
@@ -139,7 +145,7 @@ private fun PreviewFirstChallengeHomeOngoingChallenge() {
         HomeOngoingChallenge(
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerUiModel.firstChallengeList,
+                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
             ),
         )
     }
@@ -152,7 +158,7 @@ private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
         HomeOngoingChallenge(
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerUiModel.authOnlyPartnerList,
+                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
             ),
         )
     }
@@ -165,7 +171,7 @@ private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
         HomeOngoingChallenge(
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerUiModel.authOnlyMeList,
+                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
             ),
         )
     }
@@ -178,7 +184,7 @@ private fun PreviewAuthBothHomeOngoingChallenge() {
         HomeOngoingChallenge(
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerUiModel.authBoth,
+                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authBoth,
             ),
         )
     }
@@ -191,7 +197,7 @@ private fun PreviewDoNotAuthBothHomeOngoingChallenge() {
         HomeOngoingChallenge(
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerUiModel.doNotAuthBoth,
+                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
             ),
         )
     }
