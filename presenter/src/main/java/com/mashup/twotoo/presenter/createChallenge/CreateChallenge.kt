@@ -48,8 +48,7 @@ fun CreateChallenge(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxSize().padding(horizontal = 24.dp)
-                    .background(TwoTooTheme.color.backgroundYellow),
+                    .fillMaxSize().padding(horizontal = 24.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.create_challenge_step, currentStep),
@@ -99,7 +98,7 @@ private fun PreviewCreateChallengeTwoStep() {
 @Composable
 private fun PreviewCreateChallengeThreeStep() {
     CreateChallenge {
-        CrateChallengeCard(
+        CreateChallengeCard(
             "하루 운동 30분 이상 하기",
             "2023/05/01 ~ 5/22",
             "운동사진으로 인증하기\n실패하는 사람은 뷔페 쏘기",
