@@ -41,6 +41,10 @@
     <!--Home-->
     <string name="homeFirstCreatedChallenge">내 씨앗을 눌러 인증 해보세요!</string>
     <string name="homeAuthOnlyPartener">완료!</string>
+    <string name="homeBeforeChallengeImage">챌리지 생선 전 이미지</string>
+    <string name="homeBeforeChallengeTitle">챌린지 생성 전 타이틀</string>
+    <string name="homeBeforeChallengeButton">챌린지 생성 전 버튼 텍스트</string>
+    <string name="homeBeforeChallengeSubTitle">챌린지 생성 전 서브 타이틀</string>
     <string name="homeBeforeChallengeEmpty">연인과 함께할 22일 챌린지를\n시작해보세요</string>
     <string name="homeBeforeChallengeEmptyButtonText">챌린지 시작히기</string>
     <string name="homeBeforeChallengeRequest">상대방의 응답을\n기다리고 있습니다</string>
