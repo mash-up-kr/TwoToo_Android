@@ -1,12 +1,16 @@
 package com.mashup.twotoo.presenter.home.before
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,53 +33,60 @@ fun HomeBeforeChallenge(
     modifier: Modifier = Modifier,
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp
-    ConstraintLayout(
-        modifier = modifier,
-    ) {
-        val (homeGoalCount, homeBeforeChallengeTitle, homeBeforeChallengeImage, textButton, homeBackground) = createRefs()
-        HomeGoalCount(
-            modifier = Modifier.constrainAs(homeGoalCount) {
-                top.linkTo(parent.top, margin = 11.dp)
-                end.linkTo(parent.end, margin = 22.dp)
-            },
-            homeGoalCountUiModel = beforeChallengeUiModel.homeGoalCountUiModel,
+    Box(modifier = modifier) {
+        TwoTooImageView(
+            modifier = Modifier.fillMaxSize(),
+            model = R.drawable.image_background,
+            previewPlaceholder = R.drawable.image_background,
         )
-        HomeBeforeChallengeTitle(
-            modifier = Modifier.constrainAs(homeBeforeChallengeTitle) {
-                top.linkTo(parent.top, margin = screenHeight * 0.33f.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            stateTitle = beforeChallengeUiModel.stateTitleUiModel,
-        )
-        HomeBeforeChallengeImage(
-            modifier = Modifier
-                .constrainAs(homeBeforeChallengeImage) {
-                    top.linkTo(homeBeforeChallengeTitle.bottom, margin = 11.dp)
+        ConstraintLayout(
+            modifier = modifier,
+        ) {
+            val (homeGoalCount, homeBeforeChallengeTitle, homeBeforeChallengeImage, textButton, homeBackground) = createRefs()
+            HomeGoalCount(
+                modifier = Modifier.constrainAs(homeGoalCount) {
+                    top.linkTo(parent.top, margin = 11.dp)
+                    end.linkTo(parent.end, margin = 22.dp)
+                },
+                homeGoalCountUiModel = beforeChallengeUiModel.homeGoalCountUiModel,
+            )
+            HomeBeforeChallengeTitle(
+                modifier = Modifier.constrainAs(homeBeforeChallengeTitle) {
+                    top.linkTo(parent.top, margin = screenHeight * 0.29f.dp)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
-                }.width(93.dp)
-                .height(109.dp),
-            stateImage = beforeChallengeUiModel.stateImage,
-        )
-        TwoTooImageView(
-            modifier = Modifier.fillMaxWidth().height(244.dp).constrainAs(homeBackground) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            previewPlaceholder = R.drawable.image_home_background,
-            model = R.drawable.image_home_background,
-        )
-
-        TwoTooTextButton(
-            modifier = Modifier.width(177.dp).height(57.dp).constrainAs(textButton) {
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom, margin = 51.dp)
-            },
-            text = stringResource(id = beforeChallengeUiModel.buttonText),
-        )
+                },
+                stateTitle = beforeChallengeUiModel.stateTitleUiModel,
+            )
+            TwoTooImageView(
+                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(homeBackground) {
+                    bottom.linkTo(parent.bottom)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+                previewPlaceholder = R.drawable.image_home_background,
+                model = R.drawable.image_home_background,
+                contentScale = ContentScale.FillBounds,
+            )
+            HomeBeforeChallengeImage(
+                modifier = Modifier
+                    .constrainAs(homeBeforeChallengeImage) {
+                        top.linkTo(homeBeforeChallengeTitle.bottom, margin = 11.dp)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                    }.width(93.dp)
+                    .height(109.dp),
+                stateImage = beforeChallengeUiModel.stateImage,
+            )
+            TwoTooTextButton(
+                modifier = Modifier.testTag(stringResource(id = R.string.homeBeforeChallengeButton)).width(177.dp).height(57.dp).constrainAs(textButton) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom, margin = 51.dp)
+                },
+                text = stringResource(id = beforeChallengeUiModel.buttonText),
+            )
+        }
     }
 }
 
