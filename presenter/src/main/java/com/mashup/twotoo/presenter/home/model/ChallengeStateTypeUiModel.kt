@@ -29,21 +29,21 @@ data class BeforeChallengeUiModel(
     companion object {
         val empty = BeforeChallengeUiModel(
             state = EMPTY,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.empty,
             stateImage = R.drawable.image_challenge_empty,
             buttonText = R.string.homeBeforeChallengeEmptyButtonText,
         )
         val request = BeforeChallengeUiModel(
             state = REQUEST,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.request,
             stateImage = R.drawable.image_challenge_empty,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
         )
         val response = BeforeChallengeUiModel(
             state = RESPONSE,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.response,
             stateImage = R.drawable.image_challenge_response,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
@@ -51,7 +51,7 @@ data class BeforeChallengeUiModel(
 
         val wait = BeforeChallengeUiModel(
             state = WAIT,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.wait,
             stateImage = R.drawable.image_challenge_empty,
             buttonText = R.string.homeBeforeChallengeWaitButtonText,
@@ -59,7 +59,7 @@ data class BeforeChallengeUiModel(
 
         val termination = BeforeChallengeUiModel(
             state = TERMINATION,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.termination,
             stateImage = R.drawable.image_challenge_empty,
             buttonText = R.string.homeBeforeChallengeTerminationButtonText,
@@ -78,7 +78,7 @@ data class OngoingChallengeUiModel(
         val default = OngoingChallengeUiModel(
             homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
             homeGoalAchieveUiModel = HomeGoalAchieveUiModel.default,
-            homeGoalCountUiModel = HomeGoalCountUiModel.empty,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
             homeShotCountTextUiModel = HomeShotCountTextUiModel.default,
         )
