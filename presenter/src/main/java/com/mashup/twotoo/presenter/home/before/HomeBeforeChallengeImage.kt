@@ -3,6 +3,9 @@ package com.mashup.twotoo.presenter.home.before
 import androidx.annotation.DrawableRes
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 
 /**
@@ -15,7 +18,7 @@ fun HomeBeforeChallengeImage(
     modifier: Modifier = Modifier,
 ) {
     TwoTooImageView(
-        modifier = modifier,
+        modifier = modifier.testTag(stringResource(id = R.string.homeBeforeChallengeImage)),
         model = stateImage,
         previewPlaceholder = stateImage,
     )
