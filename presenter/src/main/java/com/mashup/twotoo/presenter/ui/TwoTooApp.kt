@@ -16,6 +16,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBarItem
 import com.mashup.twotoo.presenter.designsystem.icon.Icon
 import com.mashup.twotoo.presenter.designsystem.icon.Icon.ImageVectorIcon
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
@@ -24,9 +25,11 @@ import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooApp(
+    isBackgroundImageExist: Boolean,
     appState: TwoTooAppState = rememberTwoTooAppState(),
 ) {
     Scaffold(
+        containerColor = if (isBackgroundImageExist) Color.Transparent else TwoTooTheme.color.backgroundYellow,
         modifier = Modifier,
         bottomBar = {
             TwoTooBottomBar(
@@ -37,10 +40,11 @@ fun TwoTooApp(
             )
         },
     ) { paddingValues: PaddingValues ->
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.White)
+                .background(color = Color.Transparent)
                 .padding(paddingValues),
         ) {
             val destination = appState.currentTopLevelDestination

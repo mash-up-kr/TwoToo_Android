@@ -8,6 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,10 +23,10 @@ import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 @Composable
 fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
     Scaffold(
+        containerColor = Color.Transparent,
         topBar = {
             TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickName))
         },
-        containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
         CompositionLocalProvider(
             LocalContentColor provides TwoTooTheme.color.mainBrown,
@@ -112,14 +113,18 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
 @Preview
 @Composable
 private fun PreviewHistoryDetailScreen() {
-    HistoryDetailScreen(
-        HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
-            .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
-    )
+    TwoTooTheme {
+        HistoryDetailScreen(
+            HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+                .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
+        )
+    }
 }
 
 @Preview("파트너가 칭찬 하지 않았을 때")
 @Composable
 private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
-    HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
+    TwoTooTheme {
+        HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
+    }
 }

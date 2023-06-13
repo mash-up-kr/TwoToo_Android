@@ -14,7 +14,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TwoTooTheme {
-                TwoTooApp()
+                TwoTooApp(isBackgroundImageExist = it)
             }
         }
         Logging.logRegToken()
