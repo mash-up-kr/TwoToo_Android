@@ -5,25 +5,27 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Visibility
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
+import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
-import com.mashup.twotoo.presenter.home.model.AuthType.DoNotAuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
@@ -34,52 +36,50 @@ import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeFlowerMeAndPartner(
-    meAndPartner: List<HomeFlowerUiModel>,
+    meAndPartner: HomeFlowerPartnerAndMeUiModel,
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(
         modifier = modifier,
     ) {
         val (textHint, partnerText, waterImage, partner, me) = createRefs()
-        TextHint(
-            modifier = Modifier.constrainAs(textHint) {
-                start.linkTo(waterImage.start)
-                end.linkTo(waterImage.end)
-                top.linkTo(parent.top)
-                bottom.linkTo(waterImage.top, margin = 15.dp)
-                visibility = if (meAndPartner[1].authType == FirstCreateChallenge) {
-                    Visibility.Visible
-                } else {
-                    Visibility.Invisible
-                }
-            },
-        )
-        Row(
-            modifier = Modifier.constrainAs(partnerText) {
-                bottom.linkTo(partner.top, margin = 15.dp)
-                start.linkTo(partner.start)
-                end.linkTo(partner.end)
-                visibility = if (meAndPartner[0].authType == AuthOnlyPartner ||
-                    meAndPartner[0].authType == AuthBoth
-                ) {
-                    Visibility.Visible
-                } else {
-                    Visibility.Invisible
-                }
-            },
-            verticalAlignment = Alignment.CenterVertically,
-        ) {
-            Text(
-                text = stringResource(id = R.string.homeAuthOnlyPartener),
-                style = TwoTooTheme.typography.bodyNormal14,
-                color = TwotooPink,
+
+        if (meAndPartner.me.authType == FirstCreateChallenge) {
+            TextHint(
+                modifier = Modifier.testTag(
+                    stringResource(id = R.string.homeOngoingChallengeFirstChallengeHint),
+                ).constrainAs(textHint) {
+                    start.linkTo(waterImage.start)
+                    end.linkTo(waterImage.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(waterImage.top, margin = 6.dp)
+                },
             )
-            Spacer(modifier = Modifier.width(4.dp))
-            TwoTooImageView(
-                modifier = Modifier.width(14.dp).height(14.dp),
-                model = R.drawable.ic_heart,
-                previewPlaceholder = R.drawable.ic_heart,
-            )
+        }
+
+        if (meAndPartner.partner.authType == AuthOnlyPartner) {
+            Row(
+                modifier = Modifier.testTag(
+                    stringResource(id = R.string.homeOngoingChallengeAuthPartnerText),
+                ).constrainAs(partnerText) {
+                    bottom.linkTo(partner.top, margin = 15.dp)
+                    start.linkTo(partner.start)
+                    end.linkTo(partner.end)
+                },
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Text(
+                    text = stringResource(id = R.string.homeAuthOnlyPartener),
+                    style = TwoTooTheme.typography.bodyNormal14,
+                    color = TwotooPink,
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+                TwoTooImageView(
+                    modifier = Modifier.width(14.dp).height(14.dp),
+                    model = R.drawable.ic_heart,
+                    previewPlaceholder = R.drawable.ic_heart,
+                )
+            }
         }
 
         HomeFlowerPartner(
@@ -88,26 +88,22 @@ fun HomeFlowerMeAndPartner(
                 end.linkTo(me.start)
                 bottom.linkTo(parent.bottom)
             },
-            homeFlowerUiModel = meAndPartner[0],
+            homeFlowerUiModel = meAndPartner.partner,
         )
 
-        TwoTooImageView(
-            modifier = Modifier.width(59.dp).height(60.dp).constrainAs(waterImage) {
-                top.linkTo(textHint.bottom)
-                bottom.linkTo(me.top, margin = 22.dp)
-                start.linkTo(me.start)
-                end.linkTo(me.end)
-                visibility = if (meAndPartner[1].authType == AuthOnlyPartner ||
-                    meAndPartner[1].authType == FirstCreateChallenge ||
-                    meAndPartner[1].authType == DoNotAuthBoth
-                ) {
-                    Visibility.Visible
-                } else {
-                    Visibility.Invisible
-                }
-            },
-            model = R.drawable.ic_needed_water,
-        )
+        if (meAndPartner.me.authType != AuthOnlyMe && meAndPartner.me.authType != AuthBoth) {
+            TwoTooImageView(
+                modifier = Modifier.testTag(
+                    stringResource(id = R.string.homeOngoingChallengeWaterImage),
+                ).width(59.dp).height(60.dp).constrainAs(waterImage) {
+                    top.linkTo(textHint.bottom)
+                    bottom.linkTo(me.top, margin = 8.dp)
+                    start.linkTo(me.start)
+                    end.linkTo(me.end)
+                },
+                model = R.drawable.ic_needed_water,
+            )
+        }
 
         HomeFlowerMe(
             modifier = Modifier.constrainAs(me) {
@@ -115,7 +111,7 @@ fun HomeFlowerMeAndPartner(
                 start.linkTo(partner.end)
                 bottom.linkTo(parent.bottom)
             },
-            homeFlowerUiModel = meAndPartner[1],
+            homeFlowerUiModel = meAndPartner.me,
         )
     }
 }
@@ -131,11 +127,13 @@ fun HomeFlowerPartner(
     ) {
         with(homeFlowerUiModel.growType) {
             TwoTooImageView(
-                modifier = Modifier.width(width).height(height),
+                modifier = Modifier.testTag(
+                    stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
+                ).width(width).height(height),
                 model = growImage,
             )
         }
-        Spacer(modifier = Modifier.height(26.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         HomeFlowerOwnerText(
             name = homeFlowerUiModel.name,
             userType = PARTNER,
@@ -154,11 +152,13 @@ fun HomeFlowerMe(
     ) {
         with(homeFlowerUiModel.growType) {
             TwoTooImageView(
-                modifier = Modifier.width(width).height(height),
+                modifier = Modifier.testTag(
+                    stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
+                ).width(width).height(height),
                 model = growImage,
             )
         }
-        Spacer(modifier = Modifier.height(26.dp))
+        Spacer(modifier = Modifier.height(3.dp))
         HomeFlowerOwnerText(
             name = homeFlowerUiModel.name,
             userType = ME,
@@ -184,7 +184,8 @@ private fun PreviewFirstChallengeHomeFlower() {
     TwoTooTheme {
         Box(modifier = Modifier.fillMaxSize()) {
             HomeFlowerMeAndPartner(
-                meAndPartner = HomeFlowerUiModel.firstChallengeList,
+                modifier = Modifier.fillMaxWidth(),
+                meAndPartner = HomeFlowerPartnerAndMeUiModel.firstChallenge,
             )
         }
     }
@@ -198,7 +199,8 @@ private fun PreviewAuthOnlyPartnerHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                meAndPartner = HomeFlowerUiModel.authOnlyPartnerList,
+                modifier = Modifier.fillMaxWidth(),
+                meAndPartner = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
             )
         }
     }
@@ -212,7 +214,8 @@ private fun PreviewAuthOnlyMeHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                meAndPartner = HomeFlowerUiModel.authOnlyMeList,
+                modifier = Modifier.fillMaxWidth(),
+                meAndPartner = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
             )
         }
     }
@@ -226,7 +229,8 @@ private fun PreviewAuthBothHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                meAndPartner = HomeFlowerUiModel.authBoth,
+                modifier = Modifier.fillMaxWidth(),
+                meAndPartner = HomeFlowerPartnerAndMeUiModel.authBoth,
             )
         }
     }
@@ -240,7 +244,8 @@ private fun PreviewDoNotAuthBothHomeFlower() {
             modifier = Modifier.fillMaxSize(),
         ) {
             HomeFlowerMeAndPartner(
-                meAndPartner = HomeFlowerUiModel.doNotAuthBoth,
+                modifier = Modifier.fillMaxWidth(),
+                meAndPartner = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
             )
         }
     }
