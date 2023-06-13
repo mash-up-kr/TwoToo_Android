@@ -23,7 +23,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun CrateChallengeCard(
+fun CreateChallengeCard(
     challengeTitle: String,
     challengeDate: String,
     challengeDesc: String
@@ -115,7 +115,7 @@ fun ChallengeCardInfoBottom(
 @Preview
 @Composable
 private fun ChallengeCardPreview() {
-    CrateChallengeCard(
+    CreateChallengeCard(
         "하루 운동 30분 이상 하기",
         "2023/05/01 ~ 5/22",
         "운동사진으로 인증하기\n실패하는 사람은 뷔페 쏘기",
