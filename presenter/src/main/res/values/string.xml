@@ -57,6 +57,13 @@
     <string name="homeBeforeChallengeTermination">챌린지가 만료됐어요\nㅠㅜ</string>
     <string name="homeBeforeChallengeTerminationButtonText">챌린지 시작하기</string>
 
+    <string name="homeOngoingChallengeFirstChallengeHint">첫번째 챌린지일 때 힌트텍스트</string>
+    <string name="homeOngoingChallengeAuthPartnerText">상태방이 인증했을 때 텍스트</string>
+    <string name="homeOngoingChallengeWaterImage">물 뿌리개 이미지</string>
+    <string name="homeOngoingChallengeFlowerMeImage">나의 꽃 이미지</string>
+    <string name="homeOngoingChallengeFlowerPartnerImage">파트너 꽃 이미지</string>
+
+
     
     
     <!--onboarding -->
