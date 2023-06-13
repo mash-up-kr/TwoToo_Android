@@ -4,16 +4,16 @@ import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
+import androidx.compose.ui.test.performClick
 import androidx.navigation.compose.ComposeNavigator
 import androidx.navigation.testing.TestNavHostController
-import androidx.test.platform.app.InstrumentationRegistry
 import com.google.common.truth.Truth.assertThat
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.BackgroundYellow
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
-import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.twotoo.TwoTooApp
 import com.mashup.twotoo.presenter.user.navigation.UserNavigationRoute
 import org.junit.Before
@@ -38,45 +38,49 @@ class TwoTooAppKtTest {
     @Before
     fun setupAppNavHost() {
         composeTestRule.setContent {
-            context = LocalContext.current
-            navController = TestNavHostController(context)
-            twoTooAppState = rememberTwoTooAppState(
-                navController = navController,
-            )
-            navController.navigatorProvider.addNavigator(ComposeNavigator())
-            TwoTooApp(appState = twoTooAppState)
+            TwoTooTheme {
+                context = LocalContext.current
+                navController = TestNavHostController(context)
+                navController.navigatorProvider.addNavigator(ComposeNavigator())
+
+                twoTooAppState = rememberTwoTooAppState(
+                    navController = navController,
+                )
+                TwoTooApp(appState = twoTooAppState)
+            }
         }
     }
 
-    private fun setDestinationHome() {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            twoTooAppState.navigationToTopLevelDestination(TopLevelDestination.Home)
-        }
+    private fun homeNavButtonClick() {
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.home_nav_button),
+        ).performClick()
+    }
+    private fun gardenNavButtonClick() {
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.garden_nav_button),
+        ).performClick()
     }
 
-    private fun setDestinationGarden() {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            twoTooAppState.navigationToTopLevelDestination(TopLevelDestination.Garden)
-        }
-    }
-
-    private fun setDestinationUser() {
-        InstrumentationRegistry.getInstrumentation().runOnMainSync {
-            twoTooAppState.navigationToTopLevelDestination(TopLevelDestination.User)
-        }
+    private fun userNavButtonClick() {
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.user_nav_button),
+        ).performClick()
     }
 
     @Test
     fun 경로가_홈일때_경로가_홈이_맞는가() {
-        setDestinationHome()
+        homeNavButtonClick()
 
         // 현재 Destination이 Home인지 검증
         assertThat(navController.currentDestination?.route).isEqualTo(HomeNavigationRoute)
+        assertThat(navController.currentDestination?.route).isNotEqualTo(GardenNavigationRoute)
+        assertThat(navController.currentDestination?.route).isNotEqualTo(UserNavigationRoute)
     }
 
     @Test
     fun 경로가_홈일때_바텀네비게이션색상이_핑크색상인가() {
-        setDestinationHome()
+        homeNavButtonClick()
 
         // 현재 Destination인 TwoTooBottomBar Background 색상 검증
         assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(MainPink)
@@ -84,7 +88,7 @@ class TwoTooAppKtTest {
 
     @Test
     fun 경로가_홈일때_다른_스크린_아이콘이_노랑색상인가() {
-        setDestinationHome()
+        homeNavButtonClick()
 
         // 현재 Destination이 아닌 아이콘의 색상 검증
         assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(BackgroundYellow)
@@ -92,7 +96,7 @@ class TwoTooAppKtTest {
 
     @Test
     fun 경로가_홈일때_홈스크린이_보이는가() {
-        setDestinationHome()
+        homeNavButtonClick()
 
         // 현재 HomeScreen이 보이는 지 검증
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertExists()
@@ -106,25 +110,31 @@ class TwoTooAppKtTest {
 
     @Test
     fun 경로가_가든일때_경로가_가든이_맞는가() {
-        setDestinationGarden()
+        gardenNavButtonClick()
+
         assertThat(navController.currentDestination?.route).isEqualTo(GardenNavigationRoute)
+        assertThat(navController.currentDestination?.route).isNotEqualTo(HomeNavigationRoute)
+        assertThat(navController.currentDestination?.route).isNotEqualTo(UserNavigationRoute)
     }
 
     @Test
     fun 경로가_가든일때_바텀네비게이션색상이_노랑색상인가() {
-        setDestinationGarden()
+        gardenNavButtonClick()
+
         assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(BackgroundYellow)
     }
 
     @Test
     fun 경로가_가든일때_다른_스크린_아이콘이_핑크색상인가() {
-        setDestinationGarden()
+        gardenNavButtonClick()
+
         assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(MainPink)
     }
 
     @Test
     fun 경로가_가든일때_가든스크린이_보이는가() {
-        setDestinationGarden()
+        gardenNavButtonClick()
+
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertExists()
         composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertDoesNotExist()
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertDoesNotExist()
@@ -132,25 +142,29 @@ class TwoTooAppKtTest {
 
     @Test
     fun 경로가_유저일때_경로가_유저가_맞는가() {
-        setDestinationUser()
+        userNavButtonClick()
+
         assertThat(navController.currentDestination?.route).isEqualTo(UserNavigationRoute)
     }
 
     @Test
     fun 경로가_유저일때_바텀네비게이션_색상이_노랑인가() {
-        setDestinationUser()
+        userNavButtonClick()
+
         assertThat(twoTooAppState.getContainerColorByDestinationForTest()).isEqualTo(BackgroundYellow)
     }
 
     @Test
     fun 경로가_유저일때_다른_스크린_아이콘이_핑크색상인가() {
-        setDestinationUser()
+        userNavButtonClick()
+
         assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(MainPink)
     }
 
     @Test
     fun 경로가_유저일때_유저스크린이_보이는가() {
-        setDestinationUser()
+        userNavButtonClick()
+
         composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertExists()
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertDoesNotExist()
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertDoesNotExist()
