@@ -29,6 +29,7 @@ fun TwoTooMainToolbar(
                     color = TwotooPink,
                     style = TwoTooTheme.typography.headLineNormal28,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier.offset(x = (-16).dp).padding(horizontal = 24.dp),
                 )
             }
         },
@@ -64,6 +65,7 @@ fun TwoTooMainToolbar(title: String = stringResource(id = R.string.app_name)) {
                     color = TwotooPink,
                     style = TwoTooTheme.typography.headLineNormal28,
                     textAlign = TextAlign.Center,
+                    modifier = Modifier.offset(x = (-16).dp).padding(horizontal = 24.dp),
                 )
             }
         },

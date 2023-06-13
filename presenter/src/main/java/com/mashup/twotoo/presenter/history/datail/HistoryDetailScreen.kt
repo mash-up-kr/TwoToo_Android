@@ -27,13 +27,13 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
         topBar = {
             TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickName))
         },
-    ) {
+    ) { paddingValues ->
         CompositionLocalProvider(
             LocalContentColor provides TwoTooTheme.color.mainBrown,
         ) {
             Column(
                 modifier = Modifier
-                    .padding(paddingValues = it)
+                    .padding(paddingValues = paddingValues)
                     .padding(horizontal = 24.dp),
             ) {
                 Row(
