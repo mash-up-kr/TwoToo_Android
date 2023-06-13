@@ -52,14 +52,6 @@ class TwoTooAppState(
         }
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
-    fun getContainerColorByDestinationForTest(): Color {
-        return if (navController.currentBackStackEntry?.destination?.route == HomeNavigationRoute) {
-            MainPink
-        } else {
-            BackgroundYellow
-        }
-    }
-
     fun getUnSelectedColorByDestinationForTest(): Color {
         return if (navController.currentBackStackEntry?.destination?.route == HomeNavigationRoute) {
             BackgroundYellow
