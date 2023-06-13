@@ -9,7 +9,7 @@ data class HistoryDetailInfoUiModel(
     val infoUiModel: HistoryInfoUiModel,
     val impressions: String,
     val partnerNickname: String,
-    val complimentFromPartner: String,
+    val complimentFromPartner: String = "",
 ) {
     companion object {
         fun getHistoryDetailInfoUiModelToPreview(): HistoryDetailInfoUiModel {
@@ -18,9 +18,8 @@ data class HistoryDetailInfoUiModel(
                 challengeName = "30분 이상 운동하기",
                 createdDate = "2023년 4월 20일",
                 infoUiModel = HistoryInfoUiModel(photoUrl = "", createdTime = "20:35"),
-                impressions = "오늘 따라 너무 핀곤해서 힘들었다!!! 으악 ! \n 그래도 귀여운 꽃을 키우기 위해 열심히 해야지 ㅎㅎ",
+                impressions = "오늘 따라 너무 피곤해서 힘들었다!!! 으악 ! \n 그래도 귀여운 꽃을 키우기 위해 열심히 해야지 ㅎㅎ",
                 partnerNickname = "공주",
-                complimentFromPartner = "앞으로 더 화이팅이야!!",
             )
         }
     }

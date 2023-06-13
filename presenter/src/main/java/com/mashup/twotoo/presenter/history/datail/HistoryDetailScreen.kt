@@ -112,11 +112,14 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
 @Preview
 @Composable
 private fun PreviewHistoryDetailScreen() {
-    HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
+    HistoryDetailScreen(
+        HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+            .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
+    )
 }
 
 @Preview("파트너가 칭찬 하지 않았을 때")
 @Composable
 private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
-    HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview().copy(complimentFromPartner = ""))
+    HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
 }
