@@ -73,7 +73,7 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     ),
                     modifier = Modifier.padding(top = 20.dp),
                     style = TwoTooTheme.typography.headLineNormal18,
-                    color = TwoTooTheme.color.mainPink,
+                    color = TwoTooTheme.color.gray500,
                 )
 
                 if (historyDetailInfoUiModel.complimentFromPartner.isNotEmpty()) {
