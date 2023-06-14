@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.createChallenge
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -11,9 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.paint
 import androidx.compose.ui.layout.ContentScale
@@ -29,11 +25,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun CreateChallenge(
-    currentStep: @Composable () -> Unit
+    stepNumber: Int,
+    currentStepScreen: @Composable () -> Unit,
 ) {
-    val currentStep by remember {
-        mutableStateOf(1)
-    }
     Scaffold(
         topBar = { TwoTooBackToolbar(onClickBackIcon = {}) },
     ) { padding ->
@@ -51,7 +45,7 @@ fun CreateChallenge(
                     .fillMaxSize().padding(horizontal = 24.dp),
             ) {
                 Text(
-                    text = stringResource(id = R.string.create_challenge_step, currentStep),
+                    text = stringResource(id = R.string.create_challenge_step, stepNumber),
                     textAlign = TextAlign.Left,
                     style = TwoTooTheme.typography.headLineNormal28,
                     color = TwoTooTheme.color.mainBrown,
@@ -62,7 +56,7 @@ fun CreateChallenge(
                     color = TwoTooTheme.color.gray600,
                     modifier = Modifier.padding(top = 12.dp),
                 )
-                currentStep()
+                currentStepScreen()
 
                 Spacer(Modifier.weight(1f))
                 TwoTooTextButton(
@@ -81,7 +75,7 @@ fun CreateChallenge(
 @Preview
 @Composable
 private fun PreviewCreateChallengeOneStep() {
-    CreateChallenge {
+    CreateChallenge(stepNumber = 1) {
         CreateChallengeOneStep()
     }
 }
@@ -89,7 +83,7 @@ private fun PreviewCreateChallengeOneStep() {
 @Preview
 @Composable
 private fun PreviewCreateChallengeTwoStep() {
-    CreateChallenge {
+    CreateChallenge(stepNumber = 2) {
         CreateChallengeTwoStep()
     }
 }
@@ -97,7 +91,7 @@ private fun PreviewCreateChallengeTwoStep() {
 @Preview
 @Composable
 private fun PreviewCreateChallengeThreeStep() {
-    CreateChallenge {
+    CreateChallenge(stepNumber = 3) {
         CreateChallengeCard(
             "하루 운동 30분 이상 하기",
             "2023/05/01 ~ 5/22",
