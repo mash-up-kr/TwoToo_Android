@@ -1,13 +1,13 @@
 package com.mashup.twotoo.presenter.history.datail
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawBehind
+import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.theme.MainWhite
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
@@ -53,8 +54,8 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     model = historyDetailInfoUiModel.infoUiModel.photoUrl,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(327.dp)
                         .padding(vertical = 24.dp)
+                        .aspectRatio(1f)
                         .clip(TwoTooTheme.shape.extraSmall),
                 )
                 Text(
@@ -87,23 +88,18 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                         color = TwotooPink,
                     )
 
-                    Box(
+                    Text(
+                        text = historyDetailInfoUiModel.complimentFromPartner,
+                        style = TwoTooTheme.typography.bodyNormal16,
                         modifier = Modifier
                             .padding(top = 8.dp)
-                            .fillMaxWidth()
-                            .height(46.dp)
-                            .clip(TwoTooTheme.shape.extraSmall)
-                            .background(TwoTooTheme.color.mainWhite),
-                        contentAlignment = Alignment.Center,
-                    ) {
-                        Text(
-                            text = historyDetailInfoUiModel.complimentFromPartner,
-                            style = TwoTooTheme.typography.bodyNormal16,
-                            modifier = Modifier
-                                .padding(horizontal = 10.dp)
-                                .fillMaxWidth(),
-                        )
-                    }
+                            .fillMaxWidth().drawBehind {
+                                drawRoundRect(
+                                    color = MainWhite,
+                                    cornerRadius = CornerRadius(10.dp.toPx()),
+                                )
+                            }.padding(horizontal = 10.dp, vertical = 15.dp),
+                    )
                 }
             }
         }
