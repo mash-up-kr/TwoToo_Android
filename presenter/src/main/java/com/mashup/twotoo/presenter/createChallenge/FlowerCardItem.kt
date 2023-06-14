@@ -66,7 +66,7 @@ fun FlowerCardItem(
             TwoTooImageView(
                 model = R.drawable.example_flower,
                 modifier = Modifier
-                    .size(55.dp, 55.dp),
+                    .size(55.dp),
                 previewPlaceholder = R.drawable.example_flower,
             )
             Text(
