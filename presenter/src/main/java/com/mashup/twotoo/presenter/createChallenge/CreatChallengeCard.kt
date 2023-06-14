@@ -13,6 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,7 +27,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 fun CreateChallengeCard(
     challengeTitle: String,
     challengeDate: String,
-    challengeDesc: String
+    challengeDesc: String,
 ) {
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -50,7 +51,7 @@ fun CreateChallengeCard(
 fun ChallengeCardInfoTop(
     challengeTitle: String,
     challengeDate: String,
-    challengeDesc: String
+    challengeDesc: String,
 ) {
     Column(
         modifier = Modifier
@@ -109,6 +110,7 @@ fun ChallengeCardInfoBottom(
                 .padding(end = 8.dp, bottom = 21.dp),
         ),
         previewPlaceholder = R.drawable.card_seed_img,
+        contentScale = ContentScale.FillBounds,
     )
 }
 
