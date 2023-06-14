@@ -67,13 +67,13 @@ fun ChallengeCardInfoTop(
         )
         Text(
             text = challengeDate,
-            textAlign = TextAlign.Left,
+            textAlign = TextAlign.Start,
             style = TwoTooTheme.typography.headLineNormal20,
             color = TwoTooTheme.color.mainBrown,
         )
         Text(
             text = challengeDesc,
-            textAlign = TextAlign.Left,
+            textAlign = TextAlign.Start,
             style = TwoTooTheme.typography.bodyNormal14,
             color = TwoTooTheme.color.gray600,
             modifier = Modifier.padding(top = 18.dp),
