@@ -29,7 +29,7 @@ import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 @Composable
 fun OwnerNickNames(partnerNickname: String, myNickname: String) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 67.dp),
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 67.dp).padding(top = 37.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         CardText(text = partnerNickname)
