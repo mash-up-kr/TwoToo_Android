@@ -2,7 +2,6 @@ package com.mashup.twotoo.presenter.home.ongoing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,7 +18,6 @@ import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
@@ -36,95 +34,79 @@ fun HomeOngoingChallenge(
     modifier: Modifier = Modifier,
     ongoingChallengeUiModel: OngoingChallengeUiModel = OngoingChallengeUiModel.default,
 ) {
-    Box(modifier = modifier.fillMaxSize()) {
+    ConstraintLayout(modifier = modifier.fillMaxSize()) {
+        val (
+            homeGoalField, goalAchievement, goalCount,
+            homeBackground, beeButton, shotCount, homeFlower,
+        ) = createRefs()
+
         TwoTooImageView(
-            modifier = Modifier.fillMaxSize(),
-            model = R.drawable.image_background,
-            previewPlaceholder = R.drawable.image_background,
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(homeBackground) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            previewPlaceholder = R.drawable.image_home_background,
+            model = R.drawable.image_home_background,
+            contentScale = ContentScale.FillBounds,
         )
 
-        ConstraintLayout(modifier = Modifier.fillMaxSize()) {
-            val (
-                topBar, homeGoalField, goalAchievement, goalCount,
-                homeBackground, beeButton, shotCount, homeFlower,
-            ) = createRefs()
+        HomeGoalField(
+            modifier = Modifier.constrainAs(homeGoalField) {
+                top.linkTo(parent.top, margin = 11.dp)
+                start.linkTo(parent.start, margin = 24.dp)
+                end.linkTo(parent.end, margin = 24.dp)
+                width = Dimension.fillToConstraints
+            },
+            homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
+        )
+        HomeGoalAchievement(
+            modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
+                start.linkTo(homeGoalField.start)
+                top.linkTo(homeGoalField.bottom)
+            }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
+            goalAchieveDataList = listOf(
+                HomeGoalAchieveUiModel(name = "공주", type = UserType.PARTNER, progress = 0.7f),
+                HomeGoalAchieveUiModel(name = "나", type = UserType.ME, progress = 0.6f),
+            ),
+        )
+        HomeGoalCount(
+            modifier = Modifier.constrainAs(goalCount) {
+                end.linkTo(homeGoalField.end)
+                top.linkTo(goalAchievement.top)
+                bottom.linkTo(goalAchievement.bottom)
+            },
+            homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
+        )
 
-            TwoTooImageView(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(homeBackground) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                previewPlaceholder = R.drawable.image_home_background,
-                model = R.drawable.image_home_background,
-                contentScale = ContentScale.FillBounds,
-            )
-            TwoTooMainToolbar(
-                modifier = Modifier.constrainAs(topBar) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                onClickHelpIcon = {},
-            )
+        val barrier = createTopBarrier(homeBackground, margin = 60.dp)
+        HomeFlowerMeAndPartner(
+            modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(barrier)
+            },
+            meAndPartner = ongoingChallengeUiModel.homeFlowerUiModels,
+        )
 
-            HomeGoalField(
-                modifier = Modifier.constrainAs(homeGoalField) {
-                    top.linkTo(topBar.bottom)
-                    start.linkTo(parent.start, margin = 24.dp)
-                    end.linkTo(parent.end, margin = 24.dp)
-                    width = Dimension.fillToConstraints
-                },
-                homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
-            )
-            HomeGoalAchievement(
-                modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
-                    start.linkTo(homeGoalField.start)
-                    top.linkTo(homeGoalField.bottom)
-                }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                goalAchieveDataList = listOf(
-                    HomeGoalAchieveUiModel(name = "공주", type = UserType.PARTNER, progress = 0.7f),
-                    HomeGoalAchieveUiModel(name = "나", type = UserType.ME, progress = 0.6f),
-                ),
-            )
-            HomeGoalCount(
-                modifier = Modifier.constrainAs(goalCount) {
-                    end.linkTo(homeGoalField.end)
-                    top.linkTo(goalAchievement.top)
-                    bottom.linkTo(goalAchievement.bottom)
-                },
-                homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
-            )
-
-            val barrier = createTopBarrier(homeBackground, margin = 60.dp)
-            HomeFlowerMeAndPartner(
-                modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(barrier)
-                },
-                meAndPartner = ongoingChallengeUiModel.homeFlowerUiModels,
-            )
-
-            HomeBeeButton(
-                modifier = Modifier.constrainAs(beeButton) {
-                    top.linkTo(homeBackground.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                    bottom.linkTo(parent.bottom)
-                }.clickable {
-                    onBeeButtonClick()
-                },
-            )
-            HomeShotCountText(
-                modifier = Modifier.constrainAs(shotCount) {
-                    top.linkTo(beeButton.bottom, margin = 10.19.dp)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                homeShotCountTextUiModel = ongoingChallengeUiModel.homeShotCountTextUiModel,
-            )
-        }
+        HomeBeeButton(
+            modifier = Modifier.constrainAs(beeButton) {
+                top.linkTo(homeBackground.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+            }.clickable {
+                onBeeButtonClick()
+            },
+        )
+        HomeShotCountText(
+            modifier = Modifier.constrainAs(shotCount) {
+                top.linkTo(beeButton.bottom, margin = 10.19.dp)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            homeShotCountTextUiModel = ongoingChallengeUiModel.homeShotCountTextUiModel,
+        )
     }
 }
 
