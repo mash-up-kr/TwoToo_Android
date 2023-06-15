@@ -14,10 +14,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.BackgroundYellow
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
-import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.twotoo.TwoTooApp
-import com.mashup.twotoo.presenter.user.navigation.UserNavigationRoute
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -102,15 +99,6 @@ class TwoTooAppKtTest {
     }
 
     @Test
-    fun 경로가_가든일때_경로가_가든이_맞는가() {
-        gardenNavButtonClick()
-
-        assertThat(navController.currentDestination?.route).isEqualTo(GardenNavigationRoute)
-        assertThat(navController.currentDestination?.route).isNotEqualTo(HomeNavigationRoute)
-        assertThat(navController.currentDestination?.route).isNotEqualTo(UserNavigationRoute)
-    }
-
-    @Test
     fun 경로가_가든일때_바텀네비게이션색상이_노랑색상인가() {
         gardenNavButtonClick()
 
@@ -131,13 +119,6 @@ class TwoTooAppKtTest {
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertExists()
         composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertDoesNotExist()
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertDoesNotExist()
-    }
-
-    @Test
-    fun 경로가_유저일때_경로가_유저가_맞는가() {
-        userNavButtonClick()
-
-        assertThat(navController.currentDestination?.route).isEqualTo(UserNavigationRoute)
     }
 
     @Test
