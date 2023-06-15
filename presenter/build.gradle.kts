@@ -66,6 +66,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     debugImplementation(libs.bundles.androidx.compose.ui.debug)
     implementation(libs.bundles.firebase)
+    androidTestImplementation(libs.test.navigation)
+    androidTestImplementation(libs.truth)
 }
 
 fun getApiKey(propertyKey: String): String {
