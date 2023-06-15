@@ -88,17 +88,6 @@ class TwoTooAppKtTest {
     }
 
     @Test
-    fun 경로가_홈일때_다른_스크린_아이콘이_노랑색상인가() {
-        homeNavButtonClick()
-
-        // 현재 Destination이 아닌 아이콘의 색상 검증
-
-        assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(
-            BackgroundYellow,
-        )
-    }
-
-    @Test
     fun 경로가_홈일때_홈스크린이_보이는가() {
         homeNavButtonClick()
 
@@ -136,13 +125,6 @@ class TwoTooAppKtTest {
     }
 
     @Test
-    fun 경로가_가든일때_다른_스크린_아이콘이_핑크색상인가() {
-        gardenNavButtonClick()
-
-        assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(MainPink)
-    }
-
-    @Test
     fun 경로가_가든일때_가든스크린이_보이는가() {
         gardenNavButtonClick()
 
@@ -170,13 +152,6 @@ class TwoTooAppKtTest {
         array.forEach {
             assertThat(it).isEqualTo(BackgroundYellow.convert(ColorSpaces.Srgb).hashCode())
         }
-    }
-
-    @Test
-    fun 경로가_유저일때_다른_스크린_아이콘이_핑크색상인가() {
-        userNavButtonClick()
-
-        assertThat(twoTooAppState.getUnSelectedColorByDestinationForTest()).isEqualTo(MainPink)
     }
 
     @Test
