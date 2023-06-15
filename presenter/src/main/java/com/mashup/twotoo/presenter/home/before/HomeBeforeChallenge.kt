@@ -19,8 +19,10 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.home.before.components.HomeBeforeChallengeImage
+import com.mashup.twotoo.presenter.home.before.components.HomeBeforeChallengeTitle
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
-import com.mashup.twotoo.presenter.home.ongoing.HomeGoalCount
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 
 /**
  * @Created by 김현국 2023/06/10

@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.before
+package com.mashup.twotoo.presenter.home.before.components
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

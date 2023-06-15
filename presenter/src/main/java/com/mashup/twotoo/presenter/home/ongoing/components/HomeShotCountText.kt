@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.ongoing
+package com.mashup.twotoo.presenter.home.ongoing.components
 
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable

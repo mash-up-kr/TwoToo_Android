@@ -31,7 +31,7 @@ import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 import com.mashup.twotoo.presenter.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TwoTooApp(
     appState: TwoTooAppState = rememberTwoTooAppState(),

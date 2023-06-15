@@ -21,6 +21,12 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeBeeButton
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeFlowerMeAndPartner
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalAchievement
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalField
+import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
 
 /**
  * @Created by 김현국 2023/06/11
