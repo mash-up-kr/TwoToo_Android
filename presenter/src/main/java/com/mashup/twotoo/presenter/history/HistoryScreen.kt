@@ -38,21 +38,23 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf(), isHo
         },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
-        val isHomeGoalAchievementShow by remember { mutableStateOf(isHomeGoalAchievementShow) }
         Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
             ChallengeInfo(
                 "24",
                 "30분 이상 운동하기",
                 "운동 사진으로 인증하기\n인증 실패하는지 확인",
             )
-            TwoTooGoalAchievementProgressbar(
-                modifier = Modifier.padding(top = 12.dp, start = 24.dp).width(210.dp).height(59.dp).background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                goalAchieveDataList = listOf(
-                    HomeGoalAchieveData(name = "공주", type = UserType.PARTNER, progress = 0.7f),
-                    HomeGoalAchieveData(name = "나", type = UserType.ME, progress = 0.6f),
-                ),
-                isShow = isHomeGoalAchievementShow,
-            )
+            if (isHomeGoalAchievementShow) {
+                TwoTooGoalAchievementProgressbar(
+                    modifier = Modifier.padding(top = 12.dp, start = 24.dp).width(210.dp)
+                        .height(59.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
+                    goalAchieveDataList = listOf(
+                        HomeGoalAchieveData(name = "공주", type = UserType.PARTNER, progress = 0.7f),
+                        HomeGoalAchieveData(name = "나", type = UserType.ME, progress = 0.6f),
+                    ),
+                )
+            }
             OwnerNickNames("왕자", "공주")
             Spacer(modifier = Modifier.height(12.dp))
             Divider(
