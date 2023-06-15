@@ -22,6 +22,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
+import com.mashup.twotoo.presenter.designsystem.component.common.TextContainer
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound7
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 /**
@@ -91,7 +93,7 @@ fun SetImageOptionDialog(
                         .height(55.dp)
                         .background(
                             color = Color.White,
-                            shape = RoundedCornerShape(7.dp),
+                            shape = TwoTooRound7,
                         ).clickable {
                             onClickDismissButton()
                         },
@@ -106,19 +108,6 @@ fun SetImageOptionDialog(
                 )
             }
         }
-    }
-}
-
-@Composable
-fun TextContainer(
-    text: @Composable () -> Unit,
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier = modifier,
-        contentAlignment = Alignment.Center,
-    ) {
-        text()
     }
 }
 
