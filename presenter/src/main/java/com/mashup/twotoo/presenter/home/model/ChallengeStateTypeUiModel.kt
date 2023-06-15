@@ -69,7 +69,7 @@ data class BeforeChallengeUiModel(
 
 data class OngoingChallengeUiModel(
     val homeFlowerUiModels: HomeFlowerPartnerAndMeUiModel,
-    val homeGoalAchieveUiModel: HomeGoalAchieveUiModel,
+    val homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel,
     val homeGoalCountUiModel: HomeGoalCountUiModel,
     val homeGoalFieldUiModel: HomeGoalFieldUiModel,
     val homeShotCountTextUiModel: HomeShotCountTextUiModel,
@@ -77,7 +77,7 @@ data class OngoingChallengeUiModel(
     companion object {
         val default = OngoingChallengeUiModel(
             homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
-            homeGoalAchieveUiModel = HomeGoalAchieveUiModel.default,
+            homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
             homeShotCountTextUiModel = HomeShotCountTextUiModel.default,

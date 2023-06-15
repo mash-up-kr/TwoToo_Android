@@ -20,9 +20,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
-import com.mashup.twotoo.presenter.home.model.UserType
 
 /**
  * @Created by 김현국 2023/06/11
@@ -65,10 +63,7 @@ fun HomeOngoingChallenge(
                 start.linkTo(homeGoalField.start)
                 top.linkTo(homeGoalField.bottom)
             }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-            goalAchieveDataList = listOf(
-                HomeGoalAchieveUiModel(name = "공주", type = UserType.PARTNER, progress = 0.7f),
-                HomeGoalAchieveUiModel(name = "나", type = UserType.ME, progress = 0.6f),
-            ),
+            homeGoalAchievePartnerAndMeUiModel = ongoingChallengeUiModel.homeGoalAchievePartnerAndMeUiModel,
         )
         HomeGoalCount(
             modifier = Modifier.constrainAs(goalCount) {
