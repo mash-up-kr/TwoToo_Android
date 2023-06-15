@@ -31,7 +31,7 @@ fun GardenRoute(
 @Composable
 fun GardenScreen(
   challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
-  modifier : Modifer = Modifier,
+  modifier : Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {
