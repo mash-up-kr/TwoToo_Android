@@ -4,6 +4,11 @@
     <string name="garden">Garden</string>
     <string name="home">Home</string>
     <string name="user">User</string>
+
+    <string name="home_nav_button">홈 네비게이션 버튼</string>
+    <string name="garden_nav_button">가든 네비게이션 버튼</string>
+    <string name="user_nav_button">유저 네비게이션 버튼</string>
+    <string name="bottom_navigation_bar">바텀 네비게이션</string>
     
     <!-- Kakao Login -->
     <string name= "login_tite">카카오톡으로 로그인</string>
@@ -102,6 +107,9 @@
     <string name="send_invite">초대장 보내기</string>
     <string name="resend_invite">초대장 다시 보내기</string>
     <string name="challenge_start">챌린지 시작</string>
+
+    <!-- Garend -->
+    <string name="garden_title">우리의 정원</string>
     
     
 </resources>

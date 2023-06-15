@@ -13,6 +13,7 @@ import androidx.compose.ui.unit.dp
 // Todo 디자인 시스템 적용 필요한 rounds
 val TwoTooRound10 = RoundedCornerShape(10.dp)
 val TwoTooRound4 = RoundedCornerShape(4.dp)
+val TwoTooRound6 = RoundedCornerShape(6.dp)
 
 @Immutable
 data class Shapes(

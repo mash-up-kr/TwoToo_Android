@@ -7,6 +7,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -25,8 +27,11 @@ import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
-fun HomeRoute() {
+fun HomeRoute(
+    modifier: Modifier = Modifier,
+) {
     HomeScreen(
+        modifier = modifier.testTag(stringResource(id = R.string.home)),
         onBeeButtonClick = {},
     )
 }
