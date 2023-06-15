@@ -14,6 +14,7 @@ import androidx.compose.ui.unit.dp
 val TwoTooRound10 = RoundedCornerShape(10.dp)
 val TwoTooRound4 = RoundedCornerShape(4.dp)
 val TwoTooRound7 = RoundedCornerShape(7.dp)
+val TwoTooRound6 = RoundedCornerShape(6.dp)
 
 @Immutable
 data class Shapes(
