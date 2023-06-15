@@ -3,12 +3,16 @@ package com.mashup.twotoo.presenter.ui
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavDestination
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.twotoo.presenter.designsystem.theme.BackgroundYellow
+import com.mashup.twotoo.presenter.designsystem.theme.MainPink
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
@@ -48,6 +52,27 @@ class TwoTooAppState(
         }
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
+    fun getUnSelectedColorByDestinationForTest(): Color {
+        return if (navController.currentBackStackEntry?.destination?.route == HomeNavigationRoute) {
+            BackgroundYellow
+        } else {
+            MainPink
+        }
+    }
+
+    val getContainerColorByDestination: Color
+        @Composable get() = if (currentTopLevelDestination == Home) {
+            TwoTooTheme.color.mainPink
+        } else {
+            TwoTooTheme.color.backgroundYellow
+        }
+
+    val getUnSelectedColorByDestination: Color
+        @Composable get() = if (currentTopLevelDestination == Home) {
+            TwoTooTheme.color.backgroundYellow
+        } else {
+            TwoTooTheme.color.mainPink
+        }
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {

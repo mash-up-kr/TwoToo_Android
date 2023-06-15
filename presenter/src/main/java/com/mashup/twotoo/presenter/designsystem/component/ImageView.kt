@@ -34,6 +34,7 @@ fun TwoTooImageView(
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
+    contentScale: ContentScale? = null,
 ) {
     TwoTooImageViewImpl(
         model = model,
@@ -41,6 +42,7 @@ fun TwoTooImageView(
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
         modifier = modifier,
+        contentScale = contentScale,
     )
 }
 
@@ -52,6 +54,7 @@ fun TwoTooImageViewWithSetter(
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
+    contentScale: ContentScale? = null,
 ) {
     TwoTooImageViewImpl(
         model = imageUri,
@@ -61,6 +64,7 @@ fun TwoTooImageViewWithSetter(
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
         modifier = modifier,
+        contentScale = contentScale,
     )
 }
 
@@ -73,7 +77,7 @@ fun TwoTooImageViewImpl(
     enableSetImage: Boolean = false,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
-
+    contentScale: ContentScale? = null,
 ) {
     Box(
         modifier = modifier,
@@ -83,7 +87,7 @@ fun TwoTooImageViewImpl(
             imageModel = { model ?: R.drawable.empty_image_color_placeholder },
             previewPlaceholder = previewPlaceholder ?: R.drawable.empty_image_color_placeholder,
             imageOptions = ImageOptions(
-                contentScale = ContentScale.Crop,
+                contentScale = contentScale ?: ContentScale.Crop,
                 alignment = Alignment.Center,
             ),
             loading = loadingPlaceHolder,

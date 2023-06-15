@@ -1,15 +1,17 @@
 package com.mashup.twotoo.presenter.designsystem.component
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.material.ripple.LocalRippleTheme
+import androidx.compose.material.ripple.RippleAlpha
+import androidx.compose.material.ripple.RippleTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.mashup.twotoo.presenter.designsystem.theme.SelectedIconColor
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.designsystem.theme.UnSelectedIconColor
 
 @Composable
 fun TwoTooNavigationBar(
@@ -17,12 +19,14 @@ fun TwoTooNavigationBar(
     containerColor: Color,
     content: @Composable RowScope.() -> Unit,
 ) {
-    NavigationBar(
-        modifier = modifier,
-        containerColor = containerColor,
-        contentColor = TwoTooNavigationDefaults.navigationContentColor(),
-        content = content,
-    )
+    CompositionLocalProvider(LocalRippleTheme provides NoRippleTheme) {
+        NavigationBar(
+            modifier = modifier,
+            containerColor = containerColor,
+            contentColor = TwoTooNavigationDefaults.navigationContentColor(),
+            content = content,
+        )
+    }
 }
 
 @Composable
@@ -30,35 +34,38 @@ fun RowScope.TwoTooNavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
+    contentColor: Color,
+    unSelectedColor: Color,
     modifier: Modifier = Modifier,
-    selectedIcon: @Composable () -> Unit = icon,
-    enabled: Boolean = true,
     label: @Composable (() -> Unit)? = null,
-    alwaysShowLabel: Boolean = false,
 ) {
     NavigationBarItem(
         selected = selected,
         onClick = onClick,
-        icon = if (selected) selectedIcon else icon,
+        icon = icon,
         modifier = modifier,
-        enabled = enabled,
         label = label,
-        alwaysShowLabel = alwaysShowLabel,
+        alwaysShowLabel = false,
         colors = NavigationBarItemDefaults.colors(
             selectedIconColor = TwoTooNavigationDefaults.navigationSelectedItemColor(),
-            unselectedIconColor = TwoTooNavigationDefaults.navigationContentColor(),
-            indicatorColor = TwoTooNavigationDefaults.navigationIndicatorColor(),
+            unselectedIconColor = unSelectedColor,
+            indicatorColor = contentColor,
         ),
     )
 }
 
+private object NoRippleTheme : RippleTheme {
+    @Composable
+    override fun defaultColor() = Color.Transparent
+
+    @Composable
+    override fun rippleAlpha() = RippleAlpha(0F, 0F, 0F, 0F)
+}
+
 object TwoTooNavigationDefaults {
     @Composable
-    fun navigationContentColor() = UnSelectedIconColor
+    fun navigationContentColor() = TwoTooTheme.color.backgroundYellow
 
     @Composable
-    fun navigationSelectedItemColor() = SelectedIconColor
-
-    @Composable
-    fun navigationIndicatorColor() = TwoTooTheme.color.mainWhite
+    fun navigationSelectedItemColor() = TwoTooTheme.color.mainBrown
 }

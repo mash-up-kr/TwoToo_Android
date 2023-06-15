@@ -3,13 +3,21 @@ package com.mashup.twotoo.presenter.twotoo
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
@@ -21,8 +29,9 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
+import com.mashup.twotoo.presenter.R
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TwoTooApp(
     isBackgroundImageExist: Boolean,
@@ -30,13 +39,16 @@ fun TwoTooApp(
 ) {
     Scaffold(
         containerColor = if (isBackgroundImageExist) Color.Transparent else TwoTooTheme.color.backgroundYellow,
-        modifier = Modifier,
+        modifier = Modifier.semantics {
+            testTagsAsResourceId = true
+        },
         bottomBar = {
             TwoTooBottomBar(
                 destinations = appState.topLevelDestinations,
                 onNavigateToDestination = appState::navigationToTopLevelDestination,
                 currentDestination = appState.currentDestination,
-                containerColor = Color.White,
+                containerColor = appState.getContainerColorByDestination,
+                unSelectedColor = appState.getUnSelectedColorByDestination,
             )
         },
     ) { paddingValues: PaddingValues ->
@@ -62,26 +74,28 @@ fun TwoTooBottomBar(
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     containerColor: Color,
+    unSelectedColor: Color,
     modifier: Modifier = Modifier,
 ) {
     TwoTooNavigationBar(
-        modifier = modifier,
+        modifier = modifier.testTag(
+            stringResource(id = R.string.bottom_navigation_bar),
+        ),
         containerColor = containerColor,
     ) {
+        Spacer(modifier = Modifier.fillMaxWidth(0.07f))
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination = destination)
             TwoTooNavigationBarItem(
-                selected,
+                modifier = Modifier.testTag(
+                    stringResource(id = destination.buttonTitleTextId),
+                ),
+                selected = selected,
                 onClick = {
                     onNavigateToDestination(destination)
                 },
                 icon = {
-                    val icon = if (selected) {
-                        destination.selectedIcon
-                    } else {
-                        destination.unselectedIcon
-                    }
-                    when (icon) {
+                    when (val icon = destination.icon) {
                         is ImageVectorIcon -> Icon(
                             imageVector = icon.imageVector,
                             contentDescription = null,
@@ -93,8 +107,11 @@ fun TwoTooBottomBar(
                     }
                 },
                 label = null,
+                contentColor = containerColor,
+                unSelectedColor = unSelectedColor,
             )
         }
+        Spacer(modifier = Modifier.fillMaxWidth(0.07f))
     }
 }
 
@@ -102,3 +119,11 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
     this?.hierarchy?.any {
         it.route?.contains(destination.name, true) ?: false
     } ?: false
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewTwoTooApp() {
+    TwoTooTheme {
+        TwoTooApp()
+    }
+}
