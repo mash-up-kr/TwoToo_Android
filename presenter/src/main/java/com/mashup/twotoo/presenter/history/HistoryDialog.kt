@@ -14,17 +14,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
-import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.common.TextContainer
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRed
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound7
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 
 @Composable
 fun ChallengeDropDialog(
+    dropDialogTextUiModels: List<DropDialogTextUiModel>,
     onDismissRequest: () -> Unit,
-    onClickDoneButton: () -> Unit,
-    onClickCancelButton: () -> Unit,
     properties: DialogProperties = DialogProperties(),
 ) {
     Dialog(
@@ -49,33 +47,22 @@ fun ChallengeDropDialog(
             Column(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                TextContainer(
-                    modifier = textContainerModifier.clickable {
-                        onClickDoneButton()
-                    },
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.challenge_done),
-                            textAlign = TextAlign.Center,
-                            color = TwoTooRed,
-                            style = TwoTooTheme.typography.headLineNormal18,
-
-                        )
-                    },
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-                TextContainer(
-                    modifier = textContainerModifier.clickable {
-                        onClickCancelButton()
-                    },
-                    text = {
-                        Text(
-                            text = stringResource(id = R.string.cancel),
-                            textAlign = TextAlign.Center,
-                            style = TwoTooTheme.typography.headLineNormal18,
-                        )
-                    },
-                )
+                dropDialogTextUiModels.forEach {
+                    TextContainer(
+                        modifier = textContainerModifier.clickable { it.buttonAction },
+                        text = {
+                            Text(
+                                text = stringResource(id = it.titleId),
+                                textAlign = TextAlign.Center,
+                                color = it.color,
+                                style = TwoTooTheme.typography.headLineNormal18,
+                            )
+                        },
+                    )
+                    if (dropDialogTextUiModels.last() != it) {
+                        Spacer(modifier = Modifier.height(8.dp))
+                    }
+                }
             }
         }
     }
@@ -86,7 +73,6 @@ fun ChallengeDropDialog(
 fun TwoTooButtonDialogPreview() {
     ChallengeDropDialog(
         onDismissRequest = { },
-        onClickDoneButton = { },
-        onClickCancelButton = { },
+        dropDialogTextUiModels = DropDialogTextUiModel.default,
     )
 }
