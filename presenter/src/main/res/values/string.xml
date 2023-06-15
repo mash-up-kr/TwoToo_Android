@@ -74,16 +74,39 @@
     <string name="input_challenge_name_placeholder">챌린지 이름을 입력해주세요</string>
     <string name="input_challenge_info_placeholder">구체적인 챌린지 룰, 벌칙등을 입력해주세요</string>
     <string name="recommend_challenge">챌린지 추천 ></string>
+    <string name="recommend_challenge_title">챌린지 추천</string>
     <string name="challenge_start_date">시작일</string>
     <string name="challenge_end_date">종료일</string>
     <string name="twotoo_challenge">Twotoo challenge</string>
+    <string name="during_challenge">챌린지를 하는동안\n</string>
+    <string name="pair">상대방</string>
+    <string name="select_flower">이 키울 꽃을 골라주세요</string>
+    <string name="select_flower_desc">어떤 꽃인지는 챌린지 종료 후 확인할 수 있습니다 :)</string>
+    <string name="send_challenge_request">챌린지 요청을 보냈습니다</string>
+    <string name="success_challenge_request_desc">상대방이 수락하면, 챌린지가 시작됩니다</string>
+
+    <string name="recommend_challenge_say_love">💗 사랑한다고 얘기 해주기</string>
+    <string name="recommend_challenge_share_daily">📝 하루 한 문장 일상 공유하기</string>
+    <string name="recommend_challenge_oneday_praise">👍 하루에 한번 칭찬 해주기</string>
+    <string name="recommend_challenge_mirror_selfie">📷 거울 셀카 찍기</string>
+    <string name="recommend_challenge_fashion">👗 패션 사진 OOTD 찍기</string>
+    <string name="recommend_challenge_eat_vegetable">🥦 하루 한끼 채식 식단 하기</string>
+    <string name="recommend_challenge_money_daily">💵 하루 만원만 쓰기</string>
+    <string name="recommend_challenge_exercise">🏃‍ 매일 운동하기</string>
+    <string name="recommend_challenge_weight_loss">🐷 체중 감량하기</string>
+    <string name="recommend_challenge_read_book">📘 독서하기</string>
+    <string name="recommend_challenge_miracle_morning">🌞 미라클 모닝하기</string>
+
+
 
 
     <!-- button -->
     <string name="button_confirm">확인</string>
+    <string name="button_next">다음</string>
     <string name="refresh">새로고침</string>
     <string name="send_invite">초대장 보내기</string>
     <string name="resend_invite">초대장 다시 보내기</string>
+    <string name="challenge_start">챌린지 시작</string>
 
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
