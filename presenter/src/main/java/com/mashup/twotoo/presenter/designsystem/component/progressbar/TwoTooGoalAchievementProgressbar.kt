@@ -18,7 +18,7 @@ import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
-fun HomeGoalAchievement(
+fun TwoTooGoalAchievementProgressbar(
     goalAchieveDataList: List<HomeGoalAchieveData>,
     modifier: Modifier = Modifier,
 ) {
@@ -107,7 +107,7 @@ private fun PreviewHomeGoalAchieveRow() {
 @Composable
 private fun PreviewHomeGoalAchievement() {
     TwoTooTheme {
-        HomeGoalAchievement(
+        TwoTooGoalAchievementProgressbar(
             modifier = Modifier.width(203.dp).height(59.dp),
             goalAchieveDataList = listOf(
                 HomeGoalAchieveData("공주", type = PARTNER, 0.7f),
