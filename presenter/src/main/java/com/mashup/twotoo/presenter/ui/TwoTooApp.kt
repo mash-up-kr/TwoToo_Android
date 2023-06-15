@@ -124,6 +124,6 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
 @Composable
 private fun PreviewTwoTooApp() {
     TwoTooTheme {
-        TwoTooApp()
+        TwoTooApp(true)
     }
 }
