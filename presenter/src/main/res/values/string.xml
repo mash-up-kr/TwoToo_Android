@@ -46,6 +46,29 @@
     <!--Home-->
     <string name="homeFirstCreatedChallenge">내 씨앗을 눌러 인증 해보세요!</string>
     <string name="homeAuthOnlyPartener">완료!</string>
+    <string name="homeBeforeChallengeImage">챌리지 생선 전 이미지</string>
+    <string name="homeBeforeChallengeTitle">챌린지 생성 전 타이틀</string>
+    <string name="homeBeforeChallengeButton">챌린지 생성 전 버튼 텍스트</string>
+    <string name="homeBeforeChallengeSubTitle">챌린지 생성 전 서브 타이틀</string>
+    <string name="homeBeforeChallengeEmpty">연인과 함께할 22일 챌린지를\n시작해보세요</string>
+    <string name="homeBeforeChallengeEmptyButtonText">챌린지 시작히기</string>
+    <string name="homeBeforeChallengeRequest">상대방의 응답을\n기다리고 있습니다</string>
+    <string name="homeBeforeChallengeRequestButtonText">챌린지 확인하기</string>
+    <string name="homeBeforeChallengeResponse">공주님이 보낸\n챌린지를 확인해주세요</string>
+    <string name="homeBeforeChallengeResponseButtonText">챌린지 확인하기</string>
+    <string name="homeBeforeChallengeWait">챌린지 대기중이에요</string>
+    <string name="homeBeforeChallengeWaitSubTitle">아직 챌린지 시작 전이에요!\n시작날짜에 다시 들어와주세요!</string>
+    <string name="homeBeforeChallengeWaitButtonText">챌린지 확인하기</string>
+    <string name="homeBeforeChallengeTermination">챌린지가 만료됐어요\nㅠㅜ</string>
+    <string name="homeBeforeChallengeTerminationButtonText">챌린지 시작하기</string>
+
+    <string name="homeOngoingChallengeFirstChallengeHint">첫번째 챌린지일 때 힌트텍스트</string>
+    <string name="homeOngoingChallengeAuthPartnerText">상태방이 인증했을 때 텍스트</string>
+    <string name="homeOngoingChallengeWaterImage">물 뿌리개 이미지</string>
+    <string name="homeOngoingChallengeFlowerMeImage">나의 꽃 이미지</string>
+    <string name="homeOngoingChallengeFlowerPartnerImage">파트너 꽃 이미지</string>
+
+
     
     
     <!--onboarding -->
