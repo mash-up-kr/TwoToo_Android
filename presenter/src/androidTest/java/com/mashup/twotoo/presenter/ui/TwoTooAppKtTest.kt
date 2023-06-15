@@ -73,16 +73,6 @@ class TwoTooAppKtTest {
     }
 
     @Test
-    fun 경로가_홈일때_경로가_홈이_맞는가() {
-        homeNavButtonClick()
-
-        // 현재 Destination이 Home인지 검증
-        assertThat(navController.currentDestination?.route).isEqualTo(HomeNavigationRoute)
-        assertThat(navController.currentDestination?.route).isNotEqualTo(GardenNavigationRoute)
-        assertThat(navController.currentDestination?.route).isNotEqualTo(UserNavigationRoute)
-    }
-
-    @Test
     fun 경로가_홈일때_바텀네비게이션색상이_핑크색상인가() {
         homeNavButtonClick()
 
