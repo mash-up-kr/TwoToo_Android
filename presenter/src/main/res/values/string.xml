@@ -84,6 +84,9 @@
     <string name="refresh">새로고침</string>
     <string name="send_invite">초대장 보내기</string>
     <string name="resend_invite">초대장 다시 보내기</string>
+
+    <!-- Garend -->
+    <string name="garden_title">우리의 정원</string>
     
     
 </resources>
