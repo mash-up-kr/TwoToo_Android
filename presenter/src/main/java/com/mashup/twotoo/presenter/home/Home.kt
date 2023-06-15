@@ -26,12 +26,12 @@ fun HomeRoute(
 ) {
     HomeScreen(
         modifier = modifier.testTag(stringResource(id = R.string.home)),
-        onBeeButtonClick = {},
     )
 }
 
 @Composable
 fun HomeScreen(
+    onBeeButtonClick : () -> Unit = {},
     modifier: Modifier = Modifier,
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
 ) {
