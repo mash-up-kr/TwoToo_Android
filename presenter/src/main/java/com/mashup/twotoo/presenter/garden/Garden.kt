@@ -8,30 +8,29 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.platform.testTag
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
-
 
 @Composable
 fun GardenRoute(
     modifier: Modifier = Modifier,
 ) {
     GardenScreen(
-      modifier = modifier.testTag(stringResource(id = R.string.garden)),
-      challengeCardInfoUiModels = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()
+        modifier = modifier.testTag(stringResource(id = R.string.garden)),
+        challengeCardInfoUiModels = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(),
     )
 }
 
 @Composable
 fun GardenScreen(
-  challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
-  modifier : Modifier = Modifier,
+    challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         topBar = {

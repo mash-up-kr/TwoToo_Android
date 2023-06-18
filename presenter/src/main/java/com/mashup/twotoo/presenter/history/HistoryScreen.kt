@@ -19,13 +19,29 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
+@Composable
+fun HistoryRoute(
+    onClickBackButton: () -> Unit,
+) {
+    HistoryScreen(
+        isHomeGoalAchievementShow = false,
+        onClickBackButton = onClickBackButton,
+        historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+    )
+}
 
 @Composable
-fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf(), isHomeGoalAchievementShow: Boolean) {
+fun HistoryScreen(
+    isHomeGoalAchievementShow: Boolean,
+    onClickBackButton: () -> Unit,
+    historyItemUiModels: List<HistoryItemUiModel> = listOf(),
+) {
     Scaffold(
         topBar = {
             TwoTooBackToolbar(
-                onClickBackIcon = { },
+                onClickBackIcon = {
+                    onClickBackButton()
+                },
             ) {
                 IconButton(onClick = {}) {
                     Icon(
@@ -69,7 +85,11 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf(), isHo
 @Composable
 private fun PreviewHistoryScreen() {
     TwoTooTheme {
-        HistoryScreen(HistoryItemUiModel.generateDummyHistoryItemsToPreView(), isHomeGoalAchievementShow = false)
+        HistoryScreen(
+            isHomeGoalAchievementShow = false,
+            onClickBackButton = {},
+            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+        )
     }
 }
 
@@ -77,7 +97,11 @@ private fun PreviewHistoryScreen() {
 @Composable
 private fun PreviewHistoryScreenEmpty() {
     TwoTooTheme {
-        HistoryScreen(HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView(), isHomeGoalAchievementShow = false)
+        HistoryScreen(
+            isHomeGoalAchievementShow = false,
+            onClickBackButton = {},
+            historyItemUiModels = HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView(),
+        )
     }
 }
 
@@ -85,6 +109,10 @@ private fun PreviewHistoryScreenEmpty() {
 @Composable
 private fun PreviewHistoryScreenWithProgressBar() {
     TwoTooTheme {
-        HistoryScreen(HistoryItemUiModel.generateDummyHistoryItemsToPreView(), isHomeGoalAchievementShow = true)
+        HistoryScreen(
+            isHomeGoalAchievementShow = true,
+            onClickBackButton = {},
+            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+        )
     }
 }
