@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGraph
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
+import com.mashup.twotoo.presenter.history.navigation.historyGraph
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
@@ -28,7 +29,7 @@ fun TwoTooNavHost(
         modifier = modifier,
     ) {
         gardenGraph()
-        homeGraph()
+        homeGraph(navController = navController)
         userGraph()
         onBoardingGraph {
             navController.navigateToOnNickNameSetting()
@@ -38,5 +39,6 @@ fun TwoTooNavHost(
         }
         invitationGraph(navController)
         createChallengeGraph(navController)
+        historyGraph(navController = navController)
     }
 }

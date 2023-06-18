@@ -34,6 +34,7 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
 
 @Composable
 fun HomeOngoingChallenge(
+    navigateToHistory: () -> Unit,
     onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     ongoingChallengeUiModel: OngoingChallengeUiModel = OngoingChallengeUiModel.default,
@@ -61,7 +62,7 @@ fun HomeOngoingChallenge(
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
-            },
+            }.clickable { navigateToHistory() },
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
         )
         TwoTooGoalAchievementProgressbar(
@@ -116,6 +117,7 @@ fun HomeOngoingChallenge(
 private fun PreviewHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
         )
     }
@@ -126,6 +128,7 @@ private fun PreviewHomeOngoingChallenge() {
 private fun PreviewFirstChallengeHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
@@ -139,6 +142,7 @@ private fun PreviewFirstChallengeHomeOngoingChallenge() {
 private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
@@ -152,6 +156,7 @@ private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
 private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
@@ -165,6 +170,7 @@ private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
 private fun PreviewAuthBothHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authBoth,
@@ -178,6 +184,7 @@ private fun PreviewAuthBothHomeOngoingChallenge() {
 private fun PreviewDoNotAuthBothHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
+            navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
