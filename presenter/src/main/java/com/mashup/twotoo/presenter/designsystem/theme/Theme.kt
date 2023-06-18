@@ -7,6 +7,7 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
@@ -41,7 +42,7 @@ fun TwoTooTheme(
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     @DrawableRes backgroundImageId: Int? = null,
-    content: @Composable (isBackgroundImageExist: Boolean) -> Unit,
+    content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
@@ -50,7 +51,10 @@ fun TwoTooTheme(
         }
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
+    }.run {
+        copy(background = if (backgroundImageId != null) Color.Transparent else TwoTooTheme.color.backgroundYellow)
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -63,11 +67,7 @@ fun TwoTooTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = {
-            if (backgroundImageId != null) {
-                TwoTooScreenContainer(backgroundImageId = backgroundImageId) { content(true) }
-            } else {
-                content(false)
-            }
+            TwoTooScreenContainer(backgroundImageId = backgroundImageId) { content() }
         },
     )
 }

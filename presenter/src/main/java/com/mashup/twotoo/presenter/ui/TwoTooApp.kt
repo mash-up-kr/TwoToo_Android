@@ -24,7 +24,6 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBarItem
 import com.mashup.twotoo.presenter.designsystem.icon.Icon
 import com.mashup.twotoo.presenter.designsystem.icon.Icon.ImageVectorIcon
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
@@ -34,11 +33,9 @@ import com.mashup.twotoo.presenter.R
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TwoTooApp(
-    isBackgroundImageExist: Boolean,
     appState: TwoTooAppState = rememberTwoTooAppState(),
 ) {
     Scaffold(
-        containerColor = if (isBackgroundImageExist) Color.Transparent else TwoTooTheme.color.backgroundYellow,
         modifier = Modifier.semantics {
             testTagsAsResourceId = true
         },
