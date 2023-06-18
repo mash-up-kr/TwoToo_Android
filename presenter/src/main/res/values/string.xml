@@ -121,6 +121,10 @@
     <string name="recommend_challenge_miracle_morning">🌞 미라클 모닝하기</string>
 
 
+    <!-- history detail-->
+    <string name="historyDetailTitle">%s의 기록</string>
+    <string name="historyDetailCreatedTime">입력 시간 : %s</string>
+    <string name="complimentFromPartner">%s가 보낸 칭찬</string>
 
     <!-- button -->
     <string name="button_confirm">확인</string>

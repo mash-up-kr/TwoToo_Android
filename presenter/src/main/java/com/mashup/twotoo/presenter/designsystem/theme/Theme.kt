@@ -2,14 +2,17 @@ package com.mashup.twotoo.presenter.designsystem.theme
 
 import android.app.Activity
 import android.os.Build
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.ViewCompat
+import com.mashup.twotoo.presenter.designsystem.component.container.TwoTooScreenContainer
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -38,6 +41,7 @@ fun TwoTooTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
+    @DrawableRes backgroundImageId: Int? = null,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = when {
@@ -47,7 +51,10 @@ fun TwoTooTheme(
         }
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
+    }.run {
+        copy(background = if (backgroundImageId != null) Color.Transparent else TwoTooTheme.color.backgroundYellow)
     }
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
@@ -59,7 +66,9 @@ fun TwoTooTheme(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content,
+        content = {
+            TwoTooScreenContainer(backgroundImageId = backgroundImageId, screen = { content() })
+        },
     )
 }
 
