@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGraph
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
+import com.mashup.twotoo.presenter.history.datail.navigation.historyDetailGraph
 import com.mashup.twotoo.presenter.history.navigation.historyGraph
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
@@ -40,5 +41,6 @@ fun TwoTooNavHost(
         invitationGraph(navController)
         createChallengeGraph(navController)
         historyGraph(navController = navController)
+        historyDetailGraph(navController = navController)
     }
 }

@@ -104,16 +104,16 @@ fun ChallengeInfo(day: String, name: String, detail: String) {
 }
 
 @Composable
-fun HistoryItems(items: List<HistoryItemUiModel>) {
+fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: () -> Unit) {
     LazyColumn {
         items(items) { item ->
-            HistoryItem(item)
+            HistoryItem(item, navigateToHistoryDetail)
         }
     }
 }
 
 @Composable
-private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
+private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -121,7 +121,7 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false, navigateToHistoryDetail = navigateToHistoryDetail)
         Box(
             modifier = Modifier
                 .padding(horizontal = 13.dp)
@@ -137,17 +137,19 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
                 color = TwotooPink,
             )
         }
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true, navigateToHistoryDetail = navigateToHistoryDetail)
     }
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean) {
+private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean, navigateToHistoryDetail: () -> Unit) {
     Box(
         modifier = Modifier
             .size(127.dp)
             .clip(TwoTooTheme.shape.large)
-            .background(TwoTooTheme.color.mainWhite),
+            .background(TwoTooTheme.color.mainWhite).clickable {
+            navigateToHistoryDetail()
+        },
     ) {
         if (historyInfoUiModel.photoUrl.isEmpty()) {
             EmptyHistoryInfo(isMyHistoryInfo)
@@ -230,17 +232,17 @@ private fun PreviewHistoryItem() {
         myInfo = HistoryInfoUiModel("https://shop.biumfood.com/upload/1623296512image_product044.jpg", "20:35"),
         createDate = "4/10",
     )
-    HistoryItem(historyItemUiModel = historyItemUiModel)
+    HistoryItem(historyItemUiModel = historyItemUiModel, {})
 }
 
 @Preview("내 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), true)
+    HistoryInfo(HistoryInfoUiModel("", ""), true, {})
 }
 
 @Preview("연인이 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemPartnerEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), false)
+    HistoryInfo(HistoryInfoUiModel("", ""), false, {})
 }
