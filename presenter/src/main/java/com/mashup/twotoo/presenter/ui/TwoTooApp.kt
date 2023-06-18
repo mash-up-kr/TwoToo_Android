@@ -41,13 +41,15 @@ fun TwoTooApp(
             testTagsAsResourceId = true
         },
         bottomBar = {
-            TwoTooBottomBar(
-                destinations = appState.topLevelDestinations,
-                onNavigateToDestination = appState::navigationToTopLevelDestination,
-                currentDestination = appState.currentDestination,
-                containerColor = appState.getContainerColorByDestination,
-                unSelectedColor = appState.getUnSelectedColorByDestination,
-            )
+            if (appState.isBottomBarVisible()) {
+                TwoTooBottomBar(
+                    destinations = appState.topLevelDestinations,
+                    onNavigateToDestination = appState::navigationToTopLevelDestination,
+                    currentDestination = appState.currentDestination,
+                    containerColor = appState.getContainerColorByDestination,
+                    unSelectedColor = appState.getUnSelectedColorByDestination,
+                )
+            }
         },
         containerColor = Color.Transparent,
         contentWindowInsets = WindowInsets(0, 50, 0, 0),

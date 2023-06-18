@@ -13,6 +13,7 @@ import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
+import com.mashup.twotoo.presenter.history.navigation.HistoryNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
@@ -75,6 +76,17 @@ class TwoTooAppState(
             Garden -> navController.navigateToGarden(navOptions = topLevelOptions)
             Home -> navController.navigateToHome(navOptions = topLevelOptions)
             User -> navController.navigateToUser(navOptions = topLevelOptions)
+        }
+    }
+
+    @Composable
+    fun isBottomBarVisible(): Boolean {
+        return when (currentDestination?.route) {
+            GardenNavigationRoute, HomeNavigationRoute, UserNavigationRoute -> true
+            HistoryNavigationRoute -> false
+            else -> {
+                false
+            }
         }
     }
 }
