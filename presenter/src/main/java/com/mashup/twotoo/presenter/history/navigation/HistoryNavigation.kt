@@ -16,16 +16,19 @@ fun NavController.navigateToHistory(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.historyGraph(navController: NavController) {
     composable(route = HistoryNavigationRoute) {
-        HistoryRoute(onClickBackButton = { navController.popBackStack() }, navigateToHistoryDetail = {
-            navController.navigateToHistoryDetail(
-                navOptions {
-                    popUpTo(HistoryNavigationRoute) {
-                        saveState = true
-                    }
-                    launchSingleTop = true
-                    restoreState = true
-                },
-            )
-        })
+        HistoryRoute(
+            onClickBackButton = { navController.popBackStack() },
+            navigateToHistoryDetail = {
+                navController.navigateToHistoryDetail(
+                    navOptions {
+                        popUpTo(HistoryNavigationRoute) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    },
+                )
+            },
+        )
     }
 }
