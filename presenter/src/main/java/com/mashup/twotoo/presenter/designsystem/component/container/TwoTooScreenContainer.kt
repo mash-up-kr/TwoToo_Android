@@ -11,9 +11,9 @@ import androidx.compose.ui.res.painterResource
 
 @Composable
 fun TwoTooScreenContainer(
+    screen: @Composable () -> Unit,
     modifier: Modifier = Modifier,
     @DrawableRes backgroundImageId: Int? = null,
-    screen: @Composable () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize().then(modifier),
