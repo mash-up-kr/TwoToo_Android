@@ -3,7 +3,6 @@
     <string name="app_name">Twotoo</string>
     <string name="garden">Garden</string>
     <string name="home">Home</string>
-    <string name="mypage">MyPage</string>
 
     <string name="home_nav_button">홈 네비게이션 버튼</string>
     <string name="garden_nav_button">가든 네비게이션 버튼</string>
@@ -141,6 +140,13 @@
 
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
+
+    <!-- MyPage -->
+    <string name="mypage">마이페이지</string>
+    <string name="announcement">공지사항</string>
+    <string name="using_guide">이용 가이드</string>
+    <string name="inquiry">투투에 문의하기</string>
+    <string name="makers">만들이들</string>
     
 
 </resources>
