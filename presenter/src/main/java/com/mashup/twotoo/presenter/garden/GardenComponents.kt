@@ -41,11 +41,11 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
         LocalTextStyle provides TwoTooTheme.typography.bodyNormal14,
     ) {
         Column(
-            modifier = Modifier.padding(start = 14.dp, top = 19.dp).fillMaxWidth(),
+            modifier = Modifier.padding(top = 16.dp).padding(horizontal = 12.dp).fillMaxWidth(),
         ) {
-            Text(challengeCardInfoUiModel.attempts, color = TwoTooTheme.color.mainPink)
-            Text(challengeCardInfoUiModel.name, color = TwoTooTheme.color.mainBrown)
-            Text(challengeCardInfoUiModel.period, color = TwoTooTheme.color.gray500)
+            Text(text = challengeCardInfoUiModel.attempts, color = TwoTooTheme.color.mainPink)
+            Text(modifier = Modifier.padding(top = 16.dp), text = challengeCardInfoUiModel.name, color = TwoTooTheme.color.mainBrown)
+            Text(modifier = Modifier.padding(top = 7.dp), text = challengeCardInfoUiModel.period, color = TwoTooTheme.color.gray500)
         }
     }
 }
