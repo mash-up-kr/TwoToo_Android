@@ -29,6 +29,7 @@ import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -121,6 +122,6 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
 @Composable
 private fun PreviewTwoTooApp() {
     TwoTooTheme {
-        TwoTooApp(true)
+        TwoTooApp()
     }
 }
