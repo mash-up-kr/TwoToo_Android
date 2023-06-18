@@ -67,7 +67,7 @@ fun TwoTooTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = {
-            TwoTooScreenContainer(backgroundImageId = backgroundImageId) { content() }
+            TwoTooScreenContainer(backgroundImageId = backgroundImageId, screen = { content() })
         },
     )
 }
