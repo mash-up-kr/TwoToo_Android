@@ -1,13 +1,12 @@
 package com.mashup.twotoo.presenter.designsystem.component.container
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 
 @Composable
 fun TwoTooScreenContainer(
@@ -16,14 +15,16 @@ fun TwoTooScreenContainer(
     @DrawableRes backgroundImageId: Int? = null,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().then(modifier),
+        modifier = Modifier
+            .fillMaxSize()
+            .then(modifier),
     ) {
         if (backgroundImageId != null) {
-            Image(
+            TwoTooImageView(
                 modifier = Modifier.fillMaxSize(),
-                painter = painterResource(id = backgroundImageId),
-                contentDescription = null,
+                model = backgroundImageId,
                 contentScale = ContentScale.Crop,
+                previewPlaceholder = backgroundImageId,
             )
         }
         screen()

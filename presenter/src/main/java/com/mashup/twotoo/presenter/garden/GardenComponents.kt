@@ -27,7 +27,7 @@ fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
         TwoTooImageView(
             model = R.drawable.challenge_card_ground,
             modifier = Modifier.height(58.dp).fillMaxWidth().align(Alignment.BottomStart),
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             previewPlaceholder = R.drawable.challenge_card_ground,
         )
         // Todo 꽃 선택하는 ui에서 사용하는 model 공통으로 사용하도록 해야함

@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.history
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -174,9 +173,11 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.cloud),
-                contentDescription = null,
+            TwoTooImageView(
+                modifier = Modifier.size(width = 65.dp, height = 55.dp),
+                model = R.drawable.cloud,
+                previewPlaceholder = R.drawable.cloud,
+                contentScale = ContentScale.Fit,
             )
             Text(
                 text = "기다리는 중",
