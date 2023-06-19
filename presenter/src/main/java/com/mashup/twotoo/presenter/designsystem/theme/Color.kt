@@ -27,6 +27,7 @@ val TwoTooRed = Color(0xFFFF3800)
 // design system colors
 val MainBrown = Color(0xFF443018)
 val MainPink = Color(0xFFF3A989)
+val MainLightPink = Color(0xFFF5DBD0)
 val MainYellow = Color(0xFFFFE6AF)
 val MainWhite = Color(0xFFFFFFFF)
 val BackgroundYellow = Color(0xFFFCF5E6)
@@ -40,6 +41,7 @@ val Gray200 = Color(0xFFF2F1F0)
 class ColorScheme(
     mainBrown: Color,
     mainPink: Color,
+    mainLightPink: Color,
     mainYellow: Color,
     mainWhite: Color,
     backgroundYellow: Color,
@@ -52,6 +54,8 @@ class ColorScheme(
     var mainBrown by mutableStateOf(mainBrown, structuralEqualityPolicy())
         internal set
     var mainPink by mutableStateOf(mainPink, structuralEqualityPolicy())
+        internal set
+    var mainLightPink by mutableStateOf(mainLightPink, structuralEqualityPolicy())
         internal set
     var mainYellow by mutableStateOf(mainYellow, structuralEqualityPolicy())
         internal set
@@ -73,6 +77,7 @@ class ColorScheme(
     fun copy(
         mainBrown: Color,
         mainPink: Color,
+        mainLightPink: Color,
         mainYellow: Color,
         mainWhite: Color,
         backgroundYellow: Color,
@@ -84,6 +89,7 @@ class ColorScheme(
     ): ColorScheme = ColorScheme(
         mainBrown,
         mainPink,
+        mainLightPink,
         mainYellow,
         mainWhite,
         backgroundYellow,
@@ -97,6 +103,7 @@ class ColorScheme(
 fun lightColors(
     mainBrown: Color = MainBrown,
     mainPink: Color = MainPink,
+    mainLightPink: Color = MainLightPink,
     mainYellow: Color = MainYellow,
     mainWhite: Color = MainWhite,
     backgroundYellow: Color = BackgroundYellow,
@@ -108,6 +115,7 @@ fun lightColors(
 ): ColorScheme = ColorScheme(
     mainBrown,
     mainPink,
+    mainLightPink,
     mainYellow,
     mainWhite,
     backgroundYellow,
