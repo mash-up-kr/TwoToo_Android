@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.designsystem.theme
 
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.LocalIndication
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.text.selection.LocalTextSelectionColors
@@ -14,12 +13,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.remember
+import com.mashup.twotoo.presenter.designsystem.component.container.TwoTooScreenContainer
 
 @Composable
 fun TwoTooTheme(
     currentThemeColor: ThemeColor = ThemeColor.Default,
     darkTheme: Boolean = isSystemInDarkTheme(),
-    @DrawableRes backgroundImageId: Int? = null,
     content: @Composable () -> Unit,
 ) {
     val colorScheme = getCurrentThemeColor(currentThemeColor, darkTheme)
@@ -29,8 +28,7 @@ fun TwoTooTheme(
         typography = TwoTooTheme.typography,
         shapes = TwoTooTheme.shape,
         content = {
-//            TwoTooScreenContainer(backgroundImageId = backgroundImageId, screen = { content() })
-            content()
+            TwoTooScreenContainer(screen = content)
         },
     )
 }
