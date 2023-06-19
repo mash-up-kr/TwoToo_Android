@@ -141,6 +141,9 @@
 
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
+
+    <!-- toast -->
+    <string name="other_not_accept">상대방이 아직 수락을 하지 않았어요!</string>
     
 
 </resources>
