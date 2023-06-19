@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.home
 
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -10,7 +9,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
@@ -34,50 +32,41 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
 ) {
-    Box(
-        modifier = modifier,
-    ) {
-        TwoTooImageView(
-            modifier = Modifier.fillMaxSize(),
-            model = R.drawable.image_background,
-            previewPlaceholder = R.drawable.image_background,
+    ConstraintLayout(modifier = modifier) {
+        val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
+        TwoTooMainToolbar(
+            modifier = Modifier.constrainAs(topBar) {
+                start.linkTo(parent.start)
+                top.linkTo(parent.top)
+                end.linkTo(parent.end)
+            },
+            onClickHelpIcon = {},
         )
-        ConstraintLayout(modifier = modifier) {
-            val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
-            TwoTooMainToolbar(
-                modifier = Modifier.constrainAs(topBar) {
-                    top.linkTo(parent.top)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                onClickHelpIcon = {},
-            )
-            when (challengeStateTypeUiModel) {
-                is BeforeChallengeUiModel -> {
-                    HomeBeforeChallenge(
-                        modifier = Modifier.constrainAs(homeBeforeChallenge) {
-                            top.linkTo(topBar.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                            height = Dimension.fillToConstraints
-                        },
-                        beforeChallengeUiModel = challengeStateTypeUiModel,
-                    )
-                }
-                is OngoingChallengeUiModel -> {
-                    HomeOngoingChallenge(
-                        modifier = Modifier.constrainAs(homeOngoingChallenge) {
-                            top.linkTo(topBar.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                            height = Dimension.fillToConstraints
-                        },
-                        ongoingChallengeUiModel = challengeStateTypeUiModel,
-                        onBeeButtonClick = { /*TODO*/ },
-                    )
-                }
+        when (challengeStateTypeUiModel) {
+            is BeforeChallengeUiModel -> {
+                HomeBeforeChallenge(
+                    modifier = Modifier.constrainAs(homeBeforeChallenge) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                    },
+                    beforeChallengeUiModel = challengeStateTypeUiModel,
+                )
+            }
+            is OngoingChallengeUiModel -> {
+                HomeOngoingChallenge(
+                    modifier = Modifier.constrainAs(homeOngoingChallenge) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                    },
+                    ongoingChallengeUiModel = challengeStateTypeUiModel,
+                    onBeeButtonClick = { /*TODO*/ },
+                )
             }
         }
     }
