@@ -69,6 +69,8 @@
     <string name="homeOngoingChallengeFlowerPartnerImage">파트너 꽃 이미지</string>
 
 
+    <!--toastmessage-->
+    <string name="toast_challenge_start">챌린지가 시작되었습니다! 성공적인 목표를 달성해보세요</string>
     
     
     <!--onboarding -->
