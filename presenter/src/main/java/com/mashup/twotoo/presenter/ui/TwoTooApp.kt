@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.twotoo
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -24,7 +22,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBarItem
 import com.mashup.twotoo.presenter.designsystem.icon.Icon
@@ -55,18 +52,6 @@ fun TwoTooApp(
         },
         contentWindowInsets = WindowInsets(0, 50, 0, 0),
     ) { paddingValues: PaddingValues ->
-
-        TwoTooImageView(
-            modifier = Modifier.fillMaxSize(),
-            model = R.drawable.image_background,
-            previewPlaceholder = R.drawable.image_background,
-            contentScale = ContentScale.Crop,
-            failurePlaceHolder = {
-                Box(
-                    modifier = Modifier.fillMaxSize().background(color = TwoTooTheme.color.backgroundYellow),
-                ) {}
-            },
-        )
         Column(
             modifier = Modifier
                 .fillMaxSize()
