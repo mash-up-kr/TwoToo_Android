@@ -59,6 +59,7 @@ dependencies {
     implementation(libs.landscapist.glide)
     implementation(libs.bundles.pager)
     implementation(libs.image.cropper)
+    implementation(libs.accompanist.permissions)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
     testImplementation(libs.test.junit)
