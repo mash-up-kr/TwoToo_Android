@@ -26,13 +26,17 @@ import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainTool
 import com.mashup.twotoo.presenter.sdk.theme.KakaoLoginButtonTheme
 
 @Composable
-fun OnBoardingRoute() {
-    OnBoardingScreen()
+fun OnBoardingRoute(
+    onClickLoginButton: () -> Unit
+) {
+    OnBoardingScreen(onClickLoginButton)
 }
 
 @OptIn(ExperimentalPagerApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(
+    onClickLoginButton: () -> Unit
+) {
     val pagerState = rememberPagerState()
     Scaffold(
         topBar = { TwoTooMainToolbar() },
@@ -56,7 +60,7 @@ fun OnBoardingScreen() {
 
                 Spacer(modifier = Modifier.weight(1f))
                 if (pagerState.currentPage == MAX_COUNT - 1) {
-                    KakaoLoginButton()
+                    KakaoLoginButton(onClickLoginButton)
                     Spacer(modifier = Modifier.height(56.dp))
                 }
             }
@@ -65,7 +69,9 @@ fun OnBoardingScreen() {
 }
 
 @Composable
-fun KakaoLoginButton() {
+fun KakaoLoginButton(
+    onClickLoginButton: () -> Unit
+) {
     TwoTooIconButtonImpl(
         text = {
             Text(
@@ -76,11 +82,13 @@ fun KakaoLoginButton() {
         iconId = KakaoLoginButtonTheme.IconId,
         buttonColor = KakaoLoginButtonTheme.ContainerColor,
         buttonRadius = KakaoLoginButtonTheme.Radius,
-    ) {}
+    ) {
+        onClickLoginButton()
+    }
 }
 
 @Preview
 @Composable
 private fun OnBoardingPagerPreview() {
-    OnBoardingScreen()
+    OnBoardingScreen({})
 }

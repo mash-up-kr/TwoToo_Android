@@ -11,8 +11,10 @@ const val OnBoardingRoute: String = "onboarding_route"
 fun NavController.navigateToOnBoarding(navOptions: NavOptions? = null) {
     this.navigate(route = OnBoardingRoute, navOptions = navOptions)
 }
-fun NavGraphBuilder.onBoardingGraph() {
+fun NavGraphBuilder.onBoardingGraph(
+    onClickLoginButton: () -> Unit
+) {
     composable(route = OnBoardingRoute) {
-        OnBoardingRoute()
+        OnBoardingRoute(onClickLoginButton)
     }
 }
