@@ -35,6 +35,6 @@ fun TwoTooNavHost(
         onNickNameSettingGraph {
             navController.navigateToInvitation()
         }
-        invitationGraph()
+        invitationGraph(navController)
     }
 }
