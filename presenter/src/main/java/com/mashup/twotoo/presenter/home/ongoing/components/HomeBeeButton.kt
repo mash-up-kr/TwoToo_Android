@@ -2,7 +2,9 @@ package com.mashup.twotoo.presenter.home.ongoing.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -19,16 +21,16 @@ fun HomeBeeButton(
     modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier.background(
+        modifier = modifier.size(56.dp).background(
             color = TwoTooTheme.color.mainYellow,
             shape = CircleShape,
         ).clip(CircleShape),
-        contentAlignment = Alignment.Center,
+        contentAlignment = Alignment.TopCenter,
     ) {
         TwoTooImageView(
-            modifier = Modifier.size(51.52.dp),
-            model = R.drawable.image_bee,
-            previewPlaceholder = R.drawable.image_bee,
+            modifier = Modifier.width(56.dp).height(51.dp),
+            model = R.drawable.img_bee,
+            previewPlaceholder = R.drawable.img_bee,
         )
     }
 }
