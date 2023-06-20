@@ -38,8 +38,16 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 
 @Composable
+fun NickNameSettingRoute(
+    onNextButtonClick: () -> Unit,
+) {
+    NickNameSetting(onNextButtonClick)
+}
+
+@Composable
 fun NickNameSetting(
-    otherNickName: String?
+    onNextButtonClick: () -> Unit,
+    otherNickName: String? = null
 ) {
     Scaffold(
         topBar = { TwoTooMainToolbar() },
@@ -73,8 +81,10 @@ fun NickNameSetting(
                 Spacer(modifier = Modifier.weight(1f))
                 TwoTooTextButton(
                     text = stringResource(id = R.string.button_confirm),
-                    enabled = false,
-                ) {}
+                    enabled = true,
+                ) {
+                    onNextButtonClick()
+                }
                 Spacer(modifier = Modifier.height(55.dp))
             }
         }
@@ -147,5 +157,5 @@ private fun InviteGuidePreview() {
 @Preview
 @Composable
 private fun NickNameSettingPreview() {
-    NickNameSetting("공주")
+    NickNameSetting({},"공주")
 }
