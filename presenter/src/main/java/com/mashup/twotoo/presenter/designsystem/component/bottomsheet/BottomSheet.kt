@@ -1,18 +1,22 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
-import android.graphics.Bitmap
+import android.Manifest
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.result.launch
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
@@ -22,7 +26,9 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.createImageFile
 import kotlinx.coroutines.launch
+import java.util.Objects
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -53,17 +59,13 @@ fun TwoTooBottomSheetImpl(
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
     }
-
-    var setImageDialogVisible by remember { mutableStateOf(false) }
-
-    val takePhotoFromCameraLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.TakePicturePreview(),
-    ) { photo: Bitmap? ->
-        photo?.let {
-            // TODO Bitmap to Uri or 따로 변환이 필요함
-            setImageDialogVisible = false
-        }
-    }
+    val context = LocalContext.current
+    val file = context.createImageFile()
+    val uri = FileProvider.getUriForFile(
+        Objects.requireNonNull(context),
+        "com.mashup.twotoo.provider",
+        file,
+    )
 
     val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
         if (result.isSuccessful) {
@@ -74,12 +76,40 @@ fun TwoTooBottomSheetImpl(
         }
     }
 
+    var setImageDialogVisible by remember { mutableStateOf(false) }
+
+    val takePhotoFromCameraLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture(),
+    ) { success ->
+        if (success) {
+            val cropOptions = CropImageContractOptions(
+                uri,
+                CropImageOptions(),
+            ).apply {
+                setFixAspectRatio(true)
+            }
+            imageCropLauncher.launch(cropOptions)
+            setImageDialogVisible = false
+        }
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(
+        ActivityResultContracts.RequestPermission(),
+    ) { success ->
+        if (success) {
+            Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
+            setImageDialogVisible = true
+        } else {
+            Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     val takePhotoFromAlbumLauncher = rememberLauncherForActivityResult(
         contract =
         ActivityResultContracts.GetContent(),
-    ) { uri: Uri? ->
+    ) { photoUri: Uri? ->
         val cropOptions = CropImageContractOptions(
-            uri,
+            photoUri,
             CropImageOptions(),
         ).apply {
             setFixAspectRatio(true)
@@ -101,7 +131,14 @@ fun TwoTooBottomSheetImpl(
                         button = button,
                         imageUri = imageUri,
                         onClickPlusButton = {
-                            setImageDialogVisible = true
+                            val permissionCheckResult =
+                                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                            if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+                                setImageDialogVisible = true
+                            } else {
+                                // Request a permission
+                                permissionLauncher.launch(Manifest.permission.CAMERA)
+                            }
                         },
                     )
                 }
@@ -119,7 +156,7 @@ fun TwoTooBottomSheetImpl(
                 SetImageOptionDialog(
                     onDismissRequest = { setImageDialogVisible = false },
                     onClickCameraButton = {
-                        takePhotoFromCameraLauncher.launch()
+                        takePhotoFromCameraLauncher.launch(uri)
                     },
                     onClickAlbumButton = {
                         takePhotoFromAlbumLauncher.launch("image/*")
