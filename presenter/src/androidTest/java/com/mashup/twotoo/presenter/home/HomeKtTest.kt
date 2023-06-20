@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.home
 import android.content.Context
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.assertIsDisplayed
-import androidx.compose.ui.test.assertIsNotDisplayed
 import androidx.compose.ui.test.assertTextEquals
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -199,12 +198,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.growType.growImage,
+                    .homeFlowerUiModels.partner.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.growType.growImage,
+                    .homeFlowerUiModels.me.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
         }
     }
@@ -235,12 +234,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.growType.growImage,
+                    .homeFlowerUiModels.partner.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.growType.growImage,
+                    .homeFlowerUiModels.me.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
         }
     }
@@ -267,12 +266,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.growType.growImage,
+                    .homeFlowerUiModels.partner.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.growType.growImage,
+                    .homeFlowerUiModels.me.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
         }
     }
@@ -300,12 +299,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.growType.growImage,
+                    .homeFlowerUiModels.partner.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.growType.growImage,
+                    .homeFlowerUiModels.me.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
         }
     }
@@ -332,12 +331,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.growType.growImage,
+                    .homeFlowerUiModels.partner.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.growType.growImage,
+                    .homeFlowerUiModels.me.flowerType.flowerImage,
             ).isEqualTo(R.drawable.ic_seed)
         }
     }
