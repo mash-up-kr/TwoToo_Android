@@ -13,6 +13,9 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import com.canhub.cropper.CropImageContract
+import com.canhub.cropper.CropImageContractOptions
+import com.canhub.cropper.CropImageOptions
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
@@ -62,13 +65,26 @@ fun TwoTooBottomSheetImpl(
         }
     }
 
+    val imageCropLauncher = rememberLauncherForActivityResult(CropImageContract()) { result ->
+        if (result.isSuccessful) {
+            imageUri = result.uriContent
+        } else {
+            val exception = result.error
+            // 후에 토스트 추가
+        }
+    }
+
     val takePhotoFromAlbumLauncher = rememberLauncherForActivityResult(
         contract =
         ActivityResultContracts.GetContent(),
     ) { uri: Uri? ->
-        uri?.let {
-            imageUri = it
+        val cropOptions = CropImageContractOptions(
+            uri,
+            CropImageOptions(),
+        ).apply {
+            setFixAspectRatio(true)
         }
+        imageCropLauncher.launch(cropOptions)
         setImageDialogVisible = false
     }
 
