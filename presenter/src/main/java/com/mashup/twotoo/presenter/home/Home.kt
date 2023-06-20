@@ -30,8 +30,8 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
-    onBeeButtonClick: () -> Unit = {},
     modifier: Modifier = Modifier,
+    onBeeButtonClick: () -> Unit = {},
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
 ) {
     Box(
