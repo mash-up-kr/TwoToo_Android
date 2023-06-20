@@ -125,12 +125,12 @@ fun HomeFlowerPartner(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlowerUiModel.growType) {
+        with(homeFlowerUiModel.flowerType.flowerImage) {
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
                 ).width(width).height(height),
-                model = growImage,
+                model = image,
             )
         }
         Spacer(modifier = Modifier.height(3.dp))
@@ -150,12 +150,12 @@ fun HomeFlowerMe(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlowerUiModel.growType) {
+        with(homeFlowerUiModel.flowerType.flowerImage) {
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
                 ).width(width).height(height),
-                model = growImage,
+                model = image,
             )
         }
         Spacer(modifier = Modifier.height(3.dp))
