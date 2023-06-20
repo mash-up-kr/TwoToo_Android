@@ -95,13 +95,13 @@ fun HomeFlowerMeAndPartner(
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeWaterImage),
-                ).width(59.dp).height(60.dp).constrainAs(waterImage) {
+                ).width(75.dp).height(69.dp).constrainAs(waterImage) {
                     top.linkTo(textHint.bottom)
                     bottom.linkTo(me.top, margin = 8.dp)
                     start.linkTo(me.start)
                     end.linkTo(me.end)
                 },
-                model = R.drawable.ic_needed_water,
+                model = R.drawable.img_need_water,
             )
         }
 
