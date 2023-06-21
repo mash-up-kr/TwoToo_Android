@@ -8,11 +8,12 @@ import androidx.compose.ui.unit.Dp
  */
 
 enum class Stage {
-    Seed,
-    Shoot,
-    Bud,
-    Flower,
-    Bloom,
+    Zero,
+    First,
+    Second,
+    Third,
+    Fourth,
+    Fifth,
 }
 
 enum class FlowerName {
