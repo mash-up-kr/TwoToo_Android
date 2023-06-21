@@ -138,7 +138,8 @@
     <string name="cancel">취소</string>
 
     <string name="challenge_start">챌린지 시작</string>
-
+    <string name="authenticate">인증하기</string>
+    <string name="authenticate_waiting">기다리는 중</string>
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
     
