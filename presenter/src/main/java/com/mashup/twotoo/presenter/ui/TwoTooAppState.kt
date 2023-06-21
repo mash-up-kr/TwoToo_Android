@@ -41,12 +41,8 @@ class TwoTooAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when (currentDestination?.route) {
-            NavigationRoute.HomeScreenGraph.GardenScreen.route -> Garden
-            NavigationRoute.HomeScreenGraph.HomeScreen.route -> Home
-            NavigationRoute.HomeScreenGraph.UserScreen.route -> User
-            else -> null
-        }
+        @Composable get() = currentDestination?.route?.let { TopLevelDestination.of(it) }
+
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
     val getContainerColorByDestination: Color

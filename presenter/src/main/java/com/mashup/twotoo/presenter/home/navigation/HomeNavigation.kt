@@ -19,15 +19,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
         HomeRoute(
             modifier = Modifier.fillMaxSize(),
             navigateToHistory = {
-                navController.navigateToHistory(
-                    navOptions {
-                        popUpTo(NavigationRoute.HomeScreenGraph.HomeScreen.route) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    },
-                )
+                navController.navigateToHistory()
             },
         )
     }

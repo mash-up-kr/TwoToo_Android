@@ -114,10 +114,9 @@ fun TwoTooBottomBar(
         Spacer(modifier = Modifier.fillMaxWidth(0.07f))
     }
 }
-
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
+        it.route?.let { TopLevelDestination.of(it) == destination } ?: false
     } ?: false
 
 @Preview(showBackground = true)
