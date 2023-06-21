@@ -78,9 +78,8 @@ fun MyPageScreen(
         }
         Spacer(modifier = Modifier.height(28.dp))
         Divider(
-            modifier = Modifier.fillMaxWidth().height(4.dp).background(
-                color = TwoTooTheme.color.gray500,
-            ),
+            modifier = Modifier.fillMaxWidth().height(4.dp),
+            color = TwoTooTheme.color.gray500.copy(alpha = 0.1f),
         )
         MyPageItemList(
             modifier = Modifier.fillMaxWidth(),
