@@ -15,20 +15,20 @@ data class HomeFlowerPartnerAndMeUiModel(
     companion object {
         val firstChallenge = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Seed),
+                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
             ),
             me = HomeFlowerUiModel.default,
         )
         val authOnlyPartner = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Seed),
+                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
                 authType = AuthType.AuthOnlyPartner,
             ),
             me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyPartner),
         )
         val authOnlyMe = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Seed),
+                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
                 authType = AuthType.AuthOnlyMe,
             ),
             me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyMe),
@@ -52,7 +52,7 @@ data class HomeFlowerUiModel(
 
         val default = HomeFlowerUiModel(
             name = "왕자",
-            flowerType = Tulip(userType = UserType.ME, growType = Stage.Seed),
+            flowerType = Tulip(userType = UserType.ME, growType = Stage.Zero),
             authType = AuthType.FirstCreateChallenge,
         )
     }
