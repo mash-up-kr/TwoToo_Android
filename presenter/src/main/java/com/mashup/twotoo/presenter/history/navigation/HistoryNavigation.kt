@@ -4,7 +4,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.navigation.navigateToHistoryDetail
 
@@ -19,15 +18,7 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
         HistoryRoute(
             onClickBackButton = { navController.popBackStack() },
             navigateToHistoryDetail = {
-                navController.navigateToHistoryDetail(
-                    navOptions {
-                        popUpTo(HistoryNavigationRoute) {
-                            saveState = true
-                        }
-                        launchSingleTop = true
-                        restoreState = true
-                    },
-                )
+                navController.navigateToHistoryDetail()
             },
         )
     }
