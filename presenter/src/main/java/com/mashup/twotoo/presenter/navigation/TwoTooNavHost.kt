@@ -28,7 +28,7 @@ fun TwoTooNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
-        gardenGraph()
+        gardenGraph(navController = navController)
         homeGraph(navController = navController)
         userGraph()
         onBoardingGraph {

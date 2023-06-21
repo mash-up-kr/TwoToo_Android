@@ -20,10 +20,12 @@ import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 @Composable
 fun GardenRoute(
     modifier: Modifier = Modifier,
+    navigateToGarden: () -> Unit,
 ) {
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
         challengeCardInfoUiModels = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(),
+        navigateToGarden = navigateToGarden,
     )
 }
 
@@ -31,6 +33,7 @@ fun GardenRoute(
 fun GardenScreen(
     challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
     modifier: Modifier = Modifier,
+    navigateToGarden: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -45,7 +48,7 @@ fun GardenScreen(
             verticalArrangement = Arrangement.spacedBy(13.dp),
         ) {
             items(challengeCardInfoUiModels) { challengeInfo ->
-                ChallengeCard(challengeInfo)
+                ChallengeCard(challengeInfo, navigateToGarden)
             }
         }
     }
@@ -54,5 +57,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview())
+    GardenScreen(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(), navigateToGarden = {})
 }
