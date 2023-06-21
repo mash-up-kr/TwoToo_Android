@@ -7,7 +7,6 @@ import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGra
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
 import com.mashup.twotoo.presenter.history.datail.navigation.historyDetailGraph
 import com.mashup.twotoo.presenter.history.navigation.historyGraph
-import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
 import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
@@ -21,7 +20,7 @@ import com.mashup.twotoo.presenter.mypage.navigation.userGraph
 fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
-    startDestination: String = HomeNavigationRoute,
+    startDestination: String = NavigationRoute.HomeScreenGraph.HomeScreen.route,
 ) {
     val navController = appState.navController
     NavHost(

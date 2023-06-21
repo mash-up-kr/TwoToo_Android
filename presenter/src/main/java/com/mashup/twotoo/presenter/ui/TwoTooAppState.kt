@@ -11,11 +11,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
-import com.mashup.twotoo.presenter.history.navigation.HistoryNavigationRoute
-import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
@@ -44,9 +42,9 @@ class TwoTooAppState(
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentTopLevelDestination: TopLevelDestination?
         @Composable get() = when (currentDestination?.route) {
-            GardenNavigationRoute -> Garden
-            HomeNavigationRoute -> Home
-            UserNavigationRoute -> User
+            NavigationRoute.HomeScreenGraph.GardenScreen.route -> Garden
+            NavigationRoute.HomeScreenGraph.HomeScreen.route -> Home
+            NavigationRoute.HomeScreenGraph.UserScreen.route -> User
             else -> null
         }
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
@@ -82,8 +80,11 @@ class TwoTooAppState(
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
-            GardenNavigationRoute, HomeNavigationRoute, UserNavigationRoute -> true
-            HistoryNavigationRoute -> false
+            NavigationRoute.HomeScreenGraph.HomeScreen.route,
+            NavigationRoute.HomeScreenGraph.GardenScreen.route,
+            NavigationRoute.HomeScreenGraph.UserScreen.route,
+            -> true
+            NavigationRoute.HistoryScreenGraph.HistoryScreen.route -> false
             else -> {
                 false
             }

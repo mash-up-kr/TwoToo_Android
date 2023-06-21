@@ -43,4 +43,14 @@ sealed class NavigationRoute(val route: String) {
         object SelectFlowerCardScreen : NavigationRoute("selectFlowerCard/screen")
         object SuccessChallengeRequest : NavigationRoute("successChallengeRequest/screen")
     }
+
+    object HomeScreenGraph : NavigationRoute("home") {
+        object HomeScreen : NavigationRoute("home/screen")
+        object GardenScreen : NavigationRoute("home/garden_screen")
+        object UserScreen : NavigationRoute("home/user_screen")
+    }
+    object HistoryScreenGraph : NavigationRoute("history") {
+        object HistoryScreen : NavigationRoute("history/screen")
+        object HistoryDetailScreen : NavigationRoute("history/detail_screen")
+    }
 }

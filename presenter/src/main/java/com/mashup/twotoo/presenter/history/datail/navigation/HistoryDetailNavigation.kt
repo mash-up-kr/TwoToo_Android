@@ -4,15 +4,14 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
-
-const val HistoryDetailNavigationRoute = "history_detail_route"
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 
 fun NavController.navigateToHistoryDetail() {
-    this.navigate(route = HistoryDetailNavigationRoute)
+    this.navigate(route = NavigationRoute.HistoryScreenGraph.HistoryDetailScreen.route)
 }
 
 fun NavGraphBuilder.historyDetailGraph(navController: NavController) {
-    composable(route = HistoryDetailNavigationRoute) {
+    composable(route = NavigationRoute.HistoryScreenGraph.HistoryDetailScreen.route) {
         HistoryDetailRoute(onClickBackButton = { navController.popBackStack() })
     }
 }
