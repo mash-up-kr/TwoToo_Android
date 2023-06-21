@@ -21,7 +21,7 @@ fun NavGraphBuilder.invitationGraph(
 ) {
     navigation(
         startDestination = InvitationNavigation.SendInvitation.route,
-        route = "",
+        route = "SendInvitation",
     ) {
         composable(route = InvitationNavigation.SendInvitation.route) {
             SendInvitationRoute { navController.navigate(InvitationNavigation.WaitingAcceptPair.route) }

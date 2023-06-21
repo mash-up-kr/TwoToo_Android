@@ -26,14 +26,14 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun SendInvitationRoute(
-    sendInvitationButtonClick: () -> Unit
+    sendInvitationButtonClick: () -> Unit = {}
 ) {
     SendInvitation(sendInvitationButtonClick)
 }
 
 @Composable
 fun SendInvitation(
-    sendInvitationButtonClick: () -> Unit
+    sendInvitationButtonClick: () -> Unit = {}
 ) {
     Scaffold(
         topBar = { TwoTooMainToolbar() },
@@ -80,5 +80,5 @@ fun SendInvitation(
 @Preview
 @Composable
 private fun SendInvitationPreview() {
-    SendInvitation({})
+    SendInvitation()
 }

@@ -23,11 +23,12 @@ import com.google.accompanist.pager.rememberPagerState
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButtonImpl
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.sdk.theme.KakaoLoginButtonTheme
 
 @Composable
 fun OnBoardingRoute(
-    onClickLoginButton: () -> Unit
+    onClickLoginButton: () -> Unit = {}
 ) {
     OnBoardingScreen(onClickLoginButton)
 }
@@ -35,7 +36,7 @@ fun OnBoardingRoute(
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun OnBoardingScreen(
-    onClickLoginButton: () -> Unit
+    onClickLoginButton: () -> Unit = {}
 ) {
     val pagerState = rememberPagerState()
     Scaffold(
@@ -77,6 +78,7 @@ fun KakaoLoginButton(
             Text(
                 stringResource(id = KakaoLoginButtonTheme.TextId),
                 color = KakaoLoginButtonTheme.ContentColor,
+                style = TwoTooTheme.typography.headLineNormal18,
             )
         },
         iconId = KakaoLoginButtonTheme.IconId,
@@ -90,5 +92,5 @@ fun KakaoLoginButton(
 @Preview
 @Composable
 private fun OnBoardingPagerPreview() {
-    OnBoardingScreen({})
+    OnBoardingScreen()
 }
