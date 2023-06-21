@@ -9,7 +9,6 @@ import com.mashup.twotoo.presenter.createChallenge.CreateChallenge
 import com.mashup.twotoo.presenter.createChallenge.SelectFlowerCard
 import com.mashup.twotoo.presenter.createChallenge.SelectFlowerCardRoute
 import com.mashup.twotoo.presenter.createChallenge.SuccessChallengeRequest
-import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 
 sealed class CreateChallengeNavigation(val route: String) {
     object CreateChallenge : CreateChallengeNavigation("create_challenge")
@@ -25,7 +24,7 @@ fun NavGraphBuilder.createChallengeGraph(
 ) {
     navigation(
         startDestination = CreateChallengeNavigation.CreateChallenge.route,
-        route = HomeNavigationRoute,
+        route = "CreateChallengeNavigation",
     ) {
         composable(route = CreateChallengeNavigation.CreateChallenge.route) {
             CreateChallenge {
