@@ -92,7 +92,7 @@ class TwoTooAppKtTest {
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertExists()
 
         // 현재 UserScreen이 보이지 않는지 검증
-        composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(context.getString(R.string.mypage)).assertDoesNotExist()
 
         // 현재 GardenScreen이 보이지 않는지 검증
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertDoesNotExist()
@@ -117,7 +117,7 @@ class TwoTooAppKtTest {
         gardenNavButtonClick()
 
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertExists()
-        composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertDoesNotExist()
+        composeTestRule.onNodeWithTag(context.getString(R.string.mypage)).assertDoesNotExist()
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertDoesNotExist()
     }
 
@@ -139,7 +139,7 @@ class TwoTooAppKtTest {
     fun 경로가_유저일때_유저스크린이_보이는가() {
         userNavButtonClick()
 
-        composeTestRule.onNodeWithTag(context.getString(R.string.user)).assertExists()
+        composeTestRule.onNodeWithTag(context.getString(R.string.mypage)).assertExists()
         composeTestRule.onNodeWithTag(context.getString(R.string.garden)).assertDoesNotExist()
         composeTestRule.onNodeWithTag(context.getString(R.string.home)).assertDoesNotExist()
     }

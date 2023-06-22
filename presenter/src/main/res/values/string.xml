@@ -3,7 +3,6 @@
     <string name="app_name">Twotoo</string>
     <string name="garden">Garden</string>
     <string name="home">Home</string>
-    <string name="user">User</string>
 
     <string name="home_nav_button">홈 네비게이션 버튼</string>
     <string name="garden_nav_button">가든 네비게이션 버튼</string>
@@ -138,12 +137,20 @@
     <string name="cancel">취소</string>
 
     <string name="challenge_start">챌린지 시작</string>
-
+    <string name="authenticate">인증하기</string>
+    <string name="authenticate_waiting">기다리는 중</string>
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
 
     <!-- toast -->
     <string name="other_not_accept">상대방이 아직 수락을 하지 않았어요!</string>
+
+    <!-- MyPage -->
+    <string name="mypage">마이페이지</string>
+    <string name="announcement">공지사항</string>
+    <string name="using_guide">이용 가이드</string>
+    <string name="inquiry">투투에 문의하기</string>
+    <string name="makers">만든이들</string>
     
 
 </resources>
