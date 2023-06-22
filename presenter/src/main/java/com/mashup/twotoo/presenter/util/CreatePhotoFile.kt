@@ -13,7 +13,7 @@ import java.util.Locale
 fun Context.createImageFile(): File {
     // Create an image file name
     val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.KOREA).format(Date())
-    val imageFileName = "JPEG_" + timeStamp + "_"
+    val imageFileName = "JPEG_${timeStamp}_"
     return File.createTempFile(
         imageFileName, /* prefix */
         ".jpg", /* suffix */
