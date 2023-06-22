@@ -19,7 +19,7 @@ fun TwoTooBackToolbar(
     onClickBackIcon: () -> Unit,
     modifier: Modifier = Modifier,
     title: String = "",
-    @DrawableRes backIconId: Int = R.drawable.back_arrow,
+    @DrawableRes backIconId: Int = R.drawable.ic_back,
     actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(
@@ -31,7 +31,7 @@ fun TwoTooBackToolbar(
                 Text(
                     text = title,
                     color = TwoTooTheme.color.mainBrown,
-                    style = TwoTooTheme.typography.headLineNormal20,
+                    style = TwoTooTheme.typography.headLineNormal24,
                     textAlign = TextAlign.Center,
                 )
             }
@@ -70,7 +70,7 @@ private fun BackToolbarWithNavTitleAndActionPreview() {
         {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(id = R.drawable.more),
+                    painter = painterResource(id = R.drawable.ic_more),
                     contentDescription = null,
                 )
             }
@@ -85,7 +85,7 @@ private fun BackToolbarWithNavAndTitlePreview() {
         {
             IconButton(onClick = {}) {
                 Icon(
-                    painter = painterResource(id = R.drawable.more),
+                    painter = painterResource(id = R.drawable.ic_more),
                     contentDescription = null,
                 )
             }
