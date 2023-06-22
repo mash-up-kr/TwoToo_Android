@@ -22,7 +22,7 @@ enum class TopLevelDestination(
     ),
     User(
         icon = DrawableResourceIcon(TwoTooIcon.UserIcon),
-        iconTextId = R.string.user,
+        iconTextId = R.string.mypage,
         buttonTitleTextId = R.string.user_nav_button,
     ),
 }

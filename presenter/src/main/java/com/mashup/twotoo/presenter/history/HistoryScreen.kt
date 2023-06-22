@@ -29,7 +29,7 @@ fun HistoryScreen(historyItemUiModels: List<HistoryItemUiModel> = listOf(), isHo
             ) {
                 IconButton(onClick = {}) {
                     Icon(
-                        painter = painterResource(id = R.drawable.more),
+                        painter = painterResource(id = R.drawable.ic_more),
                         contentDescription = null,
                     )
                 }

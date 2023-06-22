@@ -18,7 +18,9 @@ fun TwoTooScreenContainer(
     currentThemeColor: ThemeColor = ThemeColor.Default,
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().then(modifier),
+        modifier = Modifier
+            .fillMaxSize()
+            .then(modifier),
     ) {
         TwoTooImageView(
             modifier = Modifier.fillMaxSize(),
@@ -44,7 +46,6 @@ fun TwoTooScreenContainer(
                 ) {}
             },
         )
-
         screen()
     }
 }

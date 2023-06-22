@@ -27,6 +27,7 @@ val TwoTooRed = Color(0xFFFF3800)
 // design system colors
 val MainBrown = Color(0xFF443018)
 val MainPink = Color(0xFFF3A989)
+val MainLightPink = Color(0xFFF5DBD0)
 val MainYellow = Color(0xFFFFE6AF)
 val MainWhite = Color(0xFFFFFFFF)
 val BackgroundYellow = Color(0xFFFCF5E6)

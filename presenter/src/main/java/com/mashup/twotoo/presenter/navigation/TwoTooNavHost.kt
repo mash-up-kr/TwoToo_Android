@@ -8,7 +8,7 @@ import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
-import com.mashup.twotoo.presenter.user.navigation.userGraph
+import com.mashup.twotoo.presenter.mypage.navigation.userGraph
 
 @Composable
 fun TwoTooNavHost(
