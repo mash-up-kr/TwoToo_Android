@@ -38,23 +38,30 @@ fun TwoTooBottomSheet(
     onDismiss: () -> Unit,
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
 ) {
-    TwoTooBottomSheetImpl(
-        bottomSheetState = bottomSheetState,
-        type = type,
-        button = button,
-        onDismiss = onDismiss,
-    )
+    when (type) {
+        is Authenticate -> TwoTooAuthBottomSheet(
+            type = type,
+            button = button,
+            onDismiss = onDismiss,
+            bottomSheetState = bottomSheetState,
+        )
+
+        is SendType -> TwoTooSendMsgBottomSheet(
+            type = type,
+            button = button,
+            onDismiss = onDismiss,
+            bottomSheetState = bottomSheetState,
+        )
+    }
 }
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TwoTooBottomSheetImpl(
-    bottomSheetState: SheetState,
-    type: BottomSheetType,
-    onDismiss: () -> Unit,
+fun TwoTooAuthBottomSheet(
+    type: Authenticate,
     button: @Composable (Modifier, BottomSheetData) -> Unit,
+    onDismiss: () -> Unit,
+    bottomSheetState: SheetState,
 ) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -118,53 +125,74 @@ fun TwoTooBottomSheetImpl(
         setImageDialogVisible = false
     }
 
-    Box {
-        ModalBottomSheet(
-            sheetState = bottomSheetState,
-            onDismissRequest = onDismiss,
-            containerColor = Color(0xFFFCF5E6),
+    Box(modifier = Modifier.fillMaxSize()) {
+        TwoTooBottomSheetImpl(
+            bottomSheetState = bottomSheetState,
+            onDismiss = onDismiss,
         ) {
-            when (type) {
-                is Authenticate -> {
-                    AuthenticateContent(
-                        type = type,
-                        button = button,
-                        imageUri = imageUri,
-                        onClickPlusButton = {
-                            val permissionCheckResult =
-                                ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
-                            if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
-                                setImageDialogVisible = true
-                            } else {
-                                // Request a permission
-                                permissionLauncher.launch(Manifest.permission.CAMERA)
-                            }
-                        },
-                    )
-                }
-                is SendType -> {
-                    SendMsgBottomSheetContent(
-                        type = type,
-                        button = button,
-                    )
-                }
-            }
+            AuthenticateContent(
+                type = type,
+                button = button,
+                imageUri = imageUri,
+                onClickPlusButton = {
+                    val permissionCheckResult =
+                        ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                    if (permissionCheckResult == PackageManager.PERMISSION_GRANTED) {
+                        setImageDialogVisible = true
+                    } else {
+                        // Request a permission
+                        permissionLauncher.launch(Manifest.permission.CAMERA)
+                    }
+                },
+            )
         }
+        if (setImageDialogVisible) {
+            SetImageOptionDialog(
+                onDismissRequest = { setImageDialogVisible = false },
+                onClickCameraButton = {
+                    takePhotoFromCameraLauncher.launch(uri)
+                },
+                onClickAlbumButton = {
+                    takePhotoFromAlbumLauncher.launch("image/*")
+                },
+                onClickDismissButton = { setImageDialogVisible = false },
+            )
+        }
+    }
+}
 
-        if (type is Authenticate) {
-            if (setImageDialogVisible) {
-                SetImageOptionDialog(
-                    onDismissRequest = { setImageDialogVisible = false },
-                    onClickCameraButton = {
-                        takePhotoFromCameraLauncher.launch(uri)
-                    },
-                    onClickAlbumButton = {
-                        takePhotoFromAlbumLauncher.launch("image/*")
-                    },
-                    onClickDismissButton = { setImageDialogVisible = false },
-                )
-            }
-        }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TwoTooSendMsgBottomSheet(
+    type: SendType,
+    button: @Composable (Modifier, BottomSheetData) -> Unit,
+    onDismiss: () -> Unit,
+    bottomSheetState: SheetState = rememberModalBottomSheetState(),
+) {
+    TwoTooBottomSheetImpl(
+        bottomSheetState = bottomSheetState,
+        onDismiss = onDismiss,
+    ) {
+        SendMsgBottomSheetContent(
+            type = type,
+            button = button,
+        )
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun TwoTooBottomSheetImpl(
+    bottomSheetState: SheetState,
+    onDismiss: () -> Unit,
+    bottomSheetContent: @Composable () -> Unit,
+) {
+    ModalBottomSheet(
+        sheetState = bottomSheetState,
+        onDismissRequest = onDismiss,
+        containerColor = Color(0xFFFCF5E6),
+    ) {
+        bottomSheetContent()
     }
 }
 
