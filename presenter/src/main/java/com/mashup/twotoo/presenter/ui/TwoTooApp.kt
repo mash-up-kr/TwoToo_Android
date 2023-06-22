@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.twotoo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -50,12 +49,12 @@ fun TwoTooApp(
                 unSelectedColor = appState.getUnSelectedColorByDestination,
             )
         },
+        containerColor = Color.Transparent,
         contentWindowInsets = WindowInsets(0, 50, 0, 0),
     ) { paddingValues: PaddingValues ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Transparent)
                 .padding(paddingValues),
         ) {
             val destination = appState.currentTopLevelDestination
