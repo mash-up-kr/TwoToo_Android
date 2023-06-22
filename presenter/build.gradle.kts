@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.kakao.login)
     implementation(libs.landscapist.glide)
     implementation(libs.bundles.pager)
+    implementation(libs.image.cropper)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
     testImplementation(libs.test.junit)
