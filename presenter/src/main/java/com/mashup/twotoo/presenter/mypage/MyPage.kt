@@ -92,9 +92,7 @@ fun MyPageScreen(
 @Preview(showBackground = true)
 @Composable
 fun PreviewMyPageScreen() {
-    TwoTooTheme(
-        backgroundImageId = R.drawable.image_background,
-    ) {
+    TwoTooTheme {
         MyPageRoute()
     }
 }
