@@ -12,6 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -95,13 +96,13 @@ fun HomeFlowerMeAndPartner(
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeWaterImage),
-                ).width(59.dp).height(60.dp).constrainAs(waterImage) {
+                ).width(75.dp).height(69.dp).constrainAs(waterImage) {
                     top.linkTo(textHint.bottom)
                     bottom.linkTo(me.top, margin = 8.dp)
                     start.linkTo(me.start)
                     end.linkTo(me.end)
                 },
-                model = R.drawable.ic_needed_water,
+                model = R.drawable.img_need_water,
             )
         }
 
@@ -125,12 +126,13 @@ fun HomeFlowerPartner(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlowerUiModel.growType) {
+        val context = LocalContext.current
+        with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
                 ).width(width).height(height),
-                model = growImage,
+                model = image,
             )
         }
         Spacer(modifier = Modifier.height(3.dp))
@@ -150,12 +152,13 @@ fun HomeFlowerMe(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        with(homeFlowerUiModel.growType) {
+        val context = LocalContext.current
+        with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
             TwoTooImageView(
                 modifier = Modifier.testTag(
                     stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
                 ).width(width).height(height),
-                model = growImage,
+                model = image,
             )
         }
         Spacer(modifier = Modifier.height(3.dp))
