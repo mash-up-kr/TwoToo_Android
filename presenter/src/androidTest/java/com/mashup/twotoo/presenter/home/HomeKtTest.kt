@@ -181,6 +181,7 @@ class HomeKtTest {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
             homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
         )
+
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
@@ -198,13 +199,13 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
 
@@ -234,13 +235,13 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
 
@@ -266,13 +267,13 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
 
@@ -299,13 +300,13 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
 
@@ -331,13 +332,13 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.flowerImage,
-            ).isEqualTo(R.drawable.ic_seed)
+                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
 }
