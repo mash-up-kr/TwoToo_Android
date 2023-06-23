@@ -6,37 +6,40 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.createChallenge.CreateChallenge
-import com.mashup.twotoo.presenter.createChallenge.SelectFlowerCard
 import com.mashup.twotoo.presenter.createChallenge.SelectFlowerCardRoute
 import com.mashup.twotoo.presenter.createChallenge.SuccessChallengeRequest
-
-sealed class CreateChallengeNavigation(val route: String) {
-    object CreateChallenge : CreateChallengeNavigation("create_challenge")
-    object SelectFlowerCard : CreateChallengeNavigation("select_flower_card")
-    object SuccessChallengeRequest : CreateChallengeNavigation("success_challenge_request")
-}
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 
 fun NavController.navigateToCreateChallenge(navOptions: NavOptions? = null) {
-    this.navigate(route = CreateChallengeNavigation.CreateChallenge.route, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.CreateChallengeGraph.route, navOptions = navOptions)
 }
+
+private fun NavController.navigateToSelectFlowerCard(navOptions: NavOptions? = null) {
+    this.navigate(route = NavigationRoute.CreateChallengeGraph.SelectFlowerCardScreen.route, navOptions = navOptions)
+}
+
+private fun NavController.navigateToSuccessChallengeRequest(navOptions: NavOptions? = null) {
+    this.navigate(route = NavigationRoute.CreateChallengeGraph.route, navOptions = navOptions)
+}
+
 fun NavGraphBuilder.createChallengeGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = CreateChallengeNavigation.CreateChallenge.route,
-        route = "CreateChallengeNavigation",
+        startDestination = NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route,
+        route = NavigationRoute.CreateChallengeGraph.route,
     ) {
-        composable(route = CreateChallengeNavigation.CreateChallenge.route) {
+        composable(route = NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route) {
             CreateChallenge {
-                navController.navigate(CreateChallengeNavigation.SelectFlowerCard.route)
+                navController.navigateToSelectFlowerCard()
             }
         }
-        composable(route = CreateChallengeNavigation.SelectFlowerCard.route) {
+        composable(route = NavigationRoute.CreateChallengeGraph.SelectFlowerCardScreen.route) {
             SelectFlowerCardRoute {
-                navController.navigate(CreateChallengeNavigation.SuccessChallengeRequest.route)
+                navController.navigateToSuccessChallengeRequest()
             }
         }
-        composable(route = CreateChallengeNavigation.SuccessChallengeRequest.route) {
+        composable(route = NavigationRoute.CreateChallengeGraph.SuccessChallengeRequest.route) {
             SuccessChallengeRequest()
         }
     }

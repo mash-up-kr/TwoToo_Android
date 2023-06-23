@@ -7,26 +7,26 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.invite.SendInvitationRoute
 import com.mashup.twotoo.presenter.invite.WaitingAcceptPairRoute
-
-sealed class InvitationNavigation(val route: String) {
-    object SendInvitation : InvitationNavigation("invitation_route")
-    object WaitingAcceptPair : InvitationNavigation("waiting_accept_route")
-}
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 
 fun NavController.navigateToInvitation(navOptions: NavOptions? = null) {
-    this.navigate(route = InvitationNavigation.SendInvitation.route, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.InvitationGraph.route, navOptions = navOptions)
+}
+
+private fun NavController.navigateToWaitingAcceptPair(navOptions: NavOptions? = null) {
+    this.navigate(route = NavigationRoute.InvitationGraph.route, navOptions = navOptions)
 }
 fun NavGraphBuilder.invitationGraph(
     navController: NavController
 ) {
     navigation(
-        startDestination = InvitationNavigation.SendInvitation.route,
-        route = "SendInvitation",
+        startDestination = NavigationRoute.InvitationGraph.SendInvitationScreen.route,
+        route = NavigationRoute.InvitationGraph.route,
     ) {
-        composable(route = InvitationNavigation.SendInvitation.route) {
-            SendInvitationRoute { navController.navigate(InvitationNavigation.WaitingAcceptPair.route) }
+        composable(route = NavigationRoute.InvitationGraph.SendInvitationScreen.route) {
+            SendInvitationRoute { navController.navigateToWaitingAcceptPair() }
         }
-        composable(route = InvitationNavigation.WaitingAcceptPair.route) {
+        composable(route = NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route) {
             WaitingAcceptPairRoute()
         }
     }

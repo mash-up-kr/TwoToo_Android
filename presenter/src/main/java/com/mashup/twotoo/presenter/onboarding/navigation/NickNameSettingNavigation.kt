@@ -4,17 +4,16 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.onboarding.NickNameSettingRoute
 
-const val NickNameSettingRoute: String = "nickname_route"
-
 fun NavController.navigateToOnNickNameSetting(navOptions: NavOptions? = null) {
-    this.navigate(route = NickNameSettingRoute, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.NickNameSettingGraph.route, navOptions = navOptions)
 }
 fun NavGraphBuilder.onNickNameSettingGraph(
     onNextButtonClick: () -> Unit
 ) {
-    composable(route = NickNameSettingRoute) {
+    composable(route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route) {
         NickNameSettingRoute(onNextButtonClick)
     }
 }

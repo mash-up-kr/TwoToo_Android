@@ -26,3 +26,21 @@ enum class TopLevelDestination(
         buttonTitleTextId = R.string.user_nav_button,
     ),
 }
+
+sealed class NavigationRoute(val route: String) {
+    object OnBoardingGraph : NavigationRoute("onboarding") {
+        object OnboardingScreen : NavigationRoute("onboarding/screen")
+    }
+    object NickNameSettingGraph : NavigationRoute("nickNameSetting") {
+        object NickNameSettingScreen : NavigationRoute("nickNameSetting/screen")
+    }
+    object InvitationGraph : NavigationRoute("invitation") {
+        object SendInvitationScreen : NavigationRoute("sendInvitation/screen")
+        object WaitingAcceptPairScreen : NavigationRoute("waitingAccept/screen")
+    }
+    object CreateChallengeGraph : NavigationRoute("createChallenge") {
+        object CreateChallengeScreen : NavigationRoute("createChallenge/screen")
+        object SelectFlowerCardScreen : NavigationRoute("selectFlowerCard/screen")
+        object SuccessChallengeRequest : NavigationRoute("successChallengeRequest/screen")
+    }
+}
