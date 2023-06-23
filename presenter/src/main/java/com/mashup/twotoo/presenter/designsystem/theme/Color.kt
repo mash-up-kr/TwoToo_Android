@@ -72,16 +72,16 @@ class ColorScheme(
         internal set
 
     fun copy(
-        mainBrown: Color,
-        mainPink: Color,
-        mainYellow: Color,
-        mainWhite: Color,
-        backgroundYellow: Color,
-        gray600: Color,
-        gray500: Color,
-        gray400: Color,
-        gray300: Color,
-        gray200: Color,
+        mainBrown: Color = this.mainBrown,
+        mainPink: Color = this.mainPink,
+        mainYellow: Color = this.mainYellow,
+        mainWhite: Color = this.mainWhite,
+        backgroundYellow: Color = this.backgroundYellow,
+        gray600: Color = this.gray600,
+        gray500: Color = this.gray500,
+        gray400: Color = this.gray400,
+        gray300: Color = this.gray300,
+        gray200: Color = this.gray200,
     ): ColorScheme = ColorScheme(
         mainBrown,
         mainPink,
@@ -94,6 +94,51 @@ class ColorScheme(
         gray300,
         gray200,
     )
+}
+
+/**
+ * 지정된 ColorScheme의 내부 값을 다른 값으로 업데이트합니다.
+ *
+ *
+ * 이렇게 하면 LocalTwoTooColor의 값을 사용하는 모든 컴포저블을 재구성하지 않고도
+ * ColorScheme의 하위 집합을 효율적으로 업데이트할 수 있습니다.
+ *
+ *
+ * ColorScheme는 LocalColorScheme에 새 값을 제공하면 LocalColoScheme를 사용하는,
+ * 모든 컴포저블이 재구성됩니다. 이는 엄청나게 비용이 많이 듭니다.
+ *
+ *
+ * 이 함수는 other의 값과 일치하도록 내부의 상태를 변경합니다.
+ * 즉 모든 변경사항은 내부 상태를 변경하고 변경된 특정 값을 읽는 컴포저블만 재구성하도록 합니다.
+ */
+fun ColorScheme.updateColorSchemeFrom(other: ColorScheme) {
+    mainBrown = other.mainBrown
+    mainPink = other.mainPink
+    mainYellow = other.mainYellow
+    mainWhite = other.mainWhite
+    backgroundYellow = other.backgroundYellow
+    gray600 = other.gray600
+    gray500 = other.gray500
+    gray400 = other.gray400
+    gray300 = other.gray300
+    gray200 = other.gray200
+}
+
+enum class ThemeColor {
+    Default,
+}
+fun getCurrentThemeColor(currentTheme: ThemeColor, isDarkTheme: Boolean): ColorScheme {
+    return if (isDarkTheme) {
+        // 다크테마일 경우
+        lightColors()
+    } else {
+        // 다크 테마가 아닌, 앱에서 제공하는 다른 컬러 테마일 경우
+        when (currentTheme) {
+            ThemeColor.Default -> {
+                lightColors()
+            }
+        }
+    }
 }
 fun lightColors(
     mainBrown: Color = MainBrown,

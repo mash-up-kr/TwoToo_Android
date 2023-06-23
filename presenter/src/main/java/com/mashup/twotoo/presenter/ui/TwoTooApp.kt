@@ -1,9 +1,9 @@
 package com.mashup.twotoo.presenter.twotoo
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -20,16 +20,16 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBar
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooNavigationBarItem
 import com.mashup.twotoo.presenter.designsystem.icon.Icon
 import com.mashup.twotoo.presenter.designsystem.icon.Icon.ImageVectorIcon
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
-import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -49,12 +49,12 @@ fun TwoTooApp(
                 unSelectedColor = appState.getUnSelectedColorByDestination,
             )
         },
+        containerColor = Color.Transparent,
+        contentWindowInsets = WindowInsets(0, 50, 0, 0),
     ) { paddingValues: PaddingValues ->
-
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Transparent)
                 .padding(paddingValues),
         ) {
             val destination = appState.currentTopLevelDestination
