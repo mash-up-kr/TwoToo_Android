@@ -25,7 +25,16 @@ import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainTool
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun SendInvitation() {
+fun SendInvitationRoute(
+    sendInvitationButtonClick: () -> Unit = {}
+) {
+    SendInvitation(sendInvitationButtonClick)
+}
+
+@Composable
+fun SendInvitation(
+    sendInvitationButtonClick: () -> Unit = {}
+) {
     Scaffold(
         topBar = { TwoTooMainToolbar() },
     ) { padding ->
@@ -59,7 +68,9 @@ fun SendInvitation() {
                 Spacer(modifier = Modifier.weight(1f))
                 TwoTooTextButton(
                     text = stringResource(id = R.string.send_invite),
-                ) {}
+                ) {
+                    sendInvitationButtonClick()
+                }
                 Spacer(modifier = Modifier.height(55.dp))
             }
         }

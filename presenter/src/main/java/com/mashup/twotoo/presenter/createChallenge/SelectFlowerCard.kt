@@ -28,7 +28,16 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 
 @Composable
-fun SelectFlowerCard() {
+fun SelectFlowerCardRoute(
+    onStartButtonClick: () -> Unit
+) {
+    SelectFlowerCard(onStartButtonClick)
+}
+
+@Composable
+fun SelectFlowerCard(
+    onStartButtonClick: () -> Unit = {}
+) {
     Scaffold(
         topBar = { TwoTooBackToolbar(onClickBackIcon = {}) },
     ) { padding ->
@@ -53,7 +62,9 @@ fun SelectFlowerCard() {
                     .fillMaxWidth()
                     .height(57.dp)
                     .align(Alignment.BottomCenter),
-            ) {}
+            ) {
+                onStartButtonClick()
+            }
         }
     }
 }

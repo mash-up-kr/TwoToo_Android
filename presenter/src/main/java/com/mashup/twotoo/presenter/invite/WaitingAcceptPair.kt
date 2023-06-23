@@ -27,6 +27,11 @@ import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainTool
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
+fun WaitingAcceptPairRoute() {
+    WaitingAcceptPair()
+}
+
+@Composable
 fun WaitingAcceptPair() {
     Scaffold(
         topBar = { TwoTooMainToolbar() },
@@ -47,7 +52,7 @@ fun WaitingAcceptPair() {
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 150.dp, bottom = 13.dp),
+                    modifier = Modifier.padding(top = 120.dp, bottom = 13.dp),
                     text = stringResource(id = R.string.invite_waiting_other),
                     textAlign = TextAlign.Center,
                     style = TwoTooTheme.typography.headLineNormal28,
@@ -74,7 +79,6 @@ fun WaitingAcceptPair() {
 @Composable
 fun WaitingInviteBottom() {
     Column(
-        modifier = Modifier.padding(vertical = 55.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp),
     ) {
