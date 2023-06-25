@@ -19,10 +19,13 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
+    count: Int,
     modifier: Modifier = Modifier,
+    onBeeButtonClick: () -> Unit = {},
 ) {
     HomeScreen(
         modifier = modifier.testTag(stringResource(id = R.string.home)),
+        onBeeButtonClick = onBeeButtonClick,
     )
 }
 
@@ -30,7 +33,7 @@ fun HomeRoute(
 fun HomeScreen(
     onBeeButtonClick: () -> Unit = {},
     modifier: Modifier = Modifier,
-    challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
+    challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
@@ -65,7 +68,7 @@ fun HomeScreen(
                         height = Dimension.fillToConstraints
                     },
                     ongoingChallengeUiModel = challengeStateTypeUiModel,
-                    onBeeButtonClick = { /*TODO*/ },
+                    onBeeButtonClick = onBeeButtonClick,
                 )
             }
         }

@@ -1,10 +1,8 @@
 package com.mashup.twotoo.presenter.home
 
 import com.mashup.twotoo.presenter.di.HomeScreenScope
-import com.mashup.twotoo.presenter.di.ScreenComponent
 import com.mashup.twotoo.presenter.di.ViewModelFactoryModule
 import com.mashup.twotoo.presenter.di.ViewModelModule
-import dagger.Component
 import dagger.Subcomponent
 
 /**
@@ -21,10 +19,14 @@ import dagger.Subcomponent
 @HomeScreenScope
 interface HomeComponent {
 
-    @Component.Builder
-    interface Builder {
-        fun build(
-            screenComponent: ScreenComponent,
-        ): HomeComponent
+    @Subcomponent.Factory
+    interface Factory {
+        fun create(): HomeComponent
     }
+
+    fun getHomeViewModel(): HomeViewModel
+}
+
+interface HomeComponentProvider {
+    fun provideHomeComponent(): HomeComponent
 }

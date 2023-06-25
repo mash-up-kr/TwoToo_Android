@@ -12,13 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 inline fun <reified T : ViewModel> daggerViewModel(
     key: String? = null,
     crossinline viewModelInstanceCreator: () -> T,
+    factory: ViewModelProvider.Factory,
 ): T =
     androidx.lifecycle.viewmodel.compose.viewModel(
         modelClass = T::class.java,
         key = key,
-        factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return viewModelInstanceCreator() as T
-            }
-        },
+        factory = factory,
     )

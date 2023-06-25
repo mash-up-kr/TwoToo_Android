@@ -6,15 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
+import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.twotoo.TwoTooApp
 import com.mashup.twotoo.presenter.util.Logging
+import javax.inject.Inject
 
 class MainActivity : ComponentActivity() {
 
+    @Inject
+    lateinit var factory: ViewModelProvider.Factory
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
+
+
         super.onCreate(savedInstanceState)
 
         setContent {
@@ -25,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     // behind the status bar
                     systemUiController.setStatusBarColor(color = Color.Transparent, darkIcons = true)
                 }
-                TwoTooApp()
+                TwoTooApp(factory = factory)
             }
         }
         Logging.logRegToken()
