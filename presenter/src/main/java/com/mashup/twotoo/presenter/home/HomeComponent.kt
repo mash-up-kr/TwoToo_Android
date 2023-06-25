@@ -5,16 +5,18 @@ import com.mashup.twotoo.presenter.di.ScreenComponent
 import com.mashup.twotoo.presenter.di.ViewModelFactoryModule
 import com.mashup.twotoo.presenter.di.ViewModelModule
 import dagger.Component
+import dagger.Subcomponent
 
 /**
- * @Created by 김현국 2023/06/23
+ * Component
+ * 연결된 Module을 이용하여 의존성 객체를 생성하고,
+ * Inject로 요청받은 인스턴스에 생성한 객체를 주입합니다.
  */
 
-@Component(
+@Subcomponent(
     modules = [
         ViewModelModule::class, ViewModelFactoryModule::class,
     ],
-    dependencies = [ScreenComponent::class],
 )
 @HomeScreenScope
 interface HomeComponent {
@@ -24,11 +26,5 @@ interface HomeComponent {
         fun build(
             screenComponent: ScreenComponent,
         ): HomeComponent
-    }
-
-    fun getViewModel(): HomeViewModel
-
-    interface HomeComponentProvider {
-        fun provideHomeComponent(): HomeComponent
     }
 }
