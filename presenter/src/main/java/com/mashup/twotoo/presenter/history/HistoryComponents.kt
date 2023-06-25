@@ -148,8 +148,8 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo:
             .size(127.dp)
             .clip(TwoTooTheme.shape.large)
             .background(TwoTooTheme.color.mainWhite).clickable {
-            navigateToHistoryDetail()
-        },
+                navigateToHistoryDetail()
+            },
     ) {
         if (historyInfoUiModel.photoUrl.isEmpty()) {
             EmptyHistoryInfo(isMyHistoryInfo)

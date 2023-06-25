@@ -61,18 +61,17 @@ fun HomeScreen(
             }
             is OngoingChallengeUiModel -> {
                 HomeOngoingChallenge(
-                     navigateToHistory= navigateToHistory,
-                        modifier = Modifier.constrainAs(homeOngoingChallenge) {
-                            top.linkTo(topBar.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                            height = Dimension.fillToConstraints
-                        },
-                        ongoingChallengeUiModel = challengeStateTypeUiModel,
-                        onBeeButtonClick = { /*TODO*/ },
-                    )
-
+                    navigateToHistory = navigateToHistory,
+                    modifier = Modifier.constrainAs(homeOngoingChallenge) {
+                        top.linkTo(topBar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                        height = Dimension.fillToConstraints
+                    },
+                    ongoingChallengeUiModel = challengeStateTypeUiModel,
+                    onBeeButtonClick = { /*TODO*/ },
+                )
             }
         }
     }

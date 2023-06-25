@@ -18,7 +18,6 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
-import com.mashup.twotoo.presenter.mypage.navigation.UserNavigationRoute
 import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 
 @Composable
