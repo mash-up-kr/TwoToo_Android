@@ -21,8 +21,8 @@ import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 
 @Composable
 fun ChallengeDropDialog(
-    dropDialogTextUiModels: List<DropDialogTextUiModel>,
-    onDismissRequest: () -> Unit,
+    dropDialogTextUiModels: List<DropDialogTextUiModel> = DropDialogTextUiModel.default,
+    onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
 ) {
     Dialog(
@@ -49,7 +49,7 @@ fun ChallengeDropDialog(
             ) {
                 dropDialogTextUiModels.forEach {
                     TextContainer(
-                        modifier = textContainerModifier.clickable { it.buttonAction },
+                        modifier = textContainerModifier.clickable { it.buttonAction() },
                         text = {
                             Text(
                                 text = stringResource(id = it.titleId),
