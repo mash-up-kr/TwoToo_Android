@@ -8,7 +8,7 @@ import com.mashup.twotoo.presenter.home.HomeComponentProvider
 
 class Application : Application(), HomeComponentProvider {
     val applicationComponent: ApplicationComponent by lazy {
-        DaggerApplicationComponent.factory().create(applicationContext)
+        DaggerApplicationComponent.factory().create()
     }
 
     override fun onCreate() {
