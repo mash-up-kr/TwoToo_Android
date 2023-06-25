@@ -20,7 +20,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 
 @Composable
-fun ChallengeDropDialog(
+fun ChallengeDropSelectionDialog(
     dropDialogTextUiModels: List<DropDialogTextUiModel> = DropDialogTextUiModel.default,
     onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
@@ -71,7 +71,7 @@ fun ChallengeDropDialog(
 @Preview
 @Composable
 fun TwoTooButtonDialogPreview() {
-    ChallengeDropDialog(
+    ChallengeDropSelectionDialog(
         onDismissRequest = { },
         dropDialogTextUiModels = DropDialogTextUiModel.default,
     )

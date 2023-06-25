@@ -45,7 +45,7 @@ fun HistoryScreen(
     historyItemUiModels: List<HistoryItemUiModel> = listOf(),
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }
-    var showChallengeDoneDialog by remember { mutableStateOf(false) }
+    var showChallengeDropDialog by remember { mutableStateOf(false) }
     Box {
         Scaffold(
             topBar = {
@@ -91,13 +91,13 @@ fun HistoryScreen(
             }
         }
         if (showSelectListDialog) {
-            ChallengeDropDialog(
+            ChallengeDropSelectionDialog(
                 dropDialogTextUiModels = listOf(
                     DropDialogTextUiModel(
                         titleId = R.string.challenge_done,
                         buttonAction = {
                             showSelectListDialog = false
-                            showChallengeDoneDialog = true
+                            showChallengeDropDialog = true
                         },
                         color = TwotooPink,
                     ),
@@ -109,9 +109,8 @@ fun HistoryScreen(
                 ),
             )
         }
-        if (showChallengeDoneDialog) {
+        if (showChallengeDropDialog) {
             TwoTooDialog(
-                {},
                 content =
                 DialogContent(
                     title = R.string.challenge_done,
@@ -120,7 +119,7 @@ fun HistoryScreen(
                     buttons = listOf(
                         DialogButtonContent(
                             text = R.string.cancel,
-                            action = { showChallengeDoneDialog = false },
+                            action = { showChallengeDropDialog = false },
                         ),
                         DialogButtonContent(
                             text = R.string.done,
