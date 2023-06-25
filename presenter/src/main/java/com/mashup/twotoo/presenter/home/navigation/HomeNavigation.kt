@@ -26,6 +26,7 @@ fun NavGraphBuilder.homeGraph(
     composable(route = HomeNavigationRoute) {
         val homeComponent = (LocalContext.current.applicationContext as HomeComponentProvider).provideHomeComponent()
         val homeViewModel = daggerViewModel(
+            key = "homeViewModel",
             factory = factory,
             viewModelInstanceCreator = { homeComponent.getHomeViewModel() },
         )
