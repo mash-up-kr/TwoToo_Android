@@ -14,6 +14,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -41,8 +44,9 @@ fun HistoryScreen(
     navigateToHistoryDetail: () -> Unit,
     historyItemUiModels: List<HistoryItemUiModel> = listOf(),
 ) {
+    var showSelectListDialog by remember { mutableStateOf(false) }
+    var showChallengeDoneDialog by remember { mutableStateOf(false) }
     Box {
-        var showDialog by remember { mutableStateOf(false) }
         Scaffold(
             topBar = {
                 TwoTooBackToolbar(
@@ -50,7 +54,7 @@ fun HistoryScreen(
                         onClickBackButton()
                     },
                 ) {
-                    IconButton(onClick = { showDialog = true }) {
+                    IconButton(onClick = { showSelectListDialog = true }) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_more),
                             contentDescription = null,
@@ -86,20 +90,45 @@ fun HistoryScreen(
                 }
             }
         }
-        if (showDialog) {
+        if (showSelectListDialog) {
             ChallengeDropDialog(
                 dropDialogTextUiModels = listOf(
                     DropDialogTextUiModel(
                         titleId = R.string.challenge_done,
-                        buttonAction = {},
+                        buttonAction = {
+                            showSelectListDialog = false
+                            showChallengeDoneDialog = true
+                        },
                         color = TwotooPink,
                     ),
                     DropDialogTextUiModel(
                         titleId = R.string.cancel,
-                        buttonAction = { showDialog = false },
+                        buttonAction = { showSelectListDialog = false },
                         color = Color.Black,
                     ),
                 ),
+            )
+        }
+        if (showChallengeDoneDialog) {
+            TwoTooDialog(
+                {},
+                content =
+                DialogContent(
+                    title = R.string.challenge_done,
+                    desc = R.string.challengeDoneDescription,
+                    image = R.drawable.crying_cloud,
+                    buttons = listOf(
+                        DialogButtonContent(
+                            text = R.string.cancel,
+                            action = { showChallengeDoneDialog = false },
+                        ),
+                        DialogButtonContent(
+                            text = R.string.done,
+                            action = {},
+                        ),
+                    ),
+                ),
+
             )
         }
     }

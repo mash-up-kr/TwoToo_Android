@@ -70,7 +70,7 @@ fun TwoTooDialog(
             Row {
                 content.buttons.forEach { btn ->
                     TextButton(
-                        onClick = { btn.action },
+                        onClick = { btn.action() },
                         contentPadding = PaddingValues(12.dp),
                     ) {
                         Text(
