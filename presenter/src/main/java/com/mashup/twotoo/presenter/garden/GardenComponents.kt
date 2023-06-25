@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.garden
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -19,9 +20,11 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 
 @Composable
-fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
+fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: () -> Unit) {
     Box(
-        modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite),
+        modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite).clickable {
+            navigateToGarden()
+        },
     ) {
         ChallengeInfo(challengeCardInfoUiModel)
         TwoTooImageView(
@@ -73,5 +76,5 @@ private fun BoxScope.Flowers() {
 @Preview
 @Composable
 fun PreviewChallengeCardView() {
-    ChallengeCard(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()[0])
+    ChallengeCard(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()[0]) {}
 }

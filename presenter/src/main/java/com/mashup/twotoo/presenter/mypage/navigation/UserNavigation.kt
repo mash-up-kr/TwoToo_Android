@@ -4,16 +4,15 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.mypage.MyPageRoute
 
-const val UserNavigationRoute = "user_route"
-
 fun NavController.navigateToUser(navOptions: NavOptions? = null) {
-    this.navigate(route = UserNavigationRoute, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.HomeScreenGraph.UserScreen.route, navOptions = navOptions)
 }
 
 fun NavGraphBuilder.userGraph() {
-    composable(route = UserNavigationRoute) {
+    composable(route = NavigationRoute.HomeScreenGraph.UserScreen.route) {
         MyPageRoute()
     }
 }
