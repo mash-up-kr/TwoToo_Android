@@ -41,7 +41,7 @@ class TwoTooAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = currentDestination?.route?.let { TopLevelDestination.of(it) }
+        @Composable get() = currentDestination?.route?.let { TopLevelDestination.findBy(it) }
 
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 

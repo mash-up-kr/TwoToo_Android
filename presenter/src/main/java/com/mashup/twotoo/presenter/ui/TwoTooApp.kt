@@ -115,8 +115,8 @@ fun TwoTooBottomBar(
     }
 }
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.let { TopLevelDestination.of(it) == destination } ?: false
+    this?.hierarchy?.any { navDestination ->
+        navDestination.route?.let { TopLevelDestination.findBy(it) == destination } ?: false
     } ?: false
 
 @Preview(showBackground = true)

@@ -32,7 +32,7 @@ enum class TopLevelDestination(
     ;
 
     companion object {
-        fun of(route: String): TopLevelDestination? {
+        fun findBy(route: String): TopLevelDestination? {
             return values().firstOrNull { it.route == route }
         }
     }

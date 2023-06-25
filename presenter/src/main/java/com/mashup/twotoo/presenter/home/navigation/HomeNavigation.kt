@@ -6,7 +6,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navOptions
+import androidx.navigation.navigation
+import com.mashup.twotoo.presenter.history.navigation.historyGraph
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
@@ -23,4 +24,5 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             },
         )
     }
+    historyGraph(navController)
 }
