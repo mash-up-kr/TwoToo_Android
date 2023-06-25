@@ -11,7 +11,6 @@ abstract class ViewModelModule {
 
     @Binds
     @IntoMap
-    @HomeScreenScope
     @ViewModelKey(HomeViewModel::class)
     abstract fun provideHomeViewModel(model: HomeViewModel): ViewModel
 }
