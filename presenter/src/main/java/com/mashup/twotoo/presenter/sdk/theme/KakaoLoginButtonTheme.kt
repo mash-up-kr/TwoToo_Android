@@ -10,9 +10,9 @@ import com.mashup.twotoo.presenter.R
 object KakaoLoginButtonTheme {
     val ContainerColor = Color(0xFFFEE500)
     val ContentColor = Color(0xFF000000)
-    val Radius = RoundedCornerShape(12.dp)
+    val Radius = RoundedCornerShape(20.dp)
 
-    @StringRes val TextId: Int = R.string.kakaoLogin
+    @StringRes val TextId: Int = R.string.login_title
 
     @DrawableRes val IconId: Int = R.drawable.kakaotalk
 }

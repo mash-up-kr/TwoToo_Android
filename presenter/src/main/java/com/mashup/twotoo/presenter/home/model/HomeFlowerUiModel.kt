@@ -1,8 +1,9 @@
 package com.mashup.twotoo.presenter.home.model
 
+import com.mashup.twotoo.presenter.home.model.flower.Flower
+import com.mashup.twotoo.presenter.home.model.flower.FlowerName
 import com.mashup.twotoo.presenter.home.model.flower.FlowerType
 import com.mashup.twotoo.presenter.home.model.flower.Stage
-import com.mashup.twotoo.presenter.home.model.flower.Tulip
 
 /**
  * @Created by 김현국 2023/06/09
@@ -15,20 +16,32 @@ data class HomeFlowerPartnerAndMeUiModel(
     companion object {
         val firstChallenge = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
+                flowerType = Flower(
+                    flowerName = FlowerName.Tulip,
+                    userType = UserType.PARTNER,
+                    growType = Stage.Zero,
+                ),
             ),
             me = HomeFlowerUiModel.default,
         )
         val authOnlyPartner = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
+                flowerType = Flower(
+                    flowerName = FlowerName.Tulip,
+                    userType = UserType.PARTNER,
+                    growType = Stage.Zero,
+                ),
                 authType = AuthType.AuthOnlyPartner,
             ),
             me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyPartner),
         )
         val authOnlyMe = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
-                flowerType = Tulip(userType = UserType.PARTNER, growType = Stage.Zero),
+                flowerType = Flower(
+                    flowerName = FlowerName.Tulip,
+                    userType = UserType.PARTNER,
+                    growType = Stage.Fourth,
+                ),
                 authType = AuthType.AuthOnlyMe,
             ),
             me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyMe),
@@ -52,7 +65,11 @@ data class HomeFlowerUiModel(
 
         val default = HomeFlowerUiModel(
             name = "왕자",
-            flowerType = Tulip(userType = UserType.ME, growType = Stage.Zero),
+            flowerType = Flower(
+                flowerName = FlowerName.Tulip,
+                userType = UserType.ME,
+                growType = Stage.Zero,
+            ),
             authType = AuthType.FirstCreateChallenge,
         )
     }

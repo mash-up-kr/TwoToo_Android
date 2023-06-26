@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.history
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,7 +15,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.PathEffect
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -29,7 +29,10 @@ import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 @Composable
 fun OwnerNickNames(partnerNickname: String, myNickname: String) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 67.dp).padding(top = 37.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 67.dp)
+            .padding(top = 37.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
         CardText(text = partnerNickname)
@@ -101,26 +104,29 @@ fun ChallengeInfo(day: String, name: String, detail: String) {
 }
 
 @Composable
-fun HistoryItems(items: List<HistoryItemUiModel>) {
+fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: () -> Unit) {
     LazyColumn {
         items(items) { item ->
-            HistoryItem(item)
+            HistoryItem(item, navigateToHistoryDetail)
         }
     }
 }
 
 @Composable
-private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
+private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: () -> Unit) {
     Row(
-        modifier = Modifier.fillMaxWidth().padding(vertical = 13.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 13.dp),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false, navigateToHistoryDetail = navigateToHistoryDetail)
         Box(
             modifier = Modifier
                 .padding(horizontal = 13.dp)
-                .height(45.dp).width(47.dp)
+                .height(45.dp)
+                .width(47.dp)
                 .clip(TwoTooTheme.shape.small)
                 .background(TwoTooTheme.color.mainYellow),
             contentAlignment = Alignment.Center,
@@ -131,27 +137,36 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel) {
                 color = TwotooPink,
             )
         }
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true)
+        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true, navigateToHistoryDetail = navigateToHistoryDetail)
     }
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean) {
+private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean, navigateToHistoryDetail: () -> Unit) {
     Box(
-        modifier = Modifier.size(127.dp).clip(TwoTooTheme.shape.large).background(TwoTooTheme.color.mainWhite),
+        modifier = Modifier
+            .size(127.dp)
+            .clip(TwoTooTheme.shape.large)
+            .background(TwoTooTheme.color.mainWhite).clickable {
+                navigateToHistoryDetail()
+            },
     ) {
         if (historyInfoUiModel.photoUrl.isEmpty()) {
             EmptyHistoryInfo(isMyHistoryInfo)
         } else {
             TwoTooImageView(
                 model = { historyInfoUiModel.photoUrl },
-                modifier = Modifier.fillMaxSize().clip(
-                    TwoTooRound10,
-                ),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(
+                        TwoTooRound10,
+                    ),
             )
             Text(
                 text = historyInfoUiModel.createdTime,
-                modifier = Modifier.align(Alignment.BottomEnd).padding(10.dp),
+                modifier = Modifier
+                    .align(Alignment.BottomEnd)
+                    .padding(10.dp),
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwoTooTheme.color.mainWhite,
             )
@@ -163,9 +178,11 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo:
 private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
     if (isMyHistoryInfo) {
         CardText(
-            modifier = Modifier.align(Alignment.Center).clickable {
-            },
-            text = "인증하기",
+            modifier = Modifier
+                .align(Alignment.Center)
+                .clickable {
+                },
+            text = stringResource(id = R.string.authenticate),
             fontColor = TwoTooTheme.color.mainWhite,
             backGroundColor = TwoTooTheme.color.mainBrown,
         )
@@ -174,12 +191,14 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.cloud),
-                contentDescription = null,
+            TwoTooImageView(
+                modifier = Modifier.size(width = 65.dp, height = 55.dp),
+                model = R.drawable.cloud,
+                previewPlaceholder = R.drawable.cloud,
+                contentScale = ContentScale.Fit,
             )
             Text(
-                text = "기다리는 중",
+                text = stringResource(id = R.string.authenticate_waiting),
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwoTooTheme.color.gray400,
             )
@@ -213,17 +232,17 @@ private fun PreviewHistoryItem() {
         myInfo = HistoryInfoUiModel("https://shop.biumfood.com/upload/1623296512image_product044.jpg", "20:35"),
         createDate = "4/10",
     )
-    HistoryItem(historyItemUiModel = historyItemUiModel)
+    HistoryItem(historyItemUiModel = historyItemUiModel, {})
 }
 
 @Preview("내 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), true)
+    HistoryInfo(HistoryInfoUiModel("", ""), true, {})
 }
 
 @Preview("연인이 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemPartnerEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), false)
+    HistoryInfo(HistoryInfoUiModel("", ""), false, {})
 }

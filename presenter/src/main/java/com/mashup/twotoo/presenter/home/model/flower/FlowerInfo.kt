@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.model.flower
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.unit.Dp
 
@@ -28,7 +29,7 @@ enum class FlowerName {
 }
 
 sealed class FlowerType(val name: FlowerName) {
-    abstract val flowerImage: FlowerImage
+    abstract fun getFlowerImage(context: Context): FlowerImage
 }
 
 data class FlowerImage(
