@@ -1,6 +1,8 @@
 package com.mashup.twotoo.presenter.home
 
 import com.mashup.twotoo.presenter.MainActivity
+import com.mashup.twotoo.presenter.di.ViewModelFactoryModule
+import com.mashup.twotoo.presenter.di.ViewModelModule
 import dagger.Subcomponent
 
 /**
@@ -9,7 +11,12 @@ import dagger.Subcomponent
  * Inject로 요청받은 인스턴스에 생성한 객체를 주입합니다.
  */
 
-@Subcomponent()
+@Subcomponent(
+    modules = [
+        ViewModelFactoryModule::class,
+        ViewModelModule::class,
+    ],
+)
 interface HomeComponent {
 
     @Subcomponent.Factory
