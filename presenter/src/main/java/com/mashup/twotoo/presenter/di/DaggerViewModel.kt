@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.di
 import androidx.compose.runtime.Composable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewmodel.compose.viewModel
 
 /**
  * @Created by 김현국 2023/06/23
@@ -14,7 +15,7 @@ inline fun <reified T : ViewModel> daggerViewModel(
     crossinline viewModelInstanceCreator: () -> T,
     factory: ViewModelProvider.Factory,
 ): T =
-    androidx.lifecycle.viewmodel.compose.viewModel(
+    viewModel(
         modelClass = T::class.java,
         key = key,
         factory = factory,

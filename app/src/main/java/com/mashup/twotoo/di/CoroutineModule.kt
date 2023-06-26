@@ -1,5 +1,8 @@
 package com.mashup.twotoo.di
 
+import com.mashup.twotoo.di.qualifier.DefaultDispatcher
+import com.mashup.twotoo.di.qualifier.IoDispatcher
+import com.mashup.twotoo.di.qualifier.MainDispatcher
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
