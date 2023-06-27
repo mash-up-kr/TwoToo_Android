@@ -66,13 +66,10 @@ class TwoTooAppState(
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
-//                saveState = true
+                saveState = true
             }
             launchSingleTop = true
-//            restoreState = true
-            /*
-            user graph생성시 항상 초기화하도록 변경
-             */
+            restoreState = true
         }
         when (topLevelDestination) {
             Garden -> navController.navigateToGarden(navOptions = topLevelOptions)
