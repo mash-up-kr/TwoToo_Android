@@ -1,13 +1,10 @@
 package com.mashup.twotoo.presenter.di
 
 import androidx.lifecycle.ViewModelProvider
-import com.mashup.twotoo.presenter.home.HomeComponent
 import dagger.Binds
 import dagger.Module
 
-@Module(
-    subcomponents = [HomeComponent::class],
-)
+@Module
 abstract class ViewModelFactoryModule {
 
     @Binds

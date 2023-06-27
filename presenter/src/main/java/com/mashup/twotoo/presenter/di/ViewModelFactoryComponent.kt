@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.di
 
 import com.mashup.twotoo.presenter.MainActivity
-import com.mashup.twotoo.presenter.home.HomeComponent
 import dagger.Subcomponent
 
 /**
@@ -17,8 +16,6 @@ interface ViewModelFactoryComponent {
     }
 
     fun inject(mainActivity: MainActivity)
-
-    fun homeComponent(): HomeComponent
 }
 
 interface ViewModelFactoryComponentProvider {

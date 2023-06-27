@@ -11,12 +11,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
 inline fun <reified T : ViewModel> daggerViewModel(
-    key: String? = null,
-    crossinline viewModelInstanceCreator: () -> T,
     factory: ViewModelProvider.Factory,
 ): T =
     viewModel(
         modelClass = T::class.java,
-        key = key,
+        key = T::class.simpleName,
         factory = factory,
     )
