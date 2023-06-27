@@ -2,7 +2,6 @@ package com.mashup.twotoo.presenter.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.compose.NavHost
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
@@ -13,7 +12,6 @@ import com.mashup.twotoo.presenter.ui.TwoTooAppState
 
 @Composable
 fun TwoTooNavHost(
-    factory: ViewModelProvider.Factory,
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
     startDestination: String = HomeNavigationRoute,
@@ -25,7 +23,7 @@ fun TwoTooNavHost(
         modifier = modifier,
     ) {
         gardenGraph()
-        homeGraph(factory = factory)
+        homeGraph()
         userGraph()
         onBoardingGraph()
     }

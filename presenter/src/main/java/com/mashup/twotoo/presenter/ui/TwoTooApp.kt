@@ -18,7 +18,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
 import com.mashup.twotoo.presenter.R
@@ -35,7 +34,6 @@ import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun TwoTooApp(
-    factory: ViewModelProvider.Factory,
     appState: TwoTooAppState = rememberTwoTooAppState(),
 ) {
     Scaffold(
@@ -64,7 +62,6 @@ fun TwoTooApp(
                 // topbar 공통된 tapbar 있는거 같아서 넣으면 좋을 듯
             }
             TwoTooNavHost(
-                factory = factory,
                 appState = appState,
             )
         }
