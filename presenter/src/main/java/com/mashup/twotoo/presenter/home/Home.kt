@@ -19,11 +19,12 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
-    count: Int,
+    state: Int,
     modifier: Modifier = Modifier,
     onBeeButtonClick: () -> Unit = {},
 ) {
     HomeScreen(
+        state = state,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
         onBeeButtonClick = onBeeButtonClick,
     )
@@ -31,6 +32,7 @@ fun HomeRoute(
 
 @Composable
 fun HomeScreen(
+    state: Int,
     onBeeButtonClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
@@ -43,7 +45,8 @@ fun HomeScreen(
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)
             },
-            onClickHelpIcon = {},
+            onClickHelpIcon = {
+            },
         )
         when (challengeStateTypeUiModel) {
             is BeforeChallengeUiModel -> {
@@ -81,6 +84,7 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
+            state = 0,
         )
     }
 }
@@ -92,6 +96,7 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             challengeStateTypeUiModel = OngoingChallengeUiModel.default,
+            state = 0,
         )
     }
 }
