@@ -1,10 +1,8 @@
 package com.mashup.twotoo.di
 
 import android.content.Context
-import com.mashup.twotoo.presenter.di.ScreenComponent
-import com.mashup.twotoo.presenter.di.ViewModelFactoryModule
-import com.mashup.twotoo.presenter.di.ViewModelModule
-import com.mashup.twotoo.presenter.home.HomeComponent
+import com.mashup.twotoo.presenter.di.ScreenModule
+import com.mashup.twotoo.presenter.di.ViewModelFactoryComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -16,7 +14,7 @@ import javax.inject.Singleton
         NetworkModule::class,
         DataStoreModule::class,
         RepositoryModule::class,
-        ScreenComponent::class,
+        ScreenModule::class,
     ],
 )
 interface ApplicationComponent {
@@ -25,5 +23,5 @@ interface ApplicationComponent {
     interface Factory {
         fun create(@BindsInstance context: Context): ApplicationComponent
     }
-    fun homeComponent(): HomeComponent.Factory
+    fun viewModelComponent(): ViewModelFactoryComponent.Factory
 }
