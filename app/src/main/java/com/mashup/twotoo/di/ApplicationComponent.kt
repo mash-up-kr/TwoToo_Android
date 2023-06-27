@@ -2,7 +2,8 @@ package com.mashup.twotoo.di
 
 import android.content.Context
 import com.mashup.twotoo.presenter.di.ScreenModule
-import com.mashup.twotoo.presenter.di.ViewModelFactoryComponent
+import com.mashup.twotoo.presenter.home.di.HomeComponent
+import com.mashup.twotoo.presenter.mypage.di.UserComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -23,5 +24,7 @@ interface ApplicationComponent {
     interface Factory {
         fun create(@BindsInstance context: Context): ApplicationComponent
     }
-    fun viewModelComponent(): ViewModelFactoryComponent.Factory
+
+    fun homeComponent(): HomeComponent.Factory
+    fun userComponent(): UserComponent.Factory
 }
