@@ -32,6 +32,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -63,6 +64,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -91,6 +93,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -120,6 +123,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -154,6 +158,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -185,6 +190,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -217,6 +223,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -253,6 +260,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -285,6 +293,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
@@ -318,6 +327,7 @@ class HomeKtTest {
         composeTestRule.setContent {
             context = LocalContext.current
             HomeScreen(
+                state = 0,
                 challengeStateTypeUiModel = challengeStateTypeUiModel,
             )
         }
