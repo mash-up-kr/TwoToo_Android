@@ -1,6 +1,6 @@
 package com.mashup.twotoo.presenter.mypage.navigation
 
-import androidx.compose.ui.platform.LocalContext
+import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -9,6 +9,9 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.mypage.MyPageRoute
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
+import com.mashup.twotoo.presenter.util.componentProvider
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
 const val UserNavigationRoute = "user_route"
@@ -19,13 +22,30 @@ fun NavController.navigateToUser(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.userGraph() {
     composable(route = UserNavigationRoute) {
-        val userComponent = (LocalContext.current.applicationContext as UserComponentProvider).provideUserComponent()
-        val userViewModel = daggerViewModel(viewModelStoreOwner = it) {
+        val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
+        val userViewModel = daggerViewModel {
             userComponent.getViewModel()
         }
         println("userViewModel instance : ${userViewModel.hashCode()}")
-        MyPageRoute()
+        val state = userViewModel.count.collectAsState()
+        MyPageRoute(
+            state = state.value,
+            onClickMyPageItem = {
+                userViewModel.updateCount()
+            },
+        )
     }
 }
 
-class UserViewModel @Inject constructor() : ViewModel()
+class UserViewModel @Inject constructor() : ViewModel() {
+
+    private val _count = MutableStateFlow(0)
+    val count = _count.asStateFlow()
+    fun printHashCode() {
+        println("로그 Two Too : ${this.hashCode()}")
+    }
+
+    fun updateCount() {
+        _count.value++
+    }
+}
