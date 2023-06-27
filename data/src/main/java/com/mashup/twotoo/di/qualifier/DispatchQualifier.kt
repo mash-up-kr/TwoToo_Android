@@ -1,4 +1,4 @@
-package com.mashup.twotoo.di
+package com.mashup.twotoo.di.qualifier
 
 import javax.inject.Qualifier
 
