@@ -3,12 +3,11 @@ import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import com.mashup.twotoo.di.ApplicationComponent
 import com.mashup.twotoo.di.DaggerApplicationComponent
+import com.mashup.twotoo.presenter.di.ScreenComponentProvider
 import com.mashup.twotoo.presenter.home.di.HomeComponent
-import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
-import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
 
-class Application : Application(), HomeComponentProvider, UserComponentProvider {
+class Application : Application(), ScreenComponentProvider {
     val applicationComponent: ApplicationComponent by lazy {
         DaggerApplicationComponent.factory().create(applicationContext)
     }
