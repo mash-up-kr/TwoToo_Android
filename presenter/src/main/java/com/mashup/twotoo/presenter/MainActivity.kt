@@ -9,7 +9,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.home.HomeComponentProvider
+import com.mashup.twotoo.presenter.di.ViewModelFactoryComponentProvider
 import com.mashup.twotoo.presenter.twotoo.TwoTooApp
 import com.mashup.twotoo.presenter.util.Logging
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
-        (applicationContext as HomeComponentProvider).provideHomeComponent().inject(this)
+        (applicationContext as ViewModelFactoryComponentProvider).provideViewModelFactoryComponent().inject(this)
         super.onCreate(savedInstanceState)
 
         setContent {

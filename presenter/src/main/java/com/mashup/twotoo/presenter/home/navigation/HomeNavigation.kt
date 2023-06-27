@@ -9,8 +9,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import com.mashup.twotoo.presenter.di.ViewModelFactoryComponentProvider
 import com.mashup.twotoo.presenter.di.daggerViewModel
-import com.mashup.twotoo.presenter.home.HomeComponentProvider
 import com.mashup.twotoo.presenter.home.HomeRoute
 
 const val HomeNavigationRoute = "home_route"
@@ -22,7 +22,7 @@ fun NavGraphBuilder.homeGraph(
     factory: ViewModelProvider.Factory,
 ) {
     composable(route = HomeNavigationRoute) {
-        val homeComponent = (LocalContext.current.applicationContext as HomeComponentProvider).provideHomeComponent()
+        val homeComponent = (LocalContext.current.applicationContext as ViewModelFactoryComponentProvider).provideViewModelFactoryComponent().homeComponent()
         val homeViewModel = daggerViewModel(
             key = "homeViewModel",
             factory = factory,
