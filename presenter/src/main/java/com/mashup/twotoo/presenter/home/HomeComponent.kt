@@ -1,8 +1,5 @@
 package com.mashup.twotoo.presenter.home
 
-import com.mashup.twotoo.presenter.MainActivity
-import com.mashup.twotoo.presenter.di.ViewModelFactoryModule
-import com.mashup.twotoo.presenter.di.ViewModelModule
 import dagger.Subcomponent
 
 /**
@@ -12,10 +9,7 @@ import dagger.Subcomponent
  */
 
 @Subcomponent(
-    modules = [
-        ViewModelFactoryModule::class,
-        ViewModelModule::class,
-    ],
+    modules = [],
 )
 interface HomeComponent {
 
@@ -23,8 +17,6 @@ interface HomeComponent {
     interface Factory {
         fun create(): HomeComponent
     }
-
-    fun inject(mainActivity: MainActivity)
 
     fun getHomeViewModel(): HomeViewModel
 }
