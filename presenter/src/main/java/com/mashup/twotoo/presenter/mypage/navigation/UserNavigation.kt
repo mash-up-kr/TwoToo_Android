@@ -9,19 +9,18 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.mypage.MyPageRoute
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-const val UserNavigationRoute = "user_route"
-
 fun NavController.navigateToUser(navOptions: NavOptions? = null) {
-    this.navigate(route = UserNavigationRoute, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.HomeScreenGraph.UserScreen.route, navOptions = navOptions)
 }
 
 fun NavGraphBuilder.userGraph() {
-    composable(route = UserNavigationRoute) {
+    composable(route = NavigationRoute.HomeScreenGraph.UserScreen.route) {
         val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
         val userViewModel = daggerViewModel {
             userComponent.getViewModel()

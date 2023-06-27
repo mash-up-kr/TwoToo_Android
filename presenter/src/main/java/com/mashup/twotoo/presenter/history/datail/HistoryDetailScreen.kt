@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.history.datail
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -22,7 +23,20 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 
 @Composable
-fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
+fun HistoryDetailRoute(
+    onClickBackButton: () -> Unit,
+) {
+    HistoryDetailScreen(
+        onClickBackButton = onClickBackButton,
+        historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview(),
+    )
+}
+
+@Composable
+fun HistoryDetailScreen(
+    onClickBackButton: () -> Unit,
+    historyDetailInfoUiModel: HistoryDetailInfoUiModel,
+) {
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
@@ -47,6 +61,7 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
                     )
                     Icon(
                         painter = painterResource(id = R.drawable.ic_cancel),
+                        modifier = Modifier.clickable { onClickBackButton() },
                         contentDescription = null,
                     )
                 }
@@ -111,7 +126,8 @@ fun HistoryDetailScreen(historyDetailInfoUiModel: HistoryDetailInfoUiModel) {
 private fun PreviewHistoryDetailScreen() {
     TwoTooTheme {
         HistoryDetailScreen(
-            HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+            onClickBackButton = {},
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
                 .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
         )
     }
@@ -121,6 +137,9 @@ private fun PreviewHistoryDetailScreen() {
 @Composable
 private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
     TwoTooTheme {
-        HistoryDetailScreen(HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview())
+        HistoryDetailScreen(
+            onClickBackButton = {},
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview(),
+        )
     }
 }

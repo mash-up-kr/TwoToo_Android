@@ -41,13 +41,15 @@ fun TwoTooApp(
             testTagsAsResourceId = true
         },
         bottomBar = {
-            TwoTooBottomBar(
-                destinations = appState.topLevelDestinations,
-                onNavigateToDestination = appState::navigationToTopLevelDestination,
-                currentDestination = appState.currentDestination,
-                containerColor = appState.getContainerColorByDestination,
-                unSelectedColor = appState.getUnSelectedColorByDestination,
-            )
+            if (appState.isBottomBarVisible()) {
+                TwoTooBottomBar(
+                    destinations = appState.topLevelDestinations,
+                    onNavigateToDestination = appState::navigationToTopLevelDestination,
+                    currentDestination = appState.currentDestination,
+                    containerColor = appState.getContainerColorByDestination,
+                    unSelectedColor = appState.getUnSelectedColorByDestination,
+                )
+            }
         },
         containerColor = Color.Transparent,
         contentWindowInsets = WindowInsets(0, 50, 0, 0),
@@ -114,10 +116,9 @@ fun TwoTooBottomBar(
         Spacer(modifier = Modifier.fillMaxWidth(0.07f))
     }
 }
-
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
-    this?.hierarchy?.any {
-        it.route?.contains(destination.name, true) ?: false
+    this?.hierarchy?.any { navDestination ->
+        navDestination.route?.let { TopLevelDestination.findBy(it) == destination } ?: false
     } ?: false
 
 @Preview(showBackground = true)

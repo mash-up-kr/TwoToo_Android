@@ -22,9 +22,12 @@ fun HomeRoute(
     state: Int,
     modifier: Modifier = Modifier,
     onBeeButtonClick: () -> Unit = {},
+    navigateToHistory: () -> Unit = {},
 ) {
     HomeScreen(
         state = state,
+        navigateToHistory = navigateToHistory,
+        challengeStateTypeUiModel = OngoingChallengeUiModel.default,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
         onBeeButtonClick = onBeeButtonClick,
     )
@@ -33,6 +36,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     state: Int,
+    navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     modifier: Modifier = Modifier,
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
@@ -63,6 +67,7 @@ fun HomeScreen(
             }
             is OngoingChallengeUiModel -> {
                 HomeOngoingChallenge(
+                    navigateToHistory = navigateToHistory,
                     modifier = Modifier.constrainAs(homeOngoingChallenge) {
                         top.linkTo(topBar.bottom)
                         start.linkTo(parent.start)

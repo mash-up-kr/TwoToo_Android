@@ -11,12 +11,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
-import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
-import com.mashup.twotoo.presenter.mypage.navigation.UserNavigationRoute
 import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
@@ -42,12 +40,8 @@ class TwoTooAppState(
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
     val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = when (currentDestination?.route) {
-            GardenNavigationRoute -> Garden
-            HomeNavigationRoute -> Home
-            UserNavigationRoute -> User
-            else -> null
-        }
+        @Composable get() = currentDestination?.route?.let { TopLevelDestination.findBy(it) }
+
     val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
 
     val getContainerColorByDestination: Color
@@ -75,6 +69,20 @@ class TwoTooAppState(
             Garden -> navController.navigateToGarden(navOptions = topLevelOptions)
             Home -> navController.navigateToHome(navOptions = topLevelOptions)
             User -> navController.navigateToUser(navOptions = topLevelOptions)
+        }
+    }
+
+    @Composable
+    fun isBottomBarVisible(): Boolean {
+        return when (currentDestination?.route) {
+            NavigationRoute.HomeScreenGraph.HomeScreen.route,
+            NavigationRoute.HomeScreenGraph.GardenScreen.route,
+            NavigationRoute.HomeScreenGraph.UserScreen.route,
+            -> true
+            NavigationRoute.HistoryScreenGraph.HistoryScreen.route -> false
+            else -> {
+                false
+            }
         }
     }
 }

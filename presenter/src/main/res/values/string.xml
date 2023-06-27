@@ -10,7 +10,7 @@
     <string name="bottom_navigation_bar">바텀 네비게이션</string>
     
     <!-- Kakao Login -->
-    <string name= "login_tite">카카오톡으로 로그인</string>
+    <string name= "login_title">카카오톡으로 로그인</string>
     <string name="failureKakaoTalkLogin">카카오톡으로 로그인 실패</string>
     <string name="successKakaoTalkLogin">카카오톡으로 로그인 성공</string>
     <string name= "kakaoLogin">카카오 로그인</string>
