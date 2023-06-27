@@ -15,12 +15,12 @@ import com.mashup.twotoo.presenter.garden.navigation.GardenNavigationRoute
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.home.navigation.HomeNavigationRoute
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
+import com.mashup.twotoo.presenter.mypage.navigation.UserNavigationRoute
+import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
-import com.mashup.twotoo.presenter.mypage.navigation.UserNavigationRoute
-import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 
 @Composable
 fun rememberTwoTooAppState(
@@ -66,10 +66,13 @@ class TwoTooAppState(
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
             popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
+//                saveState = true
             }
             launchSingleTop = true
-            restoreState = true
+//            restoreState = true
+            /*
+            user graph생성시 항상 초기화하도록 변경
+             */
         }
         when (topLevelDestination) {
             Garden -> navController.navigateToGarden(navOptions = topLevelOptions)
