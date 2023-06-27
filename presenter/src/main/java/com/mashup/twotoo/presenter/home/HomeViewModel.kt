@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import usecase.token.GetAccessTokenUseCase
 import javax.inject.Inject
 
 /**
@@ -12,9 +11,7 @@ import javax.inject.Inject
  */
 
 @HomeScope
-class HomeViewModel @Inject constructor(
-    private val getAccessTokenUseCase: GetAccessTokenUseCase,
-) : ViewModel() {
+class HomeViewModel @Inject constructor() : ViewModel() {
 
     private val _count = MutableStateFlow(0)
     val count = _count.asStateFlow()
