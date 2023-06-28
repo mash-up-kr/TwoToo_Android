@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 import android.net.Uri
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -22,6 +23,7 @@ import androidx.constraintlayout.compose.layoutId
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageViewWithSetter
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
+import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.addFocusCleaner
@@ -32,7 +34,7 @@ import com.mashup.twotoo.presenter.util.keyboardAsState
 fun AuthenticateContent(
     type: Authenticate,
     onClickPlusButton: () -> Unit,
-    button: @Composable (Modifier, BottomSheetData) -> Unit,
+    onClickButton: (BottomSheetData) -> Unit,
     imageUri: Uri? = null,
 ) {
     val titleText = stringResource(id = type.title)
@@ -94,7 +96,7 @@ fun AuthenticateContent(
             mutableStateOf("")
         }
         TwoTooTextField(
-            modifier = Modifier.layoutId("textField").focusRequester(
+            modifier = Modifier.layoutId("textField").fillMaxWidth().height(85.dp).focusRequester(
                 focusRequester = focusRequester,
             ).onFocusChanged {
                 animateSwitch = it.isFocused
@@ -103,12 +105,18 @@ fun AuthenticateContent(
             textHint = textHint,
             updateText = { textFieldState = it },
         )
-        button(
-            Modifier.layoutId("button"),
-            BottomSheetData.AuthenticateData(
-                image = imageUri,
-                text = textFieldState,
-            ),
+        TwoTooTextButton(
+
+            modifier = Modifier.layoutId("button")
+                .fillMaxWidth().height(57.dp).clickable {
+                    onClickButton(
+                        BottomSheetData.AuthenticateData(
+                            image = imageUri,
+                            text = textFieldState,
+                        ),
+                    )
+                },
+            text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
         )
     }
 }
