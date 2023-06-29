@@ -70,7 +70,7 @@ fun AuthenticateContent(
             .fillMaxHeight(0.8f)
             .fillMaxWidth()
             .padding(horizontal = 20.dp)
-            .imePadding().addFocusCleaner(focusManager),
+            .addFocusCleaner(focusManager),
     ) {
         Header(
             modifier = Modifier.layoutId("headerText"),
@@ -83,7 +83,7 @@ fun AuthenticateContent(
                 .clip(
                     TwoTooTheme.shape.extraSmall,
                 ),
-            imageUri = imageUri,
+            imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
             onClickPlusButton = {
                 onClickPlusButton()
             },
@@ -106,9 +106,8 @@ fun AuthenticateContent(
             updateText = { textFieldState = it },
         )
         TwoTooTextButton(
-
             modifier = Modifier.layoutId("button")
-                .fillMaxWidth().height(57.dp).clickable {
+                .fillMaxWidth().height(57.dp).navigationBarsPadding().clickable {
                     onClickButton(
                         BottomSheetData.AuthenticateData(
                             image = imageUri,
