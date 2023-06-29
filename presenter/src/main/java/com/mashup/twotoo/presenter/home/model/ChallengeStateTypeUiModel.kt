@@ -8,6 +8,8 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.REQUEST
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.RESPONSE
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.TERMINATION
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.WAIT
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Auth
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Cheer
 
 /**
  * @Created by 김현국 2023/06/10
@@ -68,7 +70,7 @@ data class BeforeChallengeUiModel(
 }
 
 data class OngoingChallengeUiModel(
-    val homeFlowerUiModels: HomeFlowerPartnerAndMeUiModel,
+    val homeChallengeStateUiModel: HomeChallengeStateUiModel,
     val homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel,
     val homeGoalCountUiModel: HomeGoalCountUiModel,
     val homeGoalFieldUiModel: HomeGoalFieldUiModel,
@@ -76,7 +78,15 @@ data class OngoingChallengeUiModel(
 ) : ChallengeStateTypeUiModel {
     companion object {
         val default = OngoingChallengeUiModel(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.auth,
+            homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
+            homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
+            homeShotCountTextUiModel = HomeShotCountTextUiModel.default,
+        )
+
+        val cheer = OngoingChallengeUiModel(
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer,
             homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
@@ -106,6 +116,26 @@ data class StateTitleUiModel(
         )
         val termination = StateTitleUiModel(
             title = R.string.homeBeforeChallengeTermination,
+        )
+    }
+}
+
+enum class ChallengeState {
+    Auth, Cheer
+}
+sealed interface ChallengeStateUiModel
+data class HomeChallengeStateUiModel(
+    val challengeState: ChallengeState,
+    val challengeStateUiModel: ChallengeStateUiModel,
+) {
+    companion object {
+        val auth = HomeChallengeStateUiModel(
+            challengeState = Auth,
+            challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+        )
+        val cheer = HomeChallengeStateUiModel(
+            challengeState = Cheer,
+            challengeStateUiModel = HomeCheerUiModel.default,
         )
     }
 }

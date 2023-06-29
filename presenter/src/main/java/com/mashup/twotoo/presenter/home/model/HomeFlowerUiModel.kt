@@ -12,7 +12,7 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage
 data class HomeFlowerPartnerAndMeUiModel(
     val partner: HomeFlowerUiModel,
     val me: HomeFlowerUiModel,
-) {
+) : ChallengeStateUiModel {
     companion object {
         val firstChallenge = HomeFlowerPartnerAndMeUiModel(
             partner = HomeFlowerUiModel.default.copy(
@@ -71,6 +71,26 @@ data class HomeFlowerUiModel(
                 growType = Stage.Zero,
             ),
             authType = AuthType.FirstCreateChallenge,
+        )
+
+        val me = HomeFlowerUiModel(
+            name = "왕자",
+            flowerType = Flower(
+                flowerName = FlowerName.Tulip,
+                userType = UserType.ME,
+                growType = Stage.Fourth,
+            ),
+            authType = AuthType.AuthBoth,
+        )
+
+        val partner = HomeFlowerUiModel(
+            name = "공주",
+            flowerType = Flower(
+                flowerName = FlowerName.Tulip,
+                userType = UserType.PARTNER,
+                growType = Stage.Fourth,
+            ),
+            authType = AuthType.AuthBoth,
         )
     }
 }
