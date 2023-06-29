@@ -11,11 +11,4 @@ class InviteViewModel : ViewModel(), ContainerHost<InviteState, InviteSideEffect
 
     fun sendInvitation() = intent {
     }
-
-    fun clickRefresh() = intent {
-    }
-
-    fun refreshStatus() = intent {
-        postSideEffect(InviteSideEffect.Toast(""))
-    }
 }
