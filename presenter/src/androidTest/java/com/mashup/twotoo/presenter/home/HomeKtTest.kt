@@ -179,7 +179,7 @@ class HomeKtTest {
     @Test
     fun 테스트_생성_후_State가_FirstCreateChallenge일때() {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+            homeChallengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
         )
 
         composeTestRule.setContent {
@@ -199,12 +199,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.partner.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.me.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
@@ -212,7 +212,7 @@ class HomeKtTest {
     @Test
     fun 테스트_생성_후_State가_AuthOnlyPartner일때() {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
+            homeChallengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
         )
         composeTestRule.setContent {
             context = LocalContext.current
@@ -235,12 +235,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.partner.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.me.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
@@ -248,7 +248,7 @@ class HomeKtTest {
     @Test
     fun 테스트_생성_후_State가_AuthOnlyMe일때() {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
+            homeChallengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
         )
         composeTestRule.setContent {
             context = LocalContext.current
@@ -267,12 +267,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.partner.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.me.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
@@ -280,7 +280,7 @@ class HomeKtTest {
     @Test
     fun 테스트_생성_후_State가_AuthBoth일때() {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authBoth,
+            homeChallengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth,
         )
         composeTestRule.setContent {
             context = LocalContext.current
@@ -300,12 +300,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.partner.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.me.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
@@ -313,7 +313,7 @@ class HomeKtTest {
     @Test
     fun 테스트_생성_후_State가_DoNotAuthBoth일때() {
         val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
+            homeChallengeStateUiModel = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
         )
         composeTestRule.setContent {
             context = LocalContext.current
@@ -332,12 +332,12 @@ class HomeKtTest {
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.partner.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.partner.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             assertThat(
                 challengeStateTypeUiModel
-                    .homeFlowerUiModels.me.flowerType.getFlowerImage(this),
+                    .homeChallengeStateUiModel.me.flowerType.getFlowerImage(this),
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
     }
