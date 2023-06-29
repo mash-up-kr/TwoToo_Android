@@ -9,9 +9,9 @@ import org.orbitmvi.orbit.viewmodel.container
 class OnBoardingViewModel : ViewModel(), ContainerHost<OnBoardingState, Unit> {
     override val container = container<OnBoardingState, Unit>(OnBoardingState())
 
-    fun setUserNickname(nickName: String) = intent {
+    fun loginState(isLogin: Boolean) = intent {
         reduce {
-            state.copy(userNickName = nickName)
+            state.copy(loginSuccess = isLogin)
         }
     }
 }
