@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,6 +27,9 @@ import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.CheerWithFlower
+import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
+import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
@@ -37,83 +41,116 @@ import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 
 @Composable
 fun HomeFlowerMeAndPartner(
-    meAndPartner: HomeFlowerPartnerAndMeUiModel,
+    homeChallengeStateUiModel: HomeChallengeStateUiModel,
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(
         modifier = modifier,
     ) {
-        val (textHint, partnerText, waterImage, partner, me) = createRefs()
-
-        if (meAndPartner.me.authType == FirstCreateChallenge) {
-            TextHint(
-                modifier = Modifier.testTag(
-                    stringResource(id = R.string.homeOngoingChallengeFirstChallengeHint),
-                ).constrainAs(textHint) {
-                    start.linkTo(waterImage.start)
-                    end.linkTo(waterImage.end)
-                    top.linkTo(parent.top)
-                    bottom.linkTo(waterImage.top, margin = 6.dp)
-                },
-            )
-        }
-
-        if (meAndPartner.partner.authType == AuthOnlyPartner) {
-            Row(
-                modifier = Modifier.testTag(
-                    stringResource(id = R.string.homeOngoingChallengeAuthPartnerText),
-                ).constrainAs(partnerText) {
-                    bottom.linkTo(partner.top, margin = 15.dp)
-                    start.linkTo(partner.start)
-                    end.linkTo(partner.end)
-                },
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(id = R.string.homeAuthOnlyPartener),
-                    style = TwoTooTheme.typography.bodyNormal14,
-                    color = TwotooPink,
+        val (textHint, partnerText, waterImage, partner, me, partnerCheer, meCheer, heartImage) = createRefs()
+        when (homeChallengeStateUiModel.challengeStateUiModel) {
+            is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
+                if (this.me.authType == FirstCreateChallenge) {
+                    TextHint(
+                        modifier = Modifier.testTag(
+                            stringResource(id = R.string.homeOngoingChallengeFirstChallengeHint),
+                        ).constrainAs(textHint) {
+                            start.linkTo(waterImage.start)
+                            end.linkTo(waterImage.end)
+                            top.linkTo(parent.top)
+                            bottom.linkTo(waterImage.top, margin = 6.dp)
+                        },
+                    )
+                }
+                HomeFlowerPartner(
+                    modifier = Modifier.constrainAs(partner) {
+                        start.linkTo(parent.start)
+                        end.linkTo(me.start)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    homeFlowerUiModel = this.partner,
                 )
-                Spacer(modifier = Modifier.width(4.dp))
+
+                if (this.partner.authType == AuthOnlyPartner) {
+                    Row(
+                        modifier = Modifier.testTag(
+                            stringResource(id = R.string.homeOngoingChallengeAuthPartnerText),
+                        ).constrainAs(partnerText) {
+                            bottom.linkTo(partner.top, margin = 15.dp)
+                            start.linkTo(partner.start)
+                            end.linkTo(partner.end)
+                        },
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.homeAuthOnlyPartener),
+                            style = TwoTooTheme.typography.bodyNormal14,
+                            color = TwotooPink,
+                        )
+                        Spacer(modifier = Modifier.width(4.dp))
+                        TwoTooImageView(
+                            modifier = Modifier.width(14.dp).height(14.dp),
+                            model = R.drawable.ic_heart,
+                            previewPlaceholder = R.drawable.ic_heart,
+                        )
+                    }
+                }
+
+                if (this.me.authType != AuthOnlyMe && this.me.authType != AuthBoth) {
+                    TwoTooImageView(
+                        modifier = Modifier.testTag(
+                            stringResource(id = R.string.homeOngoingChallengeWaterImage),
+                        ).width(75.dp).height(69.dp).constrainAs(waterImage) {
+                            top.linkTo(textHint.bottom)
+                            bottom.linkTo(me.top, margin = 8.dp)
+                            start.linkTo(me.start)
+                            end.linkTo(me.end)
+                        },
+                        model = R.drawable.img_need_water,
+                    )
+                }
+
+                HomeFlowerMe(
+                    modifier = Modifier.constrainAs(me) {
+                        end.linkTo(parent.end)
+                        start.linkTo(partner.end)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    homeFlowerUiModel = this.me,
+                )
+            }
+
+            is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
+                HomeFlowerPartner(
+                    modifier = Modifier.constrainAs(partner) {
+                        start.linkTo(parent.start)
+                        end.linkTo(me.start)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    homeFlowerUiModel = this.partner.homeFlowerUiModel,
+                )
+
                 TwoTooImageView(
-                    modifier = Modifier.width(14.dp).height(14.dp),
+                    modifier = Modifier.constrainAs(heartImage) {
+                        start.linkTo(partner.end)
+                        end.linkTo(me.start)
+                        top.linkTo(partner.top)
+                        bottom.linkTo(partner.bottom)
+                    }.size(28.dp),
                     model = R.drawable.ic_heart,
                     previewPlaceholder = R.drawable.ic_heart,
                 )
+
+                HomeFlowerMe(
+                    modifier = Modifier.constrainAs(me) {
+                        end.linkTo(parent.end)
+                        start.linkTo(partner.end)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    homeFlowerUiModel = this.me.homeFlowerUiModel,
+                )
             }
         }
-
-        HomeFlowerPartner(
-            modifier = Modifier.constrainAs(partner) {
-                start.linkTo(parent.start)
-                end.linkTo(me.start)
-                bottom.linkTo(parent.bottom)
-            },
-            homeFlowerUiModel = meAndPartner.partner,
-        )
-
-        if (meAndPartner.me.authType != AuthOnlyMe && meAndPartner.me.authType != AuthBoth) {
-            TwoTooImageView(
-                modifier = Modifier.testTag(
-                    stringResource(id = R.string.homeOngoingChallengeWaterImage),
-                ).width(75.dp).height(69.dp).constrainAs(waterImage) {
-                    top.linkTo(textHint.bottom)
-                    bottom.linkTo(me.top, margin = 8.dp)
-                    start.linkTo(me.start)
-                    end.linkTo(me.end)
-                },
-                model = R.drawable.img_need_water,
-            )
-        }
-
-        HomeFlowerMe(
-            modifier = Modifier.constrainAs(me) {
-                end.linkTo(parent.end)
-                start.linkTo(partner.end)
-                bottom.linkTo(parent.bottom)
-            },
-            homeFlowerUiModel = meAndPartner.me,
-        )
     }
 }
 
@@ -188,7 +225,9 @@ private fun PreviewFirstChallengeHomeFlower() {
         Box(modifier = Modifier.fillMaxSize()) {
             HomeFlowerMeAndPartner(
                 modifier = Modifier.fillMaxWidth(),
-                meAndPartner = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+                ),
             )
         }
     }
@@ -203,7 +242,9 @@ private fun PreviewAuthOnlyPartnerHomeFlower() {
         ) {
             HomeFlowerMeAndPartner(
                 modifier = Modifier.fillMaxWidth(),
-                meAndPartner = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
+                ),
             )
         }
     }
@@ -218,7 +259,9 @@ private fun PreviewAuthOnlyMeHomeFlower() {
         ) {
             HomeFlowerMeAndPartner(
                 modifier = Modifier.fillMaxWidth(),
-                meAndPartner = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
+                ),
             )
         }
     }
@@ -233,7 +276,9 @@ private fun PreviewAuthBothHomeFlower() {
         ) {
             HomeFlowerMeAndPartner(
                 modifier = Modifier.fillMaxWidth(),
-                meAndPartner = HomeFlowerPartnerAndMeUiModel.authBoth,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth,
+                ),
             )
         }
     }
@@ -248,7 +293,29 @@ private fun PreviewDoNotAuthBothHomeFlower() {
         ) {
             HomeFlowerMeAndPartner(
                 modifier = Modifier.fillMaxWidth(),
-                meAndPartner = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
+                ),
+            )
+        }
+    }
+}
+
+@Preview("둘다 칭찬하지 않았을때", showBackground = true)
+@Composable
+private fun PreviewDoNotCheerBothHomeFlower() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partner,
+                        me = CheerWithFlower.me,
+                    ),
+                ),
             )
         }
     }
