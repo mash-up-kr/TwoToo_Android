@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.onboarding
+package com.mashup.twotoo.presenter.nickname
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
