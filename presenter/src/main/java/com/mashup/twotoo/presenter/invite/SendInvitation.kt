@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,6 +21,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -64,6 +66,12 @@ fun SendInvitation(
                     style = TwoTooTheme.typography.bodyNormal16,
                     color = TwoTooTheme.color.gray600,
                     textAlign = TextAlign.Center,
+                )
+                TwoTooImageView(
+                    modifier = Modifier.padding(top = 47.dp).size(183.dp, 138.dp),
+                    previewPlaceholder = R.drawable.img_send_invitation_flower,
+                    model = R.drawable.img_send_invitation_flower,
+                    contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 TwoTooTextButton(
