@@ -19,22 +19,27 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
+    state: Int,
     modifier: Modifier = Modifier,
+    onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
 ) {
     HomeScreen(
+        state = state,
         navigateToHistory = navigateToHistory,
         challengeStateTypeUiModel = OngoingChallengeUiModel.default,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
+        onBeeButtonClick = onBeeButtonClick,
     )
 }
 
 @Composable
 fun HomeScreen(
+    state: Int,
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     modifier: Modifier = Modifier,
-    challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
+    challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
@@ -44,7 +49,8 @@ fun HomeScreen(
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)
             },
-            onClickHelpIcon = {},
+            onClickHelpIcon = {
+            },
         )
         when (challengeStateTypeUiModel) {
             is BeforeChallengeUiModel -> {
@@ -70,7 +76,7 @@ fun HomeScreen(
                         height = Dimension.fillToConstraints
                     },
                     ongoingChallengeUiModel = challengeStateTypeUiModel,
-                    onBeeButtonClick = { /*TODO*/ },
+                    onBeeButtonClick = onBeeButtonClick,
                 )
             }
         }
@@ -83,6 +89,7 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
+            state = 0,
         )
     }
 }
@@ -94,6 +101,7 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             challengeStateTypeUiModel = OngoingChallengeUiModel.default,
+            state = 0,
         )
     }
 }

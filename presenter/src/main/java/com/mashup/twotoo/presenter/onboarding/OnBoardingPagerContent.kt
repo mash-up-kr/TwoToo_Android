@@ -1,6 +1,8 @@
 package com.mashup.twotoo.presenter.onboarding
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.aspectRatio
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
@@ -30,25 +32,27 @@ fun HorizontalPagerContent(pagerState: PagerState) {
     }
 
     val pageImage = remember {
-        mutableStateOf(R.drawable.ic_radio_check)
+        mutableStateOf(R.drawable.onboarding_one_background)
     }
 
     HorizontalPager(
-        modifier = Modifier.padding(top = 150.dp),
+        modifier = Modifier.padding(top = 22.dp),
         count = MAX_COUNT,
         state = pagerState,
     ) { page ->
         when (page) {
             0 -> {
-                // TODO - image 로직도 추가 예정
+                pageImage.value = R.drawable.onboarding_one_background
                 pageDescription.value = R.string.onboarding_pager_1
             }
 
             1 -> {
+                pageImage.value = R.drawable.onboarding_two_background
                 pageDescription.value = R.string.onboarding_pager_2
             }
 
             2 -> {
+                pageImage.value = R.drawable.onboarding_three_background
                 pageDescription.value = R.string.onboarding_pager_3
             }
         }
@@ -57,7 +61,7 @@ fun HorizontalPagerContent(pagerState: PagerState) {
         ) {
             TwoTooImageView(
                 model = pageImage.value,
-                modifier = Modifier.size(200.dp),
+                modifier = Modifier.fillMaxWidth().aspectRatio(1f),
             )
             Text(
                 text = stringResource(id = pageDescription.value),
