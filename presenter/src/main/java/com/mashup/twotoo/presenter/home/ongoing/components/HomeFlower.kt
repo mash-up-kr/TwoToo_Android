@@ -121,6 +121,8 @@ fun HomeFlowerMeAndPartner(
             }
 
             is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
+                (this.partner.homeFlowerUiModel as HomeCheerUiModel).partner
+                HomeCheerPartner(cheerText = )
                 HomeFlowerPartner(
                     modifier = Modifier.constrainAs(partner) {
                         start.linkTo(parent.start)
@@ -152,6 +154,30 @@ fun HomeFlowerMeAndPartner(
             }
         }
     }
+}
+
+@Composable
+fun HomeCheerPartner(
+    cheerText: String,
+    modifier: Modifier = Modifier,
+) {
+    HomeCheerSpeechBubble(
+        modifier = modifier,
+        userType = PARTNER,
+        cheerText = cheerText,
+    )
+}
+
+@Composable
+fun HomeCheerMe(
+    cheerText: String,
+    modifier: Modifier = Modifier,
+) {
+    HomeCheerSpeechBubble(
+        modifier = modifier,
+        userType = ME,
+        cheerText = cheerText,
+    )
 }
 
 @Composable
