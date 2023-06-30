@@ -26,16 +26,20 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
+import com.mashup.twotoo.presenter.mypage.model.MyPageItem
 
 @Composable
 fun MyPageRoute(
+    state: Int,
     modifier: Modifier = Modifier,
+    onClickMyPageItem: (MyPageItem) -> Unit,
 ) {
     MyPageScreen(
         modifier = modifier.testTag(
             stringResource(id = R.string.mypage),
         ),
         homeGoalCountUiModel = HomeGoalCountUiModel.default,
+        onClickMyPageItem = onClickMyPageItem,
     )
 }
 
@@ -43,6 +47,7 @@ fun MyPageRoute(
 fun MyPageScreen(
     homeGoalCountUiModel: HomeGoalCountUiModel,
     modifier: Modifier = Modifier,
+    onClickMyPageItem: (MyPageItem) -> Unit,
 
 ) {
     Column(
@@ -83,8 +88,7 @@ fun MyPageScreen(
         )
         MyPageItemList(
             modifier = Modifier.fillMaxWidth(),
-            onClickMyPageItem = {
-            },
+            onClickMyPageItem = onClickMyPageItem,
         )
     }
 }
@@ -93,6 +97,6 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageRoute()
+        MyPageRoute(0, onClickMyPageItem = {})
     }
 }

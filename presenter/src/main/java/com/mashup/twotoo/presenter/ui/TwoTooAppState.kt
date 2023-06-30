@@ -13,12 +13,12 @@ import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
+import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
-import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 
 @Composable
 fun rememberTwoTooAppState(
