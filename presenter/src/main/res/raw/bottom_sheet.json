@@ -4,6 +4,7 @@
       "headerText": {
         "width": "spread",
         "height": "wrap",
+        "centerHorizontally" : "parent",
         "top": [
           "parent",
           "top",
@@ -29,7 +30,7 @@
       },
       "imageView" : {
         "width" : "wrap",
-        "height" : "wrap",
+        "height" : "50%",
         "top" : [
           "headerText",
           "bottom",
@@ -131,9 +132,8 @@
         "alpha": 1
       },
       "imageView" : {
-        "visibility" : "gone",
         "width" : "wrap",
-        "height" : "wrap",
+        "height" : "0",
         "top" : [
           "headerText",
           "bottom",
@@ -150,7 +150,7 @@
           0
         ],
         "translationY" : 0,
-        "alpha" : 0.3
+        "alpha" : 0
       },
       "textField" : {
         "width" : "wrap",

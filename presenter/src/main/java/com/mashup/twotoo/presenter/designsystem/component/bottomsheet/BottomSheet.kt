@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 import android.Manifest
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -20,7 +19,6 @@ import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
@@ -34,21 +32,21 @@ import java.util.Objects
 @Composable
 fun TwoTooBottomSheet(
     type: BottomSheetType,
-    button: @Composable (Modifier, BottomSheetData) -> Unit,
     onDismiss: () -> Unit,
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
+    onClickButton: (BottomSheetData) -> Unit = {},
 ) {
     when (type) {
         is Authenticate -> TwoTooAuthBottomSheet(
             type = type,
-            button = button,
+            onClickButton = onClickButton,
             onDismiss = onDismiss,
             bottomSheetState = bottomSheetState,
         )
 
         is SendType -> TwoTooSendMsgBottomSheet(
             type = type,
-            button = button,
+            onClickButton = onClickButton,
             onDismiss = onDismiss,
             bottomSheetState = bottomSheetState,
         )
@@ -59,7 +57,7 @@ fun TwoTooBottomSheet(
 @Composable
 fun TwoTooAuthBottomSheet(
     type: Authenticate,
-    button: @Composable (Modifier, BottomSheetData) -> Unit,
+    onClickButton: (BottomSheetData) -> Unit,
     onDismiss: () -> Unit,
     bottomSheetState: SheetState,
 ) {
@@ -132,7 +130,6 @@ fun TwoTooAuthBottomSheet(
         ) {
             AuthenticateContent(
                 type = type,
-                button = button,
                 imageUri = imageUri,
                 onClickPlusButton = {
                     val permissionCheckResult =
@@ -144,6 +141,7 @@ fun TwoTooAuthBottomSheet(
                         permissionLauncher.launch(Manifest.permission.CAMERA)
                     }
                 },
+                onClickButton = onClickButton,
             )
         }
         if (setImageDialogVisible) {
@@ -165,9 +163,9 @@ fun TwoTooAuthBottomSheet(
 @Composable
 fun TwoTooSendMsgBottomSheet(
     type: SendType,
-    button: @Composable (Modifier, BottomSheetData) -> Unit,
     onDismiss: () -> Unit,
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
+    onClickButton: (BottomSheetData) -> Unit = {},
 ) {
     TwoTooBottomSheetImpl(
         bottomSheetState = bottomSheetState,
@@ -175,7 +173,7 @@ fun TwoTooSendMsgBottomSheet(
     ) {
         SendMsgBottomSheetContent(
             type = type,
-            button = button,
+            onClickButton = onClickButton,
         )
     }
 }
@@ -199,50 +197,11 @@ fun TwoTooBottomSheetImpl(
 @Composable
 fun TestButton(
     modifier: Modifier = Modifier,
-    onClick: () -> Unit,
 ) {
-    Button(
+    Text(
         modifier = modifier,
-        onClick = onClick,
-    ) {
-        Text("버튼입니다.")
-    }
-}
-
-/**
- * 직접 실행하거나, Interactive Mode에서 확인이 가능합니다.
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(name = "인증하기 프리뷰")
-@Composable
-private fun AuthenticateSheet() {
-    TwoTooTheme {
-        TwoTooBottomSheet(
-            type = Authenticate(),
-            button = { _, _ ->
-                TestButton(Modifier, {})
-            },
-            onDismiss = {},
-        )
-    }
-}
-
-/**
- * 직접 실행하거나, Interactive Mode에서 확인이 가능합니다.
- */
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview(name = "찌르기 프리뷰")
-@Composable
-private fun ShotSheet() {
-    TwoTooTheme {
-        TwoTooBottomSheet(
-            type = Shot(),
-            button = { _, _ ->
-                TestButton(Modifier, {})
-            },
-            onDismiss = {},
-        )
-    }
+        text = "버튼입니다.",
+    )
 }
 
 /**
@@ -251,7 +210,7 @@ private fun ShotSheet() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview(name = "인증하기")
 @Composable
-private fun OpenAuthenticate() {
+fun OpenAuthenticate() {
     TwoTooTheme {
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -271,11 +230,6 @@ private fun OpenAuthenticate() {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
                     bottomSheetState = bottomSheetState,
-                    button = { modifier, bottomSheetData ->
-                        TestButton(modifier = Modifier.then(modifier)) {
-                            Log.d(TAG, "OpenAuthenticate($bottomSheetData)")
-                        }
-                    },
                     type = Authenticate(),
                     onDismiss = {
                         coroutineScope.launch {
@@ -316,14 +270,6 @@ private fun OpenShot() {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
                     bottomSheetState = bottomSheetState,
-                    button = { modifier, bottomSheetData ->
-                        /*
-                        Custom Button Composable이 들어갑니다.
-                         */
-                        TestButton(modifier = Modifier.then(modifier)) {
-                            Log.d(TAG, "OpenShot($bottomSheetData)")
-                        }
-                    },
                     type = Shot(),
                     onDismiss = {
                         coroutineScope.launch {
@@ -361,14 +307,6 @@ private fun OpenCheer() {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
                     bottomSheetState = bottomSheetState,
-                    button = { modifier, bottomSheetData ->
-                        /*
-                        Custom Button Composable이 들어갑니다.
-                         */
-                        TestButton(modifier = Modifier.then(modifier)) {
-                            Log.d(TAG, "OpenShot($bottomSheetData)")
-                        }
-                    },
                     type = Cheer(),
                     onDismiss = {
                         coroutineScope.launch {
