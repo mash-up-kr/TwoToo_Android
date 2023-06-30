@@ -40,8 +40,8 @@ fun SendMsgBottomSheetContent(
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
-    LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener {
-        if (it) {
+    LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener { isFocusable ->
+        if (isFocusable) {
             coroutineScope.launch {
                 delay(250)
                 focusRequester.requestFocus()
