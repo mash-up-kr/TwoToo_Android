@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -27,6 +28,7 @@ import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
@@ -121,8 +123,15 @@ fun HomeFlowerMeAndPartner(
             }
 
             is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
-                (this.partner.homeFlowerUiModel as HomeCheerUiModel).partner
-                HomeCheerPartner(cheerText = )
+                HomeCheerPartner(
+                    modifier = Modifier.constrainAs(partnerCheer) {
+                        start.linkTo(parent.start, margin = 32.dp)
+                        end.linkTo(heartImage.start)
+                        bottom.linkTo(partner.top, margin = 12.dp)
+                    },
+                    cheerState = this.partner.cheerState,
+                    cheerText = this.partner.cheerText,
+                )
                 HomeFlowerPartner(
                     modifier = Modifier.constrainAs(partner) {
                         start.linkTo(parent.start)
@@ -143,6 +152,17 @@ fun HomeFlowerMeAndPartner(
                     previewPlaceholder = R.drawable.ic_heart,
                 )
 
+                HomeCheerMe(
+                    modifier = Modifier.width(150.dp).constrainAs(meCheer) {
+                        top.linkTo(parent.top)
+                        start.linkTo(heartImage.end)
+                        end.linkTo(parent.end, margin = 32.dp)
+                        bottom.linkTo(me.top, margin = 12.dp)
+                    },
+                    cheerState = this.me.cheerState,
+                    cheerText = this.me.cheerText,
+                )
+
                 HomeFlowerMe(
                     modifier = Modifier.constrainAs(me) {
                         end.linkTo(parent.end)
@@ -158,26 +178,49 @@ fun HomeFlowerMeAndPartner(
 
 @Composable
 fun HomeCheerPartner(
-    cheerText: String,
+    cheerState: CheerState,
     modifier: Modifier = Modifier,
+    cheerText: String = "",
 ) {
-    HomeCheerSpeechBubble(
-        modifier = modifier,
-        userType = PARTNER,
-        cheerText = cheerText,
-    )
+    when (cheerState) {
+        CheerState.NotEmpty -> {
+            HomeCheerSpeechBubble(
+                modifier = modifier,
+                userType = PARTNER,
+                cheerText = cheerText,
+            )
+        }
+        CheerState.NotYet -> {
+            TwoTooImageView(
+                modifier = modifier.padding(bottom = 18.dp).size(44.dp),
+                model = R.drawable.img_cheer_partner_empty,
+                previewPlaceholder = R.drawable.img_cheer_partner_empty,
+            )
+        }
+    }
 }
 
 @Composable
 fun HomeCheerMe(
-    cheerText: String,
+    cheerState: CheerState,
     modifier: Modifier = Modifier,
+    cheerText: String = "",
 ) {
-    HomeCheerSpeechBubble(
-        modifier = modifier,
-        userType = ME,
-        cheerText = cheerText,
-    )
+    when (cheerState) {
+        CheerState.NotEmpty -> {
+            HomeCheerSpeechBubble(
+                modifier = modifier.width(150.dp).padding(bottom = 42.dp),
+                userType = ME,
+                cheerText = cheerText,
+            )
+        }
+        CheerState.NotYet -> {
+            HomeCheerFirstSpeech(
+                modifier = modifier.padding(bottom = 32.dp),
+                cheerText = stringResource(id = R.string.homeCheerChallengeFirstText),
+            )
+        }
+    }
 }
 
 @Composable
@@ -338,8 +381,106 @@ private fun PreviewDoNotCheerBothHomeFlower() {
                 modifier = Modifier.fillMaxWidth(),
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partner,
-                        me = CheerWithFlower.me,
+                        partner = CheerWithFlower.partnerNotYet,
+                        me = CheerWithFlower.meNotYet,
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("둘다 응원", showBackground = true)
+@Composable
+private fun PreviewCheerBoth() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partnerNotEmpty.copy(
+                            cheerState = CheerState.NotEmpty,
+                            cheerText = "앞으로 더 화이팅이야",
+                        ),
+                        me = CheerWithFlower.meNotEmpty.copy(
+                            cheerState = CheerState.NotEmpty,
+                            cheerText = "앞으로 더 화이팅이야",
+                        ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("응원상태 ", showBackground = true)
+@Composable
+private fun PreviewCheerOnlyMe() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partnerNotYet.copy(
+                            cheerState = CheerState.NotYet,
+                        ),
+                        me = CheerWithFlower.meNotEmpty.copy(
+                            cheerState = CheerState.NotEmpty,
+                        ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("응원상태 ", showBackground = true)
+@Composable
+private fun PreviewCheerOnlyPartner() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partnerNotEmpty.copy(
+                            cheerState = CheerState.NotEmpty,
+                        ),
+                        me = CheerWithFlower.meNotYet.copy(
+                            cheerState = CheerState.NotYet,
+                        ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("응원상태 ", showBackground = true)
+@Composable
+private fun PreviewDoNotCheerBoth() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partnerNotYet.copy(
+                            cheerState = CheerState.NotYet,
+                        ),
+                        me = CheerWithFlower.meNotYet.copy(
+                            cheerState = CheerState.NotYet,
+                        ),
                     ),
                 ),
             )
