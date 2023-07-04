@@ -24,17 +24,16 @@ fun HomeRoute(
 ) {
     HomeScreen(
         navigateToHistory = navigateToHistory,
-        challengeStateTypeUiModel = OngoingChallengeUiModel.default,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
     )
 }
 
 @Composable
 fun HomeScreen(
+    modifier: Modifier = Modifier,
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
-    challengeStateTypeUiModel: ChallengeStateTypeUiModel = BeforeChallengeUiModel.empty,
+    challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
@@ -70,7 +69,7 @@ fun HomeScreen(
                         height = Dimension.fillToConstraints
                     },
                     ongoingChallengeUiModel = challengeStateTypeUiModel,
-                    onBeeButtonClick = { /*TODO*/ },
+                    onBeeButtonClick = onBeeButtonClick,
                 )
             }
         }
