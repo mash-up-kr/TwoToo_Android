@@ -54,14 +54,16 @@ fun HomeFlowerMeAndPartner(
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (this.me.authType == FirstCreateChallenge) {
                     TextHint(
-                        modifier = Modifier.testTag(
-                            stringResource(id = R.string.homeOngoingChallengeFirstChallengeHint),
-                        ).constrainAs(textHint) {
-                            start.linkTo(waterImage.start)
-                            end.linkTo(waterImage.end)
-                            top.linkTo(parent.top)
-                            bottom.linkTo(waterImage.top, margin = 6.dp)
-                        },
+                        modifier = Modifier
+                            .testTag(
+                                stringResource(id = R.string.homeOngoingChallengeFirstChallengeHint),
+                            )
+                            .constrainAs(textHint) {
+                                start.linkTo(waterImage.start)
+                                end.linkTo(waterImage.end)
+                                top.linkTo(parent.top)
+                                bottom.linkTo(waterImage.top, margin = 6.dp)
+                            },
                     )
                 }
                 HomeFlowerPartner(
@@ -75,13 +77,15 @@ fun HomeFlowerMeAndPartner(
 
                 if (this.partner.authType == AuthOnlyPartner) {
                     Row(
-                        modifier = Modifier.testTag(
-                            stringResource(id = R.string.homeOngoingChallengeAuthPartnerText),
-                        ).constrainAs(partnerText) {
-                            bottom.linkTo(partner.top, margin = 15.dp)
-                            start.linkTo(partner.start)
-                            end.linkTo(partner.end)
-                        },
+                        modifier = Modifier
+                            .testTag(
+                                stringResource(id = R.string.homeOngoingChallengeAuthPartnerText),
+                            )
+                            .constrainAs(partnerText) {
+                                bottom.linkTo(partner.top, margin = 15.dp)
+                                start.linkTo(partner.start)
+                                end.linkTo(partner.end)
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -91,7 +95,9 @@ fun HomeFlowerMeAndPartner(
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         TwoTooImageView(
-                            modifier = Modifier.width(14.dp).height(14.dp),
+                            modifier = Modifier
+                                .width(14.dp)
+                                .height(14.dp),
                             model = R.drawable.ic_heart,
                             previewPlaceholder = R.drawable.ic_heart,
                         )
@@ -100,14 +106,18 @@ fun HomeFlowerMeAndPartner(
 
                 if (this.me.authType != AuthOnlyMe && this.me.authType != AuthBoth) {
                     TwoTooImageView(
-                        modifier = Modifier.testTag(
-                            stringResource(id = R.string.homeOngoingChallengeWaterImage),
-                        ).width(75.dp).height(69.dp).constrainAs(waterImage) {
-                            top.linkTo(textHint.bottom)
-                            bottom.linkTo(me.top, margin = 8.dp)
-                            start.linkTo(me.start)
-                            end.linkTo(me.end)
-                        },
+                        modifier = Modifier
+                            .testTag(
+                                stringResource(id = R.string.homeOngoingChallengeWaterImage),
+                            )
+                            .width(75.dp)
+                            .height(69.dp)
+                            .constrainAs(waterImage) {
+                                top.linkTo(textHint.bottom)
+                                bottom.linkTo(me.top, margin = 8.dp)
+                                start.linkTo(me.start)
+                                end.linkTo(me.end)
+                            },
                         model = R.drawable.img_need_water,
                     )
                 }
@@ -142,23 +152,27 @@ fun HomeFlowerMeAndPartner(
                 )
 
                 TwoTooImageView(
-                    modifier = Modifier.constrainAs(heartImage) {
-                        start.linkTo(partner.end)
-                        end.linkTo(me.start)
-                        top.linkTo(partner.top)
-                        bottom.linkTo(partner.bottom)
-                    }.size(28.dp),
+                    modifier = Modifier
+                        .constrainAs(heartImage) {
+                            start.linkTo(partner.end)
+                            end.linkTo(me.start)
+                            top.linkTo(partner.top)
+                            bottom.linkTo(partner.bottom)
+                        }
+                        .size(28.dp),
                     model = R.drawable.ic_heart,
                     previewPlaceholder = R.drawable.ic_heart,
                 )
 
                 HomeCheerMe(
-                    modifier = Modifier.width(150.dp).constrainAs(meCheer) {
-                        top.linkTo(parent.top)
-                        start.linkTo(heartImage.end)
-                        end.linkTo(parent.end, margin = 32.dp)
-                        bottom.linkTo(me.top, margin = 12.dp)
-                    },
+                    modifier = Modifier
+                        .width(150.dp)
+                        .constrainAs(meCheer) {
+                            top.linkTo(parent.top)
+                            start.linkTo(heartImage.end)
+                            end.linkTo(parent.end, margin = 32.dp)
+                            bottom.linkTo(me.top, margin = 12.dp)
+                        },
                     cheerState = this.me.cheerState,
                     cheerText = this.me.cheerText,
                 )
@@ -185,14 +199,21 @@ fun HomeCheerPartner(
     when (cheerState) {
         CheerState.NotEmpty -> {
             HomeCheerSpeechBubble(
-                modifier = modifier,
+                modifier = modifier.testTag(
+                    stringResource(R.string.homeCheerChallengePartnerBubble),
+                ),
                 userType = PARTNER,
                 cheerText = cheerText,
             )
         }
         CheerState.NotYet -> {
             TwoTooImageView(
-                modifier = modifier.padding(bottom = 18.dp).size(44.dp),
+                modifier = modifier
+                    .testTag(
+                        stringResource(R.string.homeCheerChallengePartnerBeforeCheerBubble),
+                    )
+                    .padding(bottom = 18.dp)
+                    .size(44.dp),
                 model = R.drawable.img_cheer_partner_empty,
                 previewPlaceholder = R.drawable.img_cheer_partner_empty,
             )
@@ -209,14 +230,18 @@ fun HomeCheerMe(
     when (cheerState) {
         CheerState.NotEmpty -> {
             HomeCheerSpeechBubble(
-                modifier = modifier.width(150.dp).padding(bottom = 42.dp),
+                modifier = modifier.testTag(
+                    stringResource(id = R.string.homeCheerChallengeMeBubble),
+                ).width(150.dp).padding(bottom = 42.dp),
                 userType = ME,
                 cheerText = cheerText,
             )
         }
         CheerState.NotYet -> {
             HomeCheerFirstSpeech(
-                modifier = modifier.padding(bottom = 32.dp),
+                modifier = modifier.testTag(
+                    stringResource(id = R.string.homeCheerChallengeMeBeforeCheerBubble),
+                ).padding(bottom = 32.dp),
                 cheerText = stringResource(id = R.string.homeCheerChallengeFirstText),
             )
         }
@@ -235,9 +260,12 @@ fun HomeFlowerPartner(
         val context = LocalContext.current
         with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
             TwoTooImageView(
-                modifier = Modifier.testTag(
-                    stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
-                ).width(width).height(height),
+                modifier = Modifier
+                    .testTag(
+                        stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
+                    )
+                    .width(width)
+                    .height(height),
                 model = image,
             )
         }
@@ -261,9 +289,12 @@ fun HomeFlowerMe(
         val context = LocalContext.current
         with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
             TwoTooImageView(
-                modifier = Modifier.testTag(
-                    stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
-                ).width(width).height(height),
+                modifier = Modifier
+                    .testTag(
+                        stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
+                    )
+                    .width(width)
+                    .height(height),
                 model = image,
             )
         }
