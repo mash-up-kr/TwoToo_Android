@@ -3,9 +3,7 @@ package com.mashup.twotoo.presenter.home.ongoing.components
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -144,15 +142,13 @@ fun HomeCheerSpeechBubble(
             },
         )
         Text(
-            modifier = Modifier.constrainAs(text) {
-                top.linkTo(
-                    parent.top,
-                    margin = 10.dp,
-                )
-                start.linkTo(parent.start, margin = 10.dp)
-                end.linkTo(parent.end, margin = 10.dp)
-                bottom.linkTo(barrier, margin = 10.dp)
-            }.padding(horizontal = 15.dp).fillMaxWidth(),
+            modifier = Modifier
+                .constrainAs(text) {
+                    top.linkTo(parent.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(barrier)
+                }.width(120.dp),
             text = cheerText,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
