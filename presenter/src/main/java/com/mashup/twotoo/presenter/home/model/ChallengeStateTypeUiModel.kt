@@ -92,10 +92,6 @@ data class OngoingChallengeUiModel(
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
             homeShotCountTextUiModel = HomeShotCountTextUiModel.default,
         )
-
-        val cheerBoth = cheer.copy(
-            homeChallengeStateUiModel = HomeChallengeStateUiModel.cheerBoth,
-        )
     }
 }
 

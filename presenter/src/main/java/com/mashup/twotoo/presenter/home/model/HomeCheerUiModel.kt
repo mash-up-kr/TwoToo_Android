@@ -14,6 +14,26 @@ data class HomeCheerUiModel(
             partner = CheerWithFlower.partnerNotYet,
             me = CheerWithFlower.meNotYet,
         )
+
+        val cheerBoth = HomeCheerUiModel(
+            partner = CheerWithFlower.partnerNotEmpty,
+            me = CheerWithFlower.meNotEmpty,
+        )
+
+        val doNotCheerBoth = HomeCheerUiModel(
+            partner = CheerWithFlower.partnerNotYet,
+            me = CheerWithFlower.partnerNotYet,
+        )
+
+        val cheerOnlyMe = HomeCheerUiModel(
+            partner = CheerWithFlower.partnerNotYet,
+            me = CheerWithFlower.meNotEmpty,
+        )
+
+        val cheerOnlyPartner = HomeCheerUiModel(
+            partner = CheerWithFlower.partnerNotEmpty,
+            me = CheerWithFlower.meNotYet,
+        )
     }
 }
 
