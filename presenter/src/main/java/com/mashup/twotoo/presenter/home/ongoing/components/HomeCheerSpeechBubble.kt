@@ -47,7 +47,7 @@ fun HomeCheerSpeechBubble(
 
     ConstraintLayout(
         modifier.width(150.dp).height(
-            if (cheerText.isOneLine()) 36.dp else 64.dp,
+            if (cheerText.isOneLine()) 48.dp else 76.dp,
         ),
     ) {
         val (bubble, text) = createRefs()
@@ -156,7 +156,7 @@ fun HomeCheerSpeechBubble(
             text = cheerText,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            style = TwoTooTheme.typography.bodyNormal16
+            style = TwoTooTheme.typography.bodyNormal16,
         )
     }
 }

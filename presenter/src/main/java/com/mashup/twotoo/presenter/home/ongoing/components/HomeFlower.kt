@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.home.ongoing.components
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -49,7 +48,8 @@ fun HomeFlowerMeAndPartner(
     ConstraintLayout(
         modifier = modifier,
     ) {
-        val (textHint, partnerText, waterImage, partner, me, partnerCheer, meCheer, heartImage) = createRefs()
+        val (textHint, partnerText, waterImage, partner, partnerFlowerOwnerText, me, meFlowerOwnerText, partnerCheer, meCheer, heartImage) = createRefs()
+
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (this.me.authType == FirstCreateChallenge) {
@@ -68,11 +68,19 @@ fun HomeFlowerMeAndPartner(
                 }
                 HomeFlowerPartner(
                     modifier = Modifier.constrainAs(partner) {
-                        start.linkTo(parent.start)
-                        end.linkTo(me.start)
-                        bottom.linkTo(parent.bottom)
+                        start.linkTo(partnerFlowerOwnerText.start)
+                        end.linkTo(partnerFlowerOwnerText.end)
+                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 3.dp)
                     },
                     homeFlowerUiModel = this.partner,
+                )
+                HomeFlowerOwnerText(
+                    modifier = Modifier.constrainAs(partnerFlowerOwnerText) {
+                        linkTo(start = parent.start, end = parent.end, bias = 0.3f)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    name = this.partner.name,
+                    userType = PARTNER,
                 )
 
                 if (this.partner.authType == AuthOnlyPartner) {
@@ -124,11 +132,21 @@ fun HomeFlowerMeAndPartner(
 
                 HomeFlowerMe(
                     modifier = Modifier.constrainAs(me) {
-                        end.linkTo(parent.end)
-                        start.linkTo(partner.end)
-                        bottom.linkTo(parent.bottom)
+                        start.linkTo(meFlowerOwnerText.start)
+                        end.linkTo(meFlowerOwnerText.end)
+                        bottom.linkTo(meFlowerOwnerText.top, margin = 3.dp)
                     },
                     homeFlowerUiModel = this.me,
+                )
+                HomeFlowerOwnerText(
+                    modifier = Modifier.constrainAs(
+                        meFlowerOwnerText,
+                    ) {
+                        linkTo(start = parent.start, end = parent.end, bias = 0.7f)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    name = this.me.name,
+                    userType = ME,
                 )
             }
 
@@ -144,20 +162,28 @@ fun HomeFlowerMeAndPartner(
                 )
                 HomeFlowerPartner(
                     modifier = Modifier.constrainAs(partner) {
-                        start.linkTo(parent.start)
-                        end.linkTo(me.start)
-                        bottom.linkTo(parent.bottom)
+                        start.linkTo(partnerFlowerOwnerText.start)
+                        end.linkTo(partnerFlowerOwnerText.end)
+                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 3.dp)
                     },
                     homeFlowerUiModel = this.partner.homeFlowerUiModel,
+                )
+
+                HomeFlowerOwnerText(
+                    modifier = Modifier.constrainAs(partnerFlowerOwnerText) {
+                        linkTo(start = parent.start, end = parent.end, bias = 0.3f)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    name = this.partner.homeFlowerUiModel.name,
+                    userType = PARTNER,
                 )
 
                 TwoTooImageView(
                     modifier = Modifier
                         .constrainAs(heartImage) {
-                            start.linkTo(partner.end)
-                            end.linkTo(me.start)
-                            top.linkTo(partner.top)
-                            bottom.linkTo(partner.bottom)
+                            start.linkTo(parent.start)
+                            end.linkTo(parent.end)
+                            bottom.linkTo(partner.bottom, margin = 50.dp)
                         }
                         .size(28.dp),
                     model = R.drawable.ic_heart,
@@ -179,11 +205,21 @@ fun HomeFlowerMeAndPartner(
 
                 HomeFlowerMe(
                     modifier = Modifier.constrainAs(me) {
-                        end.linkTo(parent.end)
-                        start.linkTo(partner.end)
-                        bottom.linkTo(parent.bottom)
+                        start.linkTo(meFlowerOwnerText.start)
+                        end.linkTo(meFlowerOwnerText.end)
+                        bottom.linkTo(meFlowerOwnerText.top, margin = 3.dp)
                     },
                     homeFlowerUiModel = this.me.homeFlowerUiModel,
+                )
+                HomeFlowerOwnerText(
+                    modifier = Modifier.constrainAs(
+                        meFlowerOwnerText,
+                    ) {
+                        linkTo(start = parent.start, end = parent.end, bias = 0.7f)
+                        bottom.linkTo(parent.bottom)
+                    },
+                    name = this.me.homeFlowerUiModel.name,
+                    userType = ME,
                 )
             }
         }
@@ -232,7 +268,7 @@ fun HomeCheerMe(
             HomeCheerSpeechBubble(
                 modifier = modifier.testTag(
                     stringResource(id = R.string.homeCheerChallengeMeBubble),
-                ).width(150.dp).padding(bottom = 42.dp),
+                ),
                 userType = ME,
                 cheerText = cheerText,
             )
@@ -253,26 +289,16 @@ fun HomeFlowerPartner(
     homeFlowerUiModel: HomeFlowerUiModel,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        val context = LocalContext.current
-        with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
-            TwoTooImageView(
-                modifier = Modifier
-                    .testTag(
-                        stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
-                    )
-                    .width(width)
-                    .height(height),
-                model = image,
-            )
-        }
-        Spacer(modifier = Modifier.height(3.dp))
-        HomeFlowerOwnerText(
-            name = homeFlowerUiModel.name,
-            userType = PARTNER,
+    val context = LocalContext.current
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+        TwoTooImageView(
+            modifier = modifier
+                .testTag(
+                    stringResource(id = R.string.homeOngoingChallengeFlowerPartnerImage),
+                )
+                .width(width)
+                .height(height),
+            model = image,
         )
     }
 }
@@ -282,26 +308,16 @@ fun HomeFlowerMe(
     homeFlowerUiModel: HomeFlowerUiModel,
     modifier: Modifier = Modifier,
 ) {
-    Column(
-        modifier = modifier,
-        horizontalAlignment = Alignment.CenterHorizontally,
-    ) {
-        val context = LocalContext.current
-        with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
-            TwoTooImageView(
-                modifier = Modifier
-                    .testTag(
-                        stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
-                    )
-                    .width(width)
-                    .height(height),
-                model = image,
-            )
-        }
-        Spacer(modifier = Modifier.height(3.dp))
-        HomeFlowerOwnerText(
-            name = homeFlowerUiModel.name,
-            userType = ME,
+    val context = LocalContext.current
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+        TwoTooImageView(
+            modifier = modifier
+                .testTag(
+                    stringResource(id = R.string.homeOngoingChallengeFlowerMeImage),
+                )
+                .width(width)
+                .height(height),
+            model = image,
         )
     }
 }
