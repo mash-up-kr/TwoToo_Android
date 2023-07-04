@@ -1,6 +1,6 @@
 package com.mashup.twotoo.presenter.home.model
 
-import com.mashup.twotoo.presenter.home.model.CheerState.Empty
+import com.mashup.twotoo.presenter.home.model.CheerState.NotEmpty
 import com.mashup.twotoo.presenter.home.model.CheerState.NotYet
 /**
  * @Created by 김현국 2023/06/28
@@ -11,8 +11,8 @@ data class HomeCheerUiModel(
 ) : ChallengeStateUiModel {
     companion object {
         val default = HomeCheerUiModel(
-            partner = CheerWithFlower.default,
-            me = CheerWithFlower.default,
+            partner = CheerWithFlower.partnerNotYet,
+            me = CheerWithFlower.meNotYet,
         )
     }
 }
@@ -20,6 +20,7 @@ data class HomeCheerUiModel(
 data class CheerWithFlower(
     val cheerState: CheerState,
     val homeFlowerUiModel: HomeFlowerUiModel,
+    val cheerText: String = "",
 ) {
     companion object {
         val default = CheerWithFlower(
@@ -27,18 +28,28 @@ data class CheerWithFlower(
             homeFlowerUiModel = HomeFlowerUiModel.me,
         )
 
-        val me = CheerWithFlower(
-            cheerState = Empty,
+        val meNotYet = CheerWithFlower(
+            cheerState = NotYet,
             homeFlowerUiModel = HomeFlowerUiModel.me,
         )
 
-        val partner = CheerWithFlower(
-            cheerState = Empty,
+        val meNotEmpty = CheerWithFlower(
+            cheerState = NotEmpty,
+            homeFlowerUiModel = HomeFlowerUiModel.me,
+        )
+
+        val partnerNotYet = CheerWithFlower(
+            cheerState = NotYet,
+            homeFlowerUiModel = HomeFlowerUiModel.partner,
+        )
+
+        val partnerNotEmpty = CheerWithFlower(
+            cheerState = NotEmpty,
             homeFlowerUiModel = HomeFlowerUiModel.partner,
         )
     }
 }
 
-enum class CheerState {
-    NotYet, Empty, NotEmpty
+enum class CheerState() {
+    NotYet, NotEmpty
 }
