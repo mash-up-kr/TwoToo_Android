@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
@@ -216,8 +217,27 @@ private fun PreviewDoNotCheerBothChallenge() {
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partner,
-                        me = CheerWithFlower.me,
+                        partner = CheerWithFlower.partnerNotYet,
+                        me = CheerWithFlower.meNotYet,
+                    ),
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerBothChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        partner = CheerWithFlower.partnerNotEmpty,
+                        me = CheerWithFlower.partnerNotEmpty,
                     ),
                 ),
             ),
