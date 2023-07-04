@@ -20,7 +20,6 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
-import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -215,10 +214,39 @@ private fun PreviewDoNotCheerBothChallenge() {
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
-                    challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partnerNotYet,
-                        me = CheerWithFlower.meNotYet,
-                    ),
+                    challengeStateUiModel = HomeCheerUiModel.doNotCheerBoth,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerOnlyMeChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.cheerOnlyMe,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerOnlyPartnerChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.cheerOnlyPartner,
                 ),
             ),
         )
@@ -234,10 +262,7 @@ private fun PreviewCheerBothChallenge() {
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
-                    challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partnerNotEmpty,
-                        me = CheerWithFlower.partnerNotEmpty,
-                    ),
+                    challengeStateUiModel = HomeCheerUiModel.cheerBoth,
                 ),
             ),
         )
