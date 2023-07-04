@@ -22,18 +22,23 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
+    state: Int,
     modifier: Modifier = Modifier,
+    onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
 ) {
     HomeScreen(
+        state = state,
         navigateToHistory = navigateToHistory,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
+        onBeeButtonClick = onBeeButtonClick,
     )
 }
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
+    state: Int,
     modifier: Modifier = Modifier,
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
@@ -51,7 +56,8 @@ fun HomeScreen(
                 top.linkTo(parent.top)
                 end.linkTo(parent.end)
             },
-            onClickHelpIcon = {},
+            onClickHelpIcon = {
+            },
         )
         when (challengeStateTypeUiModel) {
             is BeforeChallengeUiModel -> {
@@ -90,6 +96,7 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
+            state = 0,
         )
     }
 }
@@ -101,6 +108,7 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             challengeStateTypeUiModel = OngoingChallengeUiModel.default,
+            state = 0,
         )
     }
 }
