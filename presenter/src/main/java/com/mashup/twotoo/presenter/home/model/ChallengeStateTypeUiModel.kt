@@ -92,6 +92,10 @@ data class OngoingChallengeUiModel(
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
             homeShotCountTextUiModel = HomeShotCountTextUiModel.default,
         )
+
+        val cheerBoth = cheer.copy(
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.cheerBoth,
+        )
     }
 }
 
@@ -136,6 +140,18 @@ data class HomeChallengeStateUiModel(
         val cheer = HomeChallengeStateUiModel(
             challengeState = Cheer,
             challengeStateUiModel = HomeCheerUiModel.default,
+        )
+
+        val cheerBoth = HomeChallengeStateUiModel(
+            challengeState = Cheer,
+            challengeStateUiModel = HomeCheerUiModel.default.copy(
+                partner = CheerWithFlower.partnerNotEmpty.copy(
+                    cheerText = "앞으로 더 화이팅이야😘",
+                ),
+                me = CheerWithFlower.meNotEmpty.copy(
+                    cheerText = "오늘도 너무 고생했어😌",
+                ),
+            ),
         )
     }
 }
