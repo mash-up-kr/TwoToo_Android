@@ -6,6 +6,7 @@ import com.mashup.twotoo.di.DaggerApplicationComponent
 import com.mashup.twotoo.presenter.di.ScreenComponentProvider
 import com.mashup.twotoo.presenter.home.di.HomeComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
+import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponent
 
 class Application : Application(), ScreenComponentProvider {
     val applicationComponent: ApplicationComponent by lazy {
@@ -23,5 +24,9 @@ class Application : Application(), ScreenComponentProvider {
 
     override fun provideUserComponent(): UserComponent {
         return applicationComponent.userComponent().create()
+    }
+
+    override fun provideOnboardingComponent(): OnboardingComponent {
+        return applicationComponent.onBoardingComponent().create()
     }
 }
