@@ -2,9 +2,12 @@ package com.mashup.twotoo.presenter.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -28,6 +31,7 @@ fun HomeRoute(
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -35,7 +39,11 @@ fun HomeScreen(
     onBeeButtonClick: () -> Unit = {},
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
-    ConstraintLayout(modifier = modifier) {
+    ConstraintLayout(
+        modifier = modifier.semantics {
+            testTagsAsResourceId = true
+        },
+    ) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
         TwoTooMainToolbar(
             modifier = Modifier.constrainAs(topBar) {
