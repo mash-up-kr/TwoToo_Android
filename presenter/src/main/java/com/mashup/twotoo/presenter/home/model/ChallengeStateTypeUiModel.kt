@@ -137,6 +137,7 @@ data class HomeChallengeStateUiModel(
             challengeState = Auth,
             challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
         )
+
         val cheer = HomeChallengeStateUiModel(
             challengeState = Cheer,
             challengeStateUiModel = HomeCheerUiModel.default,
