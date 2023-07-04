@@ -153,6 +153,7 @@ fun HomeCheerSpeechBubble(
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             style = TwoTooTheme.typography.bodyNormal16,
+            color = TwoTooTheme.color.mainBrown,
         )
     }
 }
