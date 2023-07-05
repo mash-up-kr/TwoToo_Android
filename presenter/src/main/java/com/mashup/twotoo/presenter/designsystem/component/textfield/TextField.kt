@@ -22,6 +22,7 @@ fun TwoTooTextField(
     textHint: String,
     modifier: Modifier = Modifier,
     focusRequester: FocusRequester? = null,
+    maxLine: Int = Integer.MAX_VALUE,
 ) {
     TextField(
         modifier = if (focusRequester != null) {
@@ -42,6 +43,7 @@ fun TwoTooTextField(
         textStyle = TwoTooTheme.typography.bodyNormal16,
         shape = TwoTooTheme.shape.extraSmall,
         value = text,
+        maxLines = maxLine,
         onValueChange = updateText,
         placeholder = {
             Text(
