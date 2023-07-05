@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.input.pointer.PointerIcon.Companion.Text
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -148,12 +149,13 @@ fun HomeCheerSpeechBubble(
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(barrier)
-                }.width(120.dp),
+                }.width(130.dp),
             text = cheerText,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
             style = TwoTooTheme.typography.bodyNormal16,
             color = TwoTooTheme.color.mainBrown,
+            textAlign = TextAlign.Center,
         )
     }
 }
