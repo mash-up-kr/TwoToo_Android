@@ -33,7 +33,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -65,7 +65,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
 
@@ -94,7 +94,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
 
@@ -124,7 +124,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -159,7 +159,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -191,7 +191,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -224,7 +224,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -261,7 +261,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
@@ -294,7 +294,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
 
@@ -328,7 +328,7 @@ class HomeKtTest {
             context = LocalContext.current
             HomeScreen(
                 state = 0,
-                challengeStateTypeUiModel = challengeStateTypeUiModel,
+                state = challengeStateTypeUiModel,
             )
         }
         with(context) {
