@@ -12,6 +12,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
@@ -19,27 +20,28 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
-    state: Int,
+    state: ChallengeStateTypeUiModel,
     modifier: Modifier = Modifier,
     onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
+    onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
 ) {
     HomeScreen(
-        state = state,
         navigateToHistory = navigateToHistory,
-        challengeStateTypeUiModel = OngoingChallengeUiModel.default,
+        state = state,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
         onBeeButtonClick = onBeeButtonClick,
+        onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
     )
 }
 
 @Composable
 fun HomeScreen(
-    state: Int,
+    modifier: Modifier = Modifier,
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
-    challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
+    onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
+    state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(modifier = modifier) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
@@ -52,7 +54,7 @@ fun HomeScreen(
             onClickHelpIcon = {
             },
         )
-        when (challengeStateTypeUiModel) {
+        when (state) {
             is BeforeChallengeUiModel -> {
                 HomeBeforeChallenge(
                     modifier = Modifier.constrainAs(homeBeforeChallenge) {
@@ -62,7 +64,8 @@ fun HomeScreen(
                         bottom.linkTo(parent.bottom)
                         height = Dimension.fillToConstraints
                     },
-                    beforeChallengeUiModel = challengeStateTypeUiModel,
+                    beforeChallengeUiModel = state,
+                    onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
                 )
             }
             is OngoingChallengeUiModel -> {
@@ -75,7 +78,7 @@ fun HomeScreen(
                         bottom.linkTo(parent.bottom)
                         height = Dimension.fillToConstraints
                     },
-                    ongoingChallengeUiModel = challengeStateTypeUiModel,
+                    ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                 )
             }
@@ -89,7 +92,7 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            state = 0,
+            state = OngoingChallengeUiModel.default,
         )
     }
 }
@@ -100,8 +103,7 @@ fun PreviewHomeScreenAfterChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            challengeStateTypeUiModel = OngoingChallengeUiModel.default,
-            state = 0,
+            state = OngoingChallengeUiModel.default,
         )
     }
 }
