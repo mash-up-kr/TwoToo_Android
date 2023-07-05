@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.before
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,6 +22,7 @@ import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButto
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.components.HomeBeforeChallengeImage
 import com.mashup.twotoo.presenter.home.before.components.HomeBeforeChallengeTitle
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 
@@ -32,6 +34,7 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 fun HomeBeforeChallenge(
     beforeChallengeUiModel: BeforeChallengeUiModel,
     modifier: Modifier = Modifier,
+    onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp
     ConstraintLayout(
@@ -78,6 +81,10 @@ fun HomeBeforeChallenge(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom, margin = 51.dp)
+            }.clickable {
+                onClickBeforeChallengeTextButton(
+                    beforeChallengeUiModel.state,
+                )
             },
             text = stringResource(id = beforeChallengeUiModel.buttonText),
         )
