@@ -27,6 +27,7 @@ fun HomeGoalCount(
     modifier: Modifier = Modifier,
     horizontalAlignment: Alignment.Horizontal = Alignment.End,
     textLineSpacerHeight: Dp = 2.dp,
+    isChallengeCountVisible: Boolean = true,
 ) {
     Column(
         modifier = modifier,
@@ -34,7 +35,7 @@ fun HomeGoalCount(
     ) {
         CompositionLocalProvider(
             LocalTextStyle provides TwoTooTheme.typography.bodyNormal14,
-            LocalContentColor provides TwoTooTheme.color.mainPink,
+            LocalContentColor provides TwoTooTheme.color.twoTooPink,
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -48,8 +49,10 @@ fun HomeGoalCount(
                 )
                 Text(homeGoalCountUiModel.myName)
             }
-            Spacer(modifier = Modifier.height(textLineSpacerHeight))
-            Text(text = "${homeGoalCountUiModel.count}번째 꽃 피우는 중")
+            if (isChallengeCountVisible) {
+                Spacer(modifier = Modifier.height(textLineSpacerHeight))
+                Text(text = "${homeGoalCountUiModel.count}번째 챌린지 중")
+            }
         }
     }
 }
