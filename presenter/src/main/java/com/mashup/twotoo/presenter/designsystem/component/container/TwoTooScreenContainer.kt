@@ -24,11 +24,9 @@ fun TwoTooScreenContainer(
     ) {
         TwoTooImageView(
             modifier = Modifier.fillMaxSize(),
-            model = {
-                when (currentThemeColor) {
-                    ThemeColor.Default -> {
-                        R.drawable.image_background
-                    }
+            model = when (currentThemeColor) {
+                ThemeColor.Default -> {
+                    R.drawable.image_background
                 }
             },
             previewPlaceholder = R.drawable.image_background,
