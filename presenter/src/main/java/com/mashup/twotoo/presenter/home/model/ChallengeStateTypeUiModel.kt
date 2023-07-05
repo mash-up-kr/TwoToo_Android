@@ -33,21 +33,21 @@ data class BeforeChallengeUiModel(
             state = EMPTY,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.empty,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_empty,
             buttonText = R.string.homeBeforeChallengeEmptyButtonText,
         )
         val request = BeforeChallengeUiModel(
             state = REQUEST,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.request,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_request,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
         )
         val response = BeforeChallengeUiModel(
             state = RESPONSE,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.response,
-            stateImage = R.drawable.image_challenge_response,
+            stateImage = R.drawable.img_challenge_response,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
         )
 
@@ -55,7 +55,7 @@ data class BeforeChallengeUiModel(
             state = WAIT,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.wait,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_wait,
             buttonText = R.string.homeBeforeChallengeWaitButtonText,
         )
 
@@ -63,7 +63,7 @@ data class BeforeChallengeUiModel(
             state = TERMINATION,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.termination,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_termination,
             buttonText = R.string.homeBeforeChallengeTerminationButtonText,
         )
     }

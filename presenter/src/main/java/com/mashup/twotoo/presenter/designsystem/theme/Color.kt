@@ -42,6 +42,7 @@ class ColorScheme(
     mainBrown: Color,
     mainPink: Color,
     mainLightPink: Color,
+    twoTooPink: Color,
     mainYellow: Color,
     mainWhite: Color,
     backgroundYellow: Color,
@@ -56,6 +57,8 @@ class ColorScheme(
     var mainPink by mutableStateOf(mainPink, structuralEqualityPolicy())
         internal set
     var mainLightPink by mutableStateOf(mainLightPink, structuralEqualityPolicy())
+        internal set
+    var twoTooPink by mutableStateOf(twoTooPink, structuralEqualityPolicy())
         internal set
     var mainYellow by mutableStateOf(mainYellow, structuralEqualityPolicy())
         internal set
@@ -78,6 +81,7 @@ class ColorScheme(
         mainBrown: Color = this.mainBrown,
         mainPink: Color = this.mainPink,
         mainLightPink: Color = this.mainLightPink,
+        twoTooPink: Color = this.twoTooPink,
         mainYellow: Color = this.mainYellow,
         mainWhite: Color = this.mainWhite,
         backgroundYellow: Color = this.backgroundYellow,
@@ -90,6 +94,7 @@ class ColorScheme(
         mainBrown,
         mainPink,
         mainLightPink,
+        twoTooPink,
         mainYellow,
         mainWhite,
         backgroundYellow,
@@ -119,6 +124,7 @@ class ColorScheme(
 fun ColorScheme.updateColorSchemeFrom(other: ColorScheme) {
     mainBrown = other.mainBrown
     mainPink = other.mainPink
+    twoTooPink = other.twoTooPink
     mainYellow = other.mainYellow
     mainWhite = other.mainWhite
     backgroundYellow = other.backgroundYellow
@@ -149,6 +155,7 @@ fun lightColors(
     mainBrown: Color = MainBrown,
     mainPink: Color = MainPink,
     mainLightPink: Color = MainLightPink,
+    twoTooPink: Color = TwotooPink,
     mainYellow: Color = MainYellow,
     mainWhite: Color = MainWhite,
     backgroundYellow: Color = BackgroundYellow,
@@ -161,6 +168,7 @@ fun lightColors(
     mainBrown,
     mainPink,
     mainLightPink,
+    twoTooPink,
     mainYellow,
     mainWhite,
     backgroundYellow,
