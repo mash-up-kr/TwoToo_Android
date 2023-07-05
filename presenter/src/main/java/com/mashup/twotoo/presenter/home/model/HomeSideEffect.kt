@@ -10,4 +10,5 @@ sealed class HomeSideEffect {
     object NavigateToChallengeDetail : HomeSideEffect()
     object OpenToCheerBottomSheet : HomeSideEffect()
     object OpenToHelp : HomeSideEffect()
+    object NavigationToCreateChallenge : HomeSideEffect()
 }
