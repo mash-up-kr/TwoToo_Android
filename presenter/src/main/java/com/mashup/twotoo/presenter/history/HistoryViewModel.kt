@@ -10,8 +10,8 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
-class HistoryViewModel : ContainerHost<HistoryState, Unit>, ViewModel() {
-    override val container: Container<HistoryState, Unit> = container(
+class HistoryViewModel : ContainerHost<HistoryState, Nothing>, ViewModel() {
+    override val container: Container<HistoryState, Nothing> = container(
         HistoryState(emptyList()),
     )
 
