@@ -15,8 +15,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-        super.onCreate(savedInstanceState)
 
+        super.onCreate(savedInstanceState)
         setContent {
             TwoTooTheme {
                 val systemUiController = rememberSystemUiController()

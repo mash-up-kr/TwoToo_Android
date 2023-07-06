@@ -103,13 +103,13 @@ fun ChallengeCardInfoBottom(
         color = TwoTooTheme.color.mainBrown,
     )
     TwoTooImageView(
-        model = R.drawable.card_seed_img,
+        model = R.drawable.img_challenge_card_seed,
         modifier = modifier.then(
             Modifier
                 .size(81.dp, 95.dp)
                 .padding(end = 8.dp, bottom = 21.dp),
         ),
-        previewPlaceholder = R.drawable.card_seed_img,
+        previewPlaceholder = R.drawable.img_challenge_card_seed,
         contentScale = ContentScale.FillBounds,
     )
 }

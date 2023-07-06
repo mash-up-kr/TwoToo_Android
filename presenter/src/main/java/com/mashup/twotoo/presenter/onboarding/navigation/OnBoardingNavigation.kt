@@ -11,7 +11,7 @@ fun NavController.navigateToOnBoarding(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.OnBoardingGraph.route, navOptions = navOptions)
 }
 fun NavGraphBuilder.onBoardingGraph(
-    onClickLoginButton: () -> Unit
+    onClickLoginButton: () -> Unit,
 ) {
     composable(route = NavigationRoute.OnBoardingGraph.OnboardingScreen.route) {
         OnBoardingRoute(onClickLoginButton)
