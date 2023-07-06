@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class GardenViewModel : ContainerHost<GardenState, Nothing>, ViewModel() {
-    override val container: Container<GardenState, Nothing> = container(GardenState(emptyList()))
+    override val container: Container<GardenState, Nothing> = container(GardenState())
 
     init {
         loadChallengeCardInfos()

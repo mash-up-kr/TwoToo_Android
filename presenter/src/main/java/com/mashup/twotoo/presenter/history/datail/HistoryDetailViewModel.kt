@@ -11,7 +11,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 
 class HistoryDetailViewModel() : ContainerHost<HistoryDetailState, Nothing>, ViewModel() {
-    override val container: Container<HistoryDetailState, Nothing> = container(HistoryDetailState(null))
+    override val container: Container<HistoryDetailState, Nothing> = container(HistoryDetailState())
 
     init {
         loadHistoryDetail()

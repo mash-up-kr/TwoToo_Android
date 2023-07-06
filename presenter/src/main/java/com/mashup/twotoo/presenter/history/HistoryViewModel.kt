@@ -12,7 +12,7 @@ import org.orbitmvi.orbit.viewmodel.container
 
 class HistoryViewModel : ContainerHost<HistoryState, Nothing>, ViewModel() {
     override val container: Container<HistoryState, Nothing> = container(
-        HistoryState(emptyList()),
+        HistoryState(),
     )
 
     init {
