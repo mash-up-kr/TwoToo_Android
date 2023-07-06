@@ -1,8 +1,6 @@
 package com.mashup.twotoo.presenter.home.navigation
 
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -12,7 +10,6 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGraph
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.navigation.historyGraph
-import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute

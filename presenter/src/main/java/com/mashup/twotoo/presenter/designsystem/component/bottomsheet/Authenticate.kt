@@ -103,17 +103,24 @@ fun AuthenticateContent(
             },
             text = textFieldState,
             textHint = textHint,
-            updateText = { textFieldState = it },
+            updateText = {
+                if (it.length <= 100) {
+                    textFieldState = it
+                }
+            },
+            maxLine = 3,
         )
         TwoTooTextButton(
             modifier = Modifier.layoutId("button")
                 .fillMaxWidth().height(57.dp).navigationBarsPadding().clickable {
-                    onClickButton(
-                        BottomSheetData.AuthenticateData(
-                            image = imageUri,
-                            text = textFieldState,
-                        ),
-                    )
+                    if (textFieldState.isNotEmpty()) {
+                        onClickButton(
+                            BottomSheetData.AuthenticateData(
+                                image = imageUri,
+                                text = textFieldState,
+                            ),
+                        )
+                    }
                 },
             text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
         )

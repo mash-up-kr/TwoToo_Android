@@ -6,9 +6,12 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -75,6 +78,7 @@ fun HomeRoute(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
@@ -84,7 +88,11 @@ fun HomeScreen(
     onCommit: () -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
-    ConstraintLayout(modifier = modifier) {
+    ConstraintLayout(
+        modifier = modifier.semantics {
+            testTagsAsResourceId = true
+        },
+    ) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
         TwoTooMainToolbar(
             modifier = Modifier.constrainAs(topBar) {
