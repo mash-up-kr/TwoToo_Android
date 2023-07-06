@@ -42,6 +42,10 @@ class HomeViewModel @Inject constructor(
         postSideEffect(HomeSideEffect.OpenToShotBottomSheet)
     }
 
+    fun openToAuthBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.OpenToAuthBottomSheet)
+    }
+
     fun onClickBeforeChallengeTextButton(beforeChallengeState: BeforeChallengeState) = intent {
         // TODO create Challenge navigation 연결
         when (beforeChallengeState) {
