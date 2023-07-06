@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.ongoing.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -126,7 +127,10 @@ fun HomeFlowerMeAndPartner(
                                 bottom.linkTo(me.top, margin = 8.dp)
                                 start.linkTo(me.start)
                                 end.linkTo(me.end)
+                            }.clickable {
+                                onCommit()
                             },
+
                         model = R.drawable.img_need_water,
                     )
                 }
