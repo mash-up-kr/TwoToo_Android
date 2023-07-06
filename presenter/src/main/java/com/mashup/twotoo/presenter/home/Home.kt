@@ -2,9 +2,12 @@ package com.mashup.twotoo.presenter.home
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
@@ -19,29 +22,30 @@ import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 
 @Composable
 fun HomeRoute(
-    state: Int,
     modifier: Modifier = Modifier,
     onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
 ) {
     HomeScreen(
-        state = state,
         navigateToHistory = navigateToHistory,
-        challengeStateTypeUiModel = OngoingChallengeUiModel.default,
         modifier = modifier.testTag(stringResource(id = R.string.home)),
         onBeeButtonClick = onBeeButtonClick,
     )
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun HomeScreen(
-    state: Int,
+    modifier: Modifier = Modifier,
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
     challengeStateTypeUiModel: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
-    ConstraintLayout(modifier = modifier) {
+    ConstraintLayout(
+        modifier = modifier.semantics {
+            testTagsAsResourceId = true
+        },
+    ) {
         val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
         TwoTooMainToolbar(
             modifier = Modifier.constrainAs(topBar) {
@@ -89,7 +93,6 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            state = 0,
         )
     }
 }
@@ -101,7 +104,6 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             challengeStateTypeUiModel = OngoingChallengeUiModel.default,
-            state = 0,
         )
     }
 }
