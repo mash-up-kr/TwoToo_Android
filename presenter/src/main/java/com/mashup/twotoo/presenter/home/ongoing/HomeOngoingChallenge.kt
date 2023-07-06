@@ -20,6 +20,8 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
+import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
+import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeBeeButton
@@ -88,7 +90,7 @@ fun HomeOngoingChallenge(
                 end.linkTo(parent.end)
                 bottom.linkTo(barrier)
             },
-            meAndPartner = ongoingChallengeUiModel.homeFlowerUiModels,
+            homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
         )
 
         HomeBeeButton(
@@ -131,7 +133,9 @@ private fun PreviewFirstChallengeHomeOngoingChallenge() {
             navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+                ),
             ),
         )
     }
@@ -145,7 +149,9 @@ private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
             navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyPartner,
+                ),
             ),
         )
     }
@@ -159,7 +165,9 @@ private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
             navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authOnlyMe,
+                ),
             ),
         )
     }
@@ -173,7 +181,9 @@ private fun PreviewAuthBothHomeOngoingChallenge() {
             navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.authBoth,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth,
+                ),
             ),
         )
     }
@@ -187,7 +197,73 @@ private fun PreviewDoNotAuthBothHomeOngoingChallenge() {
             navigateToHistory = {},
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
-                homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewDoNotCheerBothChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.doNotCheerBoth,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerOnlyMeChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.cheerOnlyMe,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerOnlyPartnerChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.cheerOnlyPartner,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCheerBothChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            navigateToHistory = {},
+            onBeeButtonClick = {},
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
+                    challengeStateUiModel = HomeCheerUiModel.cheerBoth,
+                ),
             ),
         )
     }

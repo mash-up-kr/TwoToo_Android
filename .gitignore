@@ -2,8 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,kotlin
 
 
-compose-metrics
 compose-reports
+compose-metrics
 .DS_STORE
 ### Kotlin ###
 # Compiled class file
