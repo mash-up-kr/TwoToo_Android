@@ -7,10 +7,9 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGraph
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.navigation.historyGraph
-import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
@@ -19,6 +18,7 @@ import com.mashup.twotoo.presenter.util.componentProvider
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.HomeScreenGraph.HomeScreen.route, navOptions = navOptions)
 }
+
 fun NavGraphBuilder.homeGraph(
     navController: NavHostController,
 ) {
@@ -29,12 +29,11 @@ fun NavGraphBuilder.homeGraph(
         }
 
         HomeRoute(
+            homeViewModel = homeViewModel,
             modifier = Modifier.fillMaxSize(),
-            onBeeButtonClick = homeViewModel::updateCount,
-            navigateToHistory = {
-                navController.navigateToHistory()
-            },
+            navigateToHistory = homeViewModel::navigateToChallengeDetail,
         )
     }
     historyGraph(navController)
+    createChallengeGraph(navController)
 }
