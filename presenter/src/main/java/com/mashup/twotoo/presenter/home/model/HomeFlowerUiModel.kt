@@ -74,7 +74,7 @@ data class HomeFlowerUiModel(
         )
 
         val me = HomeFlowerUiModel(
-            name = "왕자",
+            name = "왕",
             flowerType = Flower(
                 flowerName = FlowerName.Tulip,
                 userType = UserType.ME,
@@ -144,7 +144,7 @@ data class HomeFlowerUiModel(
         )
 
         val partner = HomeFlowerUiModel(
-            name = "공주",
+            name = "공",
             flowerType = Flower(
                 flowerName = FlowerName.Tulip,
                 userType = UserType.PARTNER,
