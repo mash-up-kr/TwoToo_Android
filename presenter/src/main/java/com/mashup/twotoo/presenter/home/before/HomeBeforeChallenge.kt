@@ -44,6 +44,7 @@ fun HomeBeforeChallenge(
                 end.linkTo(parent.end, margin = 22.dp)
             },
             homeGoalCountUiModel = beforeChallengeUiModel.homeGoalCountUiModel,
+            isChallengeCountVisible = false,
         )
         HomeBeforeChallengeTitle(
             modifier = Modifier.constrainAs(homeBeforeChallengeTitle) {

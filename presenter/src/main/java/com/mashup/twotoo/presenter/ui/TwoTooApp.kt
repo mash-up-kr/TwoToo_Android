@@ -63,7 +63,9 @@ fun TwoTooApp(
             if (destination != null) {
                 // topbar 공통된 tapbar 있는거 같아서 넣으면 좋을 듯
             }
-            TwoTooNavHost(appState = appState)
+            TwoTooNavHost(
+                appState = appState,
+            )
         }
     }
 }
@@ -123,6 +125,6 @@ private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLev
 @Composable
 private fun PreviewTwoTooApp() {
     TwoTooTheme {
-        TwoTooApp()
+//        TwoTooApp()
     }
 }

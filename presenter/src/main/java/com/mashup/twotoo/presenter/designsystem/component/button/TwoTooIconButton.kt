@@ -52,7 +52,7 @@ fun TwoTooIconButtonImpl(
     Button(
         modifier = modifier.then(
             Modifier.fillMaxWidth()
-                .height(42.dp)
+                .height(56.dp)
                 .padding(horizontal = 30.dp),
         ),
         colors = ButtonDefaults.buttonColors(containerColor = buttonColor),

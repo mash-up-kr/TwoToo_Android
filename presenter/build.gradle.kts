@@ -33,6 +33,14 @@ android {
     }
     kotlinOptions {
         jvmTarget = "1.8"
+        freeCompilerArgs += listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:metricsDestination=${rootProject.file(".").absolutePath}/compose-metrics",
+        )
+        freeCompilerArgs += listOf(
+            "-P",
+            "plugin:androidx.compose.compiler.plugins.kotlin:reportsDestination=${rootProject.file(".").absolutePath}/compose-reports",
+        )
     }
     buildFeatures {
         compose = true
@@ -60,6 +68,7 @@ dependencies {
     implementation(libs.bundles.pager)
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.image.cropper)
+    implementation(libs.androidx.compose.matieral3)
     kapt(libs.google.dagger.compiler)
     implementation(libs.bundles.orbit)
     testImplementation(libs.test.junit)
