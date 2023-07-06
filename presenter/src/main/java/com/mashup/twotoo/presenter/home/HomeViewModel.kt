@@ -14,7 +14,7 @@ import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.viewmodel.container
-import usecase.challenge.GetHomeViewChallengeStateUseCase
+import usecase.view.GetViewHomeUseCase
 import javax.inject.Inject
 
 /**
@@ -23,14 +23,14 @@ import javax.inject.Inject
 
 @HomeScope
 class HomeViewModel @Inject constructor(
-    private val getHomeViewChallengeStateUseCase: GetHomeViewChallengeStateUseCase,
+    private val getHomeViewUseCase: GetViewHomeUseCase,
 ) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
 
     override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(OngoingChallengeUiModel.default)
 
     fun getHomeViewChallenge() {
         viewModelScope.launch {
-            getHomeViewChallengeStateUseCase()
+            getHomeViewUseCase()
         }
     }
 

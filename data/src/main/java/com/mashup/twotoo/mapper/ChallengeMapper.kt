@@ -1,6 +1,6 @@
 package com.mashup.twotoo.mapper
 
-import com.mashup.twotoo.datasource.remote.challenge.response.HomeViewResponse
+import com.mashup.twotoo.datasource.remote.view.response.ViewHomeResponse
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.User
 import com.mashup.twotoo.datasource.remote.challenge.response.UserCommit
@@ -13,7 +13,7 @@ import model.challenge.UserDomainModel
  * @Created by 김현국 2023/07/04
  */
 
-fun HomeViewResponse.toDomainModel(): HomeViewDomainModel {
+fun ViewHomeResponse.toDomainModel(): HomeViewDomainModel {
     return HomeViewDomainModel(
         viewState = viewState,
         challengeTotal = challengeTotal,
