@@ -15,6 +15,7 @@ import javax.inject.Singleton
         NetworkModule::class,
         DataStoreModule::class,
         RepositoryModule::class,
+        ApiModule::class,
         ScreenModule::class,
     ],
 )

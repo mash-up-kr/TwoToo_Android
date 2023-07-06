@@ -40,6 +40,7 @@ fun HomeOngoingChallenge(
     onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     ongoingChallengeUiModel: OngoingChallengeUiModel = OngoingChallengeUiModel.default,
+    onCommit: () -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
@@ -90,6 +91,7 @@ fun HomeOngoingChallenge(
                 end.linkTo(parent.end)
                 bottom.linkTo(barrier)
             },
+            onCommit = onCommit,
             homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
         )
 
