@@ -1,9 +1,9 @@
 package com.mashup.twotoo.presenter.home.di
 
-import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.home.HomeViewModel
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import usecase.view.GetViewHomeUseCase
 import javax.inject.Scope
 
 /**
@@ -11,12 +11,18 @@ import javax.inject.Scope
  */
 
 @Module
-abstract class HomeModule {
+class HomeModule {
 
     // here is the simple code, but suppose that we provide something important here
-    @Binds
+    @Provides
     @HomeScope
-    abstract fun provideViewModel(homeViewModel: HomeViewModel): ViewModel
+    fun provideViewModel(
+        getHomeViewChallengeStateUseCase: GetViewHomeUseCase,
+    ): HomeViewModel {
+        return HomeViewModel(
+            getHomeViewUseCase = getHomeViewChallengeStateUseCase,
+        )
+    }
 }
 
 @Scope

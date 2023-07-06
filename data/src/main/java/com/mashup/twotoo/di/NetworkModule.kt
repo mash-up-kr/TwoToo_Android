@@ -25,7 +25,7 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        getAccessTokenUseCase: GetAccessTokenUseCase
+        getAccessTokenUseCase: GetAccessTokenUseCase,
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.apply {
@@ -62,7 +62,7 @@ class NetworkModule {
     }
 
     companion object {
-        const val URL = ""
+        const val URL = "https://twotoo-node-zmtrd.run.goorm.site/"
         const val AUTHORIZATION = "Authorization"
     }
 }

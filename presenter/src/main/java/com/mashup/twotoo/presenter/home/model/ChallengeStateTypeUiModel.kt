@@ -8,6 +8,8 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.REQUEST
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.RESPONSE
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.TERMINATION
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.WAIT
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Auth
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Cheer
 
 /**
  * @Created by 김현국 2023/06/10
@@ -31,21 +33,21 @@ data class BeforeChallengeUiModel(
             state = EMPTY,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.empty,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_empty,
             buttonText = R.string.homeBeforeChallengeEmptyButtonText,
         )
         val request = BeforeChallengeUiModel(
             state = REQUEST,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.request,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_request,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
         )
         val response = BeforeChallengeUiModel(
             state = RESPONSE,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.response,
-            stateImage = R.drawable.image_challenge_response,
+            stateImage = R.drawable.img_challenge_response,
             buttonText = R.string.homeBeforeChallengeRequestButtonText,
         )
 
@@ -53,7 +55,7 @@ data class BeforeChallengeUiModel(
             state = WAIT,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.wait,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_wait,
             buttonText = R.string.homeBeforeChallengeWaitButtonText,
         )
 
@@ -61,14 +63,14 @@ data class BeforeChallengeUiModel(
             state = TERMINATION,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             stateTitleUiModel = StateTitleUiModel.termination,
-            stateImage = R.drawable.image_challenge_empty,
+            stateImage = R.drawable.img_challenge_termination,
             buttonText = R.string.homeBeforeChallengeTerminationButtonText,
         )
     }
 }
 
 data class OngoingChallengeUiModel(
-    val homeFlowerUiModels: HomeFlowerPartnerAndMeUiModel,
+    val homeChallengeStateUiModel: HomeChallengeStateUiModel,
     val homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel,
     val homeGoalCountUiModel: HomeGoalCountUiModel,
     val homeGoalFieldUiModel: HomeGoalFieldUiModel,
@@ -76,7 +78,15 @@ data class OngoingChallengeUiModel(
 ) : ChallengeStateTypeUiModel {
     companion object {
         val default = OngoingChallengeUiModel(
-            homeFlowerUiModels = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.auth,
+            homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default,
+            homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
+            homeShotCountTextUiModel = HomeShotCountTextUiModel.default,
+        )
+
+        val cheer = OngoingChallengeUiModel(
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer,
             homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
             homeGoalFieldUiModel = HomeGoalFieldUiModel.default,
@@ -106,6 +116,39 @@ data class StateTitleUiModel(
         )
         val termination = StateTitleUiModel(
             title = R.string.homeBeforeChallengeTermination,
+        )
+    }
+}
+
+enum class ChallengeState {
+    Auth, Cheer
+}
+sealed interface ChallengeStateUiModel
+data class HomeChallengeStateUiModel(
+    val challengeState: ChallengeState,
+    val challengeStateUiModel: ChallengeStateUiModel,
+) {
+    companion object {
+        val auth = HomeChallengeStateUiModel(
+            challengeState = Auth,
+            challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+        )
+
+        val cheer = HomeChallengeStateUiModel(
+            challengeState = Cheer,
+            challengeStateUiModel = HomeCheerUiModel.default,
+        )
+
+        val cheerBoth = HomeChallengeStateUiModel(
+            challengeState = Cheer,
+            challengeStateUiModel = HomeCheerUiModel.default.copy(
+                partner = CheerWithFlower.partnerNotEmpty.copy(
+                    cheerText = "앞으로 더 화이팅이야😘",
+                ),
+                me = CheerWithFlower.meNotEmpty.copy(
+                    cheerText = "오늘도 너무 고생했어😌",
+                ),
+            ),
         )
     }
 }
