@@ -46,7 +46,7 @@ class HomeBeforeChallengeTest {
             // Image가 Empty이미지 인지 검증
             Truth.assertThat(
                 challengeStateTypeUiModel.stateImage,
-            ).isEqualTo(R.drawable.image_challenge_empty)
+            ).isEqualTo(R.drawable.img_challenge_empty)
 
             // Button 텍스트가 맞는지 검증
             composeTestRule.onNodeWithTag(
@@ -80,7 +80,7 @@ class HomeBeforeChallengeTest {
             )
             Truth.assertThat(
                 challengeStateTypeUiModel.stateImage,
-            ).isEqualTo(R.drawable.image_challenge_empty)
+            ).isEqualTo(R.drawable.img_challenge_request)
 
             composeTestRule.onNodeWithTag(
                 getString(R.string.homeBeforeChallengeButton),
@@ -114,7 +114,7 @@ class HomeBeforeChallengeTest {
 
             Truth.assertThat(
                 challengeStateTypeUiModel.stateImage,
-            ).isEqualTo(R.drawable.image_challenge_response)
+            ).isEqualTo(R.drawable.img_challenge_response)
 
             composeTestRule.onNodeWithTag(
                 getString(R.string.homeBeforeChallengeButton),
@@ -147,7 +147,7 @@ class HomeBeforeChallengeTest {
 
             Truth.assertThat(
                 challengeStateTypeUiModel.stateImage,
-            ).isEqualTo(R.drawable.image_challenge_empty)
+            ).isEqualTo(R.drawable.img_challenge_wait)
 
             composeTestRule.onNodeWithTag(
                 getString(R.string.homeBeforeChallengeSubTitle),
@@ -186,7 +186,7 @@ class HomeBeforeChallengeTest {
 
             Truth.assertThat(
                 challengeStateTypeUiModel.stateImage,
-            ).isEqualTo(R.drawable.image_challenge_empty)
+            ).isEqualTo(R.drawable.img_challenge_termination)
 
             composeTestRule.onNodeWithTag(
                 getString(R.string.homeBeforeChallengeButton),
