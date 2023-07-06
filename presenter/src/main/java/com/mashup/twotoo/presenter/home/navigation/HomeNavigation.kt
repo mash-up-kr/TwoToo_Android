@@ -31,7 +31,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             HomeRoute(
               state = state.value,
               modifier = Modifier.fillMaxSize(),
-              onBeebuttonClick = homeViewModel::updateCount,
+              onBeeButtonClick = homeViewModel::updateCount,
               navigateToHistory = {
                   navController.navigateToHistory()
               },

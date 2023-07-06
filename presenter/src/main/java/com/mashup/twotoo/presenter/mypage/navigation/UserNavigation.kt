@@ -7,8 +7,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
-import com.mashup.twotoo.presenter.mypage.MyPageRoute
-import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.mypage.MyPageRoute
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
@@ -25,22 +23,21 @@ fun NavController.navigateToUser(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.userGraph(navController: NavController) {
     navigation(startDestination = NavigationRoute.UserGraph.UserScreen.route, route = NavigationRoute.UserGraph.route) {
         composable(route = NavigationRoute.UserGraph.UserScreen.route) {
-             val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
-             val userViewModel = daggerViewModel {
+            val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
+            val userViewModel = daggerViewModel {
                 userComponent.getViewModel()
-             }
+            }
             println("userViewModel instance : ${userViewModel.hashCode()}")
             val state = userViewModel.count.collectAsState()
             MyPageRoute(
-               state = state.value,
+                state = state.value,
                 onClickMyPageItem = {
-                   userViewModel.updateCount()
+                    userViewModel.updateCount()
                 },
             )
         }
     }
 }
-           
 
 class UserViewModel @Inject constructor() : ViewModel() {
 
