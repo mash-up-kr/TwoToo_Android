@@ -33,8 +33,7 @@ class HomeViewModel @Inject constructor(
             getHomeViewUseCase()
         }
     }
-
-    fun navigateToChallengeDetail() = intent {
+    fun navigateToHistory() = intent {
         postSideEffect(HomeSideEffect.NavigateToChallengeDetail)
     }
 
