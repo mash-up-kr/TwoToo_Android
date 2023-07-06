@@ -52,12 +52,12 @@ fun HomeRoute(
         modifier = Modifier.fillMaxSize(),
     ) {
         HomeScreen(
-            navigateToHistory = navigateToHistory,
             state = state,
             modifier = modifier.testTag(stringResource(id = R.string.home)),
             onBeeButtonClick = homeViewModel::openToShotBottomSheet,
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
             onCommit = homeViewModel::openToAuthBottomSheet,
+            navigateToHistory = homeViewModel::navigateToHistory,
         )
 
         with(homeSideEffectHandler) {
