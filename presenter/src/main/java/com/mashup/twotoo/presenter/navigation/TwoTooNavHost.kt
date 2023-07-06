@@ -11,8 +11,8 @@ import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
 import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
 import com.mashup.twotoo.presenter.mypage.navigation.userGraph
 import com.mashup.twotoo.presenter.nickname.navigation.navigateToOnNickNameSetting
-import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
 import com.mashup.twotoo.presenter.nickname.navigation.onNickNameSettingGraph
+import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 
 @Composable
@@ -29,7 +29,7 @@ fun TwoTooNavHost(
     ) {
         homeGraph(navController)
         gardenGraph(navController)
-        userGraph()
+        userGraph(navController)
         historyGraph(navController)
         onBoardingGraph {
             navController.navigateToOnNickNameSetting()
