@@ -29,7 +29,7 @@ fun TwoTooNavHost(
     ) {
         homeGraph(navController)
         gardenGraph(navController)
-        userGraph(navController)
+        userGraph()
         historyGraph(navController)
         onBoardingGraph {
             navController.navigateToOnNickNameSetting()
