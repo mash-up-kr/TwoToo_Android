@@ -1,7 +1,11 @@
 package com.mashup.twotoo.presenter.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -9,6 +13,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
@@ -17,22 +23,56 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
+import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeRoute(
-    state: ChallengeStateTypeUiModel,
+    homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier,
-    onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
-    onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
+    navigateToCreateChallenge: () -> Unit = {},
 ) {
-    HomeScreen(
+    val homeSideEffectHandler = rememberHomeSideEffectHandler(
+        navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
-        state = state,
-        modifier = modifier.testTag(stringResource(id = R.string.home)),
-        onBeeButtonClick = onBeeButtonClick,
-        onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
     )
+
+    val state by homeViewModel.collectAsState()
+
+    homeViewModel.collectSideEffect { sideEffect ->
+        homeSideEffectHandler.handleSideEffect(sideEffect = sideEffect)
+    }
+
+    Box(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        HomeScreen(
+            navigateToHistory = navigateToHistory,
+            state = state,
+            modifier = modifier.testTag(stringResource(id = R.string.home)),
+            onBeeButtonClick = homeViewModel::openToShotBottomSheet,
+            onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
+            onCommit = homeViewModel::openToAuthBottomSheet,
+        )
+
+        with(homeSideEffectHandler) {
+            if (isBottomSheetVisible) {
+                TwoTooBottomSheet(
+                    bottomSheetState = bottomSheetState,
+                    type = bottomSheetType,
+                    onDismiss = ::onDismiss,
+                    onClickButton = homeViewModel::onClickSendBottomSheetDataButton,
+                )
+            }
+
+            SnackBarHost(
+                Modifier.align(Alignment.BottomCenter),
+                snackbarHostState,
+            )
+        }
+    }
 }
 
 @Composable
@@ -41,6 +81,7 @@ fun HomeScreen(
     navigateToHistory: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
+    onCommit: () -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(modifier = modifier) {
@@ -80,6 +121,7 @@ fun HomeScreen(
                     },
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
+                    onCommit = onCommit,
                 )
             }
         }
