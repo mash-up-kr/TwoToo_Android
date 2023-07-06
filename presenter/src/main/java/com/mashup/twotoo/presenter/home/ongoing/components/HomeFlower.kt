@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.ongoing.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -39,6 +40,7 @@ import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 fun HomeFlowerMeAndPartner(
     meAndPartner: HomeFlowerPartnerAndMeUiModel,
     modifier: Modifier = Modifier,
+    onCommit: () -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier,
@@ -101,6 +103,8 @@ fun HomeFlowerMeAndPartner(
                     bottom.linkTo(me.top, margin = 8.dp)
                     start.linkTo(me.start)
                     end.linkTo(me.end)
+                }.clickable {
+                    onCommit()
                 },
                 model = R.drawable.img_need_water,
             )
