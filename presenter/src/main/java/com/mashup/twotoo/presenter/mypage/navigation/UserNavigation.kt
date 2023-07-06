@@ -20,11 +20,9 @@ fun NavController.navigateToUser(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.UserGraph.route, navOptions = navOptions)
 }
 
-fun NavGraphBuilder.userGraph() {
-    navigation(
-        startDestination = NavigationRoute.UserGraph.UserScreen.route,
-        route = NavigationRoute.UserGraph.route,
-    ) {
+
+fun NavGraphBuilder.userGraph(navController: NavController) {
+    navigation(startDestination = NavigationRoute.UserGraph.UserScreen.route, route = NavigationRoute.UserGraph.route) {
         composable(route = NavigationRoute.UserGraph.UserScreen.route) {
             val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
             val userViewModel = daggerViewModel {
