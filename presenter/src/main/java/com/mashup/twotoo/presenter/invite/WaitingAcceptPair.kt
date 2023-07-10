@@ -52,7 +52,7 @@ fun WaitingAcceptPair() {
                 verticalArrangement = Arrangement.SpaceBetween,
             ) {
                 Text(
-                    modifier = Modifier.padding(top = 120.dp, bottom = 13.dp),
+                    modifier = Modifier.padding(top = 120.dp, bottom = 28.dp),
                     text = stringResource(id = R.string.invite_waiting_other),
                     textAlign = TextAlign.Center,
                     style = TwoTooTheme.typography.headLineNormal28,
@@ -65,9 +65,10 @@ fun WaitingAcceptPair() {
                     color = TwoTooTheme.color.gray600,
                 )
                 TwoTooImageView(
-                    modifier = Modifier.size(150.dp).padding(top = 10.dp),
+                    modifier = Modifier.size(185.dp, 128.dp).padding(top = 32.dp),
                     model = R.drawable.invite_waiting_heart,
-                    previewPlaceholder = R.drawable.invite_waiting_heart,
+                    previewPlaceholder = R.drawable.img_waiting_mate_flower,
+                    contentScale = ContentScale.Crop,
                 )
                 Spacer(modifier = Modifier.weight(1f))
                 WaitingInviteBottom()

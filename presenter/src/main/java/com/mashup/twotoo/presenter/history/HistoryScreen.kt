@@ -13,6 +13,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
@@ -23,16 +24,21 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.model.*
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
+import org.orbitmvi.orbit.compose.collectAsState
+
 @Composable
 fun HistoryRoute(
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
+    val viewModel: HistoryViewModel = viewModel()
+    val state by viewModel.collectAsState()
+
     HistoryScreen(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
-        historyScreenUiModel = HistoryScreenUiModel.default,
+        historyItemUiModels = state.historyItem,
     )
 }
 

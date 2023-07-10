@@ -1,6 +1,8 @@
 package com.mashup.twotoo.di
 
 import com.mashup.twotoo.data.BuildConfig
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.runBlocking
@@ -25,7 +27,7 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        getAccessTokenUseCase: GetAccessTokenUseCase
+        getAccessTokenUseCase: GetAccessTokenUseCase,
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.apply {
@@ -49,7 +51,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory {
-        return MoshiConverterFactory.create()
+        return MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build(),
+        )
     }
 
     @Provides
@@ -62,7 +68,7 @@ class NetworkModule {
     }
 
     companion object {
-        const val URL = ""
+        const val URL = "https://twotoo-node-zmtrd.run.goorm.site/"
         const val AUTHORIZATION = "Authorization"
     }
 }

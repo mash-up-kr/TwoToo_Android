@@ -13,12 +13,12 @@ import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
+import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
-import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 
 @Composable
 fun rememberTwoTooAppState(
@@ -75,11 +75,11 @@ class TwoTooAppState(
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
-            NavigationRoute.HomeScreenGraph.HomeScreen.route,
-            NavigationRoute.HomeScreenGraph.GardenScreen.route,
-            NavigationRoute.HomeScreenGraph.UserScreen.route,
+            NavigationRoute.HomeGraph.HomeScreen.route,
+            NavigationRoute.GardenGraph.GardenScreen.route,
+            NavigationRoute.UserGraph.UserScreen.route,
             -> true
-            NavigationRoute.HistoryScreenGraph.HistoryScreen.route -> false
+            NavigationRoute.HistoryGraph.HistoryScreen.route -> false
             else -> {
                 false
             }

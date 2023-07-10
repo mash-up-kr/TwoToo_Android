@@ -15,19 +15,19 @@ enum class TopLevelDestination(
         icon = DrawableResourceIcon(TwoTooIcon.GardenIcon),
         iconTextId = R.string.garden,
         buttonTitleTextId = R.string.garden_nav_button,
-        route = NavigationRoute.HomeScreenGraph.GardenScreen.route,
+        route = NavigationRoute.GardenGraph.route,
     ),
     Home(
         icon = DrawableResourceIcon(TwoTooIcon.HomeIcon),
         iconTextId = R.string.home,
         buttonTitleTextId = R.string.home_nav_button,
-        route = NavigationRoute.HomeScreenGraph.HomeScreen.route,
+        route = NavigationRoute.HomeGraph.HomeScreen.route,
     ),
     User(
         icon = DrawableResourceIcon(TwoTooIcon.UserIcon),
         iconTextId = R.string.mypage,
         buttonTitleTextId = R.string.user_nav_button,
-        route = NavigationRoute.HomeScreenGraph.UserScreen.route,
+        route = NavigationRoute.UserGraph.route,
     ),
     ;
 
@@ -55,13 +55,18 @@ sealed class NavigationRoute(val route: String) {
         object SuccessChallengeRequest : NavigationRoute("successChallengeRequest/screen")
     }
 
-    object HomeScreenGraph : NavigationRoute("home") {
+    object HomeGraph : NavigationRoute("home") {
         object HomeScreen : NavigationRoute("home/screen")
-        object GardenScreen : NavigationRoute("home/garden_screen")
-        object UserScreen : NavigationRoute("home/user_screen")
     }
-    object HistoryScreenGraph : NavigationRoute("history") {
+    object GardenGraph : NavigationRoute("garden") {
+        object GardenScreen : NavigationRoute("garden/screen")
+    }
+
+    object UserGraph : NavigationRoute("user") {
+        object UserScreen : NavigationRoute("user/screen")
+    }
+    object HistoryGraph : NavigationRoute("history") {
         object HistoryScreen : NavigationRoute("history/screen")
-        object HistoryDetailScreen : NavigationRoute("history/detail_screen")
+        object HistoryDetailScreen : NavigationRoute("detail/screen")
     }
 }

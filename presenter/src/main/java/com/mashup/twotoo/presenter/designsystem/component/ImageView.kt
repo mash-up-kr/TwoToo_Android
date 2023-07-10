@@ -37,7 +37,7 @@ fun TwoTooImageView(
     contentScale: ContentScale? = null,
 ) {
     TwoTooImageViewImpl(
-        model = model,
+        model = { model },
         previewPlaceholder = previewPlaceholder,
         loadingPlaceHolder = loadingPlaceHolder,
         failurePlaceHolder = failurePlaceHolder,
@@ -49,7 +49,7 @@ fun TwoTooImageView(
 @Composable
 fun TwoTooImageViewWithSetter(
     modifier: Modifier = Modifier,
-    imageUri: Uri? = null,
+    imageUri: () -> Any?,
     onClickPlusButton: () -> Unit = {},
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
@@ -70,7 +70,7 @@ fun TwoTooImageViewWithSetter(
 
 @Composable
 fun TwoTooImageViewImpl(
-    model: Any?,
+    model: () -> Any?,
     modifier: Modifier = Modifier,
     @DrawableRes previewPlaceholder: Int? = null,
     onClickPlusButton: (() -> Unit) = {},
@@ -84,7 +84,7 @@ fun TwoTooImageViewImpl(
     ) {
         GlideImage(
             modifier = Modifier.fillMaxSize(),
-            imageModel = { model ?: R.drawable.empty_image_color_placeholder },
+            imageModel = { model.invoke() },
             previewPlaceholder = previewPlaceholder ?: R.drawable.empty_image_color_placeholder,
             imageOptions = ImageOptions(
                 contentScale = contentScale ?: ContentScale.Crop,
@@ -165,7 +165,7 @@ private fun HasNoneImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = TwoTooTheme.shape.extraSmall),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
-            imageUri = imageUri,
+            imageUri = { imageUri },
             onClickPlusButton = {
                 launcher.launch("image/*")
             },

@@ -18,6 +18,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
@@ -28,7 +29,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun SelectFlowerLazyColumn() {
-    val list = FlowerCardUiModel.getFlowerCardModelToPreview()
+    val list = FlowerCardUiModel.getFlowerCardModel()
 
     LazyVerticalGrid(
         contentPadding = PaddingValues(horizontal = 8.dp),
@@ -64,19 +65,19 @@ fun FlowerCardItem(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TwoTooImageView(
-                model = R.drawable.example_flower,
+                model = flowerCardModel.selectFlowerImage,
                 modifier = Modifier
                     .size(55.dp),
-                previewPlaceholder = R.drawable.example_flower,
+                previewPlaceholder = flowerCardModel.selectFlowerImage,
             )
             Text(
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                text = flowerCardModel.name,
+                text = stringResource(id = flowerCardModel.name),
                 style = TwoTooTheme.typography.headLineNormal24,
                 color = TwoTooTheme.color.mainBrown,
             )
             Text(
-                text = flowerCardModel.desc,
+                text = stringResource(flowerCardModel.desc),
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwoTooTheme.color.mainBrown,
             )
@@ -88,8 +89,9 @@ fun FlowerCardItem(
 @Composable
 private fun PreviewFlowerCardItem() {
     val model = FlowerCardUiModel(
-        name = "장미",
-        desc = "행복한 사랑을 이루고 싶어요",
+        name = R.string.rose,
+        desc = R.string.rose_language,
+        selectFlowerImage = R.drawable.img_challenge_select_rose,
     )
     FlowerCardItem(model)
 }
