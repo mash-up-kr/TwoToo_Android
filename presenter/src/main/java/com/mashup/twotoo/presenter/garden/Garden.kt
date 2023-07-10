@@ -62,5 +62,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(), navigateToGarden = {})
+    GardenScreen(ChallengeCardInfoUiModel.default, navigateToGarden = {})
 }

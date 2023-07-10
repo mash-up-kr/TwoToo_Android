@@ -19,7 +19,7 @@ class GardenViewModel : ContainerHost<GardenState, Nothing>, ViewModel() {
 
     private fun loadChallengeCardInfos() = intent {
         viewModelScope.launch {
-            val newChallengeCardInfos = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()
+            val newChallengeCardInfos = ChallengeCardInfoUiModel.default
             reduce { state.copy(challengeCardInfos = newChallengeCardInfos) }
         }
     }

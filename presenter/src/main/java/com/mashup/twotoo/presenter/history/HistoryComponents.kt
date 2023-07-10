@@ -23,11 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.*
+import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
+import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 
 @Composable
-fun OwnerNickNames(partnerNickname: String, myNickname: String) {
+fun OwnerNickNames(ownerNickNamesUiModel: OwnerNickNamesUiModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -35,8 +37,8 @@ fun OwnerNickNames(partnerNickname: String, myNickname: String) {
             .padding(top = 37.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        CardText(text = partnerNickname)
-        CardText(text = myNickname, fontColor = MainPink)
+        CardText(text = ownerNickNamesUiModel.parameterName)
+        CardText(text = ownerNickNamesUiModel.myNickName, fontColor = MainPink)
     }
 }
 
@@ -78,25 +80,25 @@ fun DottedLine() {
 }
 
 @Composable
-fun ChallengeInfo(day: String, name: String, detail: String) {
+fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             CardText(
-                text = "D-$day",
+                text = "D-${challengeInfoUiModel.day}",
                 fontColor = TwoTooTheme.color.gray500,
                 shape = TwoTooRound4,
                 textStyle = TwoTooTheme.typography.bodyNormal16,
             )
             Text(
                 modifier = Modifier.padding(start = 11.dp),
-                text = name,
+                text = challengeInfoUiModel.name,
                 style = TwoTooTheme.typography.headLineNormal24,
                 color = TwoTooTheme.color.mainBrown,
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
         Text(
-            text = detail,
+            text = challengeInfoUiModel.detail,
             style = TwoTooTheme.typography.bodyNormal16,
             color = TwoTooTheme.color.gray500,
         )
@@ -209,7 +211,7 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
 @Preview
 @Composable
 private fun PreviewOwnerNickNames() {
-    OwnerNickNames(partnerNickname = "왕자", myNickname = "공주")
+    OwnerNickNames(OwnerNickNamesUiModel.default)
 }
 
 @Preview(showBackground = true)
@@ -221,18 +223,13 @@ private fun PreviewDottedLine() {
 @Preview
 @Composable
 private fun PreviewChallengeInfo() {
-    ChallengeInfo(day = "24", name = "30분 이상 운동하기", detail = "운동 사진으로 인증하기\n인증 실패하는지 확인")
+    ChallengeInfo(ChallengeInfoUiModel.default)
 }
 
 @Preview
 @Composable
 private fun PreviewHistoryItem() {
-    val historyItemUiModel = HistoryItemUiModel(
-        partnerInfo = HistoryInfoUiModel("https://shop.biumfood.com/upload/1623296512image_product044.jpg", "20:35"),
-        myInfo = HistoryInfoUiModel("https://shop.biumfood.com/upload/1623296512image_product044.jpg", "20:35"),
-        createDate = "4/10",
-    )
-    HistoryItem(historyItemUiModel = historyItemUiModel, {})
+    HistoryItem(historyItemUiModel = HistoryItemUiModel.default[0], {})
 }
 
 @Preview("내 히스토리에 인증 안했을 때")

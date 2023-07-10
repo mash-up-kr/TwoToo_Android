@@ -19,7 +19,7 @@ class HistoryDetailViewModel() : ContainerHost<HistoryDetailState, Nothing>, Vie
 
     private fun loadHistoryDetail() = intent {
         viewModelScope.launch {
-            val newHistoryDetailInfo = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+            val newHistoryDetailInfo = HistoryDetailInfoUiModel.default
             reduce { state.copy(historyDetailInfo = newHistoryDetailInfo) }
         }
     }

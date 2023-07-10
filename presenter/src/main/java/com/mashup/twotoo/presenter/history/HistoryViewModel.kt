@@ -2,7 +2,6 @@ package com.mashup.twotoo.presenter.history
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -21,8 +20,14 @@ class HistoryViewModel : ContainerHost<HistoryState, Nothing>, ViewModel() {
 
     private fun loadHistoryItem() = intent {
         viewModelScope.launch {
-            val newHistoryItems = HistoryItemUiModel.generateDummyHistoryItemsToPreView()
-            reduce { state.copy(historyItem = newHistoryItems) }
+            val newState = HistoryState.default
+            reduce {
+                state.copy(
+                    challengeInfoUiModel = newState.challengeInfoUiModel,
+                    historyItemUiModel = newState.historyItemUiModel,
+                    ownerNickNamesUiModel = newState.ownerNickNamesUiModel,
+                )
+            }
         }
     }
 }

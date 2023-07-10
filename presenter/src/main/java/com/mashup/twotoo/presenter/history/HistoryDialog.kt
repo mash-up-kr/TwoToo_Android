@@ -20,9 +20,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 
 @Composable
-fun ChallengeDropDialog(
-    dropDialogTextUiModels: List<DropDialogTextUiModel>,
-    onDismissRequest: () -> Unit,
+fun ChallengeDropSelectionDialog(
+    dropDialogTextUiModels: List<DropDialogTextUiModel> = DropDialogTextUiModel.default,
+    onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
 ) {
     Dialog(
@@ -49,7 +49,7 @@ fun ChallengeDropDialog(
             ) {
                 dropDialogTextUiModels.forEach {
                     TextContainer(
-                        modifier = textContainerModifier.clickable { it.buttonAction },
+                        modifier = textContainerModifier.clickable { it.buttonAction() },
                         text = {
                             Text(
                                 text = stringResource(id = it.titleId),
@@ -71,7 +71,7 @@ fun ChallengeDropDialog(
 @Preview
 @Composable
 fun TwoTooButtonDialogPreview() {
-    ChallengeDropDialog(
+    ChallengeDropSelectionDialog(
         onDismissRequest = { },
         dropDialogTextUiModels = DropDialogTextUiModel.default,
     )

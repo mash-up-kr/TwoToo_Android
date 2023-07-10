@@ -137,7 +137,7 @@ private fun PreviewHistoryDetailScreen() {
     TwoTooTheme {
         HistoryDetailScreen(
             onClickBackButton = {},
-            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default
                 .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
         )
     }
@@ -149,7 +149,7 @@ private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
     TwoTooTheme {
         HistoryDetailScreen(
             onClickBackButton = {},
-            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview(),
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default,
         )
     }
 }
