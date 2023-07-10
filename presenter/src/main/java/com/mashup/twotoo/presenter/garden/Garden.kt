@@ -24,7 +24,7 @@ fun GardenRoute(
 ) {
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
-        challengeCardInfoUiModels = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(),
+        challengeCardInfoUiModels = ChallengeCardInfoUiModel.default,
         navigateToGarden = navigateToGarden,
     )
 }
@@ -57,5 +57,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(), navigateToGarden = {})
+    GardenScreen(ChallengeCardInfoUiModel.default, navigateToGarden = {})
 }

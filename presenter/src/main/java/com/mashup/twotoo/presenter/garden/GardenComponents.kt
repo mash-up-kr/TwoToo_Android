@@ -76,5 +76,5 @@ private fun BoxScope.Flowers() {
 @Preview
 @Composable
 fun PreviewChallengeCardView() {
-    ChallengeCard(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview()[0]) {}
+    ChallengeCard(ChallengeCardInfoUiModel.default[0]) {}
 }
