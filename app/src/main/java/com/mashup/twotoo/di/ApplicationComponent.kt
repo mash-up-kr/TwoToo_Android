@@ -2,6 +2,7 @@ package com.mashup.twotoo.di
 
 import android.content.Context
 import com.mashup.twotoo.presenter.di.ScreenModule
+import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
 import com.mashup.twotoo.presenter.home.di.HomeComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
@@ -30,4 +31,5 @@ interface ApplicationComponent {
     fun homeComponent(): HomeComponent.Factory
     fun userComponent(): UserComponent.Factory
     fun historyComponent(): HistoryComponent.Factory
+    fun gardenComponent(): GardenComponent.Factory
 }

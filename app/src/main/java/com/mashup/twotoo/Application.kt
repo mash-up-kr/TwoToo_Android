@@ -4,6 +4,7 @@ import com.kakao.sdk.common.KakaoSdk
 import com.mashup.twotoo.di.ApplicationComponent
 import com.mashup.twotoo.di.DaggerApplicationComponent
 import com.mashup.twotoo.presenter.di.ScreenComponentProvider
+import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
 import com.mashup.twotoo.presenter.home.di.HomeComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
@@ -27,5 +28,8 @@ class Application : Application(), ScreenComponentProvider {
     }
     override fun provideHistoryComponent(): HistoryComponent {
         return applicationComponent.historyComponent().create()
+    }
+    override fun provideGardenComponent(): GardenComponent {
+        return applicationComponent.gardenComponent().create()
     }
 }
