@@ -7,9 +7,7 @@ import model.commit.CommitDomainModel
 import repository.CommitRepository
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/10
- */
+
 class CommitRepositoryImpl @Inject constructor(
     private val commitDataSource: CommitDataSource,
 ) : CommitRepository {

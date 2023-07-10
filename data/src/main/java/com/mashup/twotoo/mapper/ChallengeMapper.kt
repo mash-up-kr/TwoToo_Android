@@ -9,9 +9,7 @@ import model.challenge.ChallengeDomainModel
 import model.challenge.UserCommitDomainModel
 import model.challenge.UserDomainModel
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 
 fun ViewHomeResponse.toDomainModel(): HomeViewDomainModel {
     return HomeViewDomainModel(

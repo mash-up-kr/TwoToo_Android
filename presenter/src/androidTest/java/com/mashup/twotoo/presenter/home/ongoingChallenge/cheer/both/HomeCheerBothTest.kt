@@ -20,9 +20,7 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 class HomeCheerBothTest {
 
     @get:Rule
@@ -153,7 +151,7 @@ class HomeCheerBothTest {
             TwoTooTheme {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }

@@ -8,9 +8,7 @@ import dagger.Provides
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 
 @Module
 class ApiModule {

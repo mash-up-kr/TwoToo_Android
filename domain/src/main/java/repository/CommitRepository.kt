@@ -2,9 +2,7 @@ package repository
 
 import model.commit.CommitDomainModel
 
-/**
- * @Created by 김현국 2023/07/10
- */
+
 interface CommitRepository {
 
     suspend fun commit(

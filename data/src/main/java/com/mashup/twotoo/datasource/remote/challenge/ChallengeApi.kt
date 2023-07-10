@@ -9,9 +9,7 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 interface ChallengeApi {
 
     @POST("/challenge")

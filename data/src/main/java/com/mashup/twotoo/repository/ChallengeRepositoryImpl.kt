@@ -4,9 +4,7 @@ import com.mashup.twotoo.datasource.remote.challenge.ChallengeDataSource
 import repository.ChallengeRepository
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 class ChallengeRepositoryImpl @Inject constructor(
     private val challengeDataSource: ChallengeDataSource,
 ) : ChallengeRepository {

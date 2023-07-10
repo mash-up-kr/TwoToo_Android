@@ -5,9 +5,7 @@ import com.mashup.twotoo.datasource.remote.challenge.request.CreateChallengeRequ
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 class ChallengeDataSource @Inject constructor(
     private val challengeApi: ChallengeApi,
 ) {

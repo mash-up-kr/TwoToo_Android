@@ -4,9 +4,7 @@ import com.mashup.twotoo.datasource.remote.commit.request.CommitRequest
 import com.mashup.twotoo.datasource.remote.commit.response.Commit
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/10
- */
+
 class CommitDataSource @Inject constructor(
     private val commitApi: CommitApi,
 ) {
