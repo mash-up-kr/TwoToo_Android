@@ -1,8 +1,8 @@
 package repository
 
-import model.challenge.HomeViewDomainModel
+import model.challenge.response.HomeViewResponseDomainModel
 
 
 interface ViewRepository {
-    suspend fun getViewHome(): Result<HomeViewDomainModel>
+    suspend fun getViewHome(): Result<HomeViewResponseDomainModel>
 }

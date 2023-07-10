@@ -4,15 +4,15 @@ import com.mashup.twotoo.datasource.remote.view.response.ViewHomeResponse
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.User
 import com.mashup.twotoo.datasource.remote.challenge.response.UserCommit
-import model.challenge.HomeViewDomainModel
-import model.challenge.ChallengeDomainModel
-import model.challenge.UserCommitDomainModel
-import model.challenge.UserDomainModel
+import model.challenge.response.HomeViewResponseDomainModel
+import model.challenge.response.ChallengeResponseDomainModel
+import model.challenge.response.UserCommitResponseDomainModel
+import model.challenge.response.UserResponseDomainModel
 
 
 
-fun ViewHomeResponse.toDomainModel(): HomeViewDomainModel {
-    return HomeViewDomainModel(
+fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
+    return HomeViewResponseDomainModel(
         viewState = viewState,
         challengeTotal = challengeTotal,
         onGoingChallenge = onGoingChallenge.toDomainModel(),
@@ -21,8 +21,8 @@ fun ViewHomeResponse.toDomainModel(): HomeViewDomainModel {
     )
 }
 
-fun Challenge.toDomainModel(): ChallengeDomainModel {
-    return ChallengeDomainModel(
+fun Challenge.toDomainModel(): ChallengeResponseDomainModel {
+    return ChallengeResponseDomainModel(
         challengeNo = this.challengeNo,
         endDate = this.endDate,
         isApproved = this.isApproved,
@@ -38,8 +38,8 @@ fun Challenge.toDomainModel(): ChallengeDomainModel {
     )
 }
 
-fun User.toDomainModel(): UserDomainModel {
-    return UserDomainModel(
+fun User.toDomainModel(): UserResponseDomainModel {
+    return UserResponseDomainModel(
         deviceToken = this.deviceToken,
         loginType = this.loginType,
         nickname = this.nickname,
@@ -49,8 +49,8 @@ fun User.toDomainModel(): UserDomainModel {
     )
 }
 
-fun UserCommit.toDomainModel(): UserCommitDomainModel {
-    return UserCommitDomainModel(
+fun UserCommit.toDomainModel(): UserCommitResponseDomainModel {
+    return UserCommitResponseDomainModel(
         commitNo = this.commitNo,
         partnerComment = this.partnerComment,
         photoUrl = this.photoUrl,
