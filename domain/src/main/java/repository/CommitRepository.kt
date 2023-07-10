@@ -1,20 +1,20 @@
 package repository
 
-import model.commit.CommitDomainModel
-
+import model.commit.request.CommitNoRequestDomainModel
+import model.commit.request.CommitRequestDomainModel
+import model.commit.response.CommitResponseDomainModel
 
 interface CommitRepository {
 
     suspend fun commit(
-        text: String,
-        img: String,
-    ): CommitDomainModel
+        commitRequestDomainModel: CommitRequestDomainModel,
+    ): CommitResponseDomainModel
 
     suspend fun cheer(
-        commitNo: String,
-    ): CommitDomainModel
+        commitNoRequestDomainModel: CommitNoRequestDomainModel,
+    ): CommitResponseDomainModel
 
     suspend fun getCommit(
-        commitNo: String,
-    ): CommitDomainModel
+        commitNoRequestDomainModel: CommitNoRequestDomainModel,
+    ): CommitResponseDomainModel
 }

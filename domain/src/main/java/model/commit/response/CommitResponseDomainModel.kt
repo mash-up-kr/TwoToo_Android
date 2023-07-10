@@ -1,7 +1,7 @@
-package model.commit
+package model.commit.response
 
 
-data class CommitDomainModel(
+data class CommitResponseDomainModel(
     val commitNo: Int,
     val userNo: Int,
     val text: String,

@@ -1,9 +1,9 @@
 package com.mashup.twotoo.datasource.remote.commit
 
+import com.mashup.twotoo.datasource.remote.commit.request.CommitNoRequest
 import com.mashup.twotoo.datasource.remote.commit.request.CommitRequest
 import com.mashup.twotoo.datasource.remote.commit.response.Commit
 import javax.inject.Inject
-
 
 class CommitDataSource @Inject constructor(
     private val commitApi: CommitApi,
@@ -15,14 +15,14 @@ class CommitDataSource @Inject constructor(
     }
 
     suspend fun getCommitByNo(
-        commitNo: String,
+        commitNoRequest: CommitNoRequest,
     ): Commit {
-        return commitApi.getCommitByNo(commitNo = commitNo)
+        return commitApi.getCommitByNo(commitNo = commitNoRequest.commitNo)
     }
 
     suspend fun cheerByNo(
-        commitNo: String,
+        commitNoRequest: CommitNoRequest,
     ): Commit {
-        return commitApi.cheerByNo(commitNo = commitNo)
+        return commitApi.cheerByNo(commitNo = commitNoRequest.commitNo)
     }
 }
