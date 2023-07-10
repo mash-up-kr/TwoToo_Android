@@ -20,8 +20,7 @@ import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
-import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
+import com.mashup.twotoo.presenter.history.model.*
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 @Composable
@@ -33,7 +32,7 @@ fun HistoryRoute(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
-        historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+        historyScreenUiModel = HistoryScreenUiModel.default,
     )
 }
 
@@ -42,7 +41,7 @@ fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
-    historyItemUiModels: List<HistoryItemUiModel> = listOf(),
+    historyScreenUiModel: HistoryScreenUiModel,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }
     var showChallengeDropDialog by remember { mutableStateOf(false) }
@@ -66,9 +65,7 @@ fun HistoryScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
                 ChallengeInfo(
-                    "24",
-                    "30분 이상 운동하기",
-                    "운동 사진으로 인증하기\n인증 실패하는지 확인",
+                    historyScreenUiModel.challengeInfoUiModel,
                 )
                 if (isHomeGoalAchievementShow) {
                     TwoTooGoalAchievementProgressbar(
@@ -78,7 +75,7 @@ fun HistoryScreen(
                         homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
                     )
                 }
-                OwnerNickNames("왕자", "공주")
+                OwnerNickNames(historyScreenUiModel.ownerNickNamesUiModel)
                 Spacer(modifier = Modifier.height(12.dp))
                 Divider(
                     color = Color.White,
@@ -86,7 +83,7 @@ fun HistoryScreen(
                 )
                 Box {
                     DottedLine()
-                    HistoryItems(historyItemUiModels, navigateToHistoryDetail)
+                    HistoryItems(historyScreenUiModel.historyItemUiModel, navigateToHistoryDetail)
                 }
             }
         }
@@ -140,7 +137,7 @@ private fun PreviewHistoryScreen() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+            historyScreenUiModel = HistoryScreenUiModel.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -153,7 +150,7 @@ private fun PreviewHistoryScreenEmpty() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView(),
+            historyScreenUiModel = HistoryScreenUiModel.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -166,7 +163,7 @@ private fun PreviewHistoryScreenWithProgressBar() {
         HistoryScreen(
             isHomeGoalAchievementShow = true,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+            historyScreenUiModel = HistoryScreenUiModel.default,
             navigateToHistoryDetail = {},
         )
     }
