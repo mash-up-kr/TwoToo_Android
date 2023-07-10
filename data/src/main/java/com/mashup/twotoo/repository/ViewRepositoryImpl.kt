@@ -6,9 +6,7 @@ import model.challenge.HomeViewDomainModel
 import repository.ViewRepository
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/06
- */
+
 class ViewRepositoryImpl @Inject constructor(
     private val viewDataSource: ViewDataSource,
 ) : ViewRepository {

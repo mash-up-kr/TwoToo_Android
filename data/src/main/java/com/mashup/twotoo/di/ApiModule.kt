@@ -1,15 +1,14 @@
 package com.mashup.twotoo.di
 
 import com.mashup.twotoo.datasource.remote.challenge.ChallengeApi
+import com.mashup.twotoo.datasource.remote.commit.CommitApi
 import com.mashup.twotoo.datasource.remote.view.ViewApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 
 @Module
 class ApiModule {
@@ -23,5 +22,11 @@ class ApiModule {
     @Singleton
     fun provideViewApi(retrofit: Retrofit): ViewApi {
         return retrofit.create(ViewApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCommitApi(retrofit: Retrofit): CommitApi {
+        return retrofit.create(CommitApi::class.java)
     }
 }

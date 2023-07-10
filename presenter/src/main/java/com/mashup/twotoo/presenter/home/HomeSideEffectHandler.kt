@@ -16,9 +16,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-/**
- * @Created by 김현국 2023/07/06
- */
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

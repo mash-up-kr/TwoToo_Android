@@ -19,9 +19,7 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 class HomeOngoingBothAuthTest {
     @get:Rule
     val composeTestRule = createComposeRule()
@@ -126,7 +124,7 @@ class HomeOngoingBothAuthTest {
             TwoTooTheme {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }
