@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
@@ -28,11 +27,11 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryRoute(
+    historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
-    val viewModel: HistoryViewModel = viewModel()
-    val state by viewModel.collectAsState()
+    val state by historyViewModel.collectAsState()
 
     HistoryScreen(
         isHomeGoalAchievementShow = false,
