@@ -1,9 +1,9 @@
 package com.mashup.twotoo.presenter.history.model
 
 data class ChallengeInfoUiModel(
-    val day: String,
-    val name: String,
-    val detail: String,
+    val day: String = "",
+    val name: String = "",
+    val detail: String = "",
 ) {
     companion object {
         val default = ChallengeInfoUiModel(

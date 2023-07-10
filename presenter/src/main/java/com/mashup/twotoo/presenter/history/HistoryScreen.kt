@@ -38,7 +38,7 @@ fun HistoryRoute(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
-        historyItemUiModels = state.historyItem,
+        historyState = state,
     )
 }
 
@@ -47,7 +47,7 @@ fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
-    historyScreenUiModel: HistoryScreenUiModel,
+    historyState: HistoryState,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }
     var showChallengeDropDialog by remember { mutableStateOf(false) }
@@ -71,7 +71,7 @@ fun HistoryScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
                 ChallengeInfo(
-                    historyScreenUiModel.challengeInfoUiModel,
+                    historyState.challengeInfoUiModel,
                 )
                 if (isHomeGoalAchievementShow) {
                     TwoTooGoalAchievementProgressbar(
@@ -81,7 +81,7 @@ fun HistoryScreen(
                         homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
                     )
                 }
-                OwnerNickNames(historyScreenUiModel.ownerNickNamesUiModel)
+                OwnerNickNames(historyState.ownerNickNamesUiModel)
                 Spacer(modifier = Modifier.height(12.dp))
                 Divider(
                     color = Color.White,
@@ -89,7 +89,7 @@ fun HistoryScreen(
                 )
                 Box {
                     DottedLine()
-                    HistoryItems(historyScreenUiModel.historyItemUiModel, navigateToHistoryDetail)
+                    HistoryItems(historyState.historyItemUiModel, navigateToHistoryDetail)
                 }
             }
         }
@@ -143,7 +143,7 @@ private fun PreviewHistoryScreen() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyScreenUiModel = HistoryScreenUiModel.default,
+            historyState = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -156,7 +156,7 @@ private fun PreviewHistoryScreenEmpty() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyScreenUiModel = HistoryScreenUiModel.default,
+            historyState = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -169,7 +169,7 @@ private fun PreviewHistoryScreenWithProgressBar() {
         HistoryScreen(
             isHomeGoalAchievementShow = true,
             onClickBackButton = {},
-            historyScreenUiModel = HistoryScreenUiModel.default,
+            historyState = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }

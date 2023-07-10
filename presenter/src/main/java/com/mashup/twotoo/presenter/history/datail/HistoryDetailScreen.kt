@@ -29,7 +29,6 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun HistoryDetailRoute(
     onClickBackButton: () -> Unit,
 ) {
-
     val viewModel: HistoryDetailViewModel = viewModel()
     val state by viewModel.collectAsState()
 
@@ -39,7 +38,6 @@ fun HistoryDetailRoute(
             historyDetailInfoUiModel = it,
         )
     }
-
 }
 
 @Composable
