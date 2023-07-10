@@ -1,6 +1,8 @@
 package com.mashup.twotoo.di
 
 import com.mashup.twotoo.data.BuildConfig
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.runBlocking
@@ -49,7 +51,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory {
-        return MoshiConverterFactory.create()
+        return MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build(),
+        )
     }
 
     @Provides
