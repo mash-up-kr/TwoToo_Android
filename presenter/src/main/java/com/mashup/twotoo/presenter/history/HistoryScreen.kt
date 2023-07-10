@@ -13,7 +13,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
@@ -28,17 +27,17 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryRoute(
+    historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
-    val viewModel: HistoryViewModel = viewModel()
-    val state by viewModel.collectAsState()
+    val state by historyViewModel.collectAsState()
 
     HistoryScreen(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
-        historyState = state,
+        state = state,
     )
 }
 
@@ -47,7 +46,7 @@ fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
-    historyState: HistoryState,
+    state: HistoryState,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }
     var showChallengeDropDialog by remember { mutableStateOf(false) }
@@ -71,7 +70,7 @@ fun HistoryScreen(
         ) {
             Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
                 ChallengeInfo(
-                    historyState.challengeInfoUiModel,
+                    state.challengeInfoUiModel,
                 )
                 if (isHomeGoalAchievementShow) {
                     TwoTooGoalAchievementProgressbar(
@@ -81,7 +80,7 @@ fun HistoryScreen(
                         homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
                     )
                 }
-                OwnerNickNames(historyState.ownerNickNamesUiModel)
+                OwnerNickNames(state.ownerNickNamesUiModel)
                 Spacer(modifier = Modifier.height(12.dp))
                 Divider(
                     color = Color.White,
@@ -89,7 +88,7 @@ fun HistoryScreen(
                 )
                 Box {
                     DottedLine()
-                    HistoryItems(historyState.historyItemUiModel, navigateToHistoryDetail)
+                    HistoryItems(state.historyItemUiModel, navigateToHistoryDetail)
                 }
             }
         }
@@ -143,7 +142,7 @@ private fun PreviewHistoryScreen() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyState = HistoryState.default,
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -156,7 +155,7 @@ private fun PreviewHistoryScreenEmpty() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyState = HistoryState.default,
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -169,7 +168,7 @@ private fun PreviewHistoryScreenWithProgressBar() {
         HistoryScreen(
             isHomeGoalAchievementShow = true,
             onClickBackButton = {},
-            historyState = HistoryState.default,
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }

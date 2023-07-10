@@ -4,4 +4,10 @@ import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 
 data class GardenState(
     val challengeCardInfos: List<ChallengeCardInfoUiModel> = emptyList(),
-)
+) {
+    companion object {
+        val default = GardenState(
+            challengeCardInfos = ChallengeCardInfoUiModel.default,
+        )
+    }
+}
