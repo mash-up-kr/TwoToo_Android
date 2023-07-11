@@ -33,7 +33,9 @@ class NetworkModule {
         okHttpClientBuilder.apply {
             addInterceptor(
                 Interceptor { chain ->
-                    val token = runBlocking { getAccessTokenUseCase() }
+                    val token = runBlocking {
+                        runCatching { getAccessTokenUseCase() }.getOrDefault("")
+                    }
                     val request = chain.request().newBuilder()
                         .addHeader(AUTHORIZATION, "Bearer $token")
                         .build()
