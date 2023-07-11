@@ -24,8 +24,8 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.createImageFile
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.Objects
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +65,9 @@ fun TwoTooAuthBottomSheet(
         mutableStateOf<Uri?>(null)
     }
     val context = LocalContext.current
-    val file = context.createImageFile()
+    val file by remember {
+        mutableStateOf(File.createTempFile("IMG_", ".jpg", context.cacheDir))
+    }
     val uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
         "com.mashup.twotoo.provider",
@@ -92,6 +94,7 @@ fun TwoTooAuthBottomSheet(
                 CropImageOptions(),
             ).apply {
                 setFixAspectRatio(true)
+                setOutputUri(uri)
             }
             imageCropLauncher.launch(cropOptions)
             setImageDialogVisible = false
@@ -118,6 +121,7 @@ fun TwoTooAuthBottomSheet(
             CropImageOptions(),
         ).apply {
             setFixAspectRatio(true)
+            setOutputUri(uri)
         }
         imageCropLauncher.launch(cropOptions)
         setImageDialogVisible = false
