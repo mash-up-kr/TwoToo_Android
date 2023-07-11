@@ -68,6 +68,9 @@ fun TwoTooAuthBottomSheet(
     val file by remember {
         mutableStateOf(File.createTempFile("IMG_", ".jpg", context.cacheDir))
     }
+    LaunchedEffect(key1 = Unit){
+        file.deleteOnExit()
+    }
     val uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
         "com.mashup.twotoo.provider",
