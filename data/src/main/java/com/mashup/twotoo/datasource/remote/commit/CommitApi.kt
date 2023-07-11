@@ -1,17 +1,19 @@
 package com.mashup.twotoo.datasource.remote.commit
 
-import com.mashup.twotoo.datasource.remote.commit.request.CommitNoRequest
-import com.mashup.twotoo.datasource.remote.commit.request.CommitRequest
 import com.mashup.twotoo.datasource.remote.commit.response.Commit
-import retrofit2.http.Body
+import okhttp3.MultipartBody
 import retrofit2.http.GET
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 import retrofit2.http.Path
 
 interface CommitApi {
+    @Multipart
     @POST("/commit")
     suspend fun commit(
-        @Body commitRequest: CommitRequest,
+        @Part text: MultipartBody.Part,
+        @Part img: MultipartBody.Part,
     ): Commit
 
     @GET("/commit{commitNo}")
