@@ -69,7 +69,7 @@ fun TwoTooAuthBottomSheet(
     val file by remember {
         mutableStateOf(File.createTempFile("IMG_", ".jpg", context.cacheDir))
     }
-    LaunchedEffect(key1 = Unit){
+    LaunchedEffect(key1 = Unit) {
         file.deleteOnExit()
     }
     val uri = FileProvider.getUriForFile(
@@ -127,8 +127,10 @@ fun TwoTooAuthBottomSheet(
             setFixAspectRatio(true)
             setOutputUri(uri)
         }
-        imageCropLauncher.launch(cropOptions)
-        setImageDialogVisible = false
+        if (photoUri != null) {
+            imageCropLauncher.launch(cropOptions)
+            setImageDialogVisible = false
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
