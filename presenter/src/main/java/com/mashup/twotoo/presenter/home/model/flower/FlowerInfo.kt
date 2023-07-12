@@ -30,6 +30,7 @@ enum class FlowerName {
 
 sealed class FlowerType(val name: FlowerName) {
     abstract fun getFlowerImage(context: Context): FlowerImage
+    abstract fun getFlowerLanguage(context: Context): String
 }
 
 data class FlowerImage(
