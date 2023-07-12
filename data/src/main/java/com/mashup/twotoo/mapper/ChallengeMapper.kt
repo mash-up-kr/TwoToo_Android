@@ -20,8 +20,8 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
         viewState = viewState,
         challengeTotal = challengeTotal,
         onGoingChallenge = onGoingChallenge.toDomainModel(),
-        user1Commit = user1Commit.toDomainModel(),
-        user2Commit = user2Commit.toDomainModel(),
+        user1Commit = user1Commit?.toDomainModel(),
+        user2Commit = user2Commit?.toDomainModel(),
     )
 }
 
