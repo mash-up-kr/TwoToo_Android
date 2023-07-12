@@ -60,4 +60,10 @@ data class Flower(
         val flowerLanguage = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerLanguage)
     }
+
+    override fun getFlowerName(context: Context): String {
+        val name = flowerName.name.lowercase()
+        val flowerName = context.resources.getIdentifier(name, "string", context.packageName)
+        return context.getString(flowerName)
+    }
 }

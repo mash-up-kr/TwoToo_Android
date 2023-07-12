@@ -28,6 +28,7 @@ import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
@@ -50,10 +51,33 @@ fun HomeFlowerMeAndPartner(
     ConstraintLayout(
         modifier = modifier,
     ) {
-        val (textHint, partnerText, waterImage, partner, partnerFlowerOwnerText, me, meFlowerOwnerText, partnerCheer, meCheer, heartImage) = createRefs()
+        val (
+            textHint, partnerText, waterImage, partner,
+            partnerFlowerOwnerText, me, meFlowerOwnerText,
+            partnerCheer, meCheer, heartImage, partnerFlowerLanguage, meFlowerLanguage,
+        ) = createRefs()
 
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
+                if (homeChallengeStateUiModel.challengeState == Complete) {
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(partnerFlowerLanguage) {
+                            bottom.linkTo(partner.top)
+                            start.linkTo(partner.start)
+                            end.linkTo(partner.end)
+                        },
+                        homeFlowerUiModel = this.partner,
+                    )
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(meFlowerLanguage) {
+                            bottom.linkTo(me.top)
+                            start.linkTo(me.start)
+                            end.linkTo(me.end)
+                        },
+                        homeFlowerUiModel = this.me,
+                    )
+                }
+
                 if (this.me.authType == FirstCreateChallenge) {
                     TextHint(
                         modifier = Modifier
