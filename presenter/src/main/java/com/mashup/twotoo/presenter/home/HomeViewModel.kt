@@ -74,7 +74,6 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onClickSendBottomSheetDataButton(bottomSheetData: BottomSheetData) = intent {
-        println("로그 : here viewModel")
         when (bottomSheetData) {
             is BottomSheetData.AuthenticateData -> {
                 createCommitUseCase(
