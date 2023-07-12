@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.di
 import com.mashup.twotoo.presenter.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
+import usecase.commit.CreateCommitUseCase
 import usecase.view.GetViewHomeUseCase
 import javax.inject.Scope
 
@@ -18,9 +19,11 @@ class HomeModule {
     @HomeScope
     fun provideViewModel(
         getHomeViewChallengeStateUseCase: GetViewHomeUseCase,
+        createCommitUseCase: CreateCommitUseCase,
     ): HomeViewModel {
         return HomeViewModel(
             getHomeViewUseCase = getHomeViewChallengeStateUseCase,
+            createCommitUseCase = createCommitUseCase,
         )
     }
 }

@@ -11,7 +11,10 @@ class CommitDataSource @Inject constructor(
     suspend fun commit(
         commitRequest: CommitRequest,
     ): Commit {
-        return commitApi.commit(commitRequest = commitRequest)
+        return commitApi.commit(
+            text = commitRequest.text,
+            img = commitRequest.img,
+        )
     }
 
     suspend fun getCommitByNo(

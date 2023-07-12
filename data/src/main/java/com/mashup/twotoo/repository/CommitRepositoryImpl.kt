@@ -1,5 +1,6 @@
 package com.mashup.twotoo.repository
 
+import android.content.Context
 import com.mashup.twotoo.datasource.remote.commit.CommitDataSource
 import com.mashup.twotoo.mapper.toDataModel
 import com.mashup.twotoo.mapper.toDomainModel
@@ -11,13 +12,16 @@ import javax.inject.Inject
 
 class CommitRepositoryImpl @Inject constructor(
     private val commitDataSource: CommitDataSource,
+    private val context: Context,
 ) : CommitRepository {
     override suspend fun commit(
         commitRequestDomainModel: CommitRequestDomainModel,
-    ): CommitResponseDomainModel {
-        return commitDataSource.commit(
-            commitRequest = commitRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+    ): Result<CommitResponseDomainModel> {
+        return runCatching {
+            commitDataSource.commit(
+                commitRequest = commitRequestDomainModel.toDataModel(context = context),
+            ).toDomainModel()
+        }
     }
 
     override suspend fun cheer(

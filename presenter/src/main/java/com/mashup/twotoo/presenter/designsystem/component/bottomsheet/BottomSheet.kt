@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
@@ -24,8 +25,8 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.createImageFile
 import kotlinx.coroutines.launch
+import java.io.File
 import java.util.Objects
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +66,12 @@ fun TwoTooAuthBottomSheet(
         mutableStateOf<Uri?>(null)
     }
     val context = LocalContext.current
-    val file = context.createImageFile()
+    val file by remember {
+        mutableStateOf(File.createTempFile("IMG_", ".jpg", context.cacheDir))
+    }
+    LaunchedEffect(key1 = Unit) {
+        file.deleteOnExit()
+    }
     val uri = FileProvider.getUriForFile(
         Objects.requireNonNull(context),
         "com.mashup.twotoo.provider",
@@ -92,6 +98,7 @@ fun TwoTooAuthBottomSheet(
                 CropImageOptions(),
             ).apply {
                 setFixAspectRatio(true)
+                setOutputUri(uri)
             }
             imageCropLauncher.launch(cropOptions)
             setImageDialogVisible = false
@@ -111,16 +118,19 @@ fun TwoTooAuthBottomSheet(
 
     val takePhotoFromAlbumLauncher = rememberLauncherForActivityResult(
         contract =
-        ActivityResultContracts.GetContent(),
+        ActivityResultContracts.PickVisualMedia(),
     ) { photoUri: Uri? ->
         val cropOptions = CropImageContractOptions(
             photoUri,
             CropImageOptions(),
         ).apply {
             setFixAspectRatio(true)
+            setOutputUri(uri)
         }
-        imageCropLauncher.launch(cropOptions)
-        setImageDialogVisible = false
+        if (photoUri != null) {
+            imageCropLauncher.launch(cropOptions)
+            setImageDialogVisible = false
+        }
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
@@ -151,7 +161,7 @@ fun TwoTooAuthBottomSheet(
                     takePhotoFromCameraLauncher.launch(uri)
                 },
                 onClickAlbumButton = {
-                    takePhotoFromAlbumLauncher.launch("image/*")
+                    takePhotoFromAlbumLauncher.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
                 },
                 onClickDismissButton = { setImageDialogVisible = false },
             )
