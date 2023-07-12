@@ -1,18 +1,18 @@
 package com.mashup.twotoo.presenter.home
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.home.di.HomeScope
+import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
-import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
-import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.view.GetViewHomeUseCase
 import javax.inject.Inject
@@ -26,11 +26,17 @@ class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
 ) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
 
-    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(OngoingChallengeUiModel.default)
+    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
 
-    fun getHomeViewChallenge() {
-        viewModelScope.launch {
-            getHomeViewUseCase()
+    fun getHomeViewChallenge() = intent {
+        getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
+            reduce {
+                this.copy(
+                    state = homeViewResponseDomainModel.toUiModel(0),
+                ).state
+            }
+        }.onFailure {
+            postSideEffect(HomeSideEffect.Toast("홈 정보를 불라오기 실패했습니다ㅠ"))
         }
     }
     fun navigateToHistory() = intent {
