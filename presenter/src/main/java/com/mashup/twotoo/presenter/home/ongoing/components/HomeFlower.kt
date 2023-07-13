@@ -37,6 +37,9 @@ import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.flower.Flower
+import com.mashup.twotoo.presenter.home.model.flower.FlowerName
+import com.mashup.twotoo.presenter.home.model.flower.Stage
 
 /**
  * @Created by 김현국 2023/06/07
@@ -556,6 +559,38 @@ private fun PreviewDoNotCheerBoth() {
                         ),
                         me = CheerWithFlower.meNotYet.copy(
                             cheerState = CheerState.NotYet,
+                        ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("완료상태", showBackground = true)
+@Composable
+private fun PreviewComplete() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.complete.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth.copy(
+                        partner = HomeFlowerUiModel.partner.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = PARTNER,
+                                growType = Stage.Fifth,
+                            ),
+                        ),
+                        me = HomeFlowerUiModel.me.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = ME,
+                                growType = Stage.Fifth,
+                            ),
                         ),
                     ),
                 ),
