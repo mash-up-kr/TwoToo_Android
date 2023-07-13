@@ -33,13 +33,20 @@ class NetworkModule {
         okHttpClientBuilder.apply {
             addInterceptor(
                 Interceptor { chain ->
-                    val token = runBlocking { getAccessTokenUseCase() }
+                    val token = runBlocking {
+                        runCatching {
+                            getAccessTokenUseCase()
+                        }.getOrDefault("")
+                    }
                     val request = chain.request().newBuilder()
                         .addHeader(AUTHORIZATION, token)
                         .build()
 
                     chain.proceed(request)
                 },
+            )
+            addInterceptor(
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
             )
             if (BuildConfig.DEBUG) {
                 addNetworkInterceptor(httpLoggingInterceptor)
