@@ -191,6 +191,21 @@ fun HomeViewResponseDomainModel.getUserCommit(
     }
 }
 
+fun String.multiLineConverter(): String {
+    return if (this.isBlank()) {
+        ""
+    } else {
+        val maxLength = 10
+        if (this.length > maxLength) {
+            val firstPart = this.substring(0, maxLength)
+            val secondPart = this.substring(maxLength)
+            "$firstPart\n$secondPart"
+        } else {
+            this
+        }
+    }
+}
+
 fun HomeViewResponseDomainModel.toHomeCheerUiModel(
     userNo: Int,
 ): HomeCheerUiModel {
@@ -202,7 +217,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
 
     return when {
         me!!.partnerComment.isNotBlank() && partner!!.partnerComment.isNotBlank() -> {
-            // 둘다 응원을 하지 않았을 경우
+            // 둘다 응원을 했을 경우
             HomeCheerUiModel.cheerBoth.copy(
                 partner = CheerWithFlower.partnerNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
@@ -210,6 +225,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         flowerType = partnerFlower,
                         authType = AuthType.AuthBoth,
                     ),
+                    cheerText = partner.partnerComment.multiLineConverter(),
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
@@ -217,6 +233,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         flowerType = meFlower,
                         authType = AuthType.AuthBoth,
                     ),
+
                 ),
             )
         }
@@ -237,6 +254,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         flowerType = partnerFlower,
                         authType = AuthType.AuthBoth,
                     ),
+                    cheerText = me.partnerComment.multiLineConverter(),
                 ),
             )
         }
@@ -250,6 +268,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         flowerType = partnerFlower,
                         authType = AuthType.AuthBoth,
                     ),
+                    cheerText = partner.partnerComment.multiLineConverter(),
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
