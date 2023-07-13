@@ -34,12 +34,10 @@ class NetworkModule {
             addInterceptor(
                 Interceptor { chain ->
                     val token = runBlocking {
-                        runCatching {
-                            getAccessTokenUseCase()
-                        }.getOrDefault("")
+                        runCatching { getAccessTokenUseCase() }.getOrDefault("")
                     }
                     val request = chain.request().newBuilder()
-                        .addHeader(AUTHORIZATION, token)
+                        .addHeader(AUTHORIZATION, "Bearer $token")
                         .build()
 
                     chain.proceed(request)
