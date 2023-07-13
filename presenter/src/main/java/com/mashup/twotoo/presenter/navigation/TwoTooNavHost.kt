@@ -7,18 +7,16 @@ import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGra
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
-import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
 import com.mashup.twotoo.presenter.mypage.navigation.userGraph
-import com.mashup.twotoo.presenter.nickname.navigation.navigateToOnNickNameSetting
+import com.mashup.twotoo.presenter.nickname.navigation.NickNameSettingGraph
 import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
-import com.mashup.twotoo.presenter.nickname.navigation.onNickNameSettingGraph
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 
 @Composable
 fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
-    startDestination: String = NavigationRoute.HomeScreenGraph.HomeScreen.route,
+    startDestination: String = NavigationRoute.OnBoardingGraph.OnboardingScreen.route
 ) {
     val navController = appState.navController
     NavHost(
@@ -29,13 +27,9 @@ fun TwoTooNavHost(
         gardenGraph(navController = navController)
         homeGraph(navController = navController)
         userGraph()
-        onBoardingGraph {
-            navController.navigateToOnNickNameSetting()
-        }
-        onNickNameSettingGraph {
-            navController.navigateToInvitation()
-        }
-        invitationGraph(navController)
-        createChallengeGraph(navController)
+        onBoardingGraph(navController = navController)
+        NickNameSettingGraph(navController = navController)
+        invitationGraph(navController = navController)
+        createChallengeGraph(navController = navController)
     }
 }
