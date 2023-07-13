@@ -15,6 +15,7 @@ import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
 
+// TODO replace mapper in model
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,

@@ -7,6 +7,7 @@ import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
 
+// TODO replace mapper in model
 fun Commit.toDomainModel(): CommitResponseDomainModel {
     return CommitResponseDomainModel(
         commitNo = this.commitNo,
