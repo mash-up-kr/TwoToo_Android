@@ -63,7 +63,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun getHomeViewApprovedButBeforeStartDate(): Unit = runTest {
+    fun getHomeViewApprovedButBeforeStartDateStateTest(): Unit = runTest {
         fakeRepository = FakeViewApprovedButBeforeStartDateRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
         val viewModel = HomeViewModel(getViewHomeUseCase)
@@ -76,7 +76,7 @@ class HomeViewModelTest {
     }
 
     @Test
-    fun getHomeViewExpiredByNotApproved(): Unit = runTest {
+    fun getHomeViewExpiredByNotApprovedStateTest(): Unit = runTest {
         fakeRepository = FakeViewExpiredByNotApprovedRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
         val viewModel = HomeViewModel(getViewHomeUseCase)
