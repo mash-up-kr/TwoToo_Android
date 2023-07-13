@@ -39,7 +39,7 @@ fun String.isBeforeChallengeState(): Boolean {
         "BEFORE_CREATE",
         "BEFORE_PARTNER_APPROVE",
         "BEFORE_MY_APPROVE",
-        "BEFORE_START_DATE",
+        "APPROVED_BUT_BEFORE_START_DATE",
         "EXPIRED_BY_NOT_APPROVED",
     )
 }
@@ -78,7 +78,7 @@ fun HomeViewResponseDomainModel.toBeforeChallengeUiModel(
             )
         }
 
-        "BEFORE_START_DATE" -> {
+        "APPROVED_BUT_BEFORE_START_DATE" -> {
             BeforeChallengeUiModel.wait.copy(
                 homeGoalCountUiModel = homeGoalCountUiModel,
             )
