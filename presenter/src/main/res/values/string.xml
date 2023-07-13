@@ -181,6 +181,14 @@
     <string name="camellia">동백</string>
     <string name="chrysanthemum">퐁퐁국화</string>
     <string name="sunflower">해바라기</string>
-    
+
+
+    <!--toast-->
+    <string name="toast_message_commit_success">오늘의 인증을 완료했습니다!</string>
+    <string name="toast_message_commit_fail">오늘의 인증을 실패했습니다ㅠ</string>
+    <string name="toast_message_shot_success">상대방에게 찌르기 문구가 보내졌습니다</string>
+    <string name="toast_message_cheer_success">칭찬 한마디가 등록되었습니다</string>
+    <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
+
 
 </resources>

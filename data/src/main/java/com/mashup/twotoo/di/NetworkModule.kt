@@ -43,6 +43,9 @@ class NetworkModule {
                     chain.proceed(request)
                 },
             )
+            addInterceptor(
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
+            )
             if (BuildConfig.DEBUG) {
                 addNetworkInterceptor(httpLoggingInterceptor)
             }

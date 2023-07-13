@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 import android.net.Uri
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.tween
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -112,17 +111,18 @@ fun AuthenticateContent(
         )
         TwoTooTextButton(
             modifier = Modifier.layoutId("button")
-                .fillMaxWidth().height(57.dp).navigationBarsPadding().clickable {
-                    if (textFieldState.isNotEmpty()) {
-                        onClickButton(
-                            BottomSheetData.AuthenticateData(
-                                image = imageUri,
-                                text = textFieldState,
-                            ),
-                        )
-                    }
-                },
+                .fillMaxWidth().height(57.dp).navigationBarsPadding(),
             text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
+            onClick = {
+                imageUri?.let { uri ->
+                    onClickButton(
+                        BottomSheetData.AuthenticateData(
+                            image = uri,
+                            text = textFieldState,
+                        ),
+                    )
+                }
+            },
         )
     }
 }
