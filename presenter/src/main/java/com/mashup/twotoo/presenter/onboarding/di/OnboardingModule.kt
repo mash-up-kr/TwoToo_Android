@@ -1,17 +1,27 @@
 package com.mashup.twotoo.presenter.onboarding.di
 
-import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.onboarding.OnBoardingViewModel
-import dagger.Binds
 import dagger.Module
+import dagger.Provides
+import usecase.token.SetAccessTokenUseCase
+import usecase.user.SetUserNoUseCase
+import usecase.user.UserAuthUseCase
 import javax.inject.Scope
 
 @Module
-abstract class OnboardingModule {
+class OnboardingModule {
 
-    @Binds
+    @Provides
     @OnboardingScope
-    abstract fun provideViewModel(onBoardingViewModel: OnBoardingViewModel): ViewModel
+    fun provideViewModel(setAccessTokenUseCase: SetAccessTokenUseCase,
+                         setUserNoUseCase: SetUserNoUseCase,
+                         userAuthUseCase: UserAuthUseCase): OnBoardingViewModel {
+        return OnBoardingViewModel(
+            setAccessTokenUseCase = setAccessTokenUseCase,
+            setUserNoUseCase = setUserNoUseCase,
+            userAuthUseCase = userAuthUseCase,
+        )
+    }
 }
 
 @Scope
