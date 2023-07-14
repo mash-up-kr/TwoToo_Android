@@ -27,7 +27,7 @@ fun NavGraphBuilder.nickNameSettingGraph(
             }
             NickNameSettingRoute(nickNameViewModel) { route ->
                 when (route) {
-                    NavigationRoute.HomeScreenGraph.HomeScreen.route -> {
+                    NavigationRoute.HomeGraph.HomeScreen.route -> {
                         navController.navigateToHome()
                     }
                     NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {

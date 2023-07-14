@@ -51,7 +51,7 @@ fun NickNameSettingRoute(
     nickNameViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is NickNameSideEffect.NavigateToHome -> {
-                onLoginSuccess(NavigationRoute.HomeScreenGraph.HomeScreen.route)
+                onLoginSuccess(NavigationRoute.HomeGraph.HomeScreen.route)
             }
             is NickNameSideEffect.NavigateToSendInvitation -> {
                 onLoginSuccess(NavigationRoute.InvitationGraph.SendInvitationScreen.route)

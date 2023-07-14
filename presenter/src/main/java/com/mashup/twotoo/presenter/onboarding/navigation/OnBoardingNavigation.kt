@@ -29,7 +29,7 @@ fun NavGraphBuilder.onBoardingGraph(
         }
         OnBoardingRoute(onBoardingViewModel) { route ->
             when (route) {
-                NavigationRoute.HomeScreenGraph.HomeScreen.route -> {
+                NavigationRoute.HomeGraph.HomeScreen.route -> {
                     navController.navigateToHome()
                 }
                 NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
