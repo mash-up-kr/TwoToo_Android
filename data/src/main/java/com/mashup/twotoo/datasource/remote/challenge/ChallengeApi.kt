@@ -9,9 +9,6 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
 
-/**
- * @Created by 김현국 2023/07/04
- */
 interface ChallengeApi {
 
     @POST("/challenge")
@@ -23,14 +20,14 @@ interface ChallengeApi {
     suspend fun getAllChallenge(): List<Challenge>
 
     @GET("/challenge/{challengeNo}")
-    suspend fun getChallengeByNo(@Path("challengeNo") challengeNo: Long): Challenge
+    suspend fun getChallengeByNo(@Path("challengeNo") challengeNo: Int): Challenge
 
     @DELETE("/challenge/{challengeNo}")
-    suspend fun deleteChallengeByNo(@Path("challengeNo") challengeNo: Long)
+    suspend fun deleteChallengeByNo(@Path("challengeNo") challengeNo: Int): Int
 
     @POST("/challenge/{challengeNo}/approve")
     suspend fun approveChallengeWithNo(
-        @Path("challengeNo") challengeNo: Long,
+        @Path("challengeNo") challengeNo: Int,
         @Body approveChallengeRequest: ApproveChallengeRequest,
     ): Challenge
 }

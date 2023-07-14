@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -14,6 +15,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
@@ -21,15 +23,21 @@ import com.mashup.twotoo.presenter.designsystem.theme.MainWhite
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryDetailRoute(
     onClickBackButton: () -> Unit,
 ) {
-    HistoryDetailScreen(
-        onClickBackButton = onClickBackButton,
-        historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview(),
-    )
+    val viewModel: HistoryDetailViewModel = viewModel()
+    val state by viewModel.collectAsState()
+
+    state.historyDetailInfo?.let {
+        HistoryDetailScreen(
+            onClickBackButton = onClickBackButton,
+            historyDetailInfoUiModel = it,
+        )
+    }
 }
 
 @Composable
@@ -108,12 +116,14 @@ fun HistoryDetailScreen(
                         style = TwoTooTheme.typography.bodyNormal16,
                         modifier = Modifier
                             .padding(top = 8.dp)
-                            .fillMaxWidth().drawBehind {
+                            .fillMaxWidth()
+                            .drawBehind {
                                 drawRoundRect(
                                     color = MainWhite,
                                     cornerRadius = CornerRadius(10.dp.toPx()),
                                 )
-                            }.padding(horizontal = 10.dp, vertical = 15.dp),
+                            }
+                            .padding(horizontal = 10.dp, vertical = 15.dp),
                     )
                 }
             }
@@ -127,7 +137,7 @@ private fun PreviewHistoryDetailScreen() {
     TwoTooTheme {
         HistoryDetailScreen(
             onClickBackButton = {},
-            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview()
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default
                 .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
         )
     }
@@ -139,7 +149,7 @@ private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
     TwoTooTheme {
         HistoryDetailScreen(
             onClickBackButton = {},
-            historyDetailInfoUiModel = HistoryDetailInfoUiModel.getHistoryDetailInfoUiModelToPreview(),
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default,
         )
     }
 }

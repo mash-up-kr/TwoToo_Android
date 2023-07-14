@@ -1,13 +1,11 @@
 package com.mashup.twotoo.datasource.remote.challenge
 
 import com.mashup.twotoo.datasource.remote.challenge.request.ApproveChallengeRequest
+import com.mashup.twotoo.datasource.remote.challenge.request.ChallengeNoRequest
 import com.mashup.twotoo.datasource.remote.challenge.request.CreateChallengeRequest
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import javax.inject.Inject
 
-/**
- * @Created by 김현국 2023/07/04
- */
 class ChallengeDataSource @Inject constructor(
     private val challengeApi: ChallengeApi,
 ) {
@@ -22,23 +20,23 @@ class ChallengeDataSource @Inject constructor(
     }
 
     suspend fun getChallengeByNo(
-        challengeNo: Long,
+        challengeNoRequest: ChallengeNoRequest,
     ): Challenge {
-        return challengeApi.getChallengeByNo(challengeNo = challengeNo)
+        return challengeApi.getChallengeByNo(challengeNo = challengeNoRequest.challengeNo)
     }
 
     suspend fun deleteChallengeByNo(
-        challengeNo: Long,
-    ) {
-        challengeApi.deleteChallengeByNo(challengeNo = challengeNo)
+        challengeNoRequest: ChallengeNoRequest,
+    ): Int {
+        return challengeApi.deleteChallengeByNo(challengeNo = challengeNoRequest.challengeNo)
     }
 
     suspend fun approveChallengeWithNo(
-        challengeNo: Long,
+        challengeNoRequest: ChallengeNoRequest,
         approveChallengeRequest: ApproveChallengeRequest,
     ): Challenge {
         return challengeApi.approveChallengeWithNo(
-            challengeNo = challengeNo,
+            challengeNo = challengeNoRequest.challengeNo,
             approveChallengeRequest = approveChallengeRequest,
         )
     }

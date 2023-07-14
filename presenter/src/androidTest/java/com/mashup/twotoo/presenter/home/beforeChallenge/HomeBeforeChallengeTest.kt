@@ -13,9 +13,7 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 
 class HomeBeforeChallengeTest {
 
@@ -31,7 +29,7 @@ class HomeBeforeChallengeTest {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }
@@ -67,7 +65,7 @@ class HomeBeforeChallengeTest {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }
@@ -100,7 +98,7 @@ class HomeBeforeChallengeTest {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }
@@ -134,7 +132,7 @@ class HomeBeforeChallengeTest {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }
@@ -173,7 +171,7 @@ class HomeBeforeChallengeTest {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }

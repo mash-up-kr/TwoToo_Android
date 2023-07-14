@@ -75,11 +75,11 @@ class TwoTooAppState(
     @Composable
     fun isBottomBarVisible(): Boolean {
         return when (currentDestination?.route) {
-            NavigationRoute.HomeScreenGraph.HomeScreen.route,
-            NavigationRoute.HomeScreenGraph.GardenScreen.route,
-            NavigationRoute.HomeScreenGraph.UserScreen.route,
+            NavigationRoute.HomeGraph.HomeScreen.route,
+            NavigationRoute.GardenGraph.GardenScreen.route,
+            NavigationRoute.UserGraph.UserScreen.route,
             -> true
-            NavigationRoute.HistoryScreenGraph.HistoryScreen.route -> false
+            NavigationRoute.HistoryGraph.HistoryScreen.route -> false
             else -> {
                 false
             }

@@ -26,9 +26,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
 fun TwoTooDialog(
-    onDismissRequest: () -> Unit,
+    onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
-    content: DialogContent
+    content: DialogContent,
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -70,7 +70,7 @@ fun TwoTooDialog(
             Row {
                 content.buttons.forEach { btn ->
                     TextButton(
-                        onClick = { btn.action },
+                        onClick = { btn.action() },
                         contentPadding = PaddingValues(12.dp),
                     ) {
                         Text(

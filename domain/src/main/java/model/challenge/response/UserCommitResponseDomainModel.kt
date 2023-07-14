@@ -1,9 +1,9 @@
-package model.challenge
+package model.challenge.response
 
 /**
  * @Created by 김현국 2023/07/05
  */
-data class UserCommitDomainModel(
+data class UserCommitResponseDomainModel(
     val commitNo: Int,
     val partnerComment: String,
     val photoUrl: String,

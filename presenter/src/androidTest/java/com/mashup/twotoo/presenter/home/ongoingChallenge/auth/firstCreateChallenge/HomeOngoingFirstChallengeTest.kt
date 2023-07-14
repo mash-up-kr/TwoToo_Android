@@ -18,9 +18,7 @@ import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import org.junit.Rule
 import org.junit.Test
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 class HomeOngoingFirstChallengeTest {
 
     @get:Rule
@@ -42,7 +40,7 @@ class HomeOngoingFirstChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
-                    challengeStateTypeUiModel = challengeStateTypeUiModel,
+                    state = challengeStateTypeUiModel,
                 )
             }
         }

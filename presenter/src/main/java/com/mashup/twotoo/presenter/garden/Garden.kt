@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -15,23 +16,25 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun GardenRoute(
+    gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
     navigateToGarden: () -> Unit,
 ) {
+    val state by gardenViewModel.collectAsState()
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
-        challengeCardInfoUiModels = ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(),
         navigateToGarden = navigateToGarden,
+        state = state,
     )
 }
 
 @Composable
 fun GardenScreen(
-    challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
+    state: GardenState,
     modifier: Modifier = Modifier,
     navigateToGarden: () -> Unit,
 ) {
@@ -47,7 +50,7 @@ fun GardenScreen(
             horizontalArrangement = Arrangement.spacedBy(13.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp),
         ) {
-            items(challengeCardInfoUiModels) { challengeInfo ->
+            items(state.challengeCardInfos) { challengeInfo ->
                 ChallengeCard(challengeInfo, navigateToGarden)
             }
         }
@@ -57,5 +60,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(ChallengeCardInfoUiModel.getChallengeCardInfoToPreview(), navigateToGarden = {})
+    GardenScreen(GardenState.default, navigateToGarden = {})
 }

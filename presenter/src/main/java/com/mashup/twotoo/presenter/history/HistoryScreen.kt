@@ -14,21 +14,30 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.history.model.*
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
+import org.orbitmvi.orbit.compose.collectAsState
+
 @Composable
 fun HistoryRoute(
+    historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
+    val state by historyViewModel.collectAsState()
+
     HistoryScreen(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
-        historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+        state = state,
     )
 }
 
@@ -37,49 +46,91 @@ fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
-    historyItemUiModels: List<HistoryItemUiModel> = listOf(),
+    state: HistoryState,
 ) {
-    Scaffold(
-        topBar = {
-            TwoTooBackToolbar(
-                onClickBackIcon = {
-                    onClickBackButton()
-                },
-            ) {
-                IconButton(onClick = {}) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_more),
-                        contentDescription = null,
+    var showSelectListDialog by remember { mutableStateOf(false) }
+    var showChallengeDropDialog by remember { mutableStateOf(false) }
+    Box {
+        Scaffold(
+            topBar = {
+                TwoTooBackToolbar(
+                    onClickBackIcon = {
+                        onClickBackButton()
+                    },
+                ) {
+                    IconButton(onClick = { showSelectListDialog = true }) {
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_more),
+                            contentDescription = null,
+                        )
+                    }
+                }
+            },
+            containerColor = TwoTooTheme.color.backgroundYellow,
+        ) {
+            Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
+                ChallengeInfo(
+                    state.challengeInfoUiModel,
+                )
+                if (isHomeGoalAchievementShow) {
+                    TwoTooGoalAchievementProgressbar(
+                        modifier = Modifier.padding(top = 12.dp, start = 24.dp).width(210.dp)
+                            .height(59.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
+                        homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
                     )
                 }
-            }
-        },
-        containerColor = TwoTooTheme.color.backgroundYellow,
-    ) {
-        Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
-            ChallengeInfo(
-                "24",
-                "30분 이상 운동하기",
-                "운동 사진으로 인증하기\n인증 실패하는지 확인",
-            )
-            if (isHomeGoalAchievementShow) {
-                TwoTooGoalAchievementProgressbar(
-                    modifier = Modifier.padding(top = 12.dp, start = 24.dp).width(210.dp)
-                        .height(59.dp)
-                        .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                    homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+                OwnerNickNames(state.ownerNickNamesUiModel)
+                Spacer(modifier = Modifier.height(12.dp))
+                Divider(
+                    color = Color.White,
+                    modifier = Modifier.fillMaxWidth().width(1.dp).padding(horizontal = 24.dp),
                 )
+                Box {
+                    DottedLine()
+                    HistoryItems(state.historyItemUiModel, navigateToHistoryDetail)
+                }
             }
-            OwnerNickNames("왕자", "공주")
-            Spacer(modifier = Modifier.height(12.dp))
-            Divider(
-                color = Color.White,
-                modifier = Modifier.fillMaxWidth().width(1.dp).padding(horizontal = 24.dp),
+        }
+        if (showSelectListDialog) {
+            ChallengeDropSelectionDialog(
+                dropDialogTextUiModels = listOf(
+                    DropDialogTextUiModel(
+                        titleId = R.string.challenge_done,
+                        buttonAction = {
+                            showSelectListDialog = false
+                            showChallengeDropDialog = true
+                        },
+                        color = TwotooPink,
+                    ),
+                    DropDialogTextUiModel(
+                        titleId = R.string.cancel,
+                        buttonAction = { showSelectListDialog = false },
+                        color = Color.Black,
+                    ),
+                ),
             )
-            Box {
-                DottedLine()
-                HistoryItems(historyItemUiModels, navigateToHistoryDetail)
-            }
+        }
+        if (showChallengeDropDialog) {
+            TwoTooDialog(
+                content =
+                DialogContent(
+                    title = R.string.challenge_done,
+                    desc = R.string.challengeDoneDescription,
+                    image = R.drawable.crying_cloud,
+                    buttons = listOf(
+                        DialogButtonContent(
+                            text = R.string.cancel,
+                            action = { showChallengeDropDialog = false },
+                        ),
+                        DialogButtonContent(
+                            text = R.string.done,
+                            action = {},
+                        ),
+                    ),
+                ),
+
+            )
         }
     }
 }
@@ -91,7 +142,7 @@ private fun PreviewHistoryScreen() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -104,7 +155,7 @@ private fun PreviewHistoryScreenEmpty() {
         HistoryScreen(
             isHomeGoalAchievementShow = false,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyEmptyHistoryItemsToPreView(),
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }
@@ -117,7 +168,7 @@ private fun PreviewHistoryScreenWithProgressBar() {
         HistoryScreen(
             isHomeGoalAchievementShow = true,
             onClickBackButton = {},
-            historyItemUiModels = HistoryItemUiModel.generateDummyHistoryItemsToPreView(),
+            state = HistoryState.default,
             navigateToHistoryDetail = {},
         )
     }

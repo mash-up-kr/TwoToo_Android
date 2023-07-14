@@ -142,7 +142,9 @@
 
     <!-- history -->
     <string name="challenge_done">챌린지 그만두기</string>
+    <string name="done">그만두기</string>
     <string name="cancel">취소</string>
+    <string name="challengeDoneDescription">기존의 챌린지는 삭제됩니다\n*그만두기 시 양쪽 모두에게 삭제 및 종료됩니다!*</string>
 
     <string name="challenge_start">챌린지 시작</string>
     <string name="authenticate">인증하기</string>
@@ -179,6 +181,14 @@
     <string name="camellia">동백</string>
     <string name="chrysanthemum">퐁퐁국화</string>
     <string name="sunflower">해바라기</string>
-    
+
+
+    <!--toast-->
+    <string name="toast_message_commit_success">오늘의 인증을 완료했습니다!</string>
+    <string name="toast_message_commit_fail">오늘의 인증을 실패했습니다ㅠ</string>
+    <string name="toast_message_shot_success">상대방에게 찌르기 문구가 보내졌습니다</string>
+    <string name="toast_message_cheer_success">칭찬 한마디가 등록되었습니다</string>
+    <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
+
 
 </resources>

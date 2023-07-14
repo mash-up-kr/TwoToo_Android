@@ -1,6 +1,8 @@
 package com.mashup.twotoo.di
 
 import com.mashup.twotoo.data.BuildConfig
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.runBlocking
@@ -31,13 +33,18 @@ class NetworkModule {
         okHttpClientBuilder.apply {
             addInterceptor(
                 Interceptor { chain ->
-                    val token = runBlocking { getAccessTokenUseCase() }
+                    val token = runBlocking {
+                        runCatching { getAccessTokenUseCase() }.getOrDefault("")
+                    }
                     val request = chain.request().newBuilder()
-                        .addHeader(AUTHORIZATION, token)
+                        .addHeader(AUTHORIZATION, "Bearer $token")
                         .build()
 
                     chain.proceed(request)
                 },
+            )
+            addInterceptor(
+                HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY),
             )
             if (BuildConfig.DEBUG) {
                 addNetworkInterceptor(httpLoggingInterceptor)
@@ -49,7 +56,11 @@ class NetworkModule {
     @Provides
     @Singleton
     fun provideMoshiConverterFactory(): MoshiConverterFactory {
-        return MoshiConverterFactory.create()
+        return MoshiConverterFactory.create(
+            Moshi.Builder()
+                .add(KotlinJsonAdapterFactory())
+                .build(),
+        )
     }
 
     @Provides
