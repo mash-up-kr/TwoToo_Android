@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -30,7 +31,7 @@ fun OnBoardingRoute(
     onBoardingViewModel: OnBoardingViewModel,
     onLoginSuccess: (String) -> Unit = {}
 ) {
-    val state = onBoardingViewModel.collectAsState().value
+    val state by onBoardingViewModel.collectAsState()
     val context = LocalContext.current
 
     OnBoardingScreen {
