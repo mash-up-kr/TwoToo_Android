@@ -8,7 +8,7 @@ import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
 import com.mashup.twotoo.presenter.mypage.navigation.userGraph
-import com.mashup.twotoo.presenter.nickname.navigation.NickNameSettingGraph
+import com.mashup.twotoo.presenter.nickname.navigation.nickNameSettingGraph
 import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 
@@ -28,7 +28,7 @@ fun TwoTooNavHost(
         homeGraph(navController = navController)
         userGraph()
         onBoardingGraph(navController = navController)
-        NickNameSettingGraph(navController = navController)
+        nickNameSettingGraph(navController = navController)
         invitationGraph(navController = navController)
         createChallengeGraph(navController = navController)
     }

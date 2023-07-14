@@ -10,8 +10,8 @@ import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
 import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
-import com.mashup.twotoo.presenter.nickname.navigation.NickNameSettingGraph
 import com.mashup.twotoo.presenter.nickname.navigation.navigateToOnNickNameSetting
+import com.mashup.twotoo.presenter.nickname.navigation.nickNameSettingGraph
 import com.mashup.twotoo.presenter.onboarding.OnBoardingRoute
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponentProvider
 import com.mashup.twotoo.presenter.util.componentProvider
@@ -41,7 +41,7 @@ fun NavGraphBuilder.onBoardingGraph(
             }
         }
     }
-    NickNameSettingGraph(navController)
+    nickNameSettingGraph(navController)
     homeGraph(navController)
     invitationGraph(navController)
 }
