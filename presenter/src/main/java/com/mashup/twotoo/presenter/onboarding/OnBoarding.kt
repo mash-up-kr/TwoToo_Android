@@ -46,7 +46,7 @@ fun OnBoardingRoute(
     onBoardingViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is OnboardingSideEffect.NavigateToHome -> {
-                onLoginSuccess(NavigationRoute.HomeScreenGraph.HomeScreen.route)
+                onLoginSuccess(NavigationRoute.HomeGraph.HomeScreen.route)
             }
             is OnboardingSideEffect.NavigateToNickNameSetting -> {
                 onLoginSuccess(NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route)
