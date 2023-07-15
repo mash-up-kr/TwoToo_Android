@@ -4,25 +4,37 @@ import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
+import com.mashup.twotoo.presenter.home.repository.FakeCommitRepository
+import com.mashup.twotoo.presenter.home.repository.FakeViewApprovedButBeforeStartDateRepository
+import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeCreateRepository
+import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeMyApproveRepository
+import com.mashup.twotoo.presenter.home.repository.FakeViewBeforePartnerApproveRepository
+import com.mashup.twotoo.presenter.home.repository.FakeViewExpiredByNotApprovedRepository
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Test
+import repository.CommitRepository
 import repository.ViewRepository
+import usecase.commit.CreateCommitUseCase
 import usecase.view.GetViewHomeUseCase
 
 class HomeViewModelTest {
 
     lateinit var getViewHomeUseCase: GetViewHomeUseCase
-    lateinit var fakeRepository: ViewRepository
+    lateinit var createCommitUseCase: CreateCommitUseCase
+    lateinit var fakeViewRepository: ViewRepository
+    lateinit var fakeCommitRepository: CommitRepository
 
     @Test
     fun getHomeViewBeforeCreateStateTest(): Unit = runTest {
         val scope = TestScope()
-        fakeRepository = FakeViewBeforeCreateRepository()
-        getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase)
+        fakeViewRepository = FakeViewBeforeCreateRepository()
+        fakeCommitRepository = FakeCommitRepository()
+        getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
+        createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
 
         viewModel.getHomeViewChallenge().join()
         scope.launch {
@@ -38,9 +50,11 @@ class HomeViewModelTest {
 
     @Test
     fun getHomeViewBeforePartnerApproveStateTest(): Unit = runTest {
-        fakeRepository = FakeViewBeforePartnerApproveRepository()
-        getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase)
+        fakeViewRepository = FakeViewBeforePartnerApproveRepository()
+        fakeCommitRepository = FakeCommitRepository()
+        getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
+        createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -51,9 +65,11 @@ class HomeViewModelTest {
 
     @Test
     fun getHomeViewBeforeMyApproveStateTest(): Unit = runTest {
-        fakeRepository = FakeViewBeforeMyApproveRepository()
-        getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase)
+        fakeViewRepository = FakeViewBeforeMyApproveRepository()
+        fakeCommitRepository = FakeCommitRepository()
+        getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
+        createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -64,9 +80,11 @@ class HomeViewModelTest {
 
     @Test
     fun getHomeViewApprovedButBeforeStartDateStateTest(): Unit = runTest {
-        fakeRepository = FakeViewApprovedButBeforeStartDateRepository()
-        getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase)
+        fakeViewRepository = FakeViewApprovedButBeforeStartDateRepository()
+        fakeCommitRepository = FakeCommitRepository()
+        getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
+        createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -77,9 +95,11 @@ class HomeViewModelTest {
 
     @Test
     fun getHomeViewExpiredByNotApprovedStateTest(): Unit = runTest {
-        fakeRepository = FakeViewExpiredByNotApprovedRepository()
-        getViewHomeUseCase = GetViewHomeUseCase(fakeRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase)
+        fakeViewRepository = FakeViewExpiredByNotApprovedRepository()
+        fakeCommitRepository = FakeCommitRepository()
+        getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
+        createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
 
         viewModel.container.stateFlow.test {
             assertInitState()

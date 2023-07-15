@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home
+package com.mashup.twotoo.presenter.home.repository
 
 import model.challenge.response.HomeViewResponseDomainModel
 import repository.ViewRepository
