@@ -9,7 +9,7 @@ import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.onboarding.model.OnboardingState
 import com.mashup.twotoo.presenter.util.Logging.getFcmTokenFlow
 import com.mashup.twotoo.presenter.util.LoginState
-import com.mashup.twotoo.presenter.util.getKakaoUserInfo
+import com.mashup.twotoo.presenter.util.getKakaoUserInfoFlow
 import com.mashup.twotoo.presenter.util.login
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
@@ -32,65 +32,52 @@ class OnBoardingViewModel @Inject constructor(
 ) : ViewModel(), ContainerHost<OnBoardingModel, OnboardingSideEffect> {
     override val container = container<OnBoardingModel, OnboardingSideEffect>(OnBoardingModel())
 
-    fun loginWithKakao(context: Context) {
+    fun loginWithKakao(context: Context) = intent {
         viewModelScope.launch {
-            UserApiClient.login(context).combine(getFcmTokenFlow()) { loginState, deviceToken ->
+            val kakaoLogin = UserApiClient.login(context)
+            val fcmToken = getFcmTokenFlow()
+            val userInfo = getKakaoUserInfoFlow()
+            combine(kakaoLogin, fcmToken, userInfo) { loginState, deviceToken, socialId ->
                 when (loginState) {
                     is LoginState.Success -> {
-                        updateLoginState(true, deviceToken)
+                        updateLoginState(true, deviceToken, socialId)
                     }
                     is LoginState.Error -> {
-                        updateLoginState(false, deviceToken)
+                        updateLoginState(false, deviceToken, socialId)
                     }
                     else -> {}
                 }
-            }.collectLatest {}
+            }.collectLatest { }
         }
     }
 
-    private fun updateLoginState(isSuccess: Boolean, deviceToken: String) {
-        getKakaoUserInfo { socialId ->
-            intent {
-                reduce {
-                    Log.d(TAG, "updateLoginState: socialId$socialId")
-                    state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = socialId ?: "")
-                }
+    private fun updateLoginState(isSuccess: Boolean, deviceToken: String, socialId: String?) {
+        intent {
+            reduce {
+                Log.d(TAG, "updateLoginState: socialId$socialId")
+                state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = socialId ?: "")
             }
         }
     }
 
-    fun signUpWithKakaoAccount(deviceToken: String, socialId: String) {
+    fun signUpWithKakaoAccount(deviceToken: String, socialId: String) = intent {
         val userAuthModel = UserAuthRequestDomainModel(deviceToken = deviceToken, socialId = socialId)
-        viewModelScope.launch {
-            userAuthUseCase.invoke(userAuthModel).onSuccess { userInfo ->
-                setAccessTokenUseCase.invoke(userInfo.accessToken)
-                setUserNoUseCase.invoke(userInfo.userNo)
-                when (userInfo.state) {
-                    OnboardingState.NEED_NICKNAME.name -> {
-                        navigateToNickNameSetting()
-                    }
-                    OnboardingState.NEED_MATCHING.name -> {
-                        navigateToMatching()
-                    }
-                    OnboardingState.HOME.name -> {
-                        navigateToHome()
-                    }
+        userAuthUseCase.invoke(userAuthModel).onSuccess { userInfo ->
+            setAccessTokenUseCase.invoke(userInfo.accessToken)
+            setUserNoUseCase.invoke(userInfo.userNo)
+            when (userInfo.state) {
+                OnboardingState.NEED_NICKNAME.name -> {
+                    postSideEffect(OnboardingSideEffect.NavigateToNickNameSetting)
                 }
-            }.onFailure {
-                Log.d(TAG, "failure: ${it.message}")
+                OnboardingState.NEED_MATCHING.name -> {
+                    postSideEffect(OnboardingSideEffect.NavigateToMatching)
+                }
+                OnboardingState.HOME.name -> {
+                    postSideEffect(OnboardingSideEffect.NavigateToHome)
+                }
             }
+        }.onFailure {
+            Log.d(TAG, "failure: ${it.message}")
         }
-    }
-
-    private fun navigateToHome() = intent {
-        postSideEffect(OnboardingSideEffect.NavigateToHome)
-    }
-
-    private fun navigateToMatching() = intent {
-        postSideEffect(OnboardingSideEffect.NavigateToMatching)
-    }
-
-    private fun navigateToNickNameSetting() = intent {
-        postSideEffect(OnboardingSideEffect.NavigateToNickNameSetting)
     }
 }

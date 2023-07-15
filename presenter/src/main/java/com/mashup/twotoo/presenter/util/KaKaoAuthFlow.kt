@@ -59,10 +59,11 @@ private fun ProducerScope<LoginState>.loginWithKakaoAccount(context: Context) =
         close()
     }
 
-fun getKakaoUserInfo(userId: (String?) -> Unit) {
+fun getKakaoUserInfoFlow() = callbackFlow<String?> {
     UserApiClient.instance.me { user, error ->
         if (error != null) {
             Log.e(TAG, "사용자 정보 요청 실패", error)
+            trySend(error.message.toString())
         } else if (user != null) {
             Log.i(
                 TAG,
@@ -70,9 +71,12 @@ fun getKakaoUserInfo(userId: (String?) -> Unit) {
                     "\n회원번호: ${user.id}" +
                     "\n이메일: ${user.kakaoAccount?.email}",
             )
-            userId(user.kakaoAccount?.email)
+            user.kakaoAccount?.email?.let { id ->
+                trySend(id)
+            }
         }
     }
+    awaitClose()
 }
 
 sealed class LoginState {
