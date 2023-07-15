@@ -31,6 +31,7 @@ accompanist_pager = "0.25.1"
 accompanist_systemuicontroller = "0.30.1"
 truth = "1.1.3"
 image_cropper = "4.3.3"
+firebase-bom = "32.1.1"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -92,6 +93,9 @@ kotlin-collection-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collecti
 #firbase
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebase" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx", version.ref = "firebase" }
+firebase-dynamic-link = { module = "com.google.firebase:firebase-dynamic-links-ktx" }
+firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom"}
 
 #workmanager
 work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workmanager" }
@@ -107,7 +111,7 @@ kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "google_services" }
 
 [bundles]
-firebase = ["firebase-messaging", "firebase-messaging-ktx"]
+firebase = ["firebase-messaging", "firebase-messaging-ktx", "firebase-dynamic-link", "firebase-analytics-ktx"]
 androidx-compose = ["androidx-compose-ui", "androidx-compose-ui-tooling-preview", "androidx-compose-matieral3"]
 androidx-compose-ui-debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
 squareup-okhttp = ["okhttp3", "okhttp-interceptor", "okhttp-url-connection"]
