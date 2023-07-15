@@ -15,19 +15,12 @@ class UserDataStoreRepositoryImpl @Inject constructor(
         userPreferenceDataSource.setAccessToken(accessToken)
     }
 
-    override suspend fun getKaKaoAccessToken(): String {
-        return userPreferenceDataSource.getKaKaoAccessToken()
+    override suspend fun setUserNo(userNo: Int) {
+        userPreferenceDataSource.setUserNo(userNo)
     }
 
-    override suspend fun setKaKaoAccessToken(kaKaoAccessToken: String) {
-        userPreferenceDataSource.setKaKaoAccessToken(kaKaoAccessToken)
+    override suspend fun getUserNo(): Int {
+        return userPreferenceDataSource.getUserNo()
     }
 
-    override suspend fun getKaKaoRefreshToken(): String {
-        return userPreferenceDataSource.getKaKaoRefreshToken()
-    }
-
-    override suspend fun setKaKaoRefreshToken(kaKaoRefreshToken: String) {
-        userPreferenceDataSource.setKaKaoRefreshToken(kaKaoRefreshToken)
-    }
 }

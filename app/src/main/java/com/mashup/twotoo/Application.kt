@@ -7,7 +7,10 @@ import com.mashup.twotoo.presenter.di.ScreenComponentProvider
 import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
 import com.mashup.twotoo.presenter.home.di.HomeComponent
+import com.mashup.twotoo.presenter.invite.di.InviteComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
+import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponent
+import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponent
 
 class Application : Application(), ScreenComponentProvider {
     val applicationComponent: ApplicationComponent by lazy {
@@ -26,6 +29,19 @@ class Application : Application(), ScreenComponentProvider {
     override fun provideUserComponent(): UserComponent {
         return applicationComponent.userComponent().create()
     }
+
+    override fun provideOnboardingComponent(): OnboardingComponent {
+        return applicationComponent.onBoardingComponent().create()
+    }
+
+    override fun provideNickNameSettingComponent(): NickNameSettingComponent {
+        return applicationComponent.nickNameSettingComponent().create()
+    }
+
+    override fun provideInviteComponent(): InviteComponent {
+        return applicationComponent.inviteComponent().create()
+    }
+
     override fun provideHistoryComponent(): HistoryComponent {
         return applicationComponent.historyComponent().create()
     }

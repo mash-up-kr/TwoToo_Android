@@ -4,6 +4,7 @@ import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -24,20 +25,12 @@ class UserPreferenceDataSource @Inject constructor(
         setDataStore(stringPreferencesKey(TWOTOO_ACCESS_TOKEN), accessToken)
     }
 
-    suspend fun getKaKaoAccessToken(): String {
-        return getDataStore(stringPreferencesKey(KAKAO_ACCESS_TOKEN)).first() ?: ""
+    suspend fun getUserNo(): Int {
+        return getDataStore(intPreferencesKey(USER_NO)).first() ?: 0
     }
 
-    suspend fun setKaKaoAccessToken(kaKaoAccessToken: String) {
-        setDataStore(stringPreferencesKey(KAKAO_ACCESS_TOKEN), kaKaoAccessToken)
-    }
-
-    suspend fun getKaKaoRefreshToken(): String {
-        return getDataStore(stringPreferencesKey(KAKAO_REFRESH_TOEKN)).first() ?: ""
-    }
-
-    suspend fun setKaKaoRefreshToken(kaKaoRefreshToken: String) {
-        setDataStore(stringPreferencesKey(KAKAO_REFRESH_TOEKN), kaKaoRefreshToken)
+    suspend fun setUserNo(userNo: Int) {
+        setDataStore(intPreferencesKey(USER_NO), userNo)
     }
 
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
@@ -62,7 +55,6 @@ class UserPreferenceDataSource @Inject constructor(
 
     companion object {
         private const val TWOTOO_ACCESS_TOKEN = "TWOTOO_ACCESS_TOKEN"
-        private const val KAKAO_ACCESS_TOKEN = "KAKAO_ACCESS_TOKEN"
-        private const val KAKAO_REFRESH_TOEKN = "KAKAO_REFRESH_TOEKN"
+        private const val USER_NO = "USER_NO"
     }
 }
