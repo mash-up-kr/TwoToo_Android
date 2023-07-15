@@ -12,14 +12,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
+import com.mashup.twotoo.presenter.home.model.ChallengeState
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -36,16 +40,18 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
 
 @Composable
 fun HomeOngoingChallenge(
-    navigateToHistory: () -> Unit,
-    onBeeButtonClick: () -> Unit,
     modifier: Modifier = Modifier,
     ongoingChallengeUiModel: OngoingChallengeUiModel = OngoingChallengeUiModel.default,
     onCommit: () -> Unit = {},
+    onCompleteButtonClick: () -> Unit = {},
+    onBeeButtonClick: () -> Unit = {},
+    navigateToHistory: () -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
             homeGoalField, goalAchievement, goalCount,
             homeBackground, beeButton, shotCount, homeFlower,
+            textButton,
         ) = createRefs()
 
         TwoTooImageView(
@@ -95,24 +101,38 @@ fun HomeOngoingChallenge(
             homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
         )
 
-        HomeBeeButton(
-            modifier = Modifier.constrainAs(beeButton) {
-                top.linkTo(homeBackground.top)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-                bottom.linkTo(parent.bottom)
-            }.clickable {
-                onBeeButtonClick()
-            },
-        )
-        HomeShotCountText(
-            modifier = Modifier.constrainAs(shotCount) {
-                top.linkTo(beeButton.bottom, margin = 10.19.dp)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            homeShotCountTextUiModel = ongoingChallengeUiModel.homeShotCountTextUiModel,
-        )
+        if (ongoingChallengeUiModel.homeChallengeStateUiModel.challengeState == ChallengeState.Complete) {
+            TwoTooTextButton(
+                modifier = Modifier.testTag(stringResource(id = R.string.homeOngoingCompleteChallengeButton)).width(177.dp).height(57.dp).constrainAs(textButton) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom, margin = 51.dp)
+                },
+                text = stringResource(id = R.string.homeOngoingCompleteChallengeButtonText),
+                onClick = {
+                    onCompleteButtonClick()
+                },
+            )
+        } else {
+            HomeBeeButton(
+                modifier = Modifier.constrainAs(beeButton) {
+                    top.linkTo(homeBackground.top)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    bottom.linkTo(parent.bottom)
+                }.clickable {
+                    onBeeButtonClick()
+                },
+            )
+            HomeShotCountText(
+                modifier = Modifier.constrainAs(shotCount) {
+                    top.linkTo(beeButton.bottom, margin = 10.19.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+                homeShotCountTextUiModel = ongoingChallengeUiModel.homeShotCountTextUiModel,
+            )
+        }
     }
 }
 

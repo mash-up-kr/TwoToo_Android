@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
@@ -15,6 +17,8 @@ import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
@@ -41,7 +45,13 @@ fun HomeRoute(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
     )
+    val lifecycleOwner = LocalLifecycleOwner.current
 
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            homeViewModel.getHomeViewChallenge()
+        }
+    }
     val state by homeViewModel.collectAsState()
 
     homeViewModel.collectSideEffect { sideEffect ->
@@ -58,6 +68,7 @@ fun HomeRoute(
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
             onCommit = homeViewModel::openToAuthBottomSheet,
             navigateToHistory = homeViewModel::navigateToHistory,
+            onCompleteButtonClick = homeViewModel::navigateToHistory,
         )
 
         with(homeSideEffectHandler) {
@@ -86,6 +97,7 @@ fun HomeScreen(
     onBeeButtonClick: () -> Unit = {},
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
     onCommit: () -> Unit = {},
+    onCompleteButtonClick: () -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
 ) {
     ConstraintLayout(
@@ -130,6 +142,7 @@ fun HomeScreen(
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,
+                    onCompleteButtonClick = onCompleteButtonClick,
                 )
             }
         }

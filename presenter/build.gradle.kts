@@ -79,6 +79,9 @@ dependencies {
     implementation(libs.bundles.firebase)
     androidTestImplementation(libs.test.navigation)
     androidTestImplementation(libs.truth)
+    testImplementation(libs.turbine)
+    testImplementation(libs.orbit.test)
+    testImplementation(libs.kotlin.coroutine.test)
 }
 
 fun getApiKey(propertyKey: String): String {

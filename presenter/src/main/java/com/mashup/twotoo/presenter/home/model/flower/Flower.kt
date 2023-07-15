@@ -17,7 +17,11 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage.Second
 import com.mashup.twotoo.presenter.home.model.flower.Stage.Third
 import com.mashup.twotoo.presenter.home.model.flower.Stage.Zero
 
-data class Flower(val flowerName: FlowerName, val userType: UserType, val growType: Stage) : FlowerType(
+data class Flower(
+    val flowerName: FlowerName,
+    val userType: UserType,
+    val growType: Stage,
+) : FlowerType(
     name = flowerName,
 ) {
     override fun getFlowerImage(context: Context): FlowerImage {
@@ -49,5 +53,17 @@ data class Flower(val flowerName: FlowerName, val userType: UserType, val growTy
                 }
             }
         }
+    }
+
+    override fun getFlowerLanguage(context: Context): String {
+        val name = "${flowerName.name.lowercase()}_language"
+        val flowerLanguage = context.resources.getIdentifier(name, "string", context.packageName)
+        return context.getString(flowerLanguage)
+    }
+
+    override fun getFlowerName(context: Context): String {
+        val name = flowerName.name.lowercase()
+        val flowerName = context.resources.getIdentifier(name, "string", context.packageName)
+        return context.getString(flowerName)
     }
 }

@@ -28,6 +28,7 @@ import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
@@ -36,6 +37,9 @@ import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.flower.Flower
+import com.mashup.twotoo.presenter.home.model.flower.FlowerName
+import com.mashup.twotoo.presenter.home.model.flower.Stage
 
 /**
  * @Created by 김현국 2023/06/07
@@ -50,10 +54,33 @@ fun HomeFlowerMeAndPartner(
     ConstraintLayout(
         modifier = modifier,
     ) {
-        val (textHint, partnerText, waterImage, partner, partnerFlowerOwnerText, me, meFlowerOwnerText, partnerCheer, meCheer, heartImage) = createRefs()
+        val (
+            textHint, partnerText, waterImage, partner,
+            partnerFlowerOwnerText, me, meFlowerOwnerText,
+            partnerCheer, meCheer, heartImage, partnerFlowerLanguage, meFlowerLanguage,
+        ) = createRefs()
 
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
+                if (homeChallengeStateUiModel.challengeState == Complete) {
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(partnerFlowerLanguage) {
+                            bottom.linkTo(partner.top)
+                            start.linkTo(partner.start)
+                            end.linkTo(partner.end)
+                        },
+                        homeFlowerUiModel = this.partner,
+                    )
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(meFlowerLanguage) {
+                            bottom.linkTo(me.top)
+                            start.linkTo(me.start)
+                            end.linkTo(me.end)
+                        },
+                        homeFlowerUiModel = this.me,
+                    )
+                }
+
                 if (this.me.authType == FirstCreateChallenge) {
                     TextHint(
                         modifier = Modifier
@@ -532,6 +559,38 @@ private fun PreviewDoNotCheerBoth() {
                         ),
                         me = CheerWithFlower.meNotYet.copy(
                             cheerState = CheerState.NotYet,
+                        ),
+                    ),
+                ),
+            )
+        }
+    }
+}
+
+@Preview("완료상태", showBackground = true)
+@Composable
+private fun PreviewComplete() {
+    TwoTooTheme {
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            HomeFlowerMeAndPartner(
+                modifier = Modifier.fillMaxWidth(),
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.complete.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth.copy(
+                        partner = HomeFlowerUiModel.partner.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = PARTNER,
+                                growType = Stage.Fifth,
+                            ),
+                        ),
+                        me = HomeFlowerUiModel.me.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = ME,
+                                growType = Stage.Fifth,
+                            ),
                         ),
                     ),
                 ),

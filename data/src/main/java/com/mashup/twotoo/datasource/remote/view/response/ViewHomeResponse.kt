@@ -9,7 +9,7 @@ import com.squareup.moshi.JsonClass
 data class ViewHomeResponse(
     @Json(name = "challengeTotal") val challengeTotal: Int,
     @Json(name = "onGoingChallenge") val onGoingChallenge: Challenge,
-    @Json(name = "user1Commit") val user1Commit: UserCommit,
-    @Json(name = "user2Commit") val user2Commit: UserCommit,
+    @Json(name = "user1Commit") val user1Commit: UserCommit?,
+    @Json(name = "user2Commit") val user2Commit: UserCommit?,
     @Json(name = "viewState") val viewState: String,
 )

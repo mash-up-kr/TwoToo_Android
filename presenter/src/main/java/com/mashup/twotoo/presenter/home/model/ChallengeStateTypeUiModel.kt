@@ -10,6 +10,7 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.TERMINATION
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.WAIT
 import com.mashup.twotoo.presenter.home.model.ChallengeState.Auth
 import com.mashup.twotoo.presenter.home.model.ChallengeState.Cheer
+import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 
 /**
  * @Created by 김현국 2023/06/10
@@ -121,7 +122,7 @@ data class StateTitleUiModel(
 }
 
 enum class ChallengeState {
-    Auth, Cheer
+    Auth, Cheer, Complete
 }
 sealed interface ChallengeStateUiModel
 data class HomeChallengeStateUiModel(
@@ -137,6 +138,11 @@ data class HomeChallengeStateUiModel(
         val cheer = HomeChallengeStateUiModel(
             challengeState = Cheer,
             challengeStateUiModel = HomeCheerUiModel.default,
+        )
+
+        val complete = HomeChallengeStateUiModel(
+            challengeState = Complete,
+            challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth,
         )
 
         val cheerBoth = HomeChallengeStateUiModel(
