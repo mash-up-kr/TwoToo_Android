@@ -8,7 +8,7 @@ interface CommitRepository {
 
     suspend fun commit(
         commitRequestDomainModel: CommitRequestDomainModel,
-    ): CommitResponseDomainModel
+    ): Result<CommitResponseDomainModel>
 
     suspend fun cheer(
         commitNoRequestDomainModel: CommitNoRequestDomainModel,

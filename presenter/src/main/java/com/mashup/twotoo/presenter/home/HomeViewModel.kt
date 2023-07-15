@@ -8,12 +8,15 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
+import com.mashup.twotoo.presenter.home.model.ToastText
+import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.commit.CreateCommitUseCase
 import usecase.view.GetViewHomeUseCase
 import javax.inject.Inject
 
@@ -24,6 +27,7 @@ import javax.inject.Inject
 @HomeScope
 class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
+    private val createCommitUseCase: CreateCommitUseCase,
 ) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
 
     override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
@@ -36,7 +40,7 @@ class HomeViewModel @Inject constructor(
                 ).state
             }
         }.onFailure {
-            postSideEffect(HomeSideEffect.Toast("홈 정보를 불라오기 실패했습니다ㅠ"))
+            postSideEffect(HomeSideEffect.Toast(ToastText.LoadHomeFail))
         }
     }
     fun navigateToHistory() = intent {
@@ -75,13 +79,32 @@ class HomeViewModel @Inject constructor(
     fun onClickSendBottomSheetDataButton(bottomSheetData: BottomSheetData) = intent {
         when (bottomSheetData) {
             is BottomSheetData.AuthenticateData -> {
-                // 서버 데이터 전송 sideEffect
-
-                // toast sideEffect
-                // Todo 텍스트 string resource로 변경
-                HomeSideEffect.Toast(
-                    "오늘의 인증을 완료했습니다.",
-                )
+                createCommitUseCase(
+                    commitRequestDomainModel = CommitRequestDomainModel(
+                        text = bottomSheetData.text,
+                        img = bottomSheetData.image.toString(),
+                    ),
+                ).onSuccess { domainModel ->
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.CommitSuccess,
+                        ),
+                    )
+                    // TODO GET VIEW API 재호출
+                }
+                    .onFailure {
+                        postSideEffect(
+                            HomeSideEffect.DismissBottomSheet,
+                        )
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.CommitFail,
+                            ),
+                        )
+                    }
             }
             is BottomSheetData.ShotData -> {
                 // 서버 데이터 전송
@@ -89,7 +112,7 @@ class HomeViewModel @Inject constructor(
                 // toast sideEffect
                 postSideEffect(
                     HomeSideEffect.Toast(
-                        "상대방에게 찌르기 문구가 보내졌습니다.",
+                        ToastText.ShotSuccess,
                     ),
                 )
             }
@@ -99,7 +122,7 @@ class HomeViewModel @Inject constructor(
                 // toast sideEffect
                 postSideEffect(
                     HomeSideEffect.Toast(
-                        "칭찬 한마디가 등록되었습니다.",
+                        ToastText.CheerSuccess,
                     ),
                 )
             }

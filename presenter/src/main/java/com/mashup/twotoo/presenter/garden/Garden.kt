@@ -13,30 +13,28 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun GardenRoute(
+    gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
     navigateToGarden: () -> Unit,
 ) {
-    val viewModel: GardenViewModel = viewModel()
-    val state by viewModel.collectAsState()
+    val state by gardenViewModel.collectAsState()
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
-        challengeCardInfoUiModels = state.challengeCardInfos,
         navigateToGarden = navigateToGarden,
+        state = state,
     )
 }
 
 @Composable
 fun GardenScreen(
-    challengeCardInfoUiModels: List<ChallengeCardInfoUiModel>,
+    state: GardenState,
     modifier: Modifier = Modifier,
     navigateToGarden: () -> Unit,
 ) {
@@ -52,7 +50,7 @@ fun GardenScreen(
             horizontalArrangement = Arrangement.spacedBy(13.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp),
         ) {
-            items(challengeCardInfoUiModels) { challengeInfo ->
+            items(state.challengeCardInfos) { challengeInfo ->
                 ChallengeCard(challengeInfo, navigateToGarden)
             }
         }
@@ -62,5 +60,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(ChallengeCardInfoUiModel.default, navigateToGarden = {})
+    GardenScreen(GardenState.default, navigateToGarden = {})
 }
