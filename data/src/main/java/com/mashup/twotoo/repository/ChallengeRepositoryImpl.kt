@@ -22,9 +22,11 @@ class ChallengeRepositoryImpl @Inject constructor(
         ).toDomainModel()
     }
 
-    override suspend fun getAllChallenge(): List<ChallengeResponseDomainModel> {
-        return challengeDataSource.getAllChallenge().map { challenge: Challenge ->
-            challenge.toDomainModel()
+    override suspend fun getAllChallenge(): Result<List<ChallengeResponseDomainModel>> {
+        return runCatching {
+            challengeDataSource.getAllChallenge().map { challenge: Challenge ->
+                challenge.toDomainModel()
+            }
         }
     }
 

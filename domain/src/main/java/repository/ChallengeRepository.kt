@@ -10,7 +10,7 @@ interface ChallengeRepository {
         createChallengeRequestDomainModel: CreateChallengeRequestDomainModel,
     ): ChallengeResponseDomainModel
 
-    suspend fun getAllChallenge(): List<ChallengeResponseDomainModel>
+    suspend fun getAllChallenge(): Result<List<ChallengeResponseDomainModel>>
 
     suspend fun getChallengeByNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
