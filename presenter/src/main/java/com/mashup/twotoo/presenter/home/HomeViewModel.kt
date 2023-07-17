@@ -5,13 +5,13 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -19,6 +19,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
@@ -39,9 +40,16 @@ class HomeViewModel @Inject constructor(
     private val getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
     private val setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
     private val setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
+    private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
 ) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
 
-    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
+    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(
+        OngoingChallengeUiModel.default.copy(
+            homeChallengeStateUiModel = OngoingChallengeUiModel.default.homeChallengeStateUiModel.copy(
+                challengeState = ChallengeState.Complete,
+            ),
+        ),
+    )
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
@@ -51,35 +59,45 @@ class HomeViewModel @Inject constructor(
                     state = uiModel,
                 ).state
             }
+
+            if (this.state is OngoingChallengeUiModel) {
+                with(this.state as OngoingChallengeUiModel) {
+                    when (homeChallengeStateUiModel.challengeState) {
+                        ChallengeState.Cheer -> {
+                            if (!getVisibilityCheerDialogUseCase()) {
+                                postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
+                            }
+                        }
+
+                        ChallengeState.Complete -> {
+                            if (!getVisibilityCompleteDialogUseCase()) {
+                                if (isBothBloom(this)) {
+                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Bloom))
+                                } else {
+                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
+                                }
+                            }
+                        }
+
+                        ChallengeState.Auth -> {
+                            return@intent
+                        }
+                    }
+                }
+            }
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.LoadHomeFail))
         }
     }
-    fun getHomeDialogState(state: ChallengeStateTypeUiModel) = intent {
-        if (state is OngoingChallengeUiModel) {
-            when (state.homeChallengeStateUiModel.challengeState) {
-                ChallengeState.Cheer -> {
-                    if (!getVisibilityCheerDialogUseCase()) {
-                        setVisibilityCheerDialogUseCase(true)
-                        postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
-                    }
-                }
-                ChallengeState.Complete -> {
-                    if (!getVisibilityCompleteDialogUseCase()) {
-                        setVisibilityCompleteDialogUseCase(true)
-                        if (isBothBloom(state)) {
-                            postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Bloom))
-                        } else {
-                            postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
-                        }
-                    }
-                }
-                ChallengeState.Auth -> {
-                    return@intent
-                }
-            }
-        }
+
+    fun onClickCheerDialogNegativeButton() = intent {
+        setVisibilityCheerDialogUseCase(true)
     }
+
+    fun onClickCompleteDialogConfirmButton() = intent {
+        setVisibilityCompleteDialogUseCase(true)
+    }
+
     fun navigateToHistory() = intent {
         postSideEffect(HomeSideEffect.NavigateToChallengeDetail)
     }
@@ -169,6 +187,21 @@ class HomeViewModel @Inject constructor(
             }
         }
     }
+
+    fun onClickCompleteButton(
+        challengeNo: Int,
+    ) = intent {
+        finishChallengeWithNoUseCase(
+            challengeNoRequestDomainModel = ChallengeNoRequestDomainModel(
+                challengeNo = challengeNo,
+            ),
+        ).onSuccess {
+            postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
+        }.onFailure {
+            postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
+        }
+    }
+
     private fun isBothBloom(state: OngoingChallengeUiModel): Boolean {
         val meProgress = state.homeGoalAchievePartnerAndMeUiModel.me.progress
         val partnerProgress = state.homeGoalAchievePartnerAndMeUiModel.partner.progress
