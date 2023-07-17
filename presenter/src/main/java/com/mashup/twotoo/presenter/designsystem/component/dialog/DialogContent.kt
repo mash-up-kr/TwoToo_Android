@@ -41,7 +41,7 @@ data class DialogContent(
         ) = DialogContent(
             title = R.string.congratulations,
             desc = R.string.congratulations_desc,
-            image = R.drawable.img_home_dialog_all_verified, // TODO 수정
+            image = R.drawable.img_home_dialog_all_bloom,
             buttons = listOf(
                 DialogButtonContent(
                     text = R.string.button_confirm,
@@ -55,7 +55,7 @@ data class DialogContent(
         ) = DialogContent(
             title = R.string.thankyou,
             desc = R.string.thankyou_desc,
-            image = R.drawable.img_home_dialog_all_verified, // TODO 수정
+            image = R.drawable.img_home_dialog_do_not_all_bloom,
             buttons = listOf(
                 DialogButtonContent(
                     text = R.string.button_confirm,

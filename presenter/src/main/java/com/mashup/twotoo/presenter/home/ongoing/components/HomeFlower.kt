@@ -50,6 +50,7 @@ fun HomeFlowerMeAndPartner(
     homeChallengeStateUiModel: HomeChallengeStateUiModel,
     modifier: Modifier = Modifier,
     onCommit: () -> Unit = {},
+    onClickCheerButton: () -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier,
@@ -233,6 +234,7 @@ fun HomeFlowerMeAndPartner(
                         },
                     cheerState = this.me.cheerState,
                     cheerText = this.me.cheerText,
+                    onClickCheerButton = onClickCheerButton,
                 )
 
                 HomeFlowerMe(
@@ -294,6 +296,7 @@ fun HomeCheerMe(
     cheerState: CheerState,
     modifier: Modifier = Modifier,
     cheerText: String = "",
+    onClickCheerButton: () -> Unit = {},
 ) {
     when (cheerState) {
         CheerState.NotEmpty -> {
@@ -309,7 +312,9 @@ fun HomeCheerMe(
             HomeCheerFirstSpeech(
                 modifier = modifier.testTag(
                     stringResource(id = R.string.homeCheerChallengeMeBeforeCheerBubble),
-                ).padding(bottom = 32.dp),
+                ).padding(bottom = 32.dp).clickable {
+                    onClickCheerButton()
+                },
                 cheerText = stringResource(id = R.string.homeCheerChallengeFirstText),
             )
         }

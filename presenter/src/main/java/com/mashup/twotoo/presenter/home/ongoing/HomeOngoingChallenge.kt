@@ -46,6 +46,7 @@ fun HomeOngoingChallenge(
     onCompleteButtonClick: () -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
+    onClickCheerButton : () -> Unit ={},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
@@ -99,6 +100,7 @@ fun HomeOngoingChallenge(
             },
             onCommit = onCommit,
             homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
+            onClickCheerButton = onClickCheerButton
         )
 
         if (ongoingChallengeUiModel.homeChallengeStateUiModel.challengeState == ChallengeState.Complete) {

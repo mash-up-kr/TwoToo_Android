@@ -12,6 +12,7 @@ sealed class HomeSideEffect {
     object OpenToHelp : HomeSideEffect()
     object NavigationToCreateChallenge : HomeSideEffect()
     object DismissBottomSheet : HomeSideEffect()
+    object OpenHomeDialog : HomeSideEffect()
 }
 
 enum class ToastText {
