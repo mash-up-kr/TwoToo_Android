@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.model.flower
+package com.mashup.twotoo.presenter.home.model
 
 /**
  * @Created by 김현국 2023/06/23
@@ -7,9 +7,12 @@ package com.mashup.twotoo.presenter.home.model.flower
 import android.content.Context
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
+import com.mashup.twotoo.presenter.home.model.flower.FlowerImage
+import com.mashup.twotoo.presenter.home.model.flower.FlowerName
+import com.mashup.twotoo.presenter.home.model.flower.FlowerType
+import com.mashup.twotoo.presenter.home.model.flower.Stage
 import com.mashup.twotoo.presenter.home.model.flower.Stage.Fifth
 import com.mashup.twotoo.presenter.home.model.flower.Stage.First
 import com.mashup.twotoo.presenter.home.model.flower.Stage.Fourth
@@ -55,13 +58,13 @@ data class Flower(
         }
     }
 
-    override fun getFlowerLanguage(context: Context): String {
+    fun getFlowerLanguage(context: Context): String {
         val name = "${flowerName.name.lowercase()}_language"
         val flowerLanguage = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerLanguage)
     }
 
-    override fun getFlowerName(context: Context): String {
+    fun getFlowerName(context: Context): String {
         val name = flowerName.name.lowercase()
         val flowerName = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerName)

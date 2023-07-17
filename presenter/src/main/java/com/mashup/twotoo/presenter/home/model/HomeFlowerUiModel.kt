@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.home.model
 
-import com.mashup.twotoo.presenter.home.model.flower.Flower
 import com.mashup.twotoo.presenter.home.model.flower.FlowerName
 import com.mashup.twotoo.presenter.home.model.flower.FlowerType
 import com.mashup.twotoo.presenter.home.model.flower.Stage

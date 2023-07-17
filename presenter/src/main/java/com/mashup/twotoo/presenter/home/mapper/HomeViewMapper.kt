@@ -4,6 +4,7 @@ import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
+import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -15,7 +16,6 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
 import com.mashup.twotoo.presenter.home.model.HomeShotCountTextUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
-import com.mashup.twotoo.presenter.home.model.flower.Flower
 import com.mashup.twotoo.presenter.home.model.flower.FlowerName
 import com.mashup.twotoo.presenter.home.model.flower.Stage
 import model.challenge.response.HomeViewResponseDomainModel
