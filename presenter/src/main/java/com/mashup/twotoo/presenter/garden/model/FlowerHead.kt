@@ -10,7 +10,7 @@ data class FlowerHead(val flowerName: FlowerName) : FlowerType(
     name = flowerName,
 ) {
     override fun getFlowerImage(context: Context): FlowerImage {
-        val name = "img_garden_${flowerName.name.lowercase()}"
+        val name = "img_head_${flowerName.name.lowercase()}_sm"
         val image = context.resources.getIdentifier(name, "drawable", context.packageName)
         return FlowerImage(image = image, width = 127.dp, height = 211.dp)
     }
