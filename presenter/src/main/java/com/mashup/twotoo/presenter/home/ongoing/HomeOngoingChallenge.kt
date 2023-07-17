@@ -43,7 +43,7 @@ fun HomeOngoingChallenge(
     modifier: Modifier = Modifier,
     ongoingChallengeUiModel: OngoingChallengeUiModel = OngoingChallengeUiModel.default,
     onCommit: () -> Unit = {},
-    onCompleteButtonClick: () -> Unit = {},
+    onCompleteButtonClick: (Int) -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
     onClickCheerButton: () -> Unit = {},
@@ -112,7 +112,7 @@ fun HomeOngoingChallenge(
                 },
                 text = stringResource(id = R.string.homeOngoingCompleteChallengeButtonText),
                 onClick = {
-                    onCompleteButtonClick()
+                    onCompleteButtonClick(ongoingChallengeUiModel.challengeNo)
                 },
             )
         } else {

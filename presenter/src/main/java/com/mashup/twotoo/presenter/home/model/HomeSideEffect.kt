@@ -19,5 +19,5 @@ enum class HomeDialogType {
     Cheer, Bloom, DoNotBloom
 }
 enum class ToastText {
-    CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, LoadHomeFail
+    CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, LoadHomeFail, FinishFail
 }

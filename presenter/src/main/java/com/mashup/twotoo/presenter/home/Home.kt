@@ -31,6 +31,7 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -46,16 +47,17 @@ fun HomeRoute(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
         openCheerBottomSheet = homeViewModel::openToCheerBottomSheet,
+        setVisibilityCheerDialog = homeViewModel::onClickCheerDialogNegativeButton,
+        setVisibilityCompleteDialog = homeViewModel::onClickCompleteDialogConfirmButton,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()
 
     LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            homeViewModel.getHomeViewChallenge()
-        }
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            homeViewModel.getHomeDialogState(state)
+        launch {
+            lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                homeViewModel.getHomeViewChallenge()
+            }
         }
     }
 
@@ -73,7 +75,7 @@ fun HomeRoute(
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
             onCommit = homeViewModel::openToAuthBottomSheet,
             navigateToHistory = homeViewModel::navigateToHistory,
-            onCompleteButtonClick = homeViewModel::navigateToHistory,
+            onClickCompleteButton = homeViewModel::onClickCompleteButton,
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
         )
 
@@ -109,7 +111,7 @@ fun HomeScreen(
     onBeeButtonClick: () -> Unit = {},
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
     onCommit: () -> Unit = {},
-    onCompleteButtonClick: () -> Unit = {},
+    onClickCompleteButton: (Int) -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
     onClickCheerButton: () -> Unit = {},
 ) {
@@ -155,7 +157,7 @@ fun HomeScreen(
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,
-                    onCompleteButtonClick = onCompleteButtonClick,
+                    onCompleteButtonClick = onClickCompleteButton,
                     onClickCheerButton = onClickCheerButton,
                 )
             }

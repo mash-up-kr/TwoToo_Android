@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.di
 import com.mashup.twotoo.presenter.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
+import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
@@ -28,6 +29,7 @@ class HomeModule {
         getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
         setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
         setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
+        finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
     ): HomeViewModel {
         return HomeViewModel(
             getHomeViewUseCase = getHomeViewChallengeStateUseCase,
@@ -36,6 +38,7 @@ class HomeModule {
             getVisibilityCompleteDialogUseCase = getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase = setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase = setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase = finishChallengeWithNoUseCase,
         )
     }
 }

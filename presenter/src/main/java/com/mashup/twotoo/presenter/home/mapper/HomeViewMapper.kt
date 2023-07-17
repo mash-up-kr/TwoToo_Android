@@ -102,6 +102,7 @@ fun HomeViewResponseDomainModel.toOngoingChallengeUiModel(
     userNo: Int,
 ): OngoingChallengeUiModel {
     return OngoingChallengeUiModel(
+        challengeNo = this.onGoingChallenge.challengeNo,
         homeChallengeStateUiModel = toHomeChallengeStateUiModel(userNo = userNo),
         homeGoalAchievePartnerAndMeUiModel = toHomeGoalAchievePartnerAndMeUiModel(userNo = userNo),
         homeGoalCountUiModel = toHomeGoalCountUiModel(userNo = userNo),

@@ -71,6 +71,7 @@ data class BeforeChallengeUiModel(
 }
 
 data class OngoingChallengeUiModel(
+    val challengeNo: Int = 0,
     val homeChallengeStateUiModel: HomeChallengeStateUiModel,
     val homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel,
     val homeGoalCountUiModel: HomeGoalCountUiModel,
