@@ -73,7 +73,7 @@ class NetworkModule {
     }
 
     companion object {
-        const val URL = "https://twotoo-node-zmtrd.run.goorm.site/"
+        const val URL = "https://twotoo-node-zmtrd.run.goorm.site/api/"
         const val AUTHORIZATION = "Authorization"
     }
 }
