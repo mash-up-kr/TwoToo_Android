@@ -5,6 +5,7 @@ import app.cash.turbine.test
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.repository.FakeCommitRepository
+import com.mashup.twotoo.presenter.home.repository.FakeUserDataStoreRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewApprovedButBeforeStartDateRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeCreateRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeMyApproveRepository
@@ -14,18 +15,39 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.TestScope
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
+import org.junit.Before
 import org.junit.Test
 import repository.CommitRepository
+import repository.UserDataStoreRepository
 import repository.ViewRepository
 import usecase.commit.CreateCommitUseCase
+import usecase.user.GetVisibilityCheerDialogUseCase
+import usecase.user.GetVisibilityCompleteDialogUseCase
+import usecase.user.SetVisibilityCheerDialogUseCase
+import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 
 class HomeViewModelTest {
 
     lateinit var getViewHomeUseCase: GetViewHomeUseCase
     lateinit var createCommitUseCase: CreateCommitUseCase
+    lateinit var getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase
+    lateinit var getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase
+    lateinit var setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase
+    lateinit var setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase
+
     lateinit var fakeViewRepository: ViewRepository
     lateinit var fakeCommitRepository: CommitRepository
+    lateinit var userDataStoreRepository: UserDataStoreRepository
+
+    @Before
+    fun initUserDataStoreRepository() {
+        userDataStoreRepository = FakeUserDataStoreRepository()
+        getVisibilityCheerDialogUseCase = GetVisibilityCheerDialogUseCase(userDataStoreRepository)
+        getVisibilityCompleteDialogUseCase = GetVisibilityCompleteDialogUseCase(userDataStoreRepository)
+        setVisibilityCheerDialogUseCase = SetVisibilityCheerDialogUseCase(userDataStoreRepository)
+        setVisibilityCompleteDialogUseCase = SetVisibilityCompleteDialogUseCase(userDataStoreRepository)
+    }
 
     @Test
     fun getHomeViewBeforeCreateStateTest(): Unit = runTest {
@@ -34,7 +56,14 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
+        val viewModel = HomeViewModel(
+            getViewHomeUseCase,
+            createCommitUseCase,
+            getVisibilityCheerDialogUseCase,
+            getVisibilityCompleteDialogUseCase,
+            setVisibilityCheerDialogUseCase,
+            setVisibilityCompleteDialogUseCase,
+        )
 
         viewModel.getHomeViewChallenge().join()
         scope.launch {
@@ -54,7 +83,14 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
+        val viewModel = HomeViewModel(
+            getViewHomeUseCase,
+            createCommitUseCase,
+            getVisibilityCheerDialogUseCase,
+            getVisibilityCompleteDialogUseCase,
+            setVisibilityCheerDialogUseCase,
+            setVisibilityCompleteDialogUseCase,
+        )
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -69,7 +105,14 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
+        val viewModel = HomeViewModel(
+            getViewHomeUseCase,
+            createCommitUseCase,
+            getVisibilityCheerDialogUseCase,
+            getVisibilityCompleteDialogUseCase,
+            setVisibilityCheerDialogUseCase,
+            setVisibilityCompleteDialogUseCase,
+        )
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -84,7 +127,14 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
+        val viewModel = HomeViewModel(
+            getViewHomeUseCase,
+            createCommitUseCase,
+            getVisibilityCheerDialogUseCase,
+            getVisibilityCompleteDialogUseCase,
+            setVisibilityCheerDialogUseCase,
+            setVisibilityCompleteDialogUseCase,
+        )
 
         viewModel.container.stateFlow.test {
             assertInitState()
@@ -99,7 +149,14 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
-        val viewModel = HomeViewModel(getViewHomeUseCase, createCommitUseCase)
+        val viewModel = HomeViewModel(
+            getViewHomeUseCase,
+            createCommitUseCase,
+            getVisibilityCheerDialogUseCase,
+            getVisibilityCompleteDialogUseCase,
+            setVisibilityCheerDialogUseCase,
+            setVisibilityCompleteDialogUseCase,
+        )
 
         viewModel.container.stateFlow.test {
             assertInitState()
