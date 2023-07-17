@@ -12,9 +12,12 @@ sealed class HomeSideEffect {
     object OpenToHelp : HomeSideEffect()
     object NavigationToCreateChallenge : HomeSideEffect()
     object DismissBottomSheet : HomeSideEffect()
-    object OpenHomeDialog : HomeSideEffect()
+    data class OpenHomeDialog(val type: HomeDialogType) : HomeSideEffect()
 }
 
+enum class HomeDialogType {
+    Cheer, Bloom, DoNotBloom
+}
 enum class ToastText {
     CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, LoadHomeFail
 }

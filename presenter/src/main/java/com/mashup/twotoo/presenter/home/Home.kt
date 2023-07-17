@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -44,15 +45,19 @@ fun HomeRoute(
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
+        openCheerBottomSheet = homeViewModel::openToCheerBottomSheet,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
+    val state by homeViewModel.collectAsState()
 
     LaunchedEffect(Unit) {
         lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
             homeViewModel.getHomeViewChallenge()
         }
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            homeViewModel.getHomeDialogState(state)
+        }
     }
-    val state by homeViewModel.collectAsState()
 
     homeViewModel.collectSideEffect { sideEffect ->
         homeSideEffectHandler.handleSideEffect(sideEffect = sideEffect)
@@ -69,6 +74,7 @@ fun HomeRoute(
             onCommit = homeViewModel::openToAuthBottomSheet,
             navigateToHistory = homeViewModel::navigateToHistory,
             onCompleteButtonClick = homeViewModel::navigateToHistory,
+            onClickCheerButton = homeViewModel::openToCheerBottomSheet,
         )
 
         with(homeSideEffectHandler) {
@@ -85,6 +91,12 @@ fun HomeRoute(
                 Modifier.align(Alignment.BottomCenter),
                 snackbarHostState,
             )
+
+            if (isHomeDialogVisible) {
+                TwoTooDialog(
+                    content = homeDialogType,
+                )
+            }
         }
     }
 }
@@ -99,6 +111,7 @@ fun HomeScreen(
     onCommit: () -> Unit = {},
     onCompleteButtonClick: () -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
+    onClickCheerButton: () -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier.semantics {
@@ -143,6 +156,7 @@ fun HomeScreen(
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,
                     onCompleteButtonClick = onCompleteButtonClick,
+                    onClickCheerButton = onClickCheerButton,
                 )
             }
         }

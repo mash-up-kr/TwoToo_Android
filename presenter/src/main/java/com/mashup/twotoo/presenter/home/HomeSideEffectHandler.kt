@@ -15,6 +15,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.CoroutineScope
@@ -29,6 +31,7 @@ fun rememberHomeSideEffectHandler(
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: () -> Unit,
     navigateToCreateChallenge: () -> Unit,
+    openCheerBottomSheet: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -43,6 +46,7 @@ fun rememberHomeSideEffectHandler(
             coroutineScope = coroutineScope,
             navigateToHistory = navigateToHistory,
             navigateToCreateChallenge = navigateToCreateChallenge,
+            openCheerBottomSheet = openCheerBottomSheet,
         )
     }
 }
@@ -56,9 +60,13 @@ class HomeSideEffectHandler(
     private val coroutineScope: CoroutineScope,
     private val navigateToHistory: () -> Unit,
     private val navigateToCreateChallenge: () -> Unit,
+    private val openCheerBottomSheet: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
+
+    var isHomeDialogVisible by mutableStateOf(false)
+    var homeDialogType by mutableStateOf(DialogContent.default)
 
     fun handleSideEffect(sideEffect: HomeSideEffect) {
         when (sideEffect) {
@@ -78,7 +86,7 @@ class HomeSideEffectHandler(
                             ToastText.CheerSuccess -> {
                                 context.getString(R.string.toast_message_cheer_success)
                             }
-                            ToastText.LoadHomeFail->{
+                            ToastText.LoadHomeFail -> {
                                 context.getString(R.string.toast_message_load_home_fail)
                             }
                         },
@@ -96,6 +104,9 @@ class HomeSideEffectHandler(
             is HomeSideEffect.OpenToAuthBottomSheet -> {
                 bottomSheetType = BottomSheetType.Authenticate()
                 isBottomSheetVisible = !isBottomSheetVisible
+            }
+            is HomeSideEffect.OpenHomeDialog -> {
+                handleDialog(sideEffect.type)
             }
             is HomeSideEffect.OpenToHelp -> {
             }
@@ -119,5 +130,36 @@ class HomeSideEffectHandler(
                 isBottomSheetVisible = !isBottomSheetVisible
             }
         }
+    }
+
+    private fun handleDialog(type: HomeDialogType) {
+        when (type) {
+            HomeDialogType.Cheer -> {
+                homeDialogType = DialogContent.createHomeBothAuthDialogContent(
+                    negativeAction = ::onDismissHomeDialog,
+                    positiveAction = {
+                        onDismissHomeDialog()
+                        openCheerBottomSheet()
+                    },
+                )
+                isHomeDialogVisible = true
+            }
+            HomeDialogType.Bloom -> {
+                homeDialogType = DialogContent.createHomeBloomBothDialogContent(
+                    onConfirm = ::onDismissHomeDialog,
+                )
+                isHomeDialogVisible = true
+            }
+            HomeDialogType.DoNotBloom -> {
+                homeDialogType = DialogContent.createHomeDoNotBloomBothDialogContent(
+                    onConfirm = ::onDismissHomeDialog,
+                )
+                isHomeDialogVisible = true
+            }
+        }
+    }
+
+    private fun onDismissHomeDialog() {
+        isHomeDialogVisible = false
     }
 }
