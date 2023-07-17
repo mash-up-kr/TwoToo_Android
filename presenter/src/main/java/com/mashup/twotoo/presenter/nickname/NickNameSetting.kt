@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.nickname
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -27,6 +28,7 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
@@ -41,7 +43,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun NickNameSettingRoute(
     nickNameViewModel: NickNameViewModel,
-    onLoginSuccess: (String) -> Unit
+    onLoginSuccess: (String, String) -> Unit
 ) {
     val state = nickNameViewModel.collectAsState().value
     NickNameSetting(state, onNextButtonClick = { nickName ->
@@ -51,10 +53,12 @@ fun NickNameSettingRoute(
     nickNameViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is NickNameSideEffect.NavigateToHome -> {
-                onLoginSuccess(NavigationRoute.HomeGraph.HomeScreen.route)
+                Log.d(TAG, "NickNameSettingRoute: home")
+                onLoginSuccess(NavigationRoute.HomeGraph.HomeScreen.route, state.userNickName)
             }
             is NickNameSideEffect.NavigateToSendInvitation -> {
-                onLoginSuccess(NavigationRoute.InvitationGraph.SendInvitationScreen.route)
+                Log.d(TAG, "NickNameSettingRoute: invitation${state.userNickName}")
+                onLoginSuccess(NavigationRoute.InvitationGraph.SendInvitationScreen.route, state.userNickName)
             }
         }
     }

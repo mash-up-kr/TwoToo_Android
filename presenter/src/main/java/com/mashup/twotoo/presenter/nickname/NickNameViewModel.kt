@@ -20,7 +20,7 @@ class NickNameViewModel @Inject constructor(
         viewModelScope.launch {
             setNickNameUseCase.invoke(UserNickNameDomainModel(nickname = userNickName)).onSuccess { userInfo ->
                 if (userInfo.partnerNo != null) {
-                    navigateToHome()
+                    navigateToWaitingPair()
                 } else {
                     navigateToWaitingPair()
                 }

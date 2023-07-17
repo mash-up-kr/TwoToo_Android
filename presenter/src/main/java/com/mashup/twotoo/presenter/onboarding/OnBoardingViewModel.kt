@@ -45,6 +45,9 @@ class OnBoardingViewModel @Inject constructor(
                     is LoginState.Error -> {
                         updateLoginState(false, deviceToken, socialId)
                     }
+                    is LoginState.Error -> {
+                        updateLoginState(false, deviceToken, "")
+                    }
                     else -> {}
                 }
             }.collectLatest { }

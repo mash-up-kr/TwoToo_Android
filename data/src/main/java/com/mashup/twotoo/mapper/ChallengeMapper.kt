@@ -7,6 +7,7 @@ import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.User
 import com.mashup.twotoo.datasource.remote.challenge.response.UserCommit
 import com.mashup.twotoo.datasource.remote.view.response.ViewHomeResponse
+import model.challenge.CreateChallengeDomainModel
 import model.challenge.request.ApproveChallengeRequestDomainModel
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.request.CreateChallengeRequestDomainModel
@@ -15,6 +16,9 @@ import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
 
+/**
+ * @Created by 김현국 2023/07/04
+ */
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,
@@ -79,5 +83,12 @@ fun UserCommit.toDomainModel(): UserCommitResponseDomainModel {
         photoUrl = this.photoUrl,
         text = this.text,
         userNo = this.userNo,
+    )
+}
+
+fun CreateChallengeDomainModel.toDataModel(): CreateChallengeRequest {
+    return CreateChallengeRequest(
+        name = this.name,
+        user2Flower = this.user2Flower,
     )
 }

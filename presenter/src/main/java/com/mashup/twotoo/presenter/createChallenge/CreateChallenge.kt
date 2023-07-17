@@ -23,6 +23,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -39,6 +40,7 @@ fun CreateChallenge(
     onFinishChallengeInfo: () -> Unit = {}
 ) {
     var currentStep by remember { mutableStateOf(1) }
+    val challengeInfo = ChallengeInfoModel()
 
     Scaffold(
         topBar = {

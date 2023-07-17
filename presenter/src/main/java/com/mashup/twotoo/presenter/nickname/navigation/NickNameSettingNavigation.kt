@@ -20,18 +20,23 @@ fun NavGraphBuilder.nickNameSettingGraph(
     navController: NavController
 ) {
     navigation(startDestination = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route, route = NavigationRoute.NickNameSettingGraph.route) {
-        composable(route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route) {
+        composable(
+            route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route,
+        ) {
             val nickNameSettingComponent = componentProvider<NickNameSettingComponentProvider>().provideNickNameSettingComponent()
             val nickNameViewModel = daggerViewModel {
                 nickNameSettingComponent.getViewModel()
             }
-            NickNameSettingRoute(nickNameViewModel) { route ->
+            NickNameSettingRoute(nickNameViewModel) { route, nickname ->
                 when (route) {
                     NavigationRoute.HomeGraph.HomeScreen.route -> {
                         navController.navigateToHome()
                     }
                     NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
-                        navController.navigateToInvitation()
+                        navController.navigateToInvitation(
+                            nickname = nickname,
+                            partnerNo = 11,
+                        )
                     }
                 }
             }

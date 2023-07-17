@@ -27,7 +27,9 @@ import com.mashup.twotoo.presenter.designsystem.theme.BackgroundYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun RecommendChallengeContent() {
+fun RecommendChallengeContent(
+    onClickItemName: (Int) -> Unit
+) {
     val verticalScrollState = rememberScrollState()
     Column(
         modifier = Modifier
@@ -47,13 +49,13 @@ fun RecommendChallengeContent() {
         )
         val recommendList = RecommendChallengeUiModel.getRecommendChallengeList()
         recommendList.forEach { recommendName ->
-            RecommendButtonItem(recommendName.name)
+            RecommendButtonItem(recommendName.name, onClickItemName)
         }
     }
 }
 
 @Composable
-fun RecommendButtonItem(recommendName: Int) {
+fun RecommendButtonItem(recommendName: Int, onClickItemName: (Int) -> Unit) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
     val color = if (isPressed) TwoTooTheme.color.mainYellow else TwoTooTheme.color.mainWhite
@@ -63,7 +65,7 @@ fun RecommendButtonItem(recommendName: Int) {
         shape = TwoTooTheme.shape.medium,
         interactionSource = interactionSource,
         colors = ButtonDefaults.buttonColors(containerColor = color),
-        onClick = {},
+        onClick = { onClickItemName(recommendName) },
     ) {
         Text(
             modifier = Modifier.padding(vertical = 5.dp, horizontal = 5.dp),
@@ -77,5 +79,5 @@ fun RecommendButtonItem(recommendName: Int) {
 @Preview
 @Composable
 private fun PreviewRecommendChallengeContent() {
-    RecommendChallengeContent()
+    RecommendChallengeContent({})
 }
