@@ -32,6 +32,8 @@ fun rememberHomeSideEffectHandler(
     navigateToHistory: () -> Unit,
     navigateToCreateChallenge: () -> Unit,
     openCheerBottomSheet: () -> Unit,
+    setVisibilityCompleteDialog: () -> Unit,
+    setVisibilityCheerDialog: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -47,6 +49,8 @@ fun rememberHomeSideEffectHandler(
             navigateToHistory = navigateToHistory,
             navigateToCreateChallenge = navigateToCreateChallenge,
             openCheerBottomSheet = openCheerBottomSheet,
+            setVisibilityCompleteDialog = setVisibilityCompleteDialog,
+            setVisibilityCheerDialog = setVisibilityCheerDialog,
         )
     }
 }
@@ -61,6 +65,8 @@ class HomeSideEffectHandler(
     private val navigateToHistory: () -> Unit,
     private val navigateToCreateChallenge: () -> Unit,
     private val openCheerBottomSheet: () -> Unit,
+    private val setVisibilityCompleteDialog: () -> Unit,
+    private val setVisibilityCheerDialog: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -88,6 +94,9 @@ class HomeSideEffectHandler(
                             }
                             ToastText.LoadHomeFail -> {
                                 context.getString(R.string.toast_message_load_home_fail)
+                            }
+                            ToastText.FinishFail -> {
+                                context.getString(R.string.toast_message_finish_challenge_fail)
                             }
                         },
                     )
@@ -138,6 +147,7 @@ class HomeSideEffectHandler(
                 homeDialogType = DialogContent.createHomeBothAuthDialogContent(
                     negativeAction = ::onDismissHomeDialog,
                     positiveAction = {
+                        setVisibilityCheerDialog()
                         onDismissHomeDialog()
                         openCheerBottomSheet()
                     },
@@ -146,13 +156,19 @@ class HomeSideEffectHandler(
             }
             HomeDialogType.Bloom -> {
                 homeDialogType = DialogContent.createHomeBloomBothDialogContent(
-                    onConfirm = ::onDismissHomeDialog,
+                    onConfirm = {
+                        setVisibilityCompleteDialog()
+                        onDismissHomeDialog()
+                    },
                 )
                 isHomeDialogVisible = true
             }
             HomeDialogType.DoNotBloom -> {
                 homeDialogType = DialogContent.createHomeDoNotBloomBothDialogContent(
-                    onConfirm = ::onDismissHomeDialog,
+                    onConfirm = {
+                        setVisibilityCompleteDialog()
+                        onDismissHomeDialog()
+                    },
                 )
                 isHomeDialogVisible = true
             }
