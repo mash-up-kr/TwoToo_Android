@@ -34,4 +34,12 @@ class FakeUserDataStoreRepository : UserDataStoreRepository {
     override suspend fun getVisibilityCompleteDialog(): Boolean {
         TODO("Not yet implemented")
     }
+
+    override suspend fun removeVisibilityCheerDialog() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeVisibilityCompleteDialog() {
+        TODO("Not yet implemented")
+    }
 }

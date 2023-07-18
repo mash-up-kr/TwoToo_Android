@@ -49,6 +49,8 @@ fun HomeRoute(
         openCheerBottomSheet = homeViewModel::openToCheerBottomSheet,
         setVisibilityCheerDialog = homeViewModel::onClickCheerDialogNegativeButton,
         setVisibilityCompleteDialog = homeViewModel::onClickCompleteDialogConfirmButton,
+        removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
+        removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()

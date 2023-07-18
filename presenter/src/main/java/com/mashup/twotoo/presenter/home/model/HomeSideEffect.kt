@@ -13,6 +13,8 @@ sealed class HomeSideEffect {
     object NavigationToCreateChallenge : HomeSideEffect()
     object DismissBottomSheet : HomeSideEffect()
     data class OpenHomeDialog(val type: HomeDialogType) : HomeSideEffect()
+    object RemoveVisibilityCheerDialog : HomeSideEffect()
+    object RemoveVisibilityCompleteDialog : HomeSideEffect()
 }
 
 enum class HomeDialogType {
