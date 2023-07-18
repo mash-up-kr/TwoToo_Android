@@ -3,7 +3,7 @@ package com.mashup.twotoo.presenter.home
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
-import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.repository.FakeCommitRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewApprovedButBeforeStartDateRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeCreateRepository
@@ -39,13 +39,13 @@ class HomeViewModelTest {
         viewModel.getHomeViewChallenge().join()
         scope.launch {
             viewModel.container.stateFlow.collect {
-                assertEquals(it, BeforeChallengeUiModel.empty)
+                assertEquals(it.challengeStateUiModel, BeforeChallengeUiModel.empty)
             }
         }
     }
 
-    suspend fun TurbineTestContext<ChallengeStateTypeUiModel>.assertInitState() {
-        assertEquals((awaitItem() as BeforeChallengeUiModel).state, BeforeChallengeUiModel.empty.state)
+    private suspend fun TurbineTestContext<HomeStateUiModel>.assertInitState() {
+        assertEquals((awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state, BeforeChallengeUiModel.empty.state)
     }
 
     @Test
@@ -59,7 +59,7 @@ class HomeViewModelTest {
         viewModel.container.stateFlow.test {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
-            assertEquals((awaitItem() as BeforeChallengeUiModel).state, BeforeChallengeUiModel.request.state)
+            assertEquals((awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state, BeforeChallengeUiModel.request.state)
         }
     }
 
@@ -74,7 +74,7 @@ class HomeViewModelTest {
         viewModel.container.stateFlow.test {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
-            assertEquals((awaitItem() as BeforeChallengeUiModel).state, BeforeChallengeUiModel.response.state)
+            assertEquals((awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state, BeforeChallengeUiModel.response.state)
         }
     }
 
@@ -89,7 +89,7 @@ class HomeViewModelTest {
         viewModel.container.stateFlow.test {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
-            assertEquals((awaitItem() as BeforeChallengeUiModel).state, BeforeChallengeUiModel.wait.state)
+            assertEquals((awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state, BeforeChallengeUiModel.wait.state)
         }
     }
 
@@ -104,7 +104,7 @@ class HomeViewModelTest {
         viewModel.container.stateFlow.test {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
-            assertEquals((awaitItem() as BeforeChallengeUiModel).state, BeforeChallengeUiModel.termination.state)
+            assertEquals((awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state, BeforeChallengeUiModel.termination.state)
         }
     }
 }
