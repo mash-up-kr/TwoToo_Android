@@ -5,9 +5,8 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
-import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
 import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
@@ -28,16 +27,16 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
     private val createCommitUseCase: CreateCommitUseCase,
-) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
+) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.empty)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
             reduce {
-                this.copy(
-                    state = homeViewResponseDomainModel.toUiModel(0),
-                ).state
+                state.copy(
+                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(0),
+                )
             }
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.LoadHomeFail))
