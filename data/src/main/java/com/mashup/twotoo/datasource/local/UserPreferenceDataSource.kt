@@ -50,6 +50,18 @@ class UserPreferenceDataSource @Inject constructor(
         return getDataStore(booleanPreferencesKey(VISIBLE_COMPLETE_DIALOG)).first() ?: false
     }
 
+    suspend fun removeVisibilityCheerDialog() {
+        dataStore.edit {
+            it.remove(booleanPreferencesKey(VISIBLE_CHEER_DIALOG))
+        }
+    }
+
+    suspend fun removeVisibilityCompleteDialog() {
+        dataStore.edit {
+            it.remove(booleanPreferencesKey(VISIBLE_COMPLETE_DIALOG))
+        }
+    }
+
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
         dataStore.edit { preferences ->
             preferences[key] = value

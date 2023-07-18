@@ -9,4 +9,6 @@ interface UserDataStoreRepository {
     suspend fun getVisibilityCheerDialog(): Boolean
     suspend fun setVisibilityCompleteDialog(visibility: Boolean)
     suspend fun getVisibilityCompleteDialog(): Boolean
+    suspend fun removeVisibilityCheerDialog()
+    suspend fun removeVisibilityCompleteDialog()
 }
