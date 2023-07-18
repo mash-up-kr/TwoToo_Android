@@ -19,7 +19,6 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage
 import org.junit.Rule
 import org.junit.Test
 
-
 class HomeOngoingDoNotAuthBothTest {
 
     @get:Rule
@@ -91,21 +90,22 @@ class HomeOngoingDoNotAuthBothTest {
         return OngoingChallengeUiModel.default.copy(
             homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
                 challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.doNotAuthBoth.copy(
+                    authType = AuthType.DoNotAuthBoth,
                     partner = when (partnerStage) {
-                        Stage.Zero -> HomeFlowerUiModel.partnerZeroState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.First -> HomeFlowerUiModel.partnerFirstState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Second -> HomeFlowerUiModel.partnerSecondState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Third -> HomeFlowerUiModel.partnerThirdState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Fourth -> HomeFlowerUiModel.partnerFourthState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Fifth -> HomeFlowerUiModel.partnerFifthState.copy(authType = AuthType.DoNotAuthBoth)
+                        Stage.Zero -> HomeFlowerUiModel.partnerZeroState
+                        Stage.First -> HomeFlowerUiModel.partnerFirstState
+                        Stage.Second -> HomeFlowerUiModel.partnerSecondState
+                        Stage.Third -> HomeFlowerUiModel.partnerThirdState
+                        Stage.Fourth -> HomeFlowerUiModel.partnerFourthState
+                        Stage.Fifth -> HomeFlowerUiModel.partnerFifthState
                     },
                     me = when (meStage) {
-                        Stage.Zero -> HomeFlowerUiModel.meZeroState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.First -> HomeFlowerUiModel.meFirstState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Second -> HomeFlowerUiModel.meSecondState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Third -> HomeFlowerUiModel.meThirdState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Fourth -> HomeFlowerUiModel.meFourthState.copy(authType = AuthType.DoNotAuthBoth)
-                        Stage.Fifth -> HomeFlowerUiModel.meFifthState.copy(authType = AuthType.DoNotAuthBoth)
+                        Stage.Zero -> HomeFlowerUiModel.meZeroState
+                        Stage.First -> HomeFlowerUiModel.meFirstState
+                        Stage.Second -> HomeFlowerUiModel.meSecondState
+                        Stage.Third -> HomeFlowerUiModel.meThirdState
+                        Stage.Fourth -> HomeFlowerUiModel.meFourthState
+                        Stage.Fifth -> HomeFlowerUiModel.meFifthState
                     },
                 ),
             ),
