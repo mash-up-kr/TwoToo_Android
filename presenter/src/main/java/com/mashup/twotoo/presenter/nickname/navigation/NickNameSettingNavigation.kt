@@ -27,16 +27,13 @@ fun NavGraphBuilder.nickNameSettingGraph(
             val nickNameViewModel = daggerViewModel {
                 nickNameSettingComponent.getViewModel()
             }
-            NickNameSettingRoute(nickNameViewModel) { route, nickname ->
+            NickNameSettingRoute(nickNameViewModel) { route ->
                 when (route) {
                     NavigationRoute.HomeGraph.HomeScreen.route -> {
                         navController.navigateToHome()
                     }
                     NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
-                        navController.navigateToInvitation(
-                            nickname = nickname,
-                            partnerNo = 11,
-                        )
+                        navController.navigateToInvitation()
                     }
                 }
             }
