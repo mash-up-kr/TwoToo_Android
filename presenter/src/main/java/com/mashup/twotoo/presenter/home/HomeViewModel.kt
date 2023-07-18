@@ -5,6 +5,7 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
@@ -43,13 +44,7 @@ class HomeViewModel @Inject constructor(
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
 ) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
 
-    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(
-        OngoingChallengeUiModel.default.copy(
-            homeChallengeStateUiModel = OngoingChallengeUiModel.default.homeChallengeStateUiModel.copy(
-                challengeState = ChallengeState.Complete,
-            ),
-        ),
-    )
+    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->

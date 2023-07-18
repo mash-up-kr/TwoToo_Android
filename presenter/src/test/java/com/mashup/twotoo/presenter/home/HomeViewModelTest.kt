@@ -4,6 +4,7 @@ import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
+import com.mashup.twotoo.presenter.home.repository.FakeChallengeRepository
 import com.mashup.twotoo.presenter.home.repository.FakeCommitRepository
 import com.mashup.twotoo.presenter.home.repository.FakeUserDataStoreRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewApprovedButBeforeStartDateRepository
@@ -17,9 +18,11 @@ import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
+import repository.ChallengeRepository
 import repository.CommitRepository
 import repository.UserDataStoreRepository
 import repository.ViewRepository
+import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
@@ -35,10 +38,12 @@ class HomeViewModelTest {
     lateinit var getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase
     lateinit var setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase
     lateinit var setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase
+    lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
 
     lateinit var fakeViewRepository: ViewRepository
     lateinit var fakeCommitRepository: CommitRepository
     lateinit var userDataStoreRepository: UserDataStoreRepository
+    lateinit var fakeChallengeRepository: ChallengeRepository
 
     @Before
     fun initUserDataStoreRepository() {
@@ -54,8 +59,12 @@ class HomeViewModelTest {
         val scope = TestScope()
         fakeViewRepository = FakeViewBeforeCreateRepository()
         fakeCommitRepository = FakeCommitRepository()
+        fakeChallengeRepository = FakeChallengeRepository()
+
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
+
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
@@ -63,6 +72,7 @@ class HomeViewModelTest {
             getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase,
         )
 
         viewModel.getHomeViewChallenge().join()
@@ -81,8 +91,12 @@ class HomeViewModelTest {
     fun getHomeViewBeforePartnerApproveStateTest(): Unit = runTest {
         fakeViewRepository = FakeViewBeforePartnerApproveRepository()
         fakeCommitRepository = FakeCommitRepository()
+        fakeChallengeRepository = FakeChallengeRepository()
+
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
+
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
@@ -90,6 +104,7 @@ class HomeViewModelTest {
             getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -103,8 +118,12 @@ class HomeViewModelTest {
     fun getHomeViewBeforeMyApproveStateTest(): Unit = runTest {
         fakeViewRepository = FakeViewBeforeMyApproveRepository()
         fakeCommitRepository = FakeCommitRepository()
+        fakeChallengeRepository = FakeChallengeRepository()
+
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
+
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
@@ -112,6 +131,7 @@ class HomeViewModelTest {
             getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -125,8 +145,12 @@ class HomeViewModelTest {
     fun getHomeViewApprovedButBeforeStartDateStateTest(): Unit = runTest {
         fakeViewRepository = FakeViewApprovedButBeforeStartDateRepository()
         fakeCommitRepository = FakeCommitRepository()
+        fakeChallengeRepository = FakeChallengeRepository()
+
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
+
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
@@ -134,6 +158,7 @@ class HomeViewModelTest {
             getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -147,8 +172,12 @@ class HomeViewModelTest {
     fun getHomeViewExpiredByNotApprovedStateTest(): Unit = runTest {
         fakeViewRepository = FakeViewExpiredByNotApprovedRepository()
         fakeCommitRepository = FakeCommitRepository()
+        fakeChallengeRepository = FakeChallengeRepository()
+
         getViewHomeUseCase = GetViewHomeUseCase(fakeViewRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
+        finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
+
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
@@ -156,6 +185,7 @@ class HomeViewModelTest {
             getVisibilityCompleteDialogUseCase,
             setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
+            finishChallengeWithNoUseCase,
         )
 
         viewModel.container.stateFlow.test {
