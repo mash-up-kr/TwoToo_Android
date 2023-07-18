@@ -1,6 +1,7 @@
 package com.mashup.twotoo.repository
 
 import com.mashup.twotoo.datasource.remote.user.UserDataSource
+import com.mashup.twotoo.datasource.remote.user.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
 import com.mashup.twotoo.mapper.toDomainModel
 import model.user.PartnerInfoDomainModel
@@ -27,10 +28,14 @@ class UserRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getPartnerInfo(): Result<PartnerInfoDomainModel> {
-        TODO("Not yet implemented")
+        return runCatching {
+            userDataSource.getPartnerInfo().toDomainModel()
+        }
     }
 
     override suspend fun getUserInfo(): Result<UserInfoDomainModel> {
-        TODO("Not yet implemented")
+        return runCatching {
+            userDataSource.getUserInfo().toDomainModel()
+        }
     }
 }

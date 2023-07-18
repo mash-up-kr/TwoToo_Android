@@ -2,6 +2,7 @@ package com.mashup.twotoo.datasource.remote.user
 
 import com.mashup.twotoo.datasource.remote.user.request.UserAuthRequest
 import com.mashup.twotoo.datasource.remote.user.request.UserNickNameRequest
+import com.mashup.twotoo.datasource.remote.user.response.PartnerInfoResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserAuthResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserInfoResponse
 import javax.inject.Inject
@@ -19,5 +20,13 @@ class UserDataSource @Inject constructor(
         userNickNameRequest: UserNickNameRequest,
     ): UserInfoResponse {
         return userApi.setUserNickName(userNickNameRequest)
+    }
+
+    suspend fun getPartnerInfo(): PartnerInfoResponse {
+        return userApi.getUserPartnerInfo()
+    }
+
+    suspend fun getUserInfo(): UserInfoResponse {
+        return userApi.getUserInfo()
     }
 }
