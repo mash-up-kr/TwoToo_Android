@@ -29,7 +29,7 @@ class HomeViewModel @Inject constructor(
     private val createCommitUseCase: CreateCommitUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.empty)
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
