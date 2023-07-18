@@ -1,5 +1,5 @@
 package model.user
 
 data class PartnerInfoDomainModel(
-    val partnerNo: Int,
+    val partnerNo: Int? = null,
 )
