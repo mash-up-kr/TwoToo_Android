@@ -45,9 +45,9 @@ private fun checkInviteLink(intent: Intent) {
         }
         deepLink?.let { uri ->
             val nickname = uri.getQueryParameter("nickname")
-            val no = uri.getQueryParameter("userNo")
+            val userNo = uri.getQueryParameter("userNo")
             Log.d(TAG, "checkInviteLink: $nickname")
-            Log.d(TAG, "checkInviteLink: $no")
+            Log.d(TAG, "checkInviteLink: $userNo")
         }
     }
 }
