@@ -34,20 +34,20 @@ import usecase.view.GetViewHomeUseCase
 
 class HomeViewModelTest {
 
-    lateinit var getViewHomeUseCase: GetViewHomeUseCase
-    lateinit var createCommitUseCase: CreateCommitUseCase
-    lateinit var getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase
-    lateinit var getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase
-    lateinit var setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase
-    lateinit var setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase
-    lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
-    lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
-    lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
+    private lateinit var getViewHomeUseCase: GetViewHomeUseCase
+    private lateinit var createCommitUseCase: CreateCommitUseCase
+    private lateinit var getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase
+    private lateinit var getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase
+    private lateinit var setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase
+    private lateinit var setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase
+    private lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
+    private lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
+    private lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
 
-    lateinit var fakeViewRepository: ViewRepository
-    lateinit var fakeCommitRepository: CommitRepository
-    lateinit var fakeUserDataStoreRepository: UserDataStoreRepository
-    lateinit var fakeChallengeRepository: ChallengeRepository
+    private lateinit var fakeViewRepository: ViewRepository
+    private lateinit var fakeCommitRepository: CommitRepository
+    private lateinit var fakeUserDataStoreRepository: UserDataStoreRepository
+    private lateinit var fakeChallengeRepository: ChallengeRepository
 
     @Before
     fun initUserDataStoreRepository() {
