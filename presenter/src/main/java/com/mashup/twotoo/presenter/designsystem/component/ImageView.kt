@@ -29,8 +29,8 @@ import com.skydoves.landscapist.glide.GlideImageState
 
 @Composable
 fun TwoTooImageView(
-    model: Any?,
     modifier: Modifier = Modifier,
+    model: Any? = null,
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
