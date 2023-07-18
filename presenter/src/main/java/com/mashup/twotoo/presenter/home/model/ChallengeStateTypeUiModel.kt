@@ -20,8 +20,11 @@ data class HomeStateUiModel(
     val challengeStateUiModel: ChallengeStateTypeUiModel,
 ) {
     companion object {
-        val empty = HomeStateUiModel(
+        val before = HomeStateUiModel(
             challengeStateUiModel = BeforeChallengeUiModel.empty,
+        )
+        val ongoing = HomeStateUiModel(
+            challengeStateUiModel = OngoingChallengeUiModel.default,
         )
     }
 }
