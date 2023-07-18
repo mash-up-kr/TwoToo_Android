@@ -1,8 +1,8 @@
 package com.mashup.twotoo.presenter.home.mapper
 
-import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
+import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
@@ -191,6 +191,20 @@ fun HomeViewResponseDomainModel.getUserCommit(
     }
 }
 
+fun HomeViewResponseDomainModel.isFirstChallenge(): Boolean = with(this.onGoingChallenge) {
+    return user1CommitCnt == 0 && user2CommitCnt == 0
+}
+
+fun HomeViewResponseDomainModel.isFirstChallengeButAuthOnlyPartner(
+    userNo: Int,
+): Boolean = with(this.onGoingChallenge) {
+    return if (user1.userNo == userNo) {
+        user1CommitCnt == 0 && user2CommitCnt != 0
+    } else {
+        user2CommitCnt == 0 && user1CommitCnt != 0
+    }
+}
+
 fun String.multiLineConverter(): String {
     return if (this.isBlank()) {
         ""
@@ -219,11 +233,11 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
         me!!.partnerComment.isNotBlank() && partner!!.partnerComment.isNotBlank() -> {
             // 둘다 응원을 했을 경우
             HomeCheerUiModel.cheerBoth.copy(
+                cheerState = CheerState.DoNotCheerBoth,
                 partner = CheerWithFlower.partnerNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                     cheerText = partner.partnerComment.multiLineConverter(),
                 ),
@@ -231,7 +245,6 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = meNickName,
                         flowerType = meFlower,
-                        authType = AuthType.AuthBoth,
                     ),
 
                 ),
@@ -241,18 +254,17 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
         me.partnerComment.isNotBlank() && partner!!.partnerComment.isBlank() -> {
             // 나만 응원을 했을 경우
             HomeCheerUiModel.cheerOnlyMe.copy(
+                cheerState = CheerState.CheerOnlyMe,
                 partner = CheerWithFlower.partnerNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                     cheerText = me.partnerComment.multiLineConverter(),
                 ),
@@ -262,11 +274,11 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
         me.partnerComment.isBlank() && partner!!.partnerComment.isNotBlank() -> {
             // 파트너만 응원을 했을 경우
             HomeCheerUiModel.cheerOnlyPartner.copy(
+                cheerState = CheerState.CheerOnlyPartner,
                 partner = CheerWithFlower.partnerNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                     cheerText = partner.partnerComment.multiLineConverter(),
                 ),
@@ -274,7 +286,6 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
             )
@@ -283,18 +294,17 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
         me.partnerComment.isBlank() && partner!!.partnerComment.isBlank() -> {
             // 둘다 응원을 하지 않았을 경우
             HomeCheerUiModel.doNotCheerBoth.copy(
+                cheerState = CheerState.DoNotCheerBoth,
                 partner = CheerWithFlower.partnerNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
             )
@@ -302,18 +312,17 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
 
         else -> {
             HomeCheerUiModel.doNotCheerBoth.copy(
+                cheerState = CheerState.DoNotCheerBoth,
                 partner = CheerWithFlower.partnerNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.partner.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
-                        authType = AuthType.AuthBoth,
                     ),
                 ),
             )
@@ -456,6 +465,32 @@ fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(
     val (meFlower, partnerFlower) = getFlowerType(userNo = userNo)
 
     return when {
+        isFirstChallenge() -> {
+            HomeFlowerPartnerAndMeUiModel.firstChallenge.copy(
+                partner = HomeFlowerUiModel.partner.copy(
+                    flowerType = partnerFlower,
+                    name = partnerNickName,
+                ),
+                me = HomeFlowerUiModel.me.copy(
+                    flowerType = meFlower,
+                    name = meNickName,
+                ),
+            )
+        }
+
+        isFirstChallengeButAuthOnlyPartner(userNo) -> {
+            HomeFlowerPartnerAndMeUiModel.firstChallengeButAuthOnlyPartner.copy(
+                partner = HomeFlowerUiModel.partner.copy(
+                    flowerType = partnerFlower,
+                    name = partnerNickName,
+                ),
+                me = HomeFlowerUiModel.me.copy(
+                    flowerType = meFlower,
+                    name = meNickName,
+                ),
+            )
+        }
+
         me == null && partner == null -> {
             // 둘다 인증을 하지 않았을 경우
             HomeFlowerPartnerAndMeUiModel.doNotAuthBoth.copy(

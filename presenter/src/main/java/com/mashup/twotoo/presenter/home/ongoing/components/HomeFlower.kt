@@ -28,6 +28,7 @@ import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyMe
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallenge
+import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallengeButAuthOnlyPartner
 import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
@@ -81,7 +82,7 @@ fun HomeFlowerMeAndPartner(
                     )
                 }
 
-                if (this.me.authType == FirstCreateChallenge) {
+                if (this.authType == FirstCreateChallenge || this.authType == FirstCreateChallengeButAuthOnlyPartner) {
                     TextHint(
                         modifier = Modifier
                             .testTag(
@@ -112,7 +113,7 @@ fun HomeFlowerMeAndPartner(
                     userType = PARTNER,
                 )
 
-                if (this.partner.authType == AuthOnlyPartner) {
+                if (this.authType == AuthOnlyPartner || this.authType == FirstCreateChallengeButAuthOnlyPartner) {
                     Row(
                         modifier = Modifier
                             .testTag(
@@ -141,7 +142,7 @@ fun HomeFlowerMeAndPartner(
                     }
                 }
 
-                if (this.me.authType != AuthOnlyMe && this.me.authType != AuthBoth) {
+                if (this.authType != AuthOnlyMe && this.authType != AuthBoth) {
                     TwoTooImageView(
                         modifier = Modifier
                             .testTag(
@@ -189,7 +190,7 @@ fun HomeFlowerMeAndPartner(
                         end.linkTo(heartImage.start)
                         bottom.linkTo(partner.top, margin = 12.dp)
                     },
-                    cheerState = this.partner.cheerState,
+                    cheerState = this.cheerState,
                     cheerText = this.partner.cheerText,
                 )
                 HomeFlowerPartner(
@@ -231,7 +232,7 @@ fun HomeFlowerMeAndPartner(
                             end.linkTo(parent.end, margin = 32.dp)
                             bottom.linkTo(me.top, margin = 12.dp)
                         },
-                    cheerState = this.me.cheerState,
+                    cheerState = this.cheerState,
                     cheerText = this.me.cheerText,
                 )
 
@@ -265,7 +266,7 @@ fun HomeCheerPartner(
     cheerText: String = "",
 ) {
     when (cheerState) {
-        CheerState.NotEmpty -> {
+        CheerState.CheerOnlyPartner, CheerState.CheerBoth -> {
             HomeCheerSpeechBubble(
                 modifier = modifier.testTag(
                     stringResource(R.string.homeCheerChallengePartnerBubble),
@@ -274,7 +275,7 @@ fun HomeCheerPartner(
                 cheerText = cheerText,
             )
         }
-        CheerState.NotYet -> {
+        CheerState.DoNotCheerBoth, CheerState.CheerOnlyMe -> {
             TwoTooImageView(
                 modifier = modifier
                     .testTag(
@@ -296,7 +297,7 @@ fun HomeCheerMe(
     cheerText: String = "",
 ) {
     when (cheerState) {
-        CheerState.NotEmpty -> {
+        CheerState.CheerOnlyMe, CheerState.CheerBoth -> {
             HomeCheerSpeechBubble(
                 modifier = modifier.testTag(
                     stringResource(id = R.string.homeCheerChallengeMeBubble),
@@ -305,7 +306,7 @@ fun HomeCheerMe(
                 cheerText = cheerText,
             )
         }
-        CheerState.NotYet -> {
+        CheerState.DoNotCheerBoth, CheerState.CheerOnlyPartner -> {
             HomeCheerFirstSpeech(
                 modifier = modifier.testTag(
                     stringResource(id = R.string.homeCheerChallengeMeBeforeCheerBubble),
@@ -480,12 +481,11 @@ private fun PreviewCheerBoth() {
                 modifier = Modifier.fillMaxWidth(),
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
+                        cheerState = CheerState.CheerBoth,
                         partner = CheerWithFlower.partnerNotEmpty.copy(
-                            cheerState = CheerState.NotEmpty,
                             cheerText = "앞으로 더 화이팅이야",
                         ),
                         me = CheerWithFlower.meNotEmpty.copy(
-                            cheerState = CheerState.NotEmpty,
                             cheerText = "앞으로 더 화이팅이야",
                         ),
                     ),
@@ -495,7 +495,7 @@ private fun PreviewCheerBoth() {
     }
 }
 
-@Preview("응원상태 ", showBackground = true)
+@Preview("나만 응원", showBackground = true)
 @Composable
 private fun PreviewCheerOnlyMe() {
     TwoTooTheme {
@@ -506,12 +506,9 @@ private fun PreviewCheerOnlyMe() {
                 modifier = Modifier.fillMaxWidth(),
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partnerNotYet.copy(
-                            cheerState = CheerState.NotYet,
-                        ),
-                        me = CheerWithFlower.meNotEmpty.copy(
-                            cheerState = CheerState.NotEmpty,
-                        ),
+                        cheerState = CheerState.CheerOnlyMe,
+                        partner = CheerWithFlower.partnerNotYet,
+                        me = CheerWithFlower.meNotEmpty,
                     ),
                 ),
             )
@@ -519,7 +516,7 @@ private fun PreviewCheerOnlyMe() {
     }
 }
 
-@Preview("응원상태 ", showBackground = true)
+@Preview("파트너만 응원", showBackground = true)
 @Composable
 private fun PreviewCheerOnlyPartner() {
     TwoTooTheme {
@@ -530,12 +527,9 @@ private fun PreviewCheerOnlyPartner() {
                 modifier = Modifier.fillMaxWidth(),
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partnerNotEmpty.copy(
-                            cheerState = CheerState.NotEmpty,
-                        ),
-                        me = CheerWithFlower.meNotYet.copy(
-                            cheerState = CheerState.NotYet,
-                        ),
+                        cheerState = CheerState.CheerOnlyPartner,
+                        partner = CheerWithFlower.partnerNotEmpty,
+                        me = CheerWithFlower.meNotYet,
                     ),
                 ),
             )
@@ -543,7 +537,7 @@ private fun PreviewCheerOnlyPartner() {
     }
 }
 
-@Preview("응원상태 ", showBackground = true)
+@Preview("둘다 응원안하기", showBackground = true)
 @Composable
 private fun PreviewDoNotCheerBoth() {
     TwoTooTheme {
@@ -554,12 +548,9 @@ private fun PreviewDoNotCheerBoth() {
                 modifier = Modifier.fillMaxWidth(),
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.default.copy(
-                        partner = CheerWithFlower.partnerNotYet.copy(
-                            cheerState = CheerState.NotYet,
-                        ),
-                        me = CheerWithFlower.meNotYet.copy(
-                            cheerState = CheerState.NotYet,
-                        ),
+                        cheerState = CheerState.DoNotCheerBoth,
+                        partner = CheerWithFlower.partnerNotYet,
+                        me = CheerWithFlower.meNotYet,
                     ),
                 ),
             )
