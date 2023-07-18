@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -27,6 +28,8 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound6
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
+import com.mashup.twotoo.presenter.garden.model.FlowerHead
+import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
 fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: () -> Unit) {
@@ -50,8 +53,7 @@ fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateTo
             contentScale = ContentScale.Crop,
             previewPlaceholder = R.drawable.challenge_card_ground,
         )
-        // Todo 꽃 선택하는 ui에서 사용하는 model 공통으로 사용하도록 해야함
-        Flowers()
+        Flowers(challengeCardInfoUiModel.meFlower, challengeCardInfoUiModel.partnerFlower)
     }
 }
 
@@ -88,23 +90,26 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
 }
 
 @Composable
-private fun BoxScope.Flowers() {
+private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
     Row(
         modifier = Modifier
             .align(Alignment.BottomCenter)
             .padding(bottom = 23.dp),
     ) {
+        val context = LocalContext.current
+        val meFlower = FlowerHead(meFlower).getFlowerImage(context)
+        val partnerFlower = FlowerHead(partnerFlower).getFlowerImage(context)
         TwoTooImageView(
-            modifier = Modifier.size(68.dp),
-            model = R.drawable.flower_fig,
+            modifier = Modifier.size(meFlower.width, meFlower.height),
+            model = meFlower.image,
             contentScale = ContentScale.Fit,
-            previewPlaceholder = R.drawable.flower_fig,
+            previewPlaceholder = R.drawable.img_head_fig_sm,
         )
         TwoTooImageView(
-            modifier = Modifier.size(68.dp),
-            model = R.drawable.flower_chrysanthemum,
+            modifier = Modifier.size(partnerFlower.width, partnerFlower.height),
+            model = partnerFlower.image,
             contentScale = ContentScale.Fit,
-            previewPlaceholder = R.drawable.flower_chrysanthemum,
+            previewPlaceholder = R.drawable.img_head_camellia_sm,
         )
     }
 }

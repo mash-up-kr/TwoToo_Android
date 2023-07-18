@@ -16,8 +16,8 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
 import com.mashup.twotoo.presenter.home.model.HomeShotCountTextUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
-import com.mashup.twotoo.presenter.home.model.flower.FlowerName
-import com.mashup.twotoo.presenter.home.model.flower.Stage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.Stage
 import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import java.text.SimpleDateFormat
@@ -364,45 +364,8 @@ fun HomeViewResponseDomainModel.getFlowerType(
     }
 }
 
-fun String.toFlowerName(): FlowerName {
-    return when (this) {
-        "TULIP" -> {
-            FlowerName.Tulip
-        }
-
-        "ROSE" -> {
-            FlowerName.Rose
-        }
-
-        "COTTON" -> {
-            FlowerName.Cotton
-        }
-
-        "FIG" -> {
-            FlowerName.Fig
-        }
-
-        "CHRYSANTHEMUM" -> {
-            FlowerName.Chrysanthemum
-        }
-
-        "SUNFLOWER" -> {
-            FlowerName.Sunflower
-        }
-
-        "CAMELLIA" -> {
-            FlowerName.Camellia
-        }
-
-        "DELPHINIUM" -> {
-            FlowerName.Delphinium
-        }
-
-        else -> {
-            FlowerName.Tulip
-        }
-    }
-}
+fun String.toFlowerName(): FlowerName =
+    FlowerName.findBy(this)
 
 fun HomeViewResponseDomainModel.getGrowType(
     userNo: Int,

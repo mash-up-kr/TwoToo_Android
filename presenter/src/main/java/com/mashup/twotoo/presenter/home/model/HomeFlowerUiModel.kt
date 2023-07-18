@@ -1,8 +1,8 @@
 package com.mashup.twotoo.presenter.home.model
 
-import com.mashup.twotoo.presenter.home.model.flower.FlowerName
-import com.mashup.twotoo.presenter.home.model.flower.FlowerType
-import com.mashup.twotoo.presenter.home.model.flower.Stage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.FlowerType
+import com.mashup.twotoo.presenter.model.Stage
 
 /**
  * @Created by 김현국 2023/06/09

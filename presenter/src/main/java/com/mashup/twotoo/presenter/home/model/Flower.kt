@@ -9,16 +9,16 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
-import com.mashup.twotoo.presenter.home.model.flower.FlowerImage
-import com.mashup.twotoo.presenter.home.model.flower.FlowerName
-import com.mashup.twotoo.presenter.home.model.flower.FlowerType
-import com.mashup.twotoo.presenter.home.model.flower.Stage
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Fifth
-import com.mashup.twotoo.presenter.home.model.flower.Stage.First
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Fourth
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Second
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Third
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Zero
+import com.mashup.twotoo.presenter.model.FlowerImage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.FlowerType
+import com.mashup.twotoo.presenter.model.Stage
+import com.mashup.twotoo.presenter.model.Stage.Fifth
+import com.mashup.twotoo.presenter.model.Stage.First
+import com.mashup.twotoo.presenter.model.Stage.Fourth
+import com.mashup.twotoo.presenter.model.Stage.Second
+import com.mashup.twotoo.presenter.model.Stage.Third
+import com.mashup.twotoo.presenter.model.Stage.Zero
 
 data class Flower(
     val flowerName: FlowerName,

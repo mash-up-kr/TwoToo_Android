@@ -2,9 +2,9 @@ package com.mashup.twotoo.presenter.garden.model
 
 import android.content.Context
 import androidx.compose.ui.unit.dp
-import com.mashup.twotoo.presenter.home.model.flower.FlowerImage
-import com.mashup.twotoo.presenter.home.model.flower.FlowerName
-import com.mashup.twotoo.presenter.home.model.flower.FlowerType
+import com.mashup.twotoo.presenter.model.FlowerImage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.FlowerType
 
 data class FlowerHead(val flowerName: FlowerName) : FlowerType(
     name = flowerName,
@@ -12,6 +12,6 @@ data class FlowerHead(val flowerName: FlowerName) : FlowerType(
     override fun getFlowerImage(context: Context): FlowerImage {
         val name = "img_head_${flowerName.name.lowercase()}_sm"
         val image = context.resources.getIdentifier(name, "drawable", context.packageName)
-        return FlowerImage(image = image, width = 127.dp, height = 211.dp)
+        return FlowerImage(image = image, width = 68.dp, height = 68.dp)
     }
 }

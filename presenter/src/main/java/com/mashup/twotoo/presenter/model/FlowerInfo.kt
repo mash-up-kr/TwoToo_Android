@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.model.flower
+package com.mashup.twotoo.presenter.model
 
 import android.content.Context
 import androidx.annotation.DrawableRes
@@ -17,15 +17,23 @@ enum class Stage {
     Fifth,
 }
 
-enum class FlowerName {
-    Tulip,
-    Rose,
-    Cotton,
-    Fig,
-    Chrysanthemum,
-    Sunflower,
-    Camellia,
-    Delphinium,
+enum class FlowerName(val value: String) {
+    Tulip("TULIP"),
+    Rose("ROSE"),
+    Cotton("COTTON"),
+    Fig("FIG"),
+    Chrysanthemum("CHRYSANTHEMUM"),
+    Sunflower("SUNFLOWER"),
+    Camellia("CAMELLIA"),
+    Delphinium("DELPHINIUM"),
+    ;
+
+    // Todo Default enum 또는 서버에러 처리 UI 필요함
+    companion object {
+        fun findBy(value: String): FlowerName {
+            return values().firstOrNull { it.value == value } ?: Tulip
+        }
+    }
 }
 
 abstract class FlowerType(val name: FlowerName) {
