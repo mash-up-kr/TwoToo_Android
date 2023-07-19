@@ -19,7 +19,7 @@ private fun NavController.navigateToHistoryDetail() {
 }
 
 fun NavGraphBuilder.historyGraph(navController: NavController) {
-    navigation(startDestination = NavigationRoute.HistoryGraph.HistoryScreen.route, route = NavigationRoute.HistoryGraph.route) {
+    navigation(startDestination = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}}", route = NavigationRoute.HistoryGraph.route) {
         composable(
             route = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}",
             arguments = listOf(

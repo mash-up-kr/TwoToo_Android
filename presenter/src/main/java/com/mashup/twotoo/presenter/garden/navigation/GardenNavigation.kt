@@ -24,7 +24,7 @@ fun NavGraphBuilder.gardenGraph(navController: NavController) {
                 gardenComponent.getViewModel()
             }
 
-            GardenRoute(navigateToGarden = { navController.navigateToHistory(challengeNo = 14) }, gardenViewModel = gardenViewModel)
+            GardenRoute(navigateToGarden = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) }, gardenViewModel = gardenViewModel)
         }
     }
 }

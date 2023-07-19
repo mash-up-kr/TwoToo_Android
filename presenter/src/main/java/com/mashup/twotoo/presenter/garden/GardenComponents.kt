@@ -20,10 +20,10 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 
 @Composable
-fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: () -> Unit) {
+fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: (Int) -> Unit) {
     Box(
         modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite).clickable {
-            navigateToGarden()
+            navigateToGarden(challengeCardInfoUiModel.challengeNo)
         },
     ) {
         ChallengeInfo(challengeCardInfoUiModel)
