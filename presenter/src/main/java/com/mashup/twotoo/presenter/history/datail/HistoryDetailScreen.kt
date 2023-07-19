@@ -48,7 +48,7 @@ fun HistoryDetailScreen(
     Scaffold(
         containerColor = Color.Transparent,
         topBar = {
-            TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickName))
+            TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickNamesUiModel.myNickName))
         },
     ) { paddingValues ->
         CompositionLocalProvider(
@@ -104,7 +104,7 @@ fun HistoryDetailScreen(
                     Text(
                         text = stringResource(
                             id = R.string.complimentFromPartner,
-                            historyDetailInfoUiModel.partnerNickname,
+                            historyDetailInfoUiModel.ownerNickNamesUiModel.partnerName,
                         ),
                         modifier = Modifier.padding(top = 33.dp),
                         style = TwoTooTheme.typography.bodyNormal16,
