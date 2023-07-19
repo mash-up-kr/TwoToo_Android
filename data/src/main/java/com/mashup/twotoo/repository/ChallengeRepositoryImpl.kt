@@ -30,10 +30,12 @@ class ChallengeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getChallengeByNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): ChallengeDetailResponseDomainModel {
-        return challengeDataSource.getChallengeByNo(
-            challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+    override suspend fun getChallengeByNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<ChallengeDetailResponseDomainModel> {
+        return runCatching {
+            challengeDataSource.getChallengeByNo(
+                challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
+            ).toDomainModel()
+        }
     }
 
     override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Int {

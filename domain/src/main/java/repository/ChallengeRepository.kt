@@ -15,7 +15,7 @@ interface ChallengeRepository {
 
     suspend fun getChallengeByNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
-    ): ChallengeDetailResponseDomainModel
+    ): Result<ChallengeDetailResponseDomainModel>
 
     suspend fun quitChallenge(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
