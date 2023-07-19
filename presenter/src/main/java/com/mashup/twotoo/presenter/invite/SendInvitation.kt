@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.invite
 
-import android.app.Activity
 import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -13,8 +12,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -34,35 +33,43 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun SendInvitationRoute(
     inviteViewModel: InviteViewModel,
-    sendInvitationButtonClick: () -> Unit = {}
+    sendInvitationOnSuccess: () -> Unit = {},
 ) {
-    SendInvitation(inviteViewModel, sendInvitationButtonClick)
+    val state by inviteViewModel.collectAsState()
+
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+        inviteViewModel.navigateToWaitingAcceptPair()
+    }
+
+    LaunchedEffect(key1 = state) {
+        if (state.userNo != 0) {
+            inviteViewModel.createInviteCode(state.userNo, state.userNickName) { intent ->
+                launcher.launch(intent)
+            }
+        }
+    }
+    SendInvitation(
+        onTextButtonClick = {
+            inviteViewModel.getUserInfo()
+        },
+    )
 
     inviteViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is InviteSideEffect.Toast -> {
             }
             is InviteSideEffect.NavigateToWaitingPair -> {
-                sendInvitationButtonClick()
+                sendInvitationOnSuccess()
             }
-            else -> {}
+            is InviteSideEffect.NavigateToHome -> {}
         }
     }
 }
 
 @Composable
 fun SendInvitation(
-    inviteViewModel: InviteViewModel,
-    sendInvitationButtonClick: () -> Unit = {}
+    onTextButtonClick: () -> Unit = {},
 ) {
-    val state by inviteViewModel.collectAsState()
-    val updateState by rememberUpdatedState(newValue = state)
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
-        when (activityResult.resultCode) {
-            Activity.RESULT_OK -> { inviteViewModel.navigateToWaitingAcceptPair() }
-        }
-    }
-
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -93,16 +100,8 @@ fun SendInvitation(
         Spacer(modifier = Modifier.weight(1f))
         TwoTooTextButton(
             text = stringResource(id = R.string.send_invite),
-        ) {
-            inviteViewModel.getUserInfo()
-            if (updateState.userNo != 0) {
-                Log.d(TAG, "SendInvitation: not null$state")
-                inviteViewModel.createInviteCode(updateState.userNo, updateState.userNickName) { intent ->
-                    launcher.launch(intent)
-                }
-            }
-            sendInvitationButtonClick()
-        }
+            onClick = onTextButtonClick,
+        )
         Spacer(modifier = Modifier.height(55.dp))
     }
 }

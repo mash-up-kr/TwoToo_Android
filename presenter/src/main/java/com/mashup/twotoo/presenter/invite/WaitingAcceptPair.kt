@@ -1,7 +1,5 @@
 package com.mashup.twotoo.presenter.invite
 
-import android.app.Activity
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -12,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,30 +20,60 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooOutlineTextButton
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun WaitingAcceptPairRoute(
-    inviteViewModel: InviteViewModel
+    inviteViewModel: InviteViewModel,
+    onSuccessMatchingPartner: () -> Unit
 ) {
-    WaitingAcceptPair(inviteViewModel)
+    val state by inviteViewModel.collectAsState()
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
+    }
+
+    LaunchedEffect(key1 = state) {
+        if (state.userNo != 0) {
+            inviteViewModel.createInviteCode(state.userNo, state.userNickName) { intent ->
+                launcher.launch(intent)
+            }
+        }
+    }
+    WaitingAcceptPair(
+        onClickRefreshState = {
+            inviteViewModel.getPartnerInfo()
+        },
+        onClickResendInvitation = {
+            inviteViewModel.getUserInfo()
+        },
+    )
+
+    inviteViewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is InviteSideEffect.Toast -> {}
+            is InviteSideEffect.NavigateToWaitingPair -> {}
+            is InviteSideEffect.NavigateToHome -> {
+                onSuccessMatchingPartner()
+            }
+        }
+    }
 }
 
 @Composable
 fun WaitingAcceptPair(
-    inviteViewModel: InviteViewModel
+    onClickRefreshState: () -> Unit,
+    onClickResendInvitation: () -> Unit,
 ) {
     Column(
         modifier = Modifier
             .fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.SpaceAround,
     ) {
         TwoTooMainToolbar()
         Text(
@@ -69,17 +98,15 @@ fun WaitingAcceptPair(
             contentScale = ContentScale.Crop,
         )
         Spacer(modifier = Modifier.weight(1f))
-        WaitingInviteBottom(inviteViewModel)
+        WaitingInviteBottom(onClickRefreshState, onClickResendInvitation)
     }
 }
 
 @Composable
 fun WaitingInviteBottom(
-    inviteViewModel: InviteViewModel
+    onClickRefreshState: () -> Unit,
+    onClickResendInvitation: () -> Unit,
 ) {
-    val state by inviteViewModel.collectAsState()
-    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) {}
-
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.spacedBy(18.dp),
@@ -92,19 +119,16 @@ fun WaitingInviteBottom(
         )
         TwoTooTextButton(
             text = stringResource(id = R.string.refresh),
-        ) {
-            inviteViewModel.getPartnerInfo()
-        }
+            onClick = {
+                onClickRefreshState()
+            },
+        )
         TwoTooOutlineTextButton(
             text = stringResource(id = R.string.resend_invite),
-        ) {
-            inviteViewModel.getUserInfo()
-            if (state.userNo != 0) {
-                inviteViewModel.createInviteCode(state.userNo, state.userNickName) { intent ->
-                    launcher.launch(intent)
-                }
-            }
-        }
+            onClick = {
+                onClickResendInvitation()
+            },
+        )
     }
 }
 
