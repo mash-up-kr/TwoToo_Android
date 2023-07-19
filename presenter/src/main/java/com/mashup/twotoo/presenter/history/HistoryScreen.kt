@@ -11,9 +11,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
@@ -33,7 +36,14 @@ fun HistoryRoute(
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
-    Log.i("hyejin", "challengeNo = $challengeNo")
+    Log.i("HistoryRoute", "challengeNo = $challengeNo")
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            historyViewModel.getChallengeByUser(challengeNo)
+        }
+    }
+
     val state by historyViewModel.collectAsState()
 
     HistoryScreen(

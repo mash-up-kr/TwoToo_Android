@@ -37,7 +37,7 @@ fun OwnerNickNames(ownerNickNamesUiModel: OwnerNickNamesUiModel) {
             .padding(top = 37.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
     ) {
-        CardText(text = ownerNickNamesUiModel.parameterName)
+        CardText(text = ownerNickNamesUiModel.partnerName)
         CardText(text = ownerNickNamesUiModel.myNickName, fontColor = MainPink)
     }
 }
