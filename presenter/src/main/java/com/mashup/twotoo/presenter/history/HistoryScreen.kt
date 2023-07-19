@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.history
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -27,10 +28,12 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryRoute(
+    challengeNo: Int,
     historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: () -> Unit,
 ) {
+    Log.i("hyejin", "challengeNo = $challengeNo")
     val state by historyViewModel.collectAsState()
 
     HistoryScreen(

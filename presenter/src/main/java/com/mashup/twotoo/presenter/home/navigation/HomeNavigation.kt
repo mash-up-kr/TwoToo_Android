@@ -30,7 +30,7 @@ fun NavGraphBuilder.homeGraph(navController: NavController) {
             HomeRoute(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
-                navigateToHistory = { navController.navigateToHistory() },
+                navigateToHistory = { navController.navigateToHistory(challengeNo = 14) },
                 navigateToCreateChallenge = { navController.navigateToCreateChallenge() },
             )
         }
