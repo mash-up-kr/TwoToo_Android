@@ -2,11 +2,13 @@ package com.mashup.twotoo.repository
 
 import com.mashup.twotoo.datasource.remote.challenge.ChallengeDataSource
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
+import com.mashup.twotoo.datasource.remote.challenge.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
 import com.mashup.twotoo.mapper.toDomainModel
 import model.challenge.request.ApproveChallengeRequestDomainModel
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.request.CreateChallengeRequestDomainModel
+import model.challenge.response.ChallengeDetailResponseDomainModel
 import model.challenge.response.ChallengeResponseDomainModel
 import repository.ChallengeRepository
 import javax.inject.Inject
@@ -28,7 +30,7 @@ class ChallengeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getChallengeByNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): ChallengeResponseDomainModel {
+    override suspend fun getChallengeByNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): ChallengeDetailResponseDomainModel {
         return challengeDataSource.getChallengeByNo(
             challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
         ).toDomainModel()
