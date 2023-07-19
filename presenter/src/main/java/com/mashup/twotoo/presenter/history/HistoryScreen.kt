@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogImage
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -117,7 +118,7 @@ fun HistoryScreen(
                 DialogContent(
                     title = R.string.challenge_done,
                     desc = R.string.challengeDoneDescription,
-                    image = R.drawable.crying_cloud,
+                    dialogImage = DialogImage.leaveChallenge,
                     buttons = listOf(
                         DialogButtonContent(
                             text = R.string.cancel,
