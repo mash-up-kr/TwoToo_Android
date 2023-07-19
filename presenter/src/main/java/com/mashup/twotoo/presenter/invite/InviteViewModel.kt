@@ -27,7 +27,7 @@ class InviteViewModel @Inject constructor(
      * get UserInfo
      */
     fun getUserInfo() = intent {
-        getUserInfoUseCase.invoke().onSuccess { userInfo ->
+        getUserInfoUseCase().onSuccess { userInfo ->
             reduce {
                 state.copy(userNo = userInfo.userNo, userNickName = userInfo.nickname)
             }
@@ -40,7 +40,7 @@ class InviteViewModel @Inject constructor(
      */
     fun getPartnerInfo() {
         viewModelScope.launch {
-            getPartnerInfoUseCase.invoke().onSuccess { partnerInfo ->
+            getPartnerInfoUseCase().onSuccess { partnerInfo ->
                 if (partnerInfo.partnerNo != null) {
                     navigateToHome()
                 } else {
