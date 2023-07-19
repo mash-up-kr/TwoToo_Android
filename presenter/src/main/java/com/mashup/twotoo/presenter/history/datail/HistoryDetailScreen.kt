@@ -86,7 +86,7 @@ fun HistoryDetailScreen(
                     style = TwoTooTheme.typography.headLineNormal24,
                 )
                 Text(
-                    text = historyDetailInfoUiModel.impressions,
+                    text = historyDetailInfoUiModel.infoUiModel.text,
                     modifier = Modifier.padding(top = 20.dp),
                     style = TwoTooTheme.typography.headLineNormal18,
                 )
@@ -100,7 +100,7 @@ fun HistoryDetailScreen(
                     color = TwoTooTheme.color.gray500,
                 )
 
-                if (historyDetailInfoUiModel.complimentFromPartner.isNotEmpty()) {
+                if (historyDetailInfoUiModel.infoUiModel.partnerComment.isNotEmpty()) {
                     Text(
                         text = stringResource(
                             id = R.string.complimentFromPartner,
@@ -112,7 +112,7 @@ fun HistoryDetailScreen(
                     )
 
                     Text(
-                        text = historyDetailInfoUiModel.complimentFromPartner,
+                        text = historyDetailInfoUiModel.infoUiModel.partnerComment,
                         style = TwoTooTheme.typography.bodyNormal16,
                         modifier = Modifier
                             .padding(top = 8.dp)
@@ -135,10 +135,12 @@ fun HistoryDetailScreen(
 @Composable
 private fun PreviewHistoryDetailScreen() {
     TwoTooTheme {
+        val infoUiModel = HistoryDetailInfoUiModel.default.infoUiModel.copy(partnerComment = "앞으로 더 화이팅 이야!")
         HistoryDetailScreen(
             onClickBackButton = {},
-            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default
-                .copy(complimentFromPartner = "앞으로 더 화이팅 이야!"),
+            historyDetailInfoUiModel = HistoryDetailInfoUiModel.default.copy(
+                infoUiModel = infoUiModel,
+            ),
         )
     }
 }
