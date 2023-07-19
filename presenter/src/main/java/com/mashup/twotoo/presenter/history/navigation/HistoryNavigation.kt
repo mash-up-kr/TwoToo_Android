@@ -9,7 +9,6 @@ import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
 
-// Todo 일단 이렇게 argument 전송하고 다시 수정해야함
 fun NavController.navigateToHistory(challengeNo: Int) {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/$challengeNo")
 }
