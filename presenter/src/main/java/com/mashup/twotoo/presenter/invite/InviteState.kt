@@ -1,7 +1,7 @@
 package com.mashup.twotoo.presenter.invite
 
-import com.mashup.twotoo.presenter.invite.model.InviteType
-
 data class InviteState(
-    val status: InviteType = InviteType.Send,
+    val partnerNo: Int = 0,
+    val userNo: Int = 0,
+    val userNickName: String = "",
 )

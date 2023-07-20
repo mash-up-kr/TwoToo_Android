@@ -38,25 +38,20 @@ class OnBoardingViewModel @Inject constructor(
             val fcmToken = getFcmTokenFlow()
             val userInfo = getKakaoUserInfoFlow()
             combine(kakaoLogin, fcmToken, userInfo) { loginState, deviceToken, socialId ->
-                when (loginState) {
-                    is LoginState.Success -> {
-                        updateLoginState(true, deviceToken, socialId)
+                reduce {
+                    when (loginState) {
+                        is LoginState.Success -> {
+                            state.copy(isSuccessLogin = true, deviceToken = deviceToken, socialId = socialId ?: "")
+                        }
+                        is LoginState.Error -> {
+                            state.copy(isSuccessLogin = false, deviceToken = deviceToken, socialId = socialId ?: "")
+                        }
+                        is LoginState.Loading -> {
+                            state.copy(isSuccessLogin = false, deviceToken = deviceToken, socialId = socialId ?: "")
+                        }
                     }
-                    is LoginState.Error -> {
-                        updateLoginState(false, deviceToken, socialId)
-                    }
-                    else -> {}
                 }
             }.collectLatest { }
-        }
-    }
-
-    private fun updateLoginState(isSuccess: Boolean, deviceToken: String, socialId: String?) {
-        intent {
-            reduce {
-                Log.d(TAG, "updateLoginState: socialId$socialId")
-                state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = socialId ?: "")
-            }
         }
     }
 

@@ -10,6 +10,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecommendChallengeBottomSheet(
+    onClickItemName: (Int) -> Unit,
     sheetState: SheetState = rememberModalBottomSheetState(),
     onDismiss: () -> Unit,
 ) {
@@ -18,6 +19,6 @@ fun RecommendChallengeBottomSheet(
         onDismissRequest = onDismiss,
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
-        RecommendChallengeContent()
+        RecommendChallengeContent(onClickItemName)
     }
 }

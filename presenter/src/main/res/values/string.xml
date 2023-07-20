@@ -91,9 +91,9 @@
     <!-- invite -->
     <string name="other">%s님</string>
     <string name="invite_someone">의 짝꿍으로 초대가 되었습니다.</string>
-    <string name="invite_title">상대방에게 초대장을 보내\n투투를 시작해보세요</string>
-    <string name="invite_desc">상대방이 수락하면 투투를 시작할 수 있습니다</string>
-    <string name="invite_waiting_other">상대방의 수락을\n기다리고 있습니다.</string>
+    <string name="invite_title">짝꿍에게 초대장을 보내\n투투를 시작해보세요</string>
+    <string name="invite_desc">짝꿍이 수락하면 투투를 시작할 수 있습니다</string>
+    <string name="invite_waiting_other">짝꿍의 수락을\n기다리고 있습니다.</string>
     <string name="invite_refresh">새로고침을 눌러주세요</string>
     <string name="invite_resend_desc">*만약 초대링크를 잃어버리셨다면, 초대장 다시보내기를 해보세요</string>
 

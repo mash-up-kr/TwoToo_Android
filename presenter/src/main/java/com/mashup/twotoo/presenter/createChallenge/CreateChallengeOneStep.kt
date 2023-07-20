@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,8 +39,13 @@ fun CreateChallengeOneStep() {
     Column(
         modifier = Modifier.padding(top = 12.dp),
     ) {
-        InputChallengeName()
-        RecommendChallengeButton()
+        var text by remember { mutableStateOf("") }
+        val context = LocalContext.current
+
+        InputChallengeName(text, onTextValueChanged = { text = it})
+        RecommendChallengeButton { clickItem ->
+            text = context.resources.getString(clickItem)
+        }
 
         Row {
             SettingChallengeDate(title = R.string.challenge_start_date)
@@ -50,8 +56,7 @@ fun CreateChallengeOneStep() {
 }
 
 @Composable
-fun InputChallengeName() {
-    var text by remember { mutableStateOf("") }
+fun InputChallengeName(text: String, onTextValueChanged:(String) -> Unit) {
 
     Column {
         Text(
@@ -65,14 +70,16 @@ fun InputChallengeName() {
             modifier = Modifier.fillMaxWidth().height(46.dp),
             text = text,
             textHint = stringResource(id = R.string.input_challenge_name_placeholder),
-            updateText = { text = it },
+            updateText = { onTextValueChanged },
         )
     }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RecommendChallengeButton() {
+fun RecommendChallengeButton(
+    onClickItemName: (Int) -> Unit
+) {
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(true)
     val scope = rememberCoroutineScope()
@@ -80,6 +87,7 @@ fun RecommendChallengeButton() {
 
     if (isBottomSheetVisible) {
         RecommendChallengeBottomSheet(
+            onClickItemName = {onClickItemName},
             sheetState = sheetState,
             onDismiss = {
                 closeSheet.invoke()

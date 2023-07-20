@@ -43,7 +43,7 @@ fun NickNameSettingRoute(
     nickNameViewModel: NickNameViewModel,
     onLoginSuccess: (String) -> Unit
 ) {
-    val state = nickNameViewModel.collectAsState().value
+    val state by nickNameViewModel.collectAsState()
     NickNameSetting(state, onNextButtonClick = { nickName ->
         nickNameViewModel.setUserNickName(nickName)
     })
