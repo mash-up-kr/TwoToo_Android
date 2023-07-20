@@ -78,7 +78,7 @@ class HomeSideEffectHandler(
                             ToastText.CheerSuccess -> {
                                 context.getString(R.string.toast_message_cheer_success)
                             }
-                            ToastText.LoadHomeFail->{
+                            ToastText.LoadHomeFail -> {
                                 context.getString(R.string.toast_message_load_home_fail)
                             }
                         },
