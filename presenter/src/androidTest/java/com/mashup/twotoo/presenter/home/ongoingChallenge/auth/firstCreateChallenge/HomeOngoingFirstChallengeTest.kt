@@ -11,13 +11,18 @@ import com.google.common.truth.Truth
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.HomeScreen
+import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.ChallengeState
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
+import com.mashup.twotoo.presenter.home.model.UserType
+import com.mashup.twotoo.presenter.home.model.flower.Flower
+import com.mashup.twotoo.presenter.home.model.flower.FlowerName
+import com.mashup.twotoo.presenter.home.model.flower.Stage
 import org.junit.Rule
 import org.junit.Test
-
 
 class HomeOngoingFirstChallengeTest {
 
@@ -55,12 +60,64 @@ class HomeOngoingFirstChallengeTest {
 
         (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).also {
             Truth.assertThat(
-                it.partner.flowerType.getFlowerImage(context),
+                it.partner.flowerType.getFlowerImage(context).image,
             ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
             Truth.assertThat(
-                it.me.flowerType.getFlowerImage(context),
+                it.me.flowerType.getFlowerImage(context).image,
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
+        Thread.sleep(3000)
+    }
+
+    @Test
+    fun 챌린지_생성후_FirstCreateChallenge일때_상대방이_인증했을_경우() {
+        val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
+            homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                challengeState = ChallengeState.Auth,
+                challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallengeButAuthOnlyPartner.copy(
+                    authType = AuthType.FirstCreateChallengeButAuthOnlyPartner,
+                    partner = HomeFlowerUiModel.partner.copy(
+                        flowerType = Flower(
+                            flowerName = FlowerName.Tulip,
+                            userType = UserType.PARTNER,
+                            growType = Stage.First,
+                        ),
+                    ),
+                ),
+            ),
+        )
+
+        composeTestRule.setContent {
+            context = LocalContext.current
+            TwoTooTheme {
+                HomeScreen(
+                    modifier = Modifier.fillMaxSize(),
+                    state = challengeStateTypeUiModel,
+                )
+            }
+        }
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.homeOngoingChallengeAuthPartnerText),
+        ).assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.homeOngoingChallengeFirstChallengeHint),
+        ).assertIsDisplayed()
+
+        composeTestRule.onNodeWithTag(
+            context.getString(R.string.homeOngoingChallengeWaterImage),
+        ).assertIsDisplayed()
+
+        (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).also {
+            Truth.assertThat(
+                it.partner.flowerType.getFlowerImage(context).image,
+            ).isEqualTo(R.drawable.img_home_first_stage_partner)
+
+            Truth.assertThat(
+                it.me.flowerType.getFlowerImage(context).image,
+            ).isEqualTo(R.drawable.img_home_zero_stage_me)
+        }
+        Thread.sleep(3000)
     }
 }

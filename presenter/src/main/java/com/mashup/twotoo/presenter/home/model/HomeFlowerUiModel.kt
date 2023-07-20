@@ -10,11 +10,13 @@ import com.mashup.twotoo.presenter.home.model.flower.Stage
  */
 
 data class HomeFlowerPartnerAndMeUiModel(
+    val authType: AuthType,
     val partner: HomeFlowerUiModel,
     val me: HomeFlowerUiModel,
 ) : ChallengeStateUiModel {
     companion object {
         val firstChallenge = HomeFlowerPartnerAndMeUiModel(
+            authType = AuthType.FirstCreateChallenge,
             partner = HomeFlowerUiModel.default.copy(
                 flowerType = Flower(
                     flowerName = FlowerName.Tulip,
@@ -24,42 +26,56 @@ data class HomeFlowerPartnerAndMeUiModel(
             ),
             me = HomeFlowerUiModel.default,
         )
+
+        val firstChallengeButAuthOnlyPartner = HomeFlowerPartnerAndMeUiModel(
+            authType = AuthType.FirstCreateChallengeButAuthOnlyPartner,
+            partner = HomeFlowerUiModel.default.copy(
+                flowerType = Flower(
+                    flowerName = FlowerName.Tulip,
+                    userType = UserType.PARTNER,
+                    growType = Stage.First,
+                ),
+            ),
+            me = HomeFlowerUiModel.default,
+        )
+
         val authOnlyPartner = HomeFlowerPartnerAndMeUiModel(
+            authType = AuthType.AuthOnlyPartner,
             partner = HomeFlowerUiModel.default.copy(
                 flowerType = Flower(
                     flowerName = FlowerName.Tulip,
                     userType = UserType.PARTNER,
                     growType = Stage.Zero,
                 ),
-                authType = AuthType.AuthOnlyPartner,
             ),
-            me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyPartner),
+            me = HomeFlowerUiModel.default,
         )
         val authOnlyMe = HomeFlowerPartnerAndMeUiModel(
+            authType = AuthType.AuthOnlyMe,
             partner = HomeFlowerUiModel.default.copy(
                 flowerType = Flower(
                     flowerName = FlowerName.Tulip,
                     userType = UserType.PARTNER,
                     growType = Stage.Fourth,
                 ),
-                authType = AuthType.AuthOnlyMe,
             ),
-            me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthOnlyMe),
+            me = HomeFlowerUiModel.default,
         )
         val authBoth = HomeFlowerPartnerAndMeUiModel(
-            partner = HomeFlowerUiModel.default.copy(authType = AuthType.AuthBoth),
-            me = HomeFlowerUiModel.default.copy(authType = AuthType.AuthBoth),
+            authType = AuthType.AuthBoth,
+            partner = HomeFlowerUiModel.default,
+            me = HomeFlowerUiModel.default,
         )
         val doNotAuthBoth = HomeFlowerPartnerAndMeUiModel(
-            partner = HomeFlowerUiModel.default.copy(authType = AuthType.DoNotAuthBoth),
-            me = HomeFlowerUiModel.default.copy(authType = AuthType.DoNotAuthBoth),
+            authType = AuthType.DoNotAuthBoth,
+            partner = HomeFlowerUiModel.default,
+            me = HomeFlowerUiModel.default,
         )
     }
 }
 data class HomeFlowerUiModel(
     val name: String,
     val flowerType: FlowerType,
-    val authType: AuthType,
 ) {
     companion object {
 
@@ -70,7 +86,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Zero,
             ),
-            authType = AuthType.FirstCreateChallenge,
         )
 
         val me = HomeFlowerUiModel(
@@ -80,7 +95,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Fourth,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meZeroState = HomeFlowerUiModel(
@@ -90,7 +104,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Zero,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meFirstState = HomeFlowerUiModel(
@@ -100,7 +113,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.First,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meSecondState = HomeFlowerUiModel(
@@ -110,7 +122,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Second,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meThirdState = HomeFlowerUiModel(
@@ -120,7 +131,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Third,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meFourthState = HomeFlowerUiModel(
@@ -130,7 +140,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Fourth,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val meFifthState = HomeFlowerUiModel(
@@ -140,7 +149,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.ME,
                 growType = Stage.Fifth,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val partner = HomeFlowerUiModel(
@@ -150,7 +158,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Fourth,
             ),
-            authType = AuthType.AuthBoth,
         )
 
         val partnerZeroState = HomeFlowerUiModel(
@@ -160,7 +167,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Zero,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
 
         val partnerFirstState = HomeFlowerUiModel(
@@ -170,7 +176,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.First,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
         val partnerSecondState = HomeFlowerUiModel(
             name = "공주",
@@ -179,7 +184,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Second,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
 
         val partnerThirdState = HomeFlowerUiModel(
@@ -189,7 +193,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Third,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
 
         val partnerFourthState = HomeFlowerUiModel(
@@ -199,7 +202,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Fourth,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
 
         val partnerFifthState = HomeFlowerUiModel(
@@ -209,7 +211,6 @@ data class HomeFlowerUiModel(
                 userType = UserType.PARTNER,
                 growType = Stage.Fifth,
             ),
-            authType = AuthType.DoNotAuthBoth,
         )
     }
 }
