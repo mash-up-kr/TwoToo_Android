@@ -16,16 +16,14 @@ import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
 
-/**
- * @Created by 김현국 2023/07/04
- */
+
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,
         challengeTotal = challengeTotal,
         onGoingChallenge = onGoingChallenge.toDomainModel(),
-        user1Commit = user1Commit.toDomainModel(),
-        user2Commit = user2Commit.toDomainModel(),
+        user1Commit = user1Commit?.toDomainModel(),
+        user2Commit = user2Commit?.toDomainModel(),
     )
 }
 

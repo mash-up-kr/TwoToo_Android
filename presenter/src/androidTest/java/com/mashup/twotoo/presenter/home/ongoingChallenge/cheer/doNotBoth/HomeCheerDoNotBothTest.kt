@@ -11,6 +11,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.HomeScreen
 import com.mashup.twotoo.presenter.home.model.AuthType
+import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
@@ -115,24 +116,25 @@ class HomeCheerDoNotBothTest {
         return OngoingChallengeUiModel.cheer.copy(
             homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                 challengeStateUiModel = HomeCheerUiModel.doNotCheerBoth.copy(
+                    cheerState = CheerState.DoNotCheerBoth,
                     partner = CheerWithFlower.partnerNotYet.copy(
                         homeFlowerUiModel = when (partnerStage) {
-                            Stage.Zero -> HomeFlowerUiModel.partnerZeroState.copy(authType = AuthType.AuthBoth)
-                            Stage.First -> HomeFlowerUiModel.partnerFirstState.copy(authType = AuthType.AuthBoth)
-                            Stage.Second -> HomeFlowerUiModel.partnerSecondState.copy(authType = AuthType.AuthBoth)
-                            Stage.Third -> HomeFlowerUiModel.partnerThirdState.copy(authType = AuthType.AuthBoth)
-                            Stage.Fourth -> HomeFlowerUiModel.partnerFourthState.copy(authType = AuthType.AuthBoth)
-                            Stage.Fifth -> HomeFlowerUiModel.partnerFifthState.copy(authType = AuthType.AuthBoth)
+                            Stage.Zero -> HomeFlowerUiModel.partnerZeroState
+                            Stage.First -> HomeFlowerUiModel.partnerFirstState
+                            Stage.Second -> HomeFlowerUiModel.partnerSecondState
+                            Stage.Third -> HomeFlowerUiModel.partnerThirdState
+                            Stage.Fourth -> HomeFlowerUiModel.partnerFourthState
+                            Stage.Fifth -> HomeFlowerUiModel.partnerFifthState
                         },
                     ),
                     me = CheerWithFlower.meNotYet.copy(
                         homeFlowerUiModel = when (meStage) {
-                            Stage.Zero -> HomeFlowerUiModel.meZeroState.copy(authType = AuthType.AuthBoth)
-                            Stage.First -> HomeFlowerUiModel.meFirstState.copy(authType = AuthType.AuthBoth)
-                            Stage.Second -> HomeFlowerUiModel.meSecondState.copy(authType = AuthType.AuthBoth)
-                            Stage.Third -> HomeFlowerUiModel.meThirdState.copy(authType = AuthType.AuthBoth)
-                            Stage.Fourth -> HomeFlowerUiModel.meFourthState.copy(authType = AuthType.AuthBoth)
-                            Stage.Fifth -> HomeFlowerUiModel.meFifthState.copy(authType = AuthType.AuthBoth)
+                            Stage.Zero -> HomeFlowerUiModel.meZeroState
+                            Stage.First -> HomeFlowerUiModel.meFirstState
+                            Stage.Second -> HomeFlowerUiModel.meSecondState
+                            Stage.Third -> HomeFlowerUiModel.meThirdState
+                            Stage.Fourth -> HomeFlowerUiModel.meFourthState
+                            Stage.Fifth -> HomeFlowerUiModel.meFifthState
                         },
                     ),
                 ),

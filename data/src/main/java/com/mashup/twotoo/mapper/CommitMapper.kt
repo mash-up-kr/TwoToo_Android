@@ -11,6 +11,7 @@ import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
 import okhttp3.MultipartBody
 
+// TODO replace mapper in model
 fun Commit.toDomainModel(): CommitResponseDomainModel {
     return CommitResponseDomainModel(
         commitNo = this.commitNo,

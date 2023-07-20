@@ -29,8 +29,8 @@ import com.skydoves.landscapist.glide.GlideImageState
 
 @Composable
 fun TwoTooImageView(
-    model: Any?,
     modifier: Modifier = Modifier,
+    model: Any? = null,
     @DrawableRes previewPlaceholder: Int? = null,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
@@ -73,7 +73,7 @@ fun TwoTooImageViewImpl(
     model: () -> Any?,
     modifier: Modifier = Modifier,
     @DrawableRes previewPlaceholder: Int? = null,
-    onClickPlusButton: (() -> Unit) = {},
+    onClickPlusButton: () -> Unit = {},
     enableSetImage: Boolean = false,
     loadingPlaceHolder: @Composable (BoxScope.(GlideImageState.Loading) -> Unit) = {},
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
@@ -99,7 +99,7 @@ fun TwoTooImageViewImpl(
                     .fillMaxSize(0.5f)
                     .align(Alignment.Center)
                     .clickable {
-                        onClickPlusButton.invoke()
+                        onClickPlusButton()
                     },
 
             )

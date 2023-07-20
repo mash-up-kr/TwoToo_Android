@@ -68,6 +68,8 @@
     <string name="homeOngoingChallengeWaterImage">물 뿌리개 이미지</string>
     <string name="homeOngoingChallengeFlowerMeImage">나의 꽃 이미지</string>
     <string name="homeOngoingChallengeFlowerPartnerImage">파트너 꽃 이미지</string>
+    <string name="homeOngoingCompleteChallengeButtonText">챌린지 완료하기</string>
+    <string name="homeOngoingCompleteChallengeButton">챌린지 완료하기 버튼</string>
 
     <string name="homeCheerChallengePartnerBubble">파트너 텍스트 풍선</string>
     <string name="homeCheerChallengeMeBubble">내 텍스트 풍선</string>
