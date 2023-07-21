@@ -28,13 +28,15 @@ enum class FlowerName(val value: String) {
     Delphinium("DELPHINIUM"),
     ;
 
-    // Todo Default enum 또는 서버에러 처리 UI 필요함
     companion object {
         fun findBy(value: String): FlowerName {
             return values().firstOrNull { it.value == value } ?: Tulip
         }
     }
 }
+
+fun String.toFlowerName(): FlowerName =
+    FlowerName.findBy(this)
 
 abstract class FlowerType(val name: FlowerName) {
     abstract fun getFlowerImage(context: Context): FlowerImage

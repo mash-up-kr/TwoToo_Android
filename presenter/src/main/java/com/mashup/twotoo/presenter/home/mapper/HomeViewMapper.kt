@@ -16,8 +16,8 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
 import com.mashup.twotoo.presenter.home.model.HomeShotCountTextUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
-import com.mashup.twotoo.presenter.model.FlowerName
 import com.mashup.twotoo.presenter.model.Stage
+import com.mashup.twotoo.presenter.model.toFlowerName
 import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import java.text.SimpleDateFormat
@@ -363,9 +363,6 @@ fun HomeViewResponseDomainModel.getFlowerType(
         Pair(user2, user1)
     }
 }
-
-fun String.toFlowerName(): FlowerName =
-    FlowerName.findBy(this)
 
 fun HomeViewResponseDomainModel.getGrowType(
     userNo: Int,

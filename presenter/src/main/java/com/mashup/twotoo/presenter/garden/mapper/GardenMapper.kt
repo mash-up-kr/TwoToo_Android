@@ -1,13 +1,13 @@
 package com.mashup.twotoo.presenter.garden.mapper
 
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
-import com.mashup.twotoo.presenter.home.mapper.toFlowerName
-import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.toFlowerName
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.response.ChallengeResponseDomainModel
 
 fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel {
     return ChallengeCardInfoUiModel(
-        attempts = index.toString(),
+        attempts = index + 1,
         name = name,
         period = toPeriod(),
         meFlower = user1Flower.toFlowerName(),
@@ -15,18 +15,10 @@ fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel
     )
 }
 
-fun String.toDate(): String {
-    val index = indexOf('T')
-    return if (index != -1) {
-        substring(0, index)
-    } else {
-        this
-    }
+fun String.toDateStr(): String {
+    return DateFormatter.getDateStrBy(this)
 }
 
 fun ChallengeResponseDomainModel.toPeriod(): String {
-    return "${startDate.toDate()} ~ ${endDate.toDate()}"
+    return "${startDate.toDateStr()} ~ ${endDate.toDateStr()}"
 }
-
-fun String.toFlowerName(): FlowerName =
-    FlowerName.findBy(this)

@@ -19,7 +19,7 @@ class GardenViewModel(
     fun getAllChallenge() = intent {
         getAllChallengeUseCase().onSuccess { challenges ->
             val challengeCardInfos = challenges.mapIndexed { index, challengeResponseDomainModel ->
-                challengeResponseDomainModel.toUiModel(index + 1)
+                challengeResponseDomainModel.toUiModel(index)
             }
             reduce {
                 state.copy(challengeCardInfos = challengeCardInfos)
