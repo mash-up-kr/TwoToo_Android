@@ -34,6 +34,7 @@ image_cropper = "4.3.3"
 firebase-bom = "32.2.0"
 turbine = "1.0.0"
 coroutine_test = "1.7.2"
+gson = "2.10.1"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -73,6 +74,7 @@ okhttp-url-connection = { module = "com.squareup.okhttp3:okhttp-urlconnection", 
 retrofit2 = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 retrofit-converter-moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+gson = {module = "com.google.code.gson:gson", version.ref = "gson"}
 
 #dagger
 google-dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
