@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import usecase.token.GetAccessTokenUseCase
+import usecase.user.GetPreferenceUserInfoUseCase
 import javax.inject.Singleton
 
 @Module
@@ -27,14 +27,14 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        getAccessTokenUseCase: GetAccessTokenUseCase,
+        getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.apply {
             addInterceptor(
                 Interceptor { chain ->
                     val token = runBlocking {
-                        runCatching { getAccessTokenUseCase() }.getOrDefault("")
+                        runCatching { getPreferenceUserInfoUseCase().accessToken }.getOrDefault("")
                     }
                     val request = chain.request().newBuilder()
                         .addHeader(AUTHORIZATION, "Bearer $token")
