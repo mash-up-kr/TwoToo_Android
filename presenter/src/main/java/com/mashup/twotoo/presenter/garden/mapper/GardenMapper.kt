@@ -7,6 +7,7 @@ import model.challenge.response.ChallengeResponseDomainModel
 
 fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel {
     return ChallengeCardInfoUiModel(
+        challengeNo = challengeNo,
         attempts = index + 1,
         name = name,
         period = toPeriod(),
