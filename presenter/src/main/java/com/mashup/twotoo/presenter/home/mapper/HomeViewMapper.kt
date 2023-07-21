@@ -240,19 +240,21 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
-                    cheerText = partner.partnerComment.multiLineConverter(),
+                    cheerText = me.partnerComment.multiLineConverter(),
+                    commitNo = partner.commitNo,
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = meNickName,
                         flowerType = meFlower,
                     ),
-
+                    cheerText = partner.partnerComment.multiLineConverter(),
+                    commitNo = me.commitNo,
                 ),
             )
         }
 
-        me.partnerComment.isNotBlank() && partner!!.partnerComment.isBlank() -> {
+        me.partnerComment.isBlank() && partner!!.partnerComment.isNotBlank() -> {
             // 나만 응원을 했을 경우
             HomeCheerUiModel.cheerOnlyMe.copy(
                 cheerState = CheerState.CheerOnlyMe,
@@ -261,18 +263,20 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
+                    commitNo = partner.commitNo,
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
-                    cheerText = me.partnerComment.multiLineConverter(),
+                    cheerText = partner.partnerComment.multiLineConverter(), // 파트너의 문구에서 나의 문구를 찾아야함.
+                    commitNo = me.commitNo,
                 ),
             )
         }
 
-        me.partnerComment.isBlank() && partner!!.partnerComment.isNotBlank() -> {
+        me.partnerComment.isNotBlank() && partner!!.partnerComment.isBlank() -> {
             // 파트너만 응원을 했을 경우
             HomeCheerUiModel.cheerOnlyPartner.copy(
                 cheerState = CheerState.CheerOnlyPartner,
@@ -281,13 +285,15 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
-                    cheerText = partner.partnerComment.multiLineConverter(),
+                    cheerText = me.partnerComment.multiLineConverter(),
+                    commitNo = partner.commitNo,
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
+                    commitNo = me.commitNo,
                 ),
             )
         }
@@ -301,12 +307,14 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
+                    commitNo = partner.commitNo,
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
                         flowerType = partnerFlower,
                     ),
+                    commitNo = me.commitNo,
                 ),
             )
         }
