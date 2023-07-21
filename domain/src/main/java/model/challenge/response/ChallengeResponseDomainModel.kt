@@ -6,6 +6,7 @@ package model.challenge.response
 data class ChallengeResponseDomainModel(
     val challengeNo: Int,
     val endDate: String,
+    val description: String = "",
     val isApproved: Boolean,
     val isFinished: Boolean,
     val name: String,

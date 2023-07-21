@@ -32,16 +32,11 @@ import com.mashup.twotoo.presenter.garden.model.FlowerHead
 import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
-fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: () -> Unit) {
+fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: (Int) -> Unit) {
     Box(
-        modifier = Modifier
-            .height(216.dp)
-            .width(156.dp)
-            .clip(TwoTooRound6)
-            .background(TwoTooTheme.color.mainWhite)
-            .clickable {
-                navigateToGarden()
-            },
+        modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite).clickable {
+            navigateToGarden(challengeCardInfoUiModel.challengeNo)
+        },
     ) {
         ChallengeInfo(challengeCardInfoUiModel)
         TwoTooImageView(

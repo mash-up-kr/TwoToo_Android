@@ -26,7 +26,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun GardenRoute(
     gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
-    navigateToGarden: () -> Unit,
+    navigateToGarden: (Int) -> Unit = {},
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -48,7 +48,7 @@ fun GardenRoute(
 fun GardenScreen(
     state: GardenState,
     modifier: Modifier = Modifier,
-    navigateToGarden: () -> Unit,
+    navigateToGarden: (Int) -> Unit,
 ) {
     Scaffold(
         topBar = {
