@@ -63,7 +63,7 @@ class HomeViewModel @Inject constructor(
                 ).state
             }
 
-            if (this.state is OngoingChallengeUiModel) {
+            if (this.state is OngoingChallengeUiModel) { // todo 인덴트 줄이기
                 with(this.state as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
