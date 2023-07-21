@@ -32,15 +32,15 @@ import com.mashup.twotoo.presenter.home.model.AuthType.FirstCreateChallengeButAu
 import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
+import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
-import com.mashup.twotoo.presenter.home.model.flower.Flower
-import com.mashup.twotoo.presenter.home.model.flower.FlowerName
-import com.mashup.twotoo.presenter.home.model.flower.Stage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.Stage
 
 /**
  * @Created by 김현국 2023/06/07
