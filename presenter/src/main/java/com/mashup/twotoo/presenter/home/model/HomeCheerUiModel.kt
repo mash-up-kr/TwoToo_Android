@@ -44,6 +44,7 @@ data class HomeCheerUiModel(
 data class CheerWithFlower(
     val homeFlowerUiModel: HomeFlowerUiModel,
     val cheerText: String = "",
+    val commitNo: Int = -1,
 ) {
     companion object {
         val meNotYet = CheerWithFlower(

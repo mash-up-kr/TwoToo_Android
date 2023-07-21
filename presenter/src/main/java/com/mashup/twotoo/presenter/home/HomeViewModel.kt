@@ -8,6 +8,7 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
@@ -16,6 +17,7 @@ import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
+import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -24,6 +26,7 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.FinishChallengeWithNoUseCase
+import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
@@ -49,6 +52,7 @@ class HomeViewModel @Inject constructor(
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
     private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
+    private val createCheerUseCase: CreateCheerUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
@@ -192,13 +196,26 @@ class HomeViewModel @Inject constructor(
             }
             is BottomSheetData.CheerData -> {
                 // 서버 데이터 전송
-
+                val commitNo = (
+                    (state.challengeStateUiModel as? OngoingChallengeUiModel)
+                        ?.homeChallengeStateUiModel?.challengeStateUiModel as? HomeCheerUiModel
+                    )?.partner?.commitNo
+                commitNo?.let { no ->
+                    createCheerUseCase(
+                        commitNoRequestDomainModel = CommitNoRequestDomainModel(
+                            commitNo = no,
+                        ),
+                    ).onSuccess {
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.CheerSuccess,
+                            ),
+                        )
+                        // home viewUpdate
+                    }.onFailure {
+                    }
+                }
                 // toast sideEffect
-                postSideEffect(
-                    HomeSideEffect.Toast(
-                        ToastText.CheerSuccess,
-                    ),
-                )
             }
         }
     }
