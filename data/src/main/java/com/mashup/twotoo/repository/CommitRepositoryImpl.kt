@@ -26,10 +26,12 @@ class CommitRepositoryImpl @Inject constructor(
 
     override suspend fun cheer(
         commitNoRequestDomainModel: CommitNoRequestDomainModel,
-    ): CommitResponseDomainModel {
-        return commitDataSource.cheerByNo(
-            commitNoRequest = commitNoRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+    ): Result<CommitResponseDomainModel> {
+        return runCatching {
+            commitDataSource.cheerByNo(
+                commitNoRequest = commitNoRequestDomainModel.toDataModel(),
+            ).toDomainModel()
+        }
     }
 
     override suspend fun getCommit(
