@@ -8,6 +8,7 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -15,6 +16,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
@@ -57,7 +59,9 @@ class HomeViewModel @Inject constructor(
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(
         HomeStateUiModel.ongoing.copy(
-            challengeStateUiModel = OngoingChallengeUiModel.cheer,
+            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheerBoth,
+            ),
         ),
     )
 
@@ -73,7 +77,9 @@ class HomeViewModel @Inject constructor(
                 with(state.challengeStateUiModel as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
-                            if (!getVisibilityCheerDialogUseCase()) {
+                            val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).partner.cheerText
+                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isNotBlank()) {
+                                // 응원텍스트가 있다면 표시하지 않습니다.
                                 postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
                             }
                         }
@@ -89,7 +95,17 @@ class HomeViewModel @Inject constructor(
                         }
 
                         ChallengeState.Auth -> with(homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel) {
-                            if (this.authType != AuthType.AuthBoth) {
+                            if (this.authType == AuthType.AuthBoth) {
+                                postSideEffect(
+                                    HomeSideEffect.DismissBottomSheet,
+                                )
+                                delay(100)
+                                postSideEffect(
+                                    HomeSideEffect.OpenHomeDialog(
+                                        type = HomeDialogType.Cheer,
+                                    ),
+                                )
+                            } else {
                                 postSideEffect(HomeSideEffect.RemoveVisibilityCheerDialog)
                             }
                         }
@@ -126,14 +142,20 @@ class HomeViewModel @Inject constructor(
     }
 
     fun openToShotBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.DismissBottomSheet)
+        delay(100)
         postSideEffect(HomeSideEffect.OpenToShotBottomSheet)
     }
 
     fun openToAuthBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.DismissBottomSheet)
+        delay(100)
         postSideEffect(HomeSideEffect.OpenToAuthBottomSheet)
     }
 
     fun openToCheerBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.DismissBottomSheet)
+        delay(100)
         postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)
     }
 
