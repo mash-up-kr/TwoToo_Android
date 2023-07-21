@@ -106,7 +106,7 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
 }
 
 @Composable
-fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: () -> Unit) {
+fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: (Int) -> Unit) {
     LazyColumn {
         items(items) { item ->
             HistoryItem(item, navigateToHistoryDetail)
@@ -115,7 +115,7 @@ fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: () ->
 }
 
 @Composable
-private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: () -> Unit) {
+private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: (Int) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -144,13 +144,13 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean, navigateToHistoryDetail: () -> Unit) {
+private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean, navigateToHistoryDetail: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .size(127.dp)
             .clip(TwoTooTheme.shape.large)
             .background(TwoTooTheme.color.mainWhite).clickable {
-                navigateToHistoryDetail()
+                navigateToHistoryDetail(historyInfoUiModel.commitNo)
             },
     ) {
         if (historyInfoUiModel.photoUrl.isEmpty()) {
@@ -235,11 +235,19 @@ private fun PreviewHistoryItem() {
 @Preview("내 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), true, {})
+    HistoryInfo(
+        historyInfoUiModel = HistoryInfoUiModel.default,
+        isMyHistoryInfo = true,
+        navigateToHistoryDetail = { },
+    )
 }
 
 @Preview("연인이 히스토리에 인증 안했을 때")
 @Composable
 private fun PreviewHistoryItemPartnerEmpty() {
-    HistoryInfo(HistoryInfoUiModel("", ""), false, {})
+    HistoryInfo(
+        historyInfoUiModel = HistoryInfoUiModel.empty,
+        isMyHistoryInfo = false,
+        navigateToHistoryDetail = { },
+    )
 }

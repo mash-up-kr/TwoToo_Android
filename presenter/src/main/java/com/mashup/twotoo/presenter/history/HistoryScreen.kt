@@ -34,7 +34,7 @@ fun HistoryRoute(
     challengeNo: Int,
     historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
-    navigateToHistoryDetail: () -> Unit,
+    navigateToHistoryDetail: (Int) -> Unit,
 ) {
     Log.i("HistoryRoute", "challengeNo = $challengeNo")
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -58,7 +58,7 @@ fun HistoryRoute(
 fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
-    navigateToHistoryDetail: () -> Unit,
+    navigateToHistoryDetail: (Int) -> Unit,
     state: HistoryState,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }

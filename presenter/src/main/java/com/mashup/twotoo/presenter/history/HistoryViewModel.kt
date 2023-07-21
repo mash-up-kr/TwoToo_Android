@@ -42,7 +42,7 @@ class HistoryViewModel @Inject constructor(
                 )
             }
         }.onFailure {
-            Log.e("HistoryViewModel", "${it.message} 서버 에러!!")
+            Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
         }
     }
 
@@ -53,8 +53,9 @@ class HistoryViewModel @Inject constructor(
         val myCommits = state.historyItemUiModel.map {
             it.myInfo
         }
+        Log.i("HistoryViewModel", "updateChallengeDetail: myCommitSize${myCommits.size}, partnerCommitSize=${partnerCommits.size}")
 
-        var isMyCommit: Boolean = true
+        var isMyCommit = true
         val commit = run {
             myCommits.firstOrNull { it.commitNo == commitNo }
         } ?: run {
@@ -68,9 +69,9 @@ class HistoryViewModel @Inject constructor(
         }
 
         val ownerNickName = if (isMyCommit) {
-            OwnerNickNamesUiModel(partnerName = this.state.ownerNickNamesUiModel.partnerName, myNickName = this.state.ownerNickNamesUiModel.myNickName)
+            OwnerNickNamesUiModel(myNickName = this.state.ownerNickNamesUiModel.myNickName, partnerName = this.state.ownerNickNamesUiModel.partnerName)
         } else {
-            OwnerNickNamesUiModel(partnerName = this.state.ownerNickNamesUiModel.myNickName, myNickName = this.state.ownerNickNamesUiModel.partnerName)
+            OwnerNickNamesUiModel(myNickName = this.state.ownerNickNamesUiModel.partnerName, partnerName = this.state.ownerNickNamesUiModel.myNickName)
         }
 
         reduce {

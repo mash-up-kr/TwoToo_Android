@@ -1,43 +1,53 @@
 package com.mashup.twotoo.presenter.history.datail
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainWhite
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.history.HistoryViewModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryDetailRoute(
+    commitNo: Int,
+    historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
 ) {
-    val viewModel: HistoryDetailViewModel = viewModel()
-    val state by viewModel.collectAsState()
-
-    state.historyDetailInfo?.let {
-        HistoryDetailScreen(
-            onClickBackButton = onClickBackButton,
-            historyDetailInfoUiModel = it,
-        )
+    Log.i("HistoryDetailRoute", "commitNo = $commitNo")
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            historyViewModel.updateChallengeDetail(commitNo)
+        }
     }
+    val state by historyViewModel.collectAsState()
+    HistoryDetailScreen(
+        onClickBackButton = onClickBackButton,
+        historyDetailInfoUiModel = state.historyDetailInfoUiModel,
+    )
 }
 
 @Composable

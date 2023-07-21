@@ -25,10 +25,11 @@ data class HistoryInfoUiModel(
             userNo = 0,
         )
 
-        // Todo crateTime을 domainmodel에 추가해야함(공통으로 사용가능한지 확인 후)
+        // Todo createdTime을 domainmodel에 추가해야함(공통으로 사용가능한지 확인 후)
         fun from(commit: CommitResponseDomainModel): HistoryInfoUiModel {
             return HistoryInfoUiModel(
                 photoUrl = commit.photoUrl,
+                commitNo = commit.commitNo,
                 createdTime = "",
                 userNo = commit.userNo,
                 text = commit.text,
