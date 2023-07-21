@@ -1,13 +1,21 @@
 package com.mashup.twotoo.presenter.home
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
+import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
+import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeDialogType
+import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
+import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import kotlinx.coroutines.launch
+import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -15,7 +23,14 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.user.GetVisibilityCheerDialogUseCase
+import usecase.user.GetVisibilityCompleteDialogUseCase
+import usecase.user.RemoveVisibilityCheerDialogUseCase
+import usecase.user.RemoveVisibilityCompleteDialogUseCase
+import usecase.user.SetVisibilityCheerDialogUseCase
+import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 import javax.inject.Inject
 
@@ -27,6 +42,13 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
     private val createCommitUseCase: CreateCommitUseCase,
+    private val getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase,
+    private val getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
+    private val setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
+    private val setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
+    private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
+    private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
+    private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
@@ -38,10 +60,59 @@ class HomeViewModel @Inject constructor(
                     challengeStateUiModel = homeViewResponseDomainModel.toUiModel(0),
                 )
             }
+
+            if (state.challengeStateUiModel is OngoingChallengeUiModel) { // todo 인덴트 줄이기
+                with(state.challengeStateUiModel as OngoingChallengeUiModel) {
+                    when (homeChallengeStateUiModel.challengeState) {
+                        ChallengeState.Cheer -> {
+                            if (!getVisibilityCheerDialogUseCase()) {
+                                postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
+                            }
+                        }
+
+                        ChallengeState.Complete -> {
+                            if (!getVisibilityCompleteDialogUseCase()) {
+                                if (isBothBloom(this)) {
+                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Bloom))
+                                } else {
+                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
+                                }
+                            }
+                        }
+
+                        ChallengeState.Auth -> with(homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel) {
+                            if (this.authType != AuthType.AuthBoth) {
+                                postSideEffect(HomeSideEffect.RemoveVisibilityCheerDialog)
+                            }
+                        }
+                    }
+                }
+            }
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.LoadHomeFail))
         }
     }
+
+    fun onClickCheerDialogNegativeButton() = intent {
+        setVisibilityCheerDialogUseCase(true)
+    }
+
+    fun onClickCompleteDialogConfirmButton() = intent {
+        setVisibilityCompleteDialogUseCase(true)
+    }
+
+    fun removeVisibilityCompleteDialogSideEffect() {
+        viewModelScope.launch {
+            removeVisibilityCompleteDialogUseCase()
+        }
+    }
+
+    fun removeVisibilityCheerDialogSideEffect() {
+        viewModelScope.launch {
+            removeVisibilityCheerDialogUseCase()
+        }
+    }
+
     fun navigateToHistory() = intent {
         postSideEffect(HomeSideEffect.NavigateToChallengeDetail)
     }
@@ -52,6 +123,10 @@ class HomeViewModel @Inject constructor(
 
     fun openToAuthBottomSheet() = intent {
         postSideEffect(HomeSideEffect.OpenToAuthBottomSheet)
+    }
+
+    fun openToCheerBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)
     }
 
     fun onClickBeforeChallengeTextButton(beforeChallengeState: BeforeChallengeState) = intent {
@@ -126,5 +201,26 @@ class HomeViewModel @Inject constructor(
                 )
             }
         }
+    }
+
+    fun onClickCompleteButton(
+        challengeNo: Int,
+    ) = intent {
+        finishChallengeWithNoUseCase(
+            challengeNoRequestDomainModel = ChallengeNoRequestDomainModel(
+                challengeNo = challengeNo,
+            ),
+        ).onSuccess {
+            postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
+            postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
+        }.onFailure {
+            postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
+        }
+    }
+
+    private fun isBothBloom(state: OngoingChallengeUiModel): Boolean {
+        val meProgress = state.homeGoalAchievePartnerAndMeUiModel.me.progress
+        val partnerProgress = state.homeGoalAchievePartnerAndMeUiModel.partner.progress
+        return meProgress >= 0.8f && partnerProgress >= 0.8f
     }
 }

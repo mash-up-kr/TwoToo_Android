@@ -28,4 +28,8 @@ interface ChallengeRepository {
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
         approveChallengeRequestDomainModel: ApproveChallengeRequestDomainModel,
     ): ChallengeResponseDomainModel
+
+    suspend fun finishChallengeWithNo(
+        challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
+    ): Result<ChallengeResponseDomainModel>
 }

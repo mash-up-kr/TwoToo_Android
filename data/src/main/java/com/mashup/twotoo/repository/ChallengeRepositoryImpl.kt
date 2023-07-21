@@ -47,4 +47,12 @@ class ChallengeRepositoryImpl @Inject constructor(
             approveChallengeRequest = approveChallengeRequestDomainModel.toDataModel(),
         ).toDomainModel()
     }
+
+    override suspend fun finishChallengeWithNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<ChallengeResponseDomainModel> {
+        return runCatching {
+            challengeDataSource.finishChallengeWithNo(
+                challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
+            ).toDomainModel()
+        }
+    }
 }
