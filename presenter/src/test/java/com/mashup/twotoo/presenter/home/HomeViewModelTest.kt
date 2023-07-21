@@ -23,6 +23,7 @@ import repository.CommitRepository
 import repository.UserDataStoreRepository
 import repository.ViewRepository
 import usecase.challenge.FinishChallengeWithNoUseCase
+import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
@@ -43,6 +44,7 @@ class HomeViewModelTest {
     private lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
     private lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
     private lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
+    private lateinit var createCheerUseCase: CreateCheerUseCase
 
     private lateinit var fakeViewRepository: ViewRepository
     private lateinit var fakeCommitRepository: CommitRepository
@@ -68,6 +70,7 @@ class HomeViewModelTest {
             RemoveVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         removeVisibilityCompleteDialogUseCase =
             RemoveVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
+        createCheerUseCase = CreateCheerUseCase(fakeCommitRepository)
     }
 
     @Test
@@ -87,6 +90,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
         )
 
         viewModel.getHomeViewChallenge().join()
@@ -120,6 +124,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -148,6 +153,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -176,6 +182,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -205,6 +212,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
         )
 
         viewModel.container.stateFlow.test {
