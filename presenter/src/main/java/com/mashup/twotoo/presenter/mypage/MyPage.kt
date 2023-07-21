@@ -1,14 +1,7 @@
 package com.mashup.twotoo.presenter.mypage
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -20,8 +13,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound4
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
@@ -61,18 +54,26 @@ fun MyPageScreen(
             text = stringResource(id = R.string.mypage),
             onClickHelpIcon = { navigateToGuide() },
         )
-        Spacer(modifier = Modifier.height(25.dp))
+        TwoTooImageView(
+            modifier = Modifier.size(width = 149.dp, height = 129.dp),
+            model = R.drawable.img_nicknam_my,
+            previewPlaceholder = R.drawable.img_nicknam_my,
+        )
+        Spacer(modifier = Modifier.height(29.dp))
         HomeGoalCount(
             homeGoalCountUiModel,
             horizontalAlignment = Alignment.CenterHorizontally,
             textLineSpacerHeight = 10.dp,
         )
-        Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(14.dp))
         Row(
-            modifier = Modifier.width(66.dp).height(30.dp).background(
-                color = Color.White,
-                shape = TwoTooRound4,
-            ),
+            modifier = Modifier
+                .width(66.dp)
+                .height(34.dp)
+                .background(
+                    color = Color.White,
+                    shape = TwoTooTheme.shape.small,
+                ),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -85,9 +86,12 @@ fun MyPageScreen(
         }
         Spacer(modifier = Modifier.height(28.dp))
         Divider(
-            modifier = Modifier.fillMaxWidth().height(4.dp),
-            color = TwoTooTheme.color.gray500.copy(alpha = 0.1f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(4.dp),
+            color = TwoTooTheme.color.mainYellow,
         )
+        Spacer(modifier = Modifier.height(11.dp))
         MyPageItemList(
             modifier = Modifier.fillMaxWidth(),
             onClickMyPageItem = onClickMyPageItem,
