@@ -16,6 +16,18 @@ import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
  * @Created by 김현국 2023/06/10
  */
 
+data class HomeStateUiModel(
+    val challengeStateUiModel: ChallengeStateTypeUiModel,
+) {
+    companion object {
+        val before = HomeStateUiModel(
+            challengeStateUiModel = BeforeChallengeUiModel.empty,
+        )
+        val ongoing = HomeStateUiModel(
+            challengeStateUiModel = OngoingChallengeUiModel.default,
+        )
+    }
+}
 sealed interface ChallengeStateTypeUiModel
 
 enum class BeforeChallengeState {

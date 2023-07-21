@@ -7,12 +7,11 @@ import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeState
-import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.launch
@@ -50,21 +49,20 @@ class HomeViewModel @Inject constructor(
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
     private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
-) : ViewModel(), ContainerHost<ChallengeStateTypeUiModel, HomeSideEffect> {
+) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<ChallengeStateTypeUiModel, HomeSideEffect> = container(BeforeChallengeUiModel.empty)
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
-            val uiModel = homeViewResponseDomainModel.toUiModel(0)
             reduce {
-                this.copy(
-                    state = uiModel,
-                ).state
+                state.copy(
+                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(0),
+                )
             }
 
-            if (this.state is OngoingChallengeUiModel) { // todo 인덴트 줄이기
-                with(this.state as OngoingChallengeUiModel) {
+            if (state.challengeStateUiModel is OngoingChallengeUiModel) { // todo 인덴트 줄이기
+                with(state.challengeStateUiModel as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
                             if (!getVisibilityCheerDialogUseCase()) {
@@ -83,9 +81,7 @@ class HomeViewModel @Inject constructor(
                         }
 
                         ChallengeState.Auth -> with(homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel) {
-                            if (me.authType != AuthType.AuthBoth ||
-                                partner.authType != AuthType.AuthBoth
-                            ) {
+                            if (this.authType != AuthType.AuthBoth) {
                                 postSideEffect(HomeSideEffect.RemoveVisibilityCheerDialog)
                             }
                         }

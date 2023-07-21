@@ -5,6 +5,7 @@ package com.mashup.twotoo.presenter.home.model
  */
 enum class AuthType {
     FirstCreateChallenge,
+    FirstCreateChallengeButAuthOnlyPartner,
     AuthOnlyPartner,
     AuthOnlyMe,
     DoNotAuthBoth,

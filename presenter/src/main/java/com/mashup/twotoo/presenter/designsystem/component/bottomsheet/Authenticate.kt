@@ -1,24 +1,19 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
 import android.net.Uri
-import androidx.compose.animation.core.animateFloatAsState
-import androidx.compose.animation.core.tween
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ExperimentalMotionApi
-import androidx.constraintlayout.compose.MotionLayout
-import androidx.constraintlayout.compose.MotionScene
-import androidx.constraintlayout.compose.layoutId
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageViewWithSetter
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
@@ -28,7 +23,6 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.addFocusCleaner
 import com.mashup.twotoo.presenter.util.keyboardAsState
 
-@OptIn(ExperimentalMotionApi::class)
 @Composable
 fun AuthenticateContent(
     type: Authenticate,
@@ -36,24 +30,8 @@ fun AuthenticateContent(
     onClickButton: (BottomSheetData) -> Unit,
     imageUri: Uri? = null,
 ) {
-    val titleText = stringResource(id = type.title)
-    val textHint = stringResource(id = type.textHint)
-    val context = LocalContext.current
-    val motionScene = remember {
-        context.resources.openRawResource(R.raw.bottom_sheet)
-            .readBytes()
-            .decodeToString()
-    }
-
     var animateSwitch by remember { mutableStateOf(false) }
-    val progress by animateFloatAsState(
-        targetValue = if (animateSwitch) 1f else 0f,
-        animationSpec = tween(),
-        label = stringResource(id = R.string.bottomSheetAuthenticateAnimation),
-    )
-    val focusRequester by remember { mutableStateOf(FocusRequester()) }
     val focusManager = LocalFocusManager.current
-
     val keyBoardOpenState by keyboardAsState()
     LaunchedEffect(keyBoardOpenState) {
         if (!keyBoardOpenState) {
@@ -61,57 +39,57 @@ fun AuthenticateContent(
             focusManager.clearFocus()
         }
     }
-
-    MotionLayout(
-        motionScene = MotionScene(content = motionScene),
-        progress = progress,
+    Column(
         modifier = Modifier
-            .fillMaxHeight(0.8f)
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp)
-            .addFocusCleaner(focusManager),
+            .fillMaxWidth().fillMaxHeight(0.8f).addFocusCleaner(focusManager).padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.SpaceAround,
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Header(
-            modifier = Modifier.layoutId("headerText"),
-            titleText = titleText,
+            titleText = stringResource(id = type.title),
         )
-        TwoTooImageViewWithSetter(
-            modifier = Modifier
-                .layoutId("imageView")
-                .aspectRatio(1f)
-                .clip(
-                    TwoTooTheme.shape.extraSmall,
-                ),
-            imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
-            onClickPlusButton = {
-                onClickPlusButton()
-            },
-            previewPlaceholder = R.drawable.empty_image_color_placeholder,
-            failurePlaceHolder = {},
-            loadingPlaceHolder = {},
-        )
+        AnimatedVisibility(
+            visible = !animateSwitch,
+            exit = fadeOut() + shrinkVertically(
+                targetHeight = { 0 },
+            ),
+        ) {
+            TwoTooImageViewWithSetter(
+                modifier = Modifier
+                    .aspectRatio(1f)
+                    .clip(
+                        TwoTooTheme.shape.extraSmall,
+                    ),
+                imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
+                onClickPlusButton = {
+                    onClickPlusButton()
+                },
+                previewPlaceholder = R.drawable.empty_image_color_placeholder,
+                failurePlaceHolder = {},
+                loadingPlaceHolder = {},
+            )
+        }
 
         var textFieldState by rememberSaveable {
             mutableStateOf("")
         }
-        TwoTooTextField(
-            modifier = Modifier.layoutId("textField").fillMaxWidth().height(85.dp).focusRequester(
-                focusRequester = focusRequester,
-            ).onFocusChanged {
-                animateSwitch = it.isFocused
+        TextWrapper(
+            modifier = Modifier
+                .fillMaxWidth().height(85.dp),
+            isFocus = {
+                animateSwitch = it
             },
-            text = textFieldState,
-            textHint = textHint,
+            text = { textFieldState },
+            textHint = stringResource(id = type.textHint),
             updateText = {
                 if (it.length <= 100) {
                     textFieldState = it
                 }
             },
-            maxLine = 3,
         )
         TwoTooTextButton(
-            modifier = Modifier.layoutId("button")
-                .fillMaxWidth().height(57.dp).navigationBarsPadding(),
+            modifier = Modifier
+                .fillMaxWidth().height(57.dp),
             text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
             onClick = {
                 imageUri?.let { uri ->
@@ -125,4 +103,24 @@ fun AuthenticateContent(
             },
         )
     }
+}
+
+@Composable
+fun TextWrapper(
+    isFocus: (Boolean) -> Unit,
+    text: () -> String,
+    textHint: String,
+    updateText: (String) -> Unit,
+    modifier: Modifier = Modifier,
+) {
+    TwoTooTextField(
+        modifier = modifier.onFocusChanged {
+            isFocus(it.isFocused)
+        },
+        text = text.invoke(),
+        textHint = textHint,
+        updateText = {
+            updateText(it)
+        },
+    )
 }

@@ -71,7 +71,7 @@ fun HomeRoute(
         modifier = Modifier.fillMaxSize(),
     ) {
         HomeScreen(
-            state = state,
+            state = state.challengeStateUiModel,
             modifier = modifier.testTag(stringResource(id = R.string.home)),
             onBeeButtonClick = homeViewModel::openToShotBottomSheet,
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,

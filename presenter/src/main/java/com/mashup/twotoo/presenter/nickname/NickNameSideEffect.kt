@@ -1,8 +1,6 @@
 package com.mashup.twotoo.presenter.nickname
 
-import model.user.UserInfoDomainModel
-
 sealed class NickNameSideEffect {
-    object NavigateToSendInvitation : NickNameSideEffect()
+    data class NavigateToSendInvitation(val nickname: String) : NickNameSideEffect()
     object NavigateToHome : NickNameSideEffect()
 }
