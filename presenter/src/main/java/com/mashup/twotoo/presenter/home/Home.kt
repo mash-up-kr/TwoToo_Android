@@ -35,7 +35,9 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(
+    ExperimentalMaterial3Api::class,
+)
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,
@@ -47,10 +49,11 @@ fun HomeRoute(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
         openCheerBottomSheet = homeViewModel::openToCheerBottomSheet,
-        setVisibilityCheerDialog = homeViewModel::onClickCheerDialogNegativeButton,
-        setVisibilityCompleteDialog = homeViewModel::onClickCompleteDialogConfirmButton,
+        onClickCheerDialogNegativeButton = homeViewModel::onClickCheerDialogNegativeButton,
+        onClickCompleteDialogConfirmButton = homeViewModel::onClickCompleteDialogConfirmButton,
         removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
         removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,
+        callViewHomeApi = homeViewModel::getHomeViewChallenge,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()
