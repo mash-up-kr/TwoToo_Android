@@ -8,7 +8,6 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
-import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -57,13 +56,7 @@ class HomeViewModel @Inject constructor(
     private val createCheerUseCase: CreateCheerUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(
-        HomeStateUiModel.ongoing.copy(
-            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
-                homeChallengeStateUiModel = HomeChallengeStateUiModel.cheerBoth,
-            ),
-        ),
-    )
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
