@@ -6,7 +6,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 
-data class DialogContent(
+class DialogContent private constructor(
     @StringRes val title: Int,
     @StringRes val desc: Int,
     val dialogImage: DialogImage,
@@ -19,6 +19,7 @@ data class DialogContent(
             dialogImage = DialogImage.bothAuth,
             buttons = emptyList(),
         )
+
         fun createHomeBothAuthDialogContent(
             negativeAction: () -> Unit,
             positiveAction: () -> Unit,
