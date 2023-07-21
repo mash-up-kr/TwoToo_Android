@@ -68,4 +68,5 @@ dependencies {
     androidTestImplementation(libs.test.espresso.core)
     implementation(libs.work.runtime.ktx)
     implementation(libs.bundles.firebase)
+    implementation(platform(libs.firebase.bom))
 }

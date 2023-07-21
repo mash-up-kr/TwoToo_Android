@@ -19,14 +19,17 @@ fun NavController.navigateToHome(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.HomeGraph.route, navOptions = navOptions)
 }
 
-fun NavGraphBuilder.homeGraph(navController: NavController) {
+fun NavGraphBuilder.homeGraph(
+    navController: NavController,
+) {
     navigation(startDestination = NavigationRoute.HomeGraph.HomeScreen.route, route = NavigationRoute.HomeGraph.route) {
-        composable(route = NavigationRoute.HomeGraph.HomeScreen.route) {
+        composable(
+            route = NavigationRoute.HomeGraph.HomeScreen.route,
+        ) {
             val homeComponent = componentProvider<HomeComponentProvider>().provideHomeComponent()
             val homeViewModel = daggerViewModel {
                 homeComponent.getViewModel()
             }
-
             HomeRoute(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),

@@ -21,6 +21,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -30,6 +31,7 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -44,15 +46,22 @@ fun HomeRoute(
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
+        openCheerBottomSheet = homeViewModel::openToCheerBottomSheet,
+        setVisibilityCheerDialog = homeViewModel::onClickCheerDialogNegativeButton,
+        setVisibilityCompleteDialog = homeViewModel::onClickCompleteDialogConfirmButton,
+        removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
+        removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
+    val state by homeViewModel.collectAsState()
 
     LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            homeViewModel.getHomeViewChallenge()
+        launch {
+            lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                homeViewModel.getHomeViewChallenge()
+            }
         }
     }
-    val state by homeViewModel.collectAsState()
 
     homeViewModel.collectSideEffect { sideEffect ->
         homeSideEffectHandler.handleSideEffect(sideEffect = sideEffect)
@@ -62,13 +71,14 @@ fun HomeRoute(
         modifier = Modifier.fillMaxSize(),
     ) {
         HomeScreen(
-            state = state,
+            state = state.challengeStateUiModel,
             modifier = modifier.testTag(stringResource(id = R.string.home)),
             onBeeButtonClick = homeViewModel::openToShotBottomSheet,
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
             onCommit = homeViewModel::openToAuthBottomSheet,
             navigateToHistory = homeViewModel::navigateToHistory,
-            onCompleteButtonClick = homeViewModel::navigateToHistory,
+            onClickCompleteButton = homeViewModel::onClickCompleteButton,
+            onClickCheerButton = homeViewModel::openToCheerBottomSheet,
         )
 
         with(homeSideEffectHandler) {
@@ -85,6 +95,12 @@ fun HomeRoute(
                 Modifier.align(Alignment.BottomCenter),
                 snackbarHostState,
             )
+
+            if (isHomeDialogVisible) {
+                TwoTooDialog(
+                    content = homeDialogType,
+                )
+            }
         }
     }
 }
@@ -97,8 +113,9 @@ fun HomeScreen(
     onBeeButtonClick: () -> Unit = {},
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
     onCommit: () -> Unit = {},
-    onCompleteButtonClick: () -> Unit = {},
+    onClickCompleteButton: (Int) -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
+    onClickCheerButton: () -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier.semantics {
@@ -142,7 +159,8 @@ fun HomeScreen(
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,
-                    onCompleteButtonClick = onCompleteButtonClick,
+                    onCompleteButtonClick = onClickCompleteButton,
+                    onClickCheerButton = onClickCheerButton,
                 )
             }
         }

@@ -16,17 +16,17 @@ import javax.inject.Inject
 class ChallengeRepositoryImpl @Inject constructor(
     private val challengeDataSource: ChallengeDataSource,
 ) : ChallengeRepository {
-    override suspend fun createChallenge(
-        createChallengeRequestDomainModel: CreateChallengeRequestDomainModel,
-    ): ChallengeResponseDomainModel {
-        return challengeDataSource.createChallenge(
-            createChallengeRequest = createChallengeRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+    override suspend fun createChallenge(createChallengeRequestDomainModel: CreateChallengeRequestDomainModel): Result<ChallengeResponseDomainModel> {
+        return runCatching {
+            challengeDataSource.createChallenge(createChallengeRequestDomainModel.toDataModel()).toDomainModel()
+        }
     }
 
-    override suspend fun getAllChallenge(): List<ChallengeResponseDomainModel> {
-        return challengeDataSource.getAllChallenge().map { challenge: Challenge ->
-            challenge.toDomainModel()
+    override suspend fun getAllChallenge(): Result<List<ChallengeResponseDomainModel>> {
+        return runCatching {
+            challengeDataSource.getAllChallenge().map { challenge: Challenge ->
+                challenge.toDomainModel()
+            }
         }
     }
 
@@ -52,5 +52,13 @@ class ChallengeRepositoryImpl @Inject constructor(
             challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
             approveChallengeRequest = approveChallengeRequestDomainModel.toDataModel(),
         ).toDomainModel()
+    }
+
+    override suspend fun finishChallengeWithNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<ChallengeResponseDomainModel> {
+        return runCatching {
+            challengeDataSource.finishChallengeWithNo(
+                challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
+            ).toDomainModel()
+        }
     }
 }

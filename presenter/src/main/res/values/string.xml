@@ -28,6 +28,10 @@
     <string name="all_auth_desc">서로 인증을 완료했어요!\n짝꿍에게 응원 한마디를 남겨요.</string>
     <string name="cheer_up">응원하기</string>
     <string name="cheer_up_cancel">괜찮아요</string>
+    <string name="congratulations">축하합니다!</string>
+    <string name="congratulations_desc">둘다 꽃을 피웠어요!\n서로의 꽃을 확인해보세요!</string>
+    <string name="thankyou">수고했어요!</string>
+    <string name="thankyou_desc">챌린지가 끝났어요!\n서로의 달성률을 확인해보세요!</string>
 
     <!-- bottom sheet -->
     <string name="bottomSheetAuthenticate">인증하기</string>
@@ -91,9 +95,9 @@
     <!-- invite -->
     <string name="other">%s님</string>
     <string name="invite_someone">의 짝꿍으로 초대가 되었습니다.</string>
-    <string name="invite_title">상대방에게 초대장을 보내\n투투를 시작해보세요</string>
-    <string name="invite_desc">상대방이 수락하면 투투를 시작할 수 있습니다</string>
-    <string name="invite_waiting_other">상대방의 수락을\n기다리고 있습니다.</string>
+    <string name="invite_title">짝꿍에게 초대장을 보내\n투투를 시작해보세요</string>
+    <string name="invite_desc">짝꿍이 수락하면 투투를 시작할 수 있습니다</string>
+    <string name="invite_waiting_other">짝꿍의 수락을\n기다리고 있습니다.</string>
     <string name="invite_refresh">새로고침을 눌러주세요</string>
     <string name="invite_resend_desc">*만약 초대링크를 잃어버리셨다면, 초대장 다시보내기를 해보세요</string>
 
@@ -131,6 +135,7 @@
 
 
     <!-- history detail-->
+    <string name="challengeAttempts">%d번째 챌린지</string>
     <string name="historyDetailTitle">%s의 기록</string>
     <string name="historyDetailCreatedTime">입력 시간 : %s</string>
     <string name="complimentFromPartner">%s가 보낸 칭찬</string>
@@ -191,6 +196,7 @@
     <string name="toast_message_shot_success">상대방에게 찌르기 문구가 보내졌습니다</string>
     <string name="toast_message_cheer_success">칭찬 한마디가 등록되었습니다</string>
     <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
+    <string name="toast_message_finish_challenge_fail">챌린지 완료에 실패했습니다</string>
 
 
 </resources>

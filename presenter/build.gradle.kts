@@ -76,6 +76,7 @@ dependencies {
     androidTestImplementation(libs.test.espresso.core)
     androidTestImplementation(libs.androidx.compose.ui.test.junit)
     debugImplementation(libs.bundles.androidx.compose.ui.debug)
+    implementation(platform(libs.firebase.bom))
     implementation(libs.bundles.firebase)
     androidTestImplementation(libs.test.navigation)
     androidTestImplementation(libs.truth)

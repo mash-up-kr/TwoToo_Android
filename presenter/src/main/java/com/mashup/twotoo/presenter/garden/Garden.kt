@@ -7,12 +7,16 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -24,7 +28,15 @@ fun GardenRoute(
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit = {},
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            gardenViewModel.getAllChallenge()
+        }
+    }
     val state by gardenViewModel.collectAsState()
+
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,

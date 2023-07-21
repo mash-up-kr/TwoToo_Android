@@ -1,20 +1,26 @@
 package com.mashup.twotoo.presenter.invite.navigation
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import androidx.navigation.compose.navigation
+import com.mashup.twotoo.presenter.constant.TAG
+import com.mashup.twotoo.presenter.di.daggerViewModel
+import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.invite.SendInvitationRoute
 import com.mashup.twotoo.presenter.invite.WaitingAcceptPairRoute
+import com.mashup.twotoo.presenter.invite.di.InviteComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
+import com.mashup.twotoo.presenter.util.componentProvider
 
 fun NavController.navigateToInvitation(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.InvitationGraph.route, navOptions = navOptions)
 }
 
 private fun NavController.navigateToWaitingAcceptPair(navOptions: NavOptions? = null) {
-    this.navigate(route = NavigationRoute.InvitationGraph.route, navOptions = navOptions)
+    this.navigate(route = NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route, navOptions = navOptions)
 }
 fun NavGraphBuilder.invitationGraph(
     navController: NavController
@@ -23,11 +29,25 @@ fun NavGraphBuilder.invitationGraph(
         startDestination = NavigationRoute.InvitationGraph.SendInvitationScreen.route,
         route = NavigationRoute.InvitationGraph.route,
     ) {
-        composable(route = NavigationRoute.InvitationGraph.SendInvitationScreen.route) {
-            SendInvitationRoute { navController.navigateToWaitingAcceptPair() }
+        composable(
+            route = NavigationRoute.InvitationGraph.SendInvitationScreen.route,
+        ) {
+            val inviteComponent = componentProvider<InviteComponentProvider>().provideInviteComponent()
+            val inviteViewModel = daggerViewModel {
+                inviteComponent.getViewModel()
+            }
+            SendInvitationRoute(inviteViewModel) {
+                navController.navigateToWaitingAcceptPair()
+            }
         }
         composable(route = NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route) {
-            WaitingAcceptPairRoute()
+            val inviteComponent = componentProvider<InviteComponentProvider>().provideInviteComponent()
+            val inviteViewModel = daggerViewModel {
+                inviteComponent.getViewModel()
+            }
+            WaitingAcceptPairRoute(inviteViewModel) {
+                navController.navigateToHome()
+            }
         }
     }
 }

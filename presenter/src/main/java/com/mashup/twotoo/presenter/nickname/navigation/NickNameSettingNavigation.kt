@@ -20,7 +20,9 @@ fun NavGraphBuilder.nickNameSettingGraph(
     navController: NavController
 ) {
     navigation(startDestination = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route, route = NavigationRoute.NickNameSettingGraph.route) {
-        composable(route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route) {
+        composable(
+            route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route,
+        ) {
             val nickNameSettingComponent = componentProvider<NickNameSettingComponentProvider>().provideNickNameSettingComponent()
             val nickNameViewModel = daggerViewModel {
                 nickNameSettingComponent.getViewModel()

@@ -23,4 +23,27 @@ class UserDataStoreRepositoryImpl @Inject constructor(
         return userPreferenceDataSource.getUserNo()
     }
 
+    override suspend fun setVisibilityCheerDialog(visibility: Boolean) {
+        userPreferenceDataSource.setVisibilityCheerDialog(visibility = visibility)
+    }
+
+    override suspend fun getVisibilityCheerDialog(): Boolean {
+        return userPreferenceDataSource.getVisibilityCheerDialog()
+    }
+
+    override suspend fun setVisibilityCompleteDialog(visibility: Boolean) {
+        userPreferenceDataSource.setVisibilityCompleteDialog(visibility = visibility)
+    }
+
+    override suspend fun getVisibilityCompleteDialog(): Boolean {
+        return userPreferenceDataSource.getVisibilityCompleteDialog()
+    }
+
+    override suspend fun removeVisibilityCheerDialog() {
+        userPreferenceDataSource.removeVisibilityCheerDialog()
+    }
+
+    override suspend fun removeVisibilityCompleteDialog() {
+        userPreferenceDataSource.removeVisibilityCompleteDialog()
+    }
 }

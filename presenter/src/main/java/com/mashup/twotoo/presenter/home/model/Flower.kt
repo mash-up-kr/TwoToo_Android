@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.model.flower
+package com.mashup.twotoo.presenter.home.model
 
 /**
  * @Created by 김현국 2023/06/23
@@ -7,15 +7,18 @@ package com.mashup.twotoo.presenter.home.model.flower
 import android.content.Context
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Fifth
-import com.mashup.twotoo.presenter.home.model.flower.Stage.First
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Fourth
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Second
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Third
-import com.mashup.twotoo.presenter.home.model.flower.Stage.Zero
+import com.mashup.twotoo.presenter.model.FlowerImage
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.FlowerType
+import com.mashup.twotoo.presenter.model.Stage
+import com.mashup.twotoo.presenter.model.Stage.Fifth
+import com.mashup.twotoo.presenter.model.Stage.First
+import com.mashup.twotoo.presenter.model.Stage.Fourth
+import com.mashup.twotoo.presenter.model.Stage.Second
+import com.mashup.twotoo.presenter.model.Stage.Third
+import com.mashup.twotoo.presenter.model.Stage.Zero
 
 data class Flower(
     val flowerName: FlowerName,
@@ -45,7 +48,7 @@ data class Flower(
 
                 when (growType) {
                     Zero -> FlowerImage(image = R.drawable.img_home_zero_stage_partner, width = 53.dp, height = 49.dp)
-                    First -> FlowerImage(image = R.drawable.img_home_first_stage_partner, width = 61.dp, height = 69.dp)
+                    First -> FlowerImage(image = R.drawable.img_home_first_stage_partner, width = 76.dp, height = 69.dp)
                     Second -> FlowerImage(image = R.drawable.img_home_second_stage_partner, width = 77.dp, height = 117.dp)
                     Third -> FlowerImage(image = R.drawable.img_home_third_stage_partner, width = 102.dp, height = 179.dp)
                     Fourth -> FlowerImage(image = image, width = 127.dp, height = 211.dp)
@@ -55,13 +58,13 @@ data class Flower(
         }
     }
 
-    override fun getFlowerLanguage(context: Context): String {
+    fun getFlowerLanguage(context: Context): String {
         val name = "${flowerName.name.lowercase()}_language"
         val flowerLanguage = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerLanguage)
     }
 
-    override fun getFlowerName(context: Context): String {
+    fun getFlowerName(context: Context): String {
         val name = flowerName.name.lowercase()
         val flowerName = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerName)

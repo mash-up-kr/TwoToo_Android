@@ -2,6 +2,7 @@ package com.mashup.twotoo.datasource.local
 
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.intPreferencesKey
@@ -14,7 +15,7 @@ import java.io.IOException
 import javax.inject.Inject
 
 class UserPreferenceDataSource @Inject constructor(
-    private val dataStore: DataStore<Preferences>
+    private val dataStore: DataStore<Preferences>,
 ) {
 
     suspend fun getAccessToken(): String {
@@ -31,6 +32,34 @@ class UserPreferenceDataSource @Inject constructor(
 
     suspend fun setUserNo(userNo: Int) {
         setDataStore(intPreferencesKey(USER_NO), userNo)
+    }
+
+    suspend fun setVisibilityCheerDialog(visibility: Boolean) {
+        setDataStore(booleanPreferencesKey(VISIBLE_CHEER_DIALOG), visibility)
+    }
+
+    suspend fun getVisibilityCheerDialog(): Boolean {
+        return getDataStore(booleanPreferencesKey(VISIBLE_CHEER_DIALOG)).first() ?: false
+    }
+
+    suspend fun setVisibilityCompleteDialog(visibility: Boolean) {
+        setDataStore(booleanPreferencesKey(VISIBLE_COMPLETE_DIALOG), visibility)
+    }
+
+    suspend fun getVisibilityCompleteDialog(): Boolean {
+        return getDataStore(booleanPreferencesKey(VISIBLE_COMPLETE_DIALOG)).first() ?: false
+    }
+
+    suspend fun removeVisibilityCheerDialog() {
+        dataStore.edit {
+            it.remove(booleanPreferencesKey(VISIBLE_CHEER_DIALOG))
+        }
+    }
+
+    suspend fun removeVisibilityCompleteDialog() {
+        dataStore.edit {
+            it.remove(booleanPreferencesKey(VISIBLE_COMPLETE_DIALOG))
+        }
     }
 
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
@@ -56,5 +85,7 @@ class UserPreferenceDataSource @Inject constructor(
     companion object {
         private const val TWOTOO_ACCESS_TOKEN = "TWOTOO_ACCESS_TOKEN"
         private const val USER_NO = "USER_NO"
+        private const val VISIBLE_CHEER_DIALOG = "VISIBLE_CHEER_DIALOG"
+        private const val VISIBLE_COMPLETE_DIALOG = "VISIBLE_COMPLETE_DIALOG"
     }
 }

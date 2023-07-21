@@ -41,4 +41,12 @@ class ChallengeDataSource @Inject constructor(
             approveChallengeRequest = approveChallengeRequest,
         )
     }
+
+    suspend fun finishChallengeWithNo(
+        challengeNoRequest: ChallengeNoRequest,
+    ): Challenge {
+        return challengeApi.finishChallengeWithNo(
+            challengeNo = challengeNoRequest.challengeNo,
+        )
+    }
 }

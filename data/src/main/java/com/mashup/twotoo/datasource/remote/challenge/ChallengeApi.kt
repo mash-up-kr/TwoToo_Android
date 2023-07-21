@@ -31,4 +31,9 @@ interface ChallengeApi {
         @Path("challengeNo") challengeNo: Int,
         @Body approveChallengeRequest: ApproveChallengeRequest,
     ): Challenge
+
+    @POST("/challenge/{challengeNo}/finish")
+    suspend fun finishChallengeWithNo(
+        @Path("challengeNo") challengeNo: Int,
+    ): Challenge
 }

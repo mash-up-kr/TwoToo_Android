@@ -1,36 +1,40 @@
 package com.mashup.twotoo.presenter.home.model
 
-import com.mashup.twotoo.presenter.home.model.CheerState.NotEmpty
-import com.mashup.twotoo.presenter.home.model.CheerState.NotYet
 /**
  * @Created by 김현국 2023/06/28
  */
 data class HomeCheerUiModel(
+    val cheerState: CheerState,
     val partner: CheerWithFlower,
     val me: CheerWithFlower,
 ) : ChallengeStateUiModel {
     companion object {
         val default = HomeCheerUiModel(
+            cheerState = CheerState.DoNotCheerBoth,
             partner = CheerWithFlower.partnerNotYet,
             me = CheerWithFlower.meNotYet,
         )
 
         val cheerBoth = HomeCheerUiModel(
+            cheerState = CheerState.CheerBoth,
             partner = CheerWithFlower.partnerNotEmpty,
             me = CheerWithFlower.meNotEmpty,
         )
 
         val doNotCheerBoth = HomeCheerUiModel(
+            cheerState = CheerState.DoNotCheerBoth,
             partner = CheerWithFlower.partnerNotYet,
             me = CheerWithFlower.partnerNotYet,
         )
 
         val cheerOnlyMe = HomeCheerUiModel(
+            cheerState = CheerState.CheerOnlyMe,
             partner = CheerWithFlower.partnerNotYet,
             me = CheerWithFlower.meNotEmpty,
         )
 
         val cheerOnlyPartner = HomeCheerUiModel(
+            cheerState = CheerState.CheerOnlyPartner,
             partner = CheerWithFlower.partnerNotEmpty,
             me = CheerWithFlower.meNotYet,
         )
@@ -38,38 +42,32 @@ data class HomeCheerUiModel(
 }
 
 data class CheerWithFlower(
-    val cheerState: CheerState,
     val homeFlowerUiModel: HomeFlowerUiModel,
     val cheerText: String = "",
 ) {
     companion object {
-        val default = CheerWithFlower(
-            cheerState = NotYet,
-            homeFlowerUiModel = HomeFlowerUiModel.me,
-        )
-
         val meNotYet = CheerWithFlower(
-            cheerState = NotYet,
             homeFlowerUiModel = HomeFlowerUiModel.me,
+            cheerText = "",
         )
 
         val meNotEmpty = CheerWithFlower(
-            cheerState = NotEmpty,
             homeFlowerUiModel = HomeFlowerUiModel.me,
+            cheerText = "나의 응원",
         )
 
         val partnerNotYet = CheerWithFlower(
-            cheerState = NotYet,
             homeFlowerUiModel = HomeFlowerUiModel.partner,
+            cheerText = "",
         )
 
         val partnerNotEmpty = CheerWithFlower(
-            cheerState = NotEmpty,
             homeFlowerUiModel = HomeFlowerUiModel.partner,
+            cheerText = "파트너의 응원",
         )
     }
 }
 
 enum class CheerState() {
-    NotYet, NotEmpty
+    CheerOnlyMe, CheerOnlyPartner, CheerBoth, DoNotCheerBoth
 }

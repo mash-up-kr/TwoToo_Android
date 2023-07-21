@@ -22,15 +22,15 @@ class NickNameViewModel @Inject constructor(
                 if (userInfo.partnerNo != null) {
                     navigateToHome()
                 } else {
-                    navigateToWaitingPair()
+                    navigateToWaitingPair(userNickName)
                 }
             }.onFailure {
             }
         }
     }
 
-    private fun navigateToWaitingPair() = intent {
-        postSideEffect(NickNameSideEffect.NavigateToSendInvitation)
+    private fun navigateToWaitingPair(userNickName: String) = intent {
+        postSideEffect(NickNameSideEffect.NavigateToSendInvitation(userNickName))
     }
 
     private fun navigateToHome() = intent {
