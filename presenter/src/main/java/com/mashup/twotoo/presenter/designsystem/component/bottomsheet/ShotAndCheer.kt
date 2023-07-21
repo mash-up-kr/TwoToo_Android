@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -70,7 +69,9 @@ fun SendMsgBottomSheetContent(
             Spacer(modifier = Modifier.height(24.5.dp))
         }
         TwoTooTextButton(
-            modifier = Modifier.fillMaxWidth().height(57.dp).clickable {
+            modifier = Modifier.fillMaxWidth().height(57.dp),
+            text = stringResource(id = R.string.bottomSheetCheerAndShotButtonText),
+            onClick = {
                 onClickButton(
                     when (type) {
                         is Shot -> {
@@ -82,7 +83,6 @@ fun SendMsgBottomSheetContent(
                     },
                 )
             },
-            text = stringResource(id = R.string.bottomSheetCheerAndShotButtonText),
         )
         Spacer(modifier = Modifier.height(14.dp))
     }

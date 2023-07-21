@@ -55,7 +55,11 @@ class HomeViewModel @Inject constructor(
     private val createCheerUseCase: CreateCheerUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(
+        HomeStateUiModel.ongoing.copy(
+            challengeStateUiModel = OngoingChallengeUiModel.cheer,
+        ),
+    )
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
@@ -172,6 +176,9 @@ class HomeViewModel @Inject constructor(
                         ),
                     )
                     // TODO GET VIEW API 재호출
+                    postSideEffect(
+                        HomeSideEffect.CallViewHomeApi,
+                    )
                 }
                     .onFailure {
                         postSideEffect(
@@ -200,22 +207,41 @@ class HomeViewModel @Inject constructor(
                     (state.challengeStateUiModel as? OngoingChallengeUiModel)
                         ?.homeChallengeStateUiModel?.challengeStateUiModel as? HomeCheerUiModel
                     )?.partner?.commitNo
-                commitNo?.let { no ->
-                    createCheerUseCase(
-                        commitNoRequestDomainModel = CommitNoRequestDomainModel(
-                            commitNo = no,
+                if (commitNo == null) {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.CheerFail,
                         ),
-                    ).onSuccess {
-                        postSideEffect(
-                            HomeSideEffect.Toast(
-                                ToastText.CheerSuccess,
-                            ),
-                        )
-                        // home viewUpdate
-                    }.onFailure {
-                    }
+                    )
+                    return@intent
                 }
-                // toast sideEffect
+                createCheerUseCase(
+                    commitNoRequestDomainModel = CommitNoRequestDomainModel(
+                        commitNo = commitNo,
+                    ),
+                ).onSuccess {
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.CheerSuccess,
+                        ),
+                    )
+                    // home viewUpdate
+                    postSideEffect(
+                        HomeSideEffect.CallViewHomeApi,
+                    )
+                }.onFailure {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.CheerFail,
+                        ),
+                    )
+                }
             }
         }
     }

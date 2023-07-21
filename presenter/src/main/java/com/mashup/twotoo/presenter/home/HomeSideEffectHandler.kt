@@ -36,6 +36,7 @@ fun rememberHomeSideEffectHandler(
     setVisibilityCheerDialog: () -> Unit,
     removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
+    callViewHomeApi: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -55,6 +56,7 @@ fun rememberHomeSideEffectHandler(
             setVisibilityCheerDialog = setVisibilityCheerDialog,
             removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
+            callViewHomeApi = callViewHomeApi,
         )
     }
 }
@@ -73,6 +75,7 @@ class HomeSideEffectHandler(
     private val setVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
+    private val callViewHomeApi: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -103,6 +106,9 @@ class HomeSideEffectHandler(
                             }
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
+                            }
+                            ToastText.CheerFail -> {
+                                context.getString(R.string.toast_message_cheer_fail)
                             }
                         },
                     )
@@ -139,6 +145,9 @@ class HomeSideEffectHandler(
             }
             is HomeSideEffect.RemoveVisibilityCheerDialog -> {
                 removeVisibilityCheerDialog()
+            }
+            is HomeSideEffect.CallViewHomeApi -> {
+                callViewHomeApi()
             }
         }
     }
