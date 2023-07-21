@@ -7,7 +7,7 @@ import model.challenge.response.ChallengeResponseDomainModel
 import repository.ChallengeRepository
 
 class FakeChallengeRepository : ChallengeRepository {
-    override suspend fun createChallenge(createChallengeRequestDomainModel: CreateChallengeRequestDomainModel): ChallengeResponseDomainModel {
+    override suspend fun createChallenge(createChallengeRequestDomainModel: CreateChallengeRequestDomainModel): Result<ChallengeResponseDomainModel> {
         TODO("Not yet implemented")
     }
 
