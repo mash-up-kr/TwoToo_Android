@@ -29,11 +29,13 @@ class HistoryViewModel @Inject constructor(
             val newHistoryItemUiModel = challengeDetailResponseDomainModel.myCommitResponseDomainModel.map {
                 HistoryItemUiModel.from(it)
             }
-            val newState = HistoryState(
-                challengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel),
-                historyItemUiModel = newHistoryItemUiModel,
-                ownerNickNamesUiModel = OwnerNickNamesUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel.user1, challengeDetailResponseDomainModel.challengeResponseDomainModel.user2),
-            )
+            val newState = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                HistoryState(
+                    challengeInfoUiModel = ChallengeInfoUiModel.from(this),
+                    historyItemUiModel = newHistoryItemUiModel,
+                    ownerNickNamesUiModel = OwnerNickNamesUiModel.from(this.user1, this.user2),
+                )
+            }
             reduce {
                 state.copy(
                     challengeInfoUiModel = newState.challengeInfoUiModel,
