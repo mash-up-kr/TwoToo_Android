@@ -21,6 +21,7 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.addFocusCleaner
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -50,7 +51,7 @@ fun SendMsgBottomSheetContent(
         }
     }
     Column(
-        modifier = modifier.fillMaxWidth().imePadding().padding(horizontal = 20.dp),
+        modifier = modifier.fillMaxWidth().addFocusCleaner(focusManager).imePadding().padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
