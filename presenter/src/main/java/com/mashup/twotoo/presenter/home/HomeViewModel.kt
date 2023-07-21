@@ -17,6 +17,7 @@ import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
+import model.notification.request.NotificationRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -25,6 +26,7 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -49,6 +51,7 @@ class HomeViewModel @Inject constructor(
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
     private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
+    private val stingUseCase: StingUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
@@ -182,13 +185,27 @@ class HomeViewModel @Inject constructor(
             }
             is BottomSheetData.ShotData -> {
                 // 서버 데이터 전송
-
-                // toast sideEffect
-                postSideEffect(
-                    HomeSideEffect.Toast(
-                        ToastText.ShotSuccess,
+                stingUseCase(
+                    notificationRequestDomainModel = NotificationRequestDomainModel(
+                        message = bottomSheetData.text,
                     ),
-                )
+                ).onSuccess {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.ShotSuccess,
+                        ),
+                    )
+                }
+                    .onFailure {
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.ShotFail,
+                            ),
+                        )
+                    }
             }
             is BottomSheetData.CheerData -> {
                 // 서버 데이터 전송

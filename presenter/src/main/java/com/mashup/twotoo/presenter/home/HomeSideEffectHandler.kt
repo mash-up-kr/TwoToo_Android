@@ -104,6 +104,9 @@ class HomeSideEffectHandler(
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
                             }
+                            ToastText.ShotFail -> {
+                                context.getString(R.string.toast_message_shot_fail)
+                            }
                         },
                     )
                 }
