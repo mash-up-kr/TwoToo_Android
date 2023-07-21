@@ -66,6 +66,25 @@ class DialogContent private constructor(
                 ),
             ),
         )
+
+        fun createHistoryLeaveChallengeDialogContent(
+            negativeAction: () -> Unit,
+            positiveAction: () -> Unit,
+        ) = DialogContent(
+            title = R.string.challenge_done,
+            desc = R.string.challengeDoneDescription,
+            dialogImage = DialogImage.leaveChallenge,
+            buttons = listOf(
+                DialogButtonContent(
+                    text = R.string.cancel,
+                    action = negativeAction,
+                ),
+                DialogButtonContent(
+                    text = R.string.done,
+                    action = positiveAction,
+                ),
+            ),
+        )
     }
 }
 

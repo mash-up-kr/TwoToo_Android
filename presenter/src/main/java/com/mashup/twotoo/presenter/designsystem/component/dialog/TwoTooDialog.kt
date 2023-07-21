@@ -71,18 +71,7 @@ fun TwoTooDialog(
             when (content.buttons.size) {
                 1 -> {
                     Row {
-                        content.buttons.forEach { btn ->
-                            TextButton(
-                                onClick = { btn.action() },
-                                contentPadding = PaddingValues(12.dp),
-                            ) {
-                                Text(
-                                    text = stringResource(id = btn.text),
-                                    style = TwoTooTheme.typography.headLineNormal20,
-                                    color = btn.color,
-                                )
-                            }
-                        }
+                        TwoTooDialogContent(content = content)
                     }
                 }
                 2 -> {
@@ -90,21 +79,28 @@ fun TwoTooDialog(
                         modifier = Modifier.fillMaxWidth().padding(horizontal = 40.dp),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        content.buttons.forEach { btn ->
-                            TextButton(
-                                onClick = { btn.action() },
-                                contentPadding = PaddingValues(12.dp),
-                            ) {
-                                Text(
-                                    text = stringResource(id = btn.text),
-                                    style = TwoTooTheme.typography.headLineNormal20,
-                                    color = btn.color,
-                                )
-                            }
-                        }
+                        TwoTooDialogContent(content = content)
                     }
                 }
             }
+        }
+    }
+}
+
+@Composable
+private fun TwoTooDialogContent(
+    content: DialogContent,
+) {
+    content.buttons.forEach { btn ->
+        TextButton(
+            onClick = { btn.action() },
+            contentPadding = PaddingValues(12.dp),
+        ) {
+            Text(
+                text = stringResource(id = btn.text),
+                style = TwoTooTheme.typography.headLineNormal20,
+                color = btn.color,
+            )
         }
     }
 }
