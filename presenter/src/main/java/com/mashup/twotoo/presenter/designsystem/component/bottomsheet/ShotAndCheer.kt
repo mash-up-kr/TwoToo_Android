@@ -7,6 +7,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -36,6 +37,7 @@ fun SendMsgBottomSheetContent(
         mutableStateOf("")
     }
 
+    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -72,16 +74,20 @@ fun SendMsgBottomSheetContent(
             modifier = Modifier.fillMaxWidth().height(57.dp),
             text = stringResource(id = R.string.bottomSheetCheerAndShotButtonText),
             onClick = {
-                onClickButton(
-                    when (type) {
-                        is Shot -> {
-                            ShotData(text = textFieldState)
-                        }
-                        is Cheer -> {
-                            CheerData(text = textFieldState)
-                        }
-                    },
-                )
+                focusManager.clearFocus()
+                coroutineScope.launch {
+                    delay(200)
+                    onClickButton(
+                        when (type) {
+                            is Shot -> {
+                                ShotData(text = textFieldState)
+                            }
+                            is Cheer -> {
+                                CheerData(text = textFieldState)
+                            }
+                        },
+                    )
+                }
             },
         )
         Spacer(modifier = Modifier.height(14.dp))
