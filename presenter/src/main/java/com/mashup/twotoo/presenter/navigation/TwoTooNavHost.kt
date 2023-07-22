@@ -11,13 +11,14 @@ import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
 import com.mashup.twotoo.presenter.mypage.navigation.userGraph
 import com.mashup.twotoo.presenter.nickname.navigation.nickNameSettingGraph
 import com.mashup.twotoo.presenter.onboarding.navigation.onBoardingGraph
+import com.mashup.twotoo.presenter.splash.navigation.splashGraph
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 
 @Composable
 fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
-    startDestination: String = NavigationRoute.OnBoardingGraph.OnboardingScreen.route
+    startDestination: String = NavigationRoute.SplashGraph.SplashScreen.route
 ) {
     val navController = appState.navController
     NavHost(
@@ -25,6 +26,7 @@ fun TwoTooNavHost(
         startDestination = startDestination,
         modifier = modifier,
     ) {
+        splashGraph(navController)
         homeGraph(navController)
         gardenGraph(navController)
         userGraph(navController)
