@@ -27,6 +27,7 @@ import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
+import java.util.*
 
 @Composable
 fun OwnerNickNames(ownerNickNamesUiModel: OwnerNickNamesUiModel) {
@@ -123,7 +124,12 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.partnerInfo, isMyHistoryInfo = false, navigateToHistoryDetail = navigateToHistoryDetail)
+        HistoryInfo(
+            historyInfoUiModel = historyItemUiModel.partnerInfo,
+            isAuthenticateExpired = historyItemUiModel.isAuthenticateExpired,
+            isMyHistoryInfo = false,
+            navigateToHistoryDetail = navigateToHistoryDetail,
+        )
         Box(
             modifier = Modifier
                 .padding(horizontal = 13.dp)
@@ -139,22 +145,33 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
                 color = TwotooPink,
             )
         }
-        HistoryInfo(historyInfoUiModel = historyItemUiModel.myInfo, isMyHistoryInfo = true, navigateToHistoryDetail = navigateToHistoryDetail)
+        HistoryInfo(
+            historyInfoUiModel = historyItemUiModel.myInfo,
+            isAuthenticateExpired = historyItemUiModel.isAuthenticateExpired,
+            isMyHistoryInfo = true,
+            navigateToHistoryDetail = navigateToHistoryDetail,
+        )
     }
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo: Boolean, navigateToHistoryDetail: (Int) -> Unit) {
+private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isAuthenticateExpired: Boolean, isMyHistoryInfo: Boolean, navigateToHistoryDetail: (Int) -> Unit) {
     Box(
         modifier = Modifier
             .size(127.dp)
             .clip(TwoTooTheme.shape.large)
             .background(TwoTooTheme.color.mainWhite).clickable {
-                navigateToHistoryDetail(historyInfoUiModel.commitNo)
+                if (historyInfoUiModel.photoUrl.isNotEmpty()) {
+                    navigateToHistoryDetail(historyInfoUiModel.commitNo)
+                }
             },
     ) {
         if (historyInfoUiModel.photoUrl.isEmpty()) {
-            EmptyHistoryInfo(isMyHistoryInfo)
+            if (isAuthenticateExpired) {
+                ExpiredHistoryInfo()
+            } else {
+                EmptyHistoryInfo(isMyHistoryInfo)
+            }
         } else {
             TwoTooImageView(
                 model = { historyInfoUiModel.photoUrl },
@@ -173,6 +190,26 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isMyHistoryInfo:
                 color = TwoTooTheme.color.mainWhite,
             )
         }
+    }
+}
+
+@Composable
+private fun BoxScope.ExpiredHistoryInfo() {
+    Column(
+        modifier = Modifier.align(Alignment.Center),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
+        TwoTooImageView(
+            modifier = Modifier.size(width = 79.dp, height = 52.dp),
+            model = R.drawable.img_failed,
+            previewPlaceholder = R.drawable.img_failed,
+            contentScale = ContentScale.Fit,
+        )
+        Text(
+            text = stringResource(id = R.string.authenticate_expired),
+            style = TwoTooTheme.typography.bodyNormal14,
+            color = TwoTooTheme.color.gray500,
+        )
     }
 }
 
@@ -239,6 +276,7 @@ private fun PreviewHistoryItemEmpty() {
         historyInfoUiModel = HistoryInfoUiModel.default,
         isMyHistoryInfo = true,
         navigateToHistoryDetail = { },
+        isAuthenticateExpired = false,
     )
 }
 
@@ -249,5 +287,14 @@ private fun PreviewHistoryItemPartnerEmpty() {
         historyInfoUiModel = HistoryInfoUiModel.empty,
         isMyHistoryInfo = false,
         navigateToHistoryDetail = { },
+        isAuthenticateExpired = false,
     )
+}
+
+@Preview("인증 실패 화면")
+@Composable
+private fun PreviewHistoryExpired() {
+    Box {
+        ExpiredHistoryInfo()
+    }
 }

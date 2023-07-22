@@ -2,12 +2,14 @@ package com.mashup.twotoo.presenter.history.model
 
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.commit.response.CommitResponseDomainModel
+import java.util.*
 
 data class HistoryItemUiModel(
     val myInfo: HistoryInfoUiModel,
     val partnerInfo: HistoryInfoUiModel,
     val createDate: String,
 ) {
+    val isAuthenticateExpired: Boolean = createDate != DateFormatter.getFormattedStrByDate(Date())
     companion object {
         val default: List<HistoryItemUiModel> = listOf(
             HistoryItemUiModel(
