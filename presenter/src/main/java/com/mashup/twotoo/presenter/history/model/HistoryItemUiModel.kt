@@ -13,12 +13,12 @@ data class HistoryItemUiModel(
             HistoryItemUiModel(
                 partnerInfo = HistoryInfoUiModel.default,
                 myInfo = HistoryInfoUiModel.default,
-                createDate = "4/10",
+                createDate = "2023-04-10",
             ),
             HistoryItemUiModel(
                 partnerInfo = HistoryInfoUiModel.default,
                 myInfo = HistoryInfoUiModel.default,
-                createDate = "4/9",
+                createDate = "2023-4-11",
             ),
         )
 
@@ -26,7 +26,7 @@ data class HistoryItemUiModel(
             HistoryItemUiModel(
                 partnerInfo = HistoryInfoUiModel.empty,
                 myInfo = HistoryInfoUiModel.empty,
-                createDate = "4/10",
+                createDate = "2023-4-12",
             ),
         )
 
