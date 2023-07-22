@@ -135,6 +135,7 @@ fun HistoryScreen(
                     positiveAction = {
                         quiteChallenge()
                         showChallengeDropDialog = false
+                        onClickBackButton()
                     },
                 ),
             )

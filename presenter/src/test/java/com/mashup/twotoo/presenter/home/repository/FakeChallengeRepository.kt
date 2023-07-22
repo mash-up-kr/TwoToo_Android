@@ -20,7 +20,7 @@ class FakeChallengeRepository : ChallengeRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Int {
+    override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<Int> {
         TODO("Not yet implemented")
     }
 
