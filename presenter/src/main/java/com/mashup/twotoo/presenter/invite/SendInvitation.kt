@@ -41,6 +41,7 @@ fun SendInvitationRoute(
 
     LaunchedEffect(key1 = state) {
         if (state.userNo != 0) {
+            inviteViewModel.storeIsSendInvitation(true)
             inviteViewModel.createInviteCode(state.userNo, state.userNickName) { intent ->
                 launcher.launch(intent)
             }
