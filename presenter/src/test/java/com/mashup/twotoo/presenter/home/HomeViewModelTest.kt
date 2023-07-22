@@ -21,6 +21,7 @@ import org.junit.Before
 import org.junit.Test
 import repository.ChallengeRepository
 import repository.CommitRepository
+import repository.NotificationRepository
 import repository.UserDataStoreRepository
 import repository.ViewRepository
 import usecase.challenge.FinishChallengeWithNoUseCase
@@ -51,7 +52,7 @@ class HomeViewModelTest {
     private lateinit var fakeCommitRepository: CommitRepository
     private lateinit var fakeUserDataStoreRepository: UserDataStoreRepository
     private lateinit var fakeChallengeRepository: ChallengeRepository
-    private lateinit var fakeNotificationRepository: FakeNotificationRepository
+    private lateinit var fakeNotificationRepository: NotificationRepository
 
     @Before
     fun initUserDataStoreRepository() {
