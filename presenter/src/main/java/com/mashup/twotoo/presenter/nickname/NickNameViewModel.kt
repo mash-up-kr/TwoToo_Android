@@ -27,7 +27,11 @@ class NickNameViewModel @Inject constructor(
         setNickNameUseCase.invoke(
             UserNickNameDomainModel(
                 nickname = userNickName,
-                partnerNo = state.partnerNo,
+                partnerNo = if (state.partnerNo == 0) {
+                    null
+                } else {
+                    state.partnerNo
+                },
             ),
         ).onSuccess { userInfo ->
             if (userInfo.partnerNo != null) {
