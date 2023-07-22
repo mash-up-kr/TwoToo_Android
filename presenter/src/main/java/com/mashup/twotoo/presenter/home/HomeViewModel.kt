@@ -170,6 +170,16 @@ class HomeViewModel @Inject constructor(
                             ToastText.CommitSuccess,
                         ),
                     )
+                    reduce {
+                        val currentState = state.challengeStateUiModel as OngoingChallengeUiModel
+                        currentState.let {
+                            state.copy(
+                                challengeStateUiModel = it.copy(
+                                    shotInteractionState = true,
+                                ),
+                            )
+                        }
+                    }
                     // TODO GET VIEW API 재호출
                 }
                     .onFailure {
@@ -242,6 +252,19 @@ class HomeViewModel @Inject constructor(
             postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
+        }
+    }
+
+    fun onWiggleAnimationEnd() = intent {
+        reduce {
+            val currentState = state.challengeStateUiModel as OngoingChallengeUiModel
+            currentState.let {
+                state.copy(
+                    challengeStateUiModel = it.copy(
+                        shotInteractionState = false,
+                    ),
+                )
+            }
         }
     }
 
