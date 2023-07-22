@@ -20,6 +20,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.*
@@ -83,7 +84,7 @@ fun DottedLine() {
 @Composable
 fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
+        Row(modifier = Modifier.padding(top = 9.dp), verticalAlignment = Alignment.CenterVertically) {
             CardText(
                 text = "D-${challengeInfoUiModel.day}",
                 fontColor = TwoTooTheme.color.gray500,
@@ -93,14 +94,15 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
             Text(
                 modifier = Modifier.padding(start = 11.dp),
                 text = challengeInfoUiModel.name,
-                style = TwoTooTheme.typography.headLineNormal24,
+                // Todo line height 테마로 적용해야함
+                style = TwoTooTheme.typography.headLineNormal24.copy(lineHeight = 22.sp),
                 color = TwoTooTheme.color.mainBrown,
             )
         }
         Spacer(modifier = Modifier.height(12.dp))
         Text(
             text = challengeInfoUiModel.detail,
-            style = TwoTooTheme.typography.bodyNormal16,
+            style = TwoTooTheme.typography.bodyNormal16.copy(lineHeight = 26.sp),
             color = TwoTooTheme.color.gray500,
         )
     }
@@ -117,6 +119,7 @@ fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: (Int)
 
 @Composable
 private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: (Int) -> Unit) {
+    // Todo 센터고정에서 가로 24dp 패딩으로 변경해야함.(디자인 팀에게 dp사이즈 수정 요청)
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -200,7 +203,7 @@ private fun BoxScope.ExpiredHistoryInfo() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TwoTooImageView(
-            modifier = Modifier.size(width = 79.dp, height = 52.dp),
+            modifier = Modifier.size(width = 79.dp, height = 52.dp).padding(bottom = 9.dp),
             model = R.drawable.img_failed,
             previewPlaceholder = R.drawable.img_failed,
             contentScale = ContentScale.Fit,
@@ -224,6 +227,7 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
             text = stringResource(id = R.string.authenticate),
             fontColor = TwoTooTheme.color.mainWhite,
             backGroundColor = TwoTooTheme.color.mainBrown,
+            shape = TwoTooTheme.shape.extraSmall,
         )
     } else {
         Column(
@@ -231,15 +235,15 @@ private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             TwoTooImageView(
-                modifier = Modifier.size(width = 65.dp, height = 55.dp),
-                model = R.drawable.cloud,
-                previewPlaceholder = R.drawable.cloud,
+                modifier = Modifier.size(width = 63.dp, height = 55.dp),
+                model = R.drawable.img_leaf,
+                previewPlaceholder = R.drawable.img_leaf,
                 contentScale = ContentScale.Fit,
             )
             Text(
                 text = stringResource(id = R.string.authenticate_waiting),
                 style = TwoTooTheme.typography.bodyNormal14,
-                color = TwoTooTheme.color.gray400,
+                color = TwoTooTheme.color.gray500,
             )
         }
     }
