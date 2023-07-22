@@ -3,8 +3,8 @@ package com.mashup.twotoo.presenter.history.model
 import model.commit.response.CommitResponseDomainModel
 
 data class HistoryItemUiModel(
-    val partnerInfo: HistoryInfoUiModel,
     val myInfo: HistoryInfoUiModel,
+    val partnerInfo: HistoryInfoUiModel,
     val createDate: String,
 ) {
     companion object {
@@ -30,10 +30,14 @@ data class HistoryItemUiModel(
         )
 
         // Todo creatDate 계산해야함
-        fun from(commitResponseDomainModel: CommitResponseDomainModel): HistoryItemUiModel {
+        fun from(myCommit: CommitResponseDomainModel?, partnerCommit: CommitResponseDomainModel?): HistoryItemUiModel {
             return HistoryItemUiModel(
-                partnerInfo = HistoryInfoUiModel.from(commitResponseDomainModel),
-                myInfo = HistoryInfoUiModel.from(commitResponseDomainModel),
+                myInfo = myCommit?.let {
+                    HistoryInfoUiModel.from(it)
+                } ?: HistoryInfoUiModel.empty,
+                partnerInfo = partnerCommit?.let {
+                    HistoryInfoUiModel.from(it)
+                } ?: HistoryInfoUiModel.empty,
                 createDate = "4/10",
             )
         }

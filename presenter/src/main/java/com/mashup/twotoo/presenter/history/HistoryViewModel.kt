@@ -26,26 +26,44 @@ class HistoryViewModel @Inject constructor(
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
                 challengeDetailResponseDomainModel ->
 
-            val newHistoryItemUiModel = challengeDetailResponseDomainModel.myCommitResponseDomainModel.map {
-                HistoryItemUiModel.from(it)
-            }
-            val newState = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
-                HistoryState(
-                    challengeInfoUiModel = ChallengeInfoUiModel.from(this),
-                    historyItemUiModel = newHistoryItemUiModel,
-                    ownerNickNamesUiModel = OwnerNickNamesUiModel.from(this.user1, this.user2),
+            val commitPairs = with(challengeDetailResponseDomainModel) {
+                combineLists(
+                    myCommitResponseDomainModel,
+                    partnerCommitResponseDomainModel,
                 )
             }
+
+            val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
+            val newHistoryItemUiModel = commitPairs.map {
+                HistoryItemUiModel.from(it.first, it.second)
+            }
+            val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                OwnerNickNamesUiModel.from(this.user1, this.user2)
+            }
+
             reduce {
                 state.copy(
-                    challengeInfoUiModel = newState.challengeInfoUiModel,
-                    historyItemUiModel = newState.historyItemUiModel,
-                    ownerNickNamesUiModel = newState.ownerNickNamesUiModel,
+                    challengeInfoUiModel = newChallengeInfoUiModel,
+                    historyItemUiModel = newHistoryItemUiModel,
+                    ownerNickNamesUiModel = newOwnerNickNamesUiModel,
                 )
             }
         }.onFailure {
             Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
         }
+    }
+
+    private fun <T, R> combineLists(list1: List<T>, list2: List<R>): List<Pair<T?, R?>> {
+        val maxSize = maxOf(list1.size, list2.size)
+        val combinedList = mutableListOf<Pair<T?, R?>>()
+
+        for (i in 0 until maxSize) {
+            val element1 = list1.getOrNull(i)
+            val element2 = list2.getOrNull(i)
+            combinedList.add(element1 to element2)
+        }
+
+        return combinedList
     }
 
     fun updateChallengeDetail(commitNo: Int) = intent {
@@ -66,7 +84,7 @@ class HistoryViewModel @Inject constructor(
         }
 
         if (commit == null) {
-            Log.e("HistoryViewModel", "해당 커밋이 존재하지 않습니다")
+            Log.d("HistoryViewModel", "해당 커밋이 존재하지 않습니다")
             return@intent
         }
 
