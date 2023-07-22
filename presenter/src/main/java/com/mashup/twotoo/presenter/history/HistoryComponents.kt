@@ -86,7 +86,7 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
         Row(modifier = Modifier.padding(top = 9.dp), verticalAlignment = Alignment.CenterVertically) {
             CardText(
-                text = "D-${challengeInfoUiModel.day}",
+                text = stringResource(id = R.string.DDay, challengeInfoUiModel.day),
                 fontColor = TwoTooTheme.color.gray500,
                 shape = TwoTooRound4,
                 textStyle = TwoTooTheme.typography.bodyNormal16,
@@ -163,7 +163,8 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isAuthenticateEx
         modifier = Modifier
             .size(127.dp)
             .clip(TwoTooTheme.shape.large)
-            .background(TwoTooTheme.color.mainWhite).clickable {
+            .background(TwoTooTheme.color.mainWhite)
+            .clickable {
                 if (historyInfoUiModel.photoUrl.isNotEmpty()) {
                     navigateToHistoryDetail(historyInfoUiModel.commitNo)
                 }
@@ -203,7 +204,9 @@ private fun BoxScope.ExpiredHistoryInfo() {
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         TwoTooImageView(
-            modifier = Modifier.size(width = 79.dp, height = 52.dp).padding(bottom = 9.dp),
+            modifier = Modifier
+                .size(width = 79.dp, height = 52.dp)
+                .padding(bottom = 9.dp),
             model = R.drawable.img_failed,
             previewPlaceholder = R.drawable.img_failed,
             contentScale = ContentScale.Fit,
