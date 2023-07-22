@@ -1,26 +1,41 @@
 package com.mashup.twotoo.presenter.history
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
+import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
+import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
+import model.challenge.request.ChallengeNoRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.challenge.GetChallengeByNoUseCase
+import javax.inject.Inject
 
-class HistoryViewModel : ContainerHost<HistoryState, Nothing>, ViewModel() {
+class HistoryViewModel @Inject constructor(
+    private val getChallengeByNoUseCase: GetChallengeByNoUseCase,
+) : ContainerHost<HistoryState, Nothing>, ViewModel() {
     override val container: Container<HistoryState, Nothing> = container(
         HistoryState(),
     )
 
-    init {
-        loadHistoryItem()
-    }
+    fun getChallengeByUser(challengeNo: Int) = intent {
+        getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
+                challengeDetailResponseDomainModel ->
 
-    private fun loadHistoryItem() = intent {
-        viewModelScope.launch {
-            val newState = HistoryState.default
+            val newHistoryItemUiModel = challengeDetailResponseDomainModel.myCommitResponseDomainModel.map {
+                HistoryItemUiModel.from(it)
+            }
+            val newState = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                HistoryState(
+                    challengeInfoUiModel = ChallengeInfoUiModel.from(this),
+                    historyItemUiModel = newHistoryItemUiModel,
+                    ownerNickNamesUiModel = OwnerNickNamesUiModel.from(this.user1, this.user2),
+                )
+            }
             reduce {
                 state.copy(
                     challengeInfoUiModel = newState.challengeInfoUiModel,
@@ -28,6 +43,47 @@ class HistoryViewModel : ContainerHost<HistoryState, Nothing>, ViewModel() {
                     ownerNickNamesUiModel = newState.ownerNickNamesUiModel,
                 )
             }
+        }.onFailure {
+            Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
+        }
+    }
+
+    fun updateChallengeDetail(commitNo: Int) = intent {
+        val partnerCommits = state.historyItemUiModel.map {
+            it.partnerInfo
+        }
+        val myCommits = state.historyItemUiModel.map {
+            it.myInfo
+        }
+        Log.i("HistoryViewModel", "updateChallengeDetail: myCommitSize${myCommits.size}, partnerCommitSize=${partnerCommits.size}")
+
+        var isMyCommit = true
+        val commit = run {
+            myCommits.firstOrNull { it.commitNo == commitNo }
+        } ?: run {
+            isMyCommit = false
+            partnerCommits.firstOrNull { it.commitNo == commitNo }
+        }
+
+        if (commit == null) {
+            Log.e("HistoryViewModel", "해당 커밋이 존재하지 않습니다")
+            return@intent
+        }
+
+        val ownerNickName = if (isMyCommit) {
+            OwnerNickNamesUiModel(myNickName = this.state.ownerNickNamesUiModel.myNickName, partnerName = this.state.ownerNickNamesUiModel.partnerName)
+        } else {
+            OwnerNickNamesUiModel(myNickName = this.state.ownerNickNamesUiModel.partnerName, partnerName = this.state.ownerNickNamesUiModel.myNickName)
+        }
+
+        reduce {
+            state.copy(
+                historyDetailInfoUiModel = HistoryDetailInfoUiModel(
+                    infoUiModel = commit,
+                    ownerNickNamesUiModel = ownerNickName,
+                    createdDate = "2023년 4월 20일",
+                ),
+            )
         }
     }
 }

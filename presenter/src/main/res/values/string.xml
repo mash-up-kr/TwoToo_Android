@@ -135,6 +135,7 @@
 
 
     <!-- history detail-->
+    <string name="challengeAttempts">%d번째 챌린지</string>
     <string name="historyDetailTitle">%s의 기록</string>
     <string name="historyDetailCreatedTime">입력 시간 : %s</string>
     <string name="complimentFromPartner">%s가 보낸 칭찬</string>

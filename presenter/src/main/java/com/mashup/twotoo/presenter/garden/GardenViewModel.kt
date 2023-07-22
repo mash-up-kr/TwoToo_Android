@@ -1,26 +1,40 @@
 package com.mashup.twotoo.presenter.garden
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
-import kotlinx.coroutines.launch
+import com.mashup.twotoo.presenter.garden.mapper.toUiModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
+import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.challenge.GetAllChallengeUseCase
 
-class GardenViewModel : ContainerHost<GardenState, Nothing>, ViewModel() {
-    override val container: Container<GardenState, Nothing> = container(GardenState())
+class GardenViewModel(
+    private val getAllChallengeUseCase: GetAllChallengeUseCase,
+) : ContainerHost<GardenState, GardenSideEffect>, ViewModel() {
+    override val container: Container<GardenState, GardenSideEffect> = container(GardenState())
 
-    init {
-        loadChallengeCardInfos()
+    fun getAllChallenge() = intent {
+        getAllChallengeUseCase().onSuccess { challenges ->
+            val challengeCardInfos = challenges.mapIndexed { index, challengeResponseDomainModel ->
+                challengeResponseDomainModel.toUiModel(index)
+            }
+            reduce {
+                state.copy(challengeCardInfos = challengeCardInfos)
+            }
+        }.onFailure {
+            Log.e(TAG, "${it.message} 실패!!")
+            postSideEffect(
+                GardenSideEffect.Toast(
+                    "정원 정보를 읽어오는데 실패했습니다ㅜ_ㅠ",
+                ),
+            )
+        }
     }
 
-    private fun loadChallengeCardInfos() = intent {
-        viewModelScope.launch {
-            val newChallengeCardInfos = ChallengeCardInfoUiModel.default
-            reduce { state.copy(challengeCardInfos = newChallengeCardInfos) }
-        }
+    companion object {
+        const val TAG = "GardenViewModel"
     }
 }
