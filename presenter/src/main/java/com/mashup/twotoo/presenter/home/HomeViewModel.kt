@@ -184,6 +184,16 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.ShotData -> {
+                with((state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeShotCountTextUiModel?.count) {
+                    if ((this == null) || (this <= 0)) {
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.ShotInvalid,
+                            ),
+                        )
+                        return@intent
+                    }
+                }
                 // 서버 데이터 전송
                 stingUseCase(
                     notificationRequestDomainModel = NotificationRequestDomainModel(

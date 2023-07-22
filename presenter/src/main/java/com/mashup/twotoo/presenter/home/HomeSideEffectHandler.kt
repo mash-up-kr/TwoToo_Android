@@ -107,6 +107,9 @@ class HomeSideEffectHandler(
                             ToastText.ShotFail -> {
                                 context.getString(R.string.toast_message_shot_fail)
                             }
+                            ToastText.ShotInvalid -> {
+                                context.getString(R.string.toast_message_shot_invalid)
+                            }
                         },
                     )
                 }
