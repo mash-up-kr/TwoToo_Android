@@ -39,6 +39,9 @@ enum class TopLevelDestination(
 }
 
 sealed class NavigationRoute(val route: String) {
+    object SplashGraph : NavigationRoute("splash") {
+        object SplashScreen : NavigationRoute("splash/screen")
+    }
     object OnBoardingGraph : NavigationRoute("onboarding") {
         object OnboardingScreen : NavigationRoute("onboarding/screen")
     }
