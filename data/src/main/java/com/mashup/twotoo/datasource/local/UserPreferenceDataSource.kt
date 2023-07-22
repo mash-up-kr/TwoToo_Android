@@ -65,7 +65,7 @@ class UserPreferenceDataSource @Inject constructor(
     suspend fun getUserInfo(): UserAuthResponse? {
         val jsonAdapter: JsonAdapter<UserAuthResponse> = moshi.adapter(UserAuthResponse::class.java)
         val userInfo = getDataStore(stringPreferencesKey(USER_INFO)).first()
-        return jsonAdapter.fromJsonValue(userInfo)
+        return userInfo?.let { info -> jsonAdapter.fromJson(info) }
     }
 
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
