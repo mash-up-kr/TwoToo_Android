@@ -10,6 +10,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 
 @Composable
@@ -24,12 +25,12 @@ fun HomeFlowerLanguage(
     ) {
         Text(
             modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-            text = homeFlowerUiModel.flowerType.getFlowerName(context = context),
+            text = (homeFlowerUiModel.flowerType as Flower).getFlowerName(context = context),
             style = TwoTooTheme.typography.headLineNormal24,
             color = TwoTooTheme.color.mainBrown,
         )
         Text(
-            text = homeFlowerUiModel.flowerType.getFlowerLanguage(context = context),
+            text = (homeFlowerUiModel.flowerType as Flower).getFlowerLanguage(context = context),
             style = TwoTooTheme.typography.bodyNormal14,
             color = TwoTooTheme.color.mainBrown,
         )

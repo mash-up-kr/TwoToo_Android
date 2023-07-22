@@ -4,6 +4,7 @@ import com.mashup.twotoo.datasource.remote.challenge.request.ApproveChallengeReq
 import com.mashup.twotoo.datasource.remote.challenge.request.ChallengeNoRequest
 import com.mashup.twotoo.datasource.remote.challenge.request.CreateChallengeRequest
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
+import com.mashup.twotoo.datasource.remote.challenge.response.ChallengeDetail
 import javax.inject.Inject
 
 class ChallengeDataSource @Inject constructor(
@@ -21,7 +22,7 @@ class ChallengeDataSource @Inject constructor(
 
     suspend fun getChallengeByNo(
         challengeNoRequest: ChallengeNoRequest,
-    ): Challenge {
+    ): ChallengeDetail {
         return challengeApi.getChallengeByNo(challengeNo = challengeNoRequest.challengeNo)
     }
 

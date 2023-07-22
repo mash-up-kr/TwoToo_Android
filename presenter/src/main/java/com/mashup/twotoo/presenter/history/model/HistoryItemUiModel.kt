@@ -1,5 +1,7 @@
 package com.mashup.twotoo.presenter.history.model
 
+import model.commit.response.CommitResponseDomainModel
+
 data class HistoryItemUiModel(
     val partnerInfo: HistoryInfoUiModel,
     val myInfo: HistoryInfoUiModel,
@@ -26,5 +28,14 @@ data class HistoryItemUiModel(
                 createDate = "4/10",
             ),
         )
+
+        // Todo creatDate 계산해야함
+        fun from(commitResponseDomainModel: CommitResponseDomainModel): HistoryItemUiModel {
+            return HistoryItemUiModel(
+                partnerInfo = HistoryInfoUiModel.from(commitResponseDomainModel),
+                myInfo = HistoryInfoUiModel.from(commitResponseDomainModel),
+                createDate = "4/10",
+            )
+        }
     }
 }

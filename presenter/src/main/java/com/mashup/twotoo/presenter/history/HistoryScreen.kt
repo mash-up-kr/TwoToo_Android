@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.history
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -10,9 +11,12 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
@@ -26,10 +30,19 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryRoute(
+    challengeNo: Int,
     historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
-    navigateToHistoryDetail: () -> Unit,
+    navigateToHistoryDetail: (Int) -> Unit,
 ) {
+    Log.i("HistoryRoute", "challengeNo = $challengeNo")
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            historyViewModel.getChallengeByUser(challengeNo)
+        }
+    }
+
     val state by historyViewModel.collectAsState()
 
     HistoryScreen(
@@ -44,7 +57,7 @@ fun HistoryRoute(
 fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
-    navigateToHistoryDetail: () -> Unit,
+    navigateToHistoryDetail: (Int) -> Unit,
     state: HistoryState,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }

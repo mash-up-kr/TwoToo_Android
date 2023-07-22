@@ -17,6 +17,7 @@ fun Commit.toDomainModel(): CommitResponseDomainModel {
         commitNo = this.commitNo,
         userNo = this.userNo,
         text = this.text,
+        createdAt = this.createdAt,
         photoUrl = this.photoUrl,
         partnerComment = this.partnerComment,
     )
