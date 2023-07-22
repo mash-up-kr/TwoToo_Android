@@ -49,5 +49,4 @@ dependencies {
     testImplementation(libs.test.junit)
     androidTestImplementation(libs.test.ext.junit)
     androidTestImplementation(libs.test.espresso.core)
-    implementation(libs.gson)
 }
