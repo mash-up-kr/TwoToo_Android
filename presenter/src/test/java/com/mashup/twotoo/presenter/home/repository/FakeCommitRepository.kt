@@ -10,7 +10,7 @@ class FakeCommitRepository : CommitRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun cheer(commitNoRequestDomainModel: CommitNoRequestDomainModel): CommitResponseDomainModel {
+    override suspend fun cheer(commitNoRequestDomainModel: CommitNoRequestDomainModel): Result<CommitResponseDomainModel> {
         TODO("Not yet implemented")
     }
 
