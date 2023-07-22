@@ -8,7 +8,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -69,12 +68,13 @@ fun SplashScreen() {
             modifier = Modifier.align(Alignment.Center),
         ) {
             TwoTooImageView(
-                model = R.drawable.example_flower,
-                modifier = Modifier.size(50.dp).align(Alignment.CenterHorizontally),
-                previewPlaceholder = R.drawable.example_flower,
+                model = R.drawable.img_splash,
+                modifier = Modifier.size(122.dp).align(Alignment.CenterHorizontally),
+                previewPlaceholder = R.drawable.img_splash,
                 contentScale = ContentScale.FillBounds,
             )
             Text(
+                modifier = Modifier.align(Alignment.CenterHorizontally),
                 text = stringResource(id = R.string.app_name),
                 textAlign = TextAlign.Center,
                 style = TwoTooTheme.typography.headLineNormal28,
