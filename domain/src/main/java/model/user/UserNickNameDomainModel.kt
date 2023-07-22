@@ -2,5 +2,5 @@ package model.user
 
 data class UserNickNameDomainModel(
     val nickname: String,
-    val partnerNo: Int? = 30
+    val partnerNo: Int? = null
 )
