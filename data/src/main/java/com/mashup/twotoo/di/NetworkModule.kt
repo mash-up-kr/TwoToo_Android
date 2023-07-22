@@ -72,6 +72,12 @@ class NetworkModule {
             ).build()
     }
 
+    @Provides
+    @Singleton
+    fun provideMoshi(): Moshi {
+        return Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+    }
+
     companion object {
         const val URL = "https://twotoo-node-zmtrd.run.goorm.site/"
         const val AUTHORIZATION = "Authorization"
