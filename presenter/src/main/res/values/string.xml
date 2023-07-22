@@ -197,6 +197,7 @@
     <string name="toast_message_cheer_success">칭찬 한마디가 등록되었습니다</string>
     <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
     <string name="toast_message_finish_challenge_fail">챌린지 완료에 실패했습니다</string>
+    <string name="toast_message_deeplink_error">잘못된 링크입니다</string>
 
 
 </resources>
