@@ -6,8 +6,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
-import com.google.gson.Gson
 import com.mashup.twotoo.datasource.remote.user.response.UserAuthResponse
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -17,10 +18,8 @@ import javax.inject.Inject
 
 class UserPreferenceDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>,
+    private val moshi: Moshi
 ) {
-
-//    val moshi: Moshi = Moshi.Builder().build()
-//    val jsonAdapter: JsonAdapter<UserAuthResponse> = moshi.adapter(UserAuthResponse::class.java)
 
     suspend fun getIsSendInvitation(): Boolean {
         return getDataStore(booleanPreferencesKey(IS_SEND_INVITATION)).first() ?: false
@@ -59,13 +58,14 @@ class UserPreferenceDataSource @Inject constructor(
     }
 
     suspend fun setUserInfo(userAuthResponse: UserAuthResponse) {
-        val json = Gson().toJson(userAuthResponse)
+        val json = moshi.adapter(UserAuthResponse::class.java).toJson(userAuthResponse)
         setDataStore(stringPreferencesKey(USER_INFO), json)
     }
 
     suspend fun getUserInfo(): UserAuthResponse? {
+        val jsonAdapter: JsonAdapter<UserAuthResponse> = moshi.adapter(UserAuthResponse::class.java)
         val userInfo = getDataStore(stringPreferencesKey(USER_INFO)).first()
-        return Gson().fromJson(userInfo, UserAuthResponse::class.java)
+        return jsonAdapter.fromJsonValue(userInfo)
     }
 
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
