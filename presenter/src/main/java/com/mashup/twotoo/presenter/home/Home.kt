@@ -42,6 +42,7 @@ fun HomeRoute(
     modifier: Modifier = Modifier,
     navigateToHistory: () -> Unit = {},
     navigateToCreateChallenge: () -> Unit = {},
+    navigateToGuide: () -> Unit,
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
@@ -79,6 +80,7 @@ fun HomeRoute(
             navigateToHistory = homeViewModel::navigateToHistory,
             onClickCompleteButton = homeViewModel::onClickCompleteButton,
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
+            navigateToGuide = navigateToGuide,
         )
 
         with(homeSideEffectHandler) {
@@ -116,6 +118,7 @@ fun HomeScreen(
     onClickCompleteButton: (Int) -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
     onClickCheerButton: () -> Unit = {},
+    navigateToGuide: () -> Unit,
 ) {
     ConstraintLayout(
         modifier = modifier.semantics {
@@ -130,6 +133,7 @@ fun HomeScreen(
                 end.linkTo(parent.end)
             },
             onClickHelpIcon = {
+                navigateToGuide()
             },
         )
         when (state) {
@@ -174,6 +178,7 @@ fun PreviewHomeScreenBeforeChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             state = OngoingChallengeUiModel.default,
+            navigateToGuide = {},
         )
     }
 }
@@ -185,6 +190,7 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             state = OngoingChallengeUiModel.default,
+            navigateToGuide = {},
         )
     }
 }

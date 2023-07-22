@@ -8,6 +8,7 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
+import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.mypage.MyPageRoute
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
@@ -20,7 +21,6 @@ fun NavController.navigateToUser(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.UserGraph.route, navOptions = navOptions)
 }
 
-
 fun NavGraphBuilder.userGraph(navController: NavController) {
     navigation(startDestination = NavigationRoute.UserGraph.UserScreen.route, route = NavigationRoute.UserGraph.route) {
         composable(route = NavigationRoute.UserGraph.UserScreen.route) {
@@ -32,9 +32,8 @@ fun NavGraphBuilder.userGraph(navController: NavController) {
             val state = userViewModel.count.collectAsState()
             MyPageRoute(
                 state = state.value,
-                onClickMyPageItem = {
-                    userViewModel.updateCount()
-                },
+                onClickMyPageItem = { userViewModel.updateCount() },
+                navigateToGuide = { navController.navigateToGuide() },
             )
         }
     }
