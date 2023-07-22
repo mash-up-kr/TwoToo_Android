@@ -198,5 +198,7 @@
     <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
     <string name="toast_message_finish_challenge_fail">챌린지 완료에 실패했습니다</string>
 
+    <!--guide-->
+    <string name="guideTitle">"투투 설명서 "</string>
 
 </resources>
