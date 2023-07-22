@@ -104,7 +104,7 @@ fun NickNameSetting(
         ) {
             onNextButtonClick(nickName)
         }
-        Spacer(modifier = Modifier.height(55.dp))
+        Spacer(modifier = Modifier.height(54.dp))
     }
 }
 
