@@ -10,8 +10,16 @@ object DateFormatter {
     @SuppressLint("SimpleDateFormat")
     private val dateFormat = SimpleDateFormat(DATE_FORMAT)
 
-    fun getDateStrBy(date: String): String {
-        val date = dateFormat.parse(date)
+    fun getDateStrByStr(date: String): String {
+        val date = getDateByStr(date)
+        return getFormattedStrByDate(date)
+    }
+
+    fun getDateByStr(date: String): Date {
+        return dateFormat.parse(date)
+    }
+
+    fun getFormattedStrByDate(date: Date): String {
         return dateFormat.format(date)
     }
 }

@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.history.model
 
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.commit.response.CommitResponseDomainModel
 
 data class HistoryItemUiModel(
@@ -29,7 +30,6 @@ data class HistoryItemUiModel(
             ),
         )
 
-        // Todo creatDate 계산해야함
         fun from(myCommit: CommitResponseDomainModel?, partnerCommit: CommitResponseDomainModel?): HistoryItemUiModel {
             return HistoryItemUiModel(
                 myInfo = myCommit?.let {
@@ -38,8 +38,15 @@ data class HistoryItemUiModel(
                 partnerInfo = partnerCommit?.let {
                     HistoryInfoUiModel.from(it)
                 } ?: HistoryInfoUiModel.empty,
-                createDate = "4/10",
+                createDate = myCommit?.let { DateFormatter.getDateStrByStr(it.createdAt) } ?: "",
             )
+        }
+
+        fun toSortDate(date: String): String {
+            val (month, day) = date.split("-").run {
+                (this[1].toInt() to this[2].toInt())
+            }
+            return "$month/$day"
         }
     }
 }

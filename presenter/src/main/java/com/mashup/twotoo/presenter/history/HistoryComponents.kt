@@ -134,7 +134,7 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
             contentAlignment = Alignment.Center,
         ) {
             Text(
-                text = historyItemUiModel.createDate,
+                text = HistoryItemUiModel.toSortDate(historyItemUiModel.createDate), // ex to 4/2 (from 2022-04-02)
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwotooPink,
             )

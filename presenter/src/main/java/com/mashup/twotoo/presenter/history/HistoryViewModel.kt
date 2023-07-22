@@ -4,8 +4,10 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
+import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -13,6 +15,7 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeByNoUseCase
+import java.util.*
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
@@ -33,10 +36,30 @@ class HistoryViewModel @Inject constructor(
                 )
             }
 
+            val startDate = DateFormatter.getDateByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+
+            val challengingDates = getDatesInRangeFromDateToToday(startDate)
+
             val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
-            val newHistoryItemUiModel = commitPairs.map {
+            val combineHistoryItemUiModels = commitPairs.map {
                 HistoryItemUiModel.from(it.first, it.second)
             }
+            val newHistoryItemUiModels: MutableList<HistoryItemUiModel> = mutableListOf()
+            for (date in challengingDates) {
+                val commit = combineHistoryItemUiModels.firstOrNull { date == it.createDate }
+                if (commit != null) {
+                    newHistoryItemUiModels.add(commit)
+                } else {
+                    newHistoryItemUiModels.add(
+                        HistoryItemUiModel(
+                            partnerInfo = HistoryInfoUiModel.empty,
+                            myInfo = HistoryInfoUiModel.empty,
+                            createDate = date,
+                        ),
+                    )
+                }
+            }
+
             val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
                 OwnerNickNamesUiModel.from(this.user1, this.user2)
             }
@@ -44,13 +67,29 @@ class HistoryViewModel @Inject constructor(
             reduce {
                 state.copy(
                     challengeInfoUiModel = newChallengeInfoUiModel,
-                    historyItemUiModel = newHistoryItemUiModel,
+                    historyItemUiModel = newHistoryItemUiModels,
                     ownerNickNamesUiModel = newOwnerNickNamesUiModel,
                 )
             }
         }.onFailure {
             Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
         }
+    }
+
+    private fun getDatesInRangeFromDateToToday(startDate: Date): List<String> {
+        val endDate = Date() // current date
+        val calendar = Calendar.getInstance()
+        calendar.time = startDate
+
+        val datesList = mutableListOf<String>()
+
+        while (calendar.time <= endDate) {
+            datesList.add(DateFormatter.getFormattedStrByDate(calendar.time))
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        datesList.reverse() // start from current date
+        return datesList
     }
 
     private fun <T, R> combineLists(list1: List<T>, list2: List<R>): List<Pair<T?, R?>> {
