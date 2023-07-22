@@ -58,6 +58,7 @@ class HomeViewModelTest {
         fakeUserDataStoreRepository = FakeUserDataStoreRepository()
         fakeCommitRepository = FakeCommitRepository()
         fakeChallengeRepository = FakeChallengeRepository()
+        fakeNotificationRepository = FakeNotificationRepository()
         getVisibilityCheerDialogUseCase =
             GetVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         getVisibilityCompleteDialogUseCase =
