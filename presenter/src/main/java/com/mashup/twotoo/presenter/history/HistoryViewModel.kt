@@ -37,28 +37,15 @@ class HistoryViewModel @Inject constructor(
             }
 
             val startDate = DateFormatter.getDateByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
-
             val challengingDates = getDatesInRangeFromDateToToday(startDate)
 
             val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
             val combineHistoryItemUiModels = commitPairs.map {
                 HistoryItemUiModel.from(it.first, it.second)
             }
-            val newHistoryItemUiModels: MutableList<HistoryItemUiModel> = mutableListOf()
-            for (date in challengingDates) {
-                val commit = combineHistoryItemUiModels.firstOrNull { date == it.createDate }
-                if (commit != null) {
-                    newHistoryItemUiModels.add(commit)
-                } else {
-                    newHistoryItemUiModels.add(
-                        HistoryItemUiModel(
-                            partnerInfo = HistoryInfoUiModel.empty,
-                            myInfo = HistoryInfoUiModel.empty,
-                            createDate = date,
-                        ),
-                    )
-                }
-            }
+
+            val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
+                getNewHistoryItemUiModels(challengingDates, combineHistoryItemUiModels)
 
             val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
                 OwnerNickNamesUiModel.from(this.user1, this.user2)
@@ -90,6 +77,28 @@ class HistoryViewModel @Inject constructor(
 
         datesList.reverse() // start from current date
         return datesList
+    }
+
+    private fun getNewHistoryItemUiModels(
+        challengingDates: List<String>,
+        combineHistoryItemUiModels: List<HistoryItemUiModel>,
+    ): MutableList<HistoryItemUiModel> {
+        val newHistoryItemUiModels: MutableList<HistoryItemUiModel> = mutableListOf()
+        for (date in challengingDates) {
+            val commit = combineHistoryItemUiModels.firstOrNull { date == it.createDate }
+            if (commit != null) {
+                newHistoryItemUiModels.add(commit)
+            } else {
+                newHistoryItemUiModels.add(
+                    HistoryItemUiModel(
+                        partnerInfo = HistoryInfoUiModel.empty,
+                        myInfo = HistoryInfoUiModel.empty,
+                        createDate = date,
+                    ),
+                )
+            }
+        }
+        return newHistoryItemUiModels
     }
 
     private fun <T, R> combineLists(list1: List<T>, list2: List<R>): List<Pair<T?, R?>> {
