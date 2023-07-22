@@ -32,7 +32,7 @@ fun GuideRoute(
             onClickBackIcon = { onClickBackButton() },
             color = TwoTooTheme.color.mainWhite,
         )
-        NotionWebViewPage(
+        GuideWebView(
             modifier = modifier.fillMaxSize(),
         )
     }
@@ -40,7 +40,7 @@ fun GuideRoute(
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun NotionWebViewPage(modifier: Modifier = Modifier) {
+fun GuideWebView(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val webView = remember {
         WebView(context)
