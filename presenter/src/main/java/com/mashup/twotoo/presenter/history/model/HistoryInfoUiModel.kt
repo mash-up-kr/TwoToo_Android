@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.history.model
 
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.commit.response.CommitResponseDomainModel
 
 data class HistoryInfoUiModel(
@@ -7,6 +8,7 @@ data class HistoryInfoUiModel(
     val userNo: Int,
     val text: String = "",
     val photoUrl: String = "",
+    val createdDate: String = "",
     val createdTime: String = "",
     val partnerComment: String = "",
 ) {
@@ -30,11 +32,28 @@ data class HistoryInfoUiModel(
             return HistoryInfoUiModel(
                 photoUrl = commit.photoUrl,
                 commitNo = commit.commitNo,
-                createdTime = "",
+                createdDate = toCreatedDate(commit.createdAt),
+                createdTime = toCreatedTime(commit.createdAt),
                 userNo = commit.userNo,
                 text = commit.text,
                 partnerComment = commit.partnerComment,
             )
+        }
+
+        private fun toCreatedTime(createdTime: String): String {
+            if (createdTime.isEmpty()) {
+                return createdTime
+            }
+            return DateFormatter.get24HourStrByStr(createdTime)
+        }
+
+        private fun toCreatedDate(createdDate: String): String {
+            if (createdDate.isEmpty()) {
+                return createdDate
+            }
+            val dateStr = DateFormatter.getDateStrByStr(createdDate)
+            val (year, month, day) = dateStr.split("-")
+            return "${year}년 ${month}월 ${day}일"
         }
     }
 }
