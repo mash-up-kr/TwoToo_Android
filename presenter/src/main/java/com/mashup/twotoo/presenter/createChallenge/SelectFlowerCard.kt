@@ -2,18 +2,17 @@ package com.mashup.twotoo.presenter.createChallenge
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -38,32 +37,30 @@ fun SelectFlowerCardRoute(
 fun SelectFlowerCard(
     onStartButtonClick: () -> Unit = {}
 ) {
-    Scaffold(
-        topBar = { TwoTooBackToolbar(onClickBackIcon = {}) },
-    ) { padding ->
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .paint(
-                    painterResource(id = R.drawable.image_background),
-                    contentScale = ContentScale.FillBounds,
-                ),
-        ) {
-            Column {
+    var isVisibleStartButton by remember { mutableStateOf(false) }
+    Column {
+        TwoTooBackToolbar(onClickBackIcon = {})
+        Box {
+            Column(modifier = Modifier.padding(top = 11.dp)) {
                 SelectFlowerTitle()
-                SelectFlowerLazyColumn()
+                SelectFlowerLazyColumn(
+                    onClickOneItem = {
+                        isVisibleStartButton = true
+                    },
+                )
             }
-            TwoTooTextButton(
-                text = stringResource(id = R.string.challenge_start),
-                enabled = false,
-                modifier = Modifier
-                    .padding(bottom = 55.dp, start = 18.dp, end = 18.dp)
-                    .fillMaxWidth()
-                    .height(57.dp)
-                    .align(Alignment.BottomCenter),
-            ) {
-                onStartButtonClick()
+            if (isVisibleStartButton) {
+                TwoTooTextButton(
+                    text = stringResource(id = R.string.challenge_start),
+                    enabled = true,
+                    modifier = Modifier
+                        .padding(bottom = 55.dp, start = 18.dp, end = 18.dp)
+                        .fillMaxWidth()
+                        .height(57.dp)
+                        .align(Alignment.BottomCenter),
+                ) {
+                    onStartButtonClick()
+                }
             }
         }
     }
