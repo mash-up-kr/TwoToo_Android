@@ -36,8 +36,14 @@ class HistoryViewModel @Inject constructor(
                 )
             }
 
-            val startDate = DateFormatter.getDateByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
-            val challengingDates = getDatesInRangeFromDateToToday(startDate)
+            val startDate = DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+            val endDate = DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+
+            val challengingDates = if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
+                getDatesInRangeFromDateToToday(startDate, endDate)
+            } else {
+                getDatesInRangeFromDateToToday(startDate, Date()) // currentDate
+            }
 
             val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
             val combineHistoryItemUiModels = commitPairs.map {
@@ -63,15 +69,14 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
-    private fun getDatesInRangeFromDateToToday(startDate: Date): List<String> {
-        val endDate = Date() // current date
+    private fun getDatesInRangeFromDateToToday(startDate: Date, endDate: Date): List<String> {
         val calendar = Calendar.getInstance()
         calendar.time = startDate
 
         val datesList = mutableListOf<String>()
 
         while (calendar.time <= endDate) {
-            datesList.add(DateFormatter.getFormattedStrByDate(calendar.time))
+            datesList.add(DateFormatter.getDateStrByDate(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 
@@ -147,7 +152,6 @@ class HistoryViewModel @Inject constructor(
                 historyDetailInfoUiModel = HistoryDetailInfoUiModel(
                     infoUiModel = commit,
                     ownerNickNamesUiModel = ownerNickName,
-                    createdDate = "2023년 4월 20일",
                 ),
             )
         }
