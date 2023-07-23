@@ -76,7 +76,7 @@ fun MyPageScreen(
         ) {
             Text(
 
-                text = homeGoalCountUiModel.myName,
+                text = homeGoalCountUiModel.myName ?: "",
                 style = TwoTooTheme.typography.headLineNormal18,
                 color = TwoTooTheme.color.mainBrown,
             )

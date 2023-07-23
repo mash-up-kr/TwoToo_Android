@@ -16,7 +16,6 @@ import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
 
-
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,
@@ -27,7 +26,10 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     )
 }
 
-fun Challenge.toDomainModel(): ChallengeResponseDomainModel {
+fun Challenge?.toDomainModel(): ChallengeResponseDomainModel? {
+    if (this == null) {
+        return null
+    }
     return ChallengeResponseDomainModel(
         challengeNo = this.challengeNo,
         endDate = this.endDate,

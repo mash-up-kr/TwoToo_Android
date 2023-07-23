@@ -18,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.model.Stage
 import com.mashup.twotoo.presenter.model.toFlowerName
+import model.challenge.response.ChallengeResponseDomainModel
 import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import java.text.SimpleDateFormat
@@ -47,15 +48,15 @@ fun String.isBeforeChallengeState(): Boolean {
 fun HomeViewResponseDomainModel.toBeforeChallengeUiModel(
     userNo: Int,
 ): BeforeChallengeUiModel {
-    val homeGoalCountUiModel = if (userNo == onGoingChallenge.user1.userNo) {
+    val homeGoalCountUiModel = if (userNo == onGoingChallenge?.user1?.userNo) {
         HomeGoalCountUiModel.default.copy(
-            partnerName = onGoingChallenge.user2.nickname,
-            myName = onGoingChallenge.user1.nickname,
+            partnerName = onGoingChallenge?.user2?.nickname ?: "",
+            myName = onGoingChallenge?.user1?.nickname ?: "",
         )
     } else {
         HomeGoalCountUiModel.default.copy(
-            partnerName = onGoingChallenge.user1.nickname,
-            myName = onGoingChallenge.user2.nickname,
+            partnerName = onGoingChallenge?.user1?.nickname ?: "",
+            myName = onGoingChallenge?.user2?.nickname ?: "",
         )
     }
 
@@ -102,11 +103,11 @@ fun HomeViewResponseDomainModel.toOngoingChallengeUiModel(
     userNo: Int,
 ): OngoingChallengeUiModel {
     return OngoingChallengeUiModel(
-        challengeNo = this.onGoingChallenge.challengeNo,
+        challengeNo = this.onGoingChallenge!!.challengeNo,
         homeChallengeStateUiModel = toHomeChallengeStateUiModel(userNo = userNo),
         homeGoalAchievePartnerAndMeUiModel = toHomeGoalAchievePartnerAndMeUiModel(userNo = userNo),
         homeGoalCountUiModel = toHomeGoalCountUiModel(userNo = userNo),
-        homeGoalFieldUiModel = toHomeGoalFieldUiModel(),
+        homeGoalFieldUiModel = this.onGoingChallenge!!.toHomeGoalFieldUiModel(),
         homeShotCountTextUiModel = HomeShotCountTextUiModel(0), // TODO CHANGE
     )
 }
@@ -143,7 +144,7 @@ fun HomeViewResponseDomainModel.toHomeGoalAchievePartnerAndMeUiModel(
 fun HomeViewResponseDomainModel.toHomeGoalCountUiModel(
     userNo: Int,
 ): HomeGoalCountUiModel {
-    val (meNickName, partnerNickName) = getUserNickName(userNo = userNo)
+    val (meNickName, partnerNickName) = this.onGoingChallenge!!.getUserNickName(userNo = userNo)
 
     val count = challengeTotal
 
@@ -154,10 +155,10 @@ fun HomeViewResponseDomainModel.toHomeGoalCountUiModel(
     )
 }
 
-fun HomeViewResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
+fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
     val currentDate = Calendar.getInstance(Locale.KOREA).time
     val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
-    val endDate = formatter.parse(onGoingChallenge.endDate)
+    val endDate = formatter.parse(endDate)
 
     val diff: Long = endDate.time - currentDate.time
     val seconds = diff / 1000
@@ -166,7 +167,7 @@ fun HomeViewResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
     val days = hours / 24
 
     return HomeGoalFieldUiModel(
-        goal = onGoingChallenge.name,
+        goal = name,
         dDay = days.toInt(),
     )
 }
@@ -192,13 +193,13 @@ fun HomeViewResponseDomainModel.getUserCommit(
     }
 }
 
-fun HomeViewResponseDomainModel.isFirstChallenge(): Boolean = with(this.onGoingChallenge) {
+fun ChallengeResponseDomainModel.isFirstChallenge(): Boolean {
     return user1CommitCnt == 0 && user2CommitCnt == 0
 }
 
-fun HomeViewResponseDomainModel.isFirstChallengeButAuthOnlyPartner(
+fun ChallengeResponseDomainModel.isFirstChallengeButAuthOnlyPartner(
     userNo: Int,
-): Boolean = with(this.onGoingChallenge) {
+): Boolean {
     return if (user1.userNo == userNo) {
         user1CommitCnt == 0 && user2CommitCnt != 0
     } else {
@@ -226,9 +227,9 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
 ): HomeCheerUiModel {
     val (me, partner) = getUserCommit(userNo = userNo)
 
-    val (meNickName, partnerNickName) = getUserNickName(userNo = userNo)
+    val (meNickName, partnerNickName) = this.onGoingChallenge!!.getUserNickName(userNo = userNo)
 
-    val (meFlower, partnerFlower) = getFlowerType(userNo = userNo)
+    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(userNo = userNo)
 
     return when {
         me!!.partnerComment.isNotBlank() && partner!!.partnerComment.isNotBlank() -> {
@@ -331,9 +332,9 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
     }
 }
 
-fun HomeViewResponseDomainModel.getUserNickName(
+fun ChallengeResponseDomainModel.getUserNickName(
     userNo: Int,
-): Pair<String, String> = with(onGoingChallenge) {
+): Pair<String, String> {
     return if (userNo == user1.userNo) {
         Pair(user1.nickname, user2.nickname)
     } else {
@@ -341,9 +342,9 @@ fun HomeViewResponseDomainModel.getUserNickName(
     }
 }
 
-fun HomeViewResponseDomainModel.getFlowerType(
+fun ChallengeResponseDomainModel.getFlowerType(
     userNo: Int,
-): Pair<Flower, Flower> = with(onGoingChallenge) {
+): Pair<Flower, Flower> {
     val (meGrowType, partnerGrowType) = getGrowType(userNo)
     return if (userNo == user1.userNo) {
         val user1 = Flower(
@@ -374,10 +375,10 @@ fun HomeViewResponseDomainModel.getFlowerType(
     }
 }
 
-fun HomeViewResponseDomainModel.getGrowType(
+fun ChallengeResponseDomainModel.getGrowType(
     userNo: Int,
-): Pair<Stage, Stage> = with(onGoingChallenge) {
-    if (userNo == user1.userNo) {
+): Pair<Stage, Stage> {
+    return if (userNo == user1.userNo) {
         Pair(user1CommitCnt.toGrowState(), user2CommitCnt.toGrowState())
     } else {
         Pair(user2CommitCnt.toGrowState(), user1CommitCnt.toGrowState())
@@ -421,12 +422,12 @@ fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(
 ): HomeFlowerPartnerAndMeUiModel {
     val (me, partner) = getUserCommit(userNo = userNo)
 
-    val (meNickName, partnerNickName) = getUserNickName(userNo = userNo)
+    val (meNickName, partnerNickName) = this.onGoingChallenge!!.getUserNickName(userNo = userNo)
 
-    val (meFlower, partnerFlower) = getFlowerType(userNo = userNo)
+    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(userNo = userNo)
 
     return when {
-        isFirstChallenge() -> {
+        this.onGoingChallenge!!.isFirstChallenge() -> {
             HomeFlowerPartnerAndMeUiModel.firstChallenge.copy(
                 partner = HomeFlowerUiModel.partner.copy(
                     flowerType = partnerFlower,
@@ -439,7 +440,7 @@ fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(
             )
         }
 
-        isFirstChallengeButAuthOnlyPartner(userNo) -> {
+        this.onGoingChallenge!!.isFirstChallengeButAuthOnlyPartner(userNo) -> {
             HomeFlowerPartnerAndMeUiModel.firstChallengeButAuthOnlyPartner.copy(
                 partner = HomeFlowerUiModel.partner.copy(
                     flowerType = partnerFlower,
@@ -513,9 +514,9 @@ fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(
 fun HomeViewResponseDomainModel.toHomeGoalAchieveUiModel(
     userNo: Int,
 ): Pair<HomeGoalAchieveUiModel, HomeGoalAchieveUiModel> {
-    val (meNickName, partnerNickName) = getUserNickName(userNo = userNo)
+    val (meNickName, partnerNickName) = this.onGoingChallenge!!.getUserNickName(userNo = userNo)
 
-    val (meCommitCount, partnerCommitCount) = getUserCommitCount(userNo = userNo)
+    val (meCommitCount, partnerCommitCount) = this.onGoingChallenge!!.getUserCommitCount(userNo = userNo)
 
     val me = HomeGoalAchieveUiModel(
         name = meNickName,
@@ -555,12 +556,12 @@ fun Int.toProgress(): Float {
     }
 }
 
-fun HomeViewResponseDomainModel.getUserCommitCount(
+fun ChallengeResponseDomainModel.getUserCommitCount(
     userNo: Int,
 ): Pair<Int, Int> {
-    return if (onGoingChallenge.user1.userNo == userNo) {
-        Pair(onGoingChallenge.user1CommitCnt, onGoingChallenge.user2CommitCnt)
+    return if (user1.userNo == userNo) {
+        Pair(user1CommitCnt, user2CommitCnt)
     } else {
-        Pair(onGoingChallenge.user2CommitCnt, onGoingChallenge.user1CommitCnt)
+        Pair(user2CommitCnt, user1CommitCnt)
     }
 }
