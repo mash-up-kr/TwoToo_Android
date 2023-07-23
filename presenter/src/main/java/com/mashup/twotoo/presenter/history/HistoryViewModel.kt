@@ -9,6 +9,7 @@ import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
+import model.challenge.response.ChallengeDetailResponseDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -29,29 +30,10 @@ class HistoryViewModel @Inject constructor(
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
                 challengeDetailResponseDomainModel ->
 
-            val commitPairs = with(challengeDetailResponseDomainModel) {
-                combineLists(
-                    myCommitResponseDomainModel,
-                    partnerCommitResponseDomainModel,
-                )
-            }
-
-            val startDate = DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
-            val endDate = DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
-
-            val challengingDates = if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
-                getDatesInRangeFromDateToToday(startDate, endDate)
-            } else {
-                getDatesInRangeFromDateToToday(startDate, Date()) // currentDate
-            }
-
             val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
-            val combineHistoryItemUiModels = commitPairs.map {
-                HistoryItemUiModel.from(it.first, it.second)
-            }
 
             val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
-                getNewHistoryItemUiModels(challengingDates, combineHistoryItemUiModels)
+                getNewHistoryItemUiModels(challengeDetailResponseDomainModel)
 
             val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
                 OwnerNickNamesUiModel.from(this.user1, this.user2)
@@ -69,7 +51,35 @@ class HistoryViewModel @Inject constructor(
         }
     }
 
-    private fun getDatesInRangeFromDateToToday(startDate: Date, endDate: Date): List<String> {
+    private fun getNewHistoryItemUiModels(
+        challengeDetailResponseDomainModel: ChallengeDetailResponseDomainModel,
+    ): MutableList<HistoryItemUiModel> {
+        val startDate =
+            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+        val endDate =
+            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+
+        val challengingDates =
+            if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
+                getDatesInRangeFromStartDateToEndDate(startDate, endDate)
+            } else {
+                getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
+            }
+
+        val commitPairs = with(challengeDetailResponseDomainModel) {
+            combineLists(
+                myCommitResponseDomainModel,
+                partnerCommitResponseDomainModel,
+            )
+        }
+        val historyItemsWithCommit = commitPairs.map {
+            HistoryItemUiModel.from(it.first, it.second)
+        }
+
+        return getNewHistoryItemsCombinedBetween(challengingDates, historyItemsWithCommit)
+    }
+
+    private fun getDatesInRangeFromStartDateToEndDate(startDate: Date, endDate: Date): List<String> {
         val calendar = Calendar.getInstance()
         calendar.time = startDate
 
@@ -84,7 +94,7 @@ class HistoryViewModel @Inject constructor(
         return datesList
     }
 
-    private fun getNewHistoryItemUiModels(
+    private fun getNewHistoryItemsCombinedBetween(
         challengingDates: List<String>,
         combineHistoryItemUiModels: List<HistoryItemUiModel>,
     ): MutableList<HistoryItemUiModel> {
