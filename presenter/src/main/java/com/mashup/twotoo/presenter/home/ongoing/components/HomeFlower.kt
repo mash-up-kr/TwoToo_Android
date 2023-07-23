@@ -191,7 +191,20 @@ fun HomeFlowerMeAndPartner(
                     modifier = Modifier.constrainAs(partnerCheer) {
                         start.linkTo(parent.start, margin = 32.dp)
                         end.linkTo(heartImage.start)
-                        bottom.linkTo(partner.top, margin = 12.dp)
+                        bottom.linkTo(
+                            partner.top,
+                            margin =
+                            if ((this@with.partner.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                0.dp
+                            } else {
+                                if (cheerState in listOf(CheerState.CheerOnlyMe, CheerState.DoNotCheerBoth)) {
+                                    18.dp
+                                } else {
+                                    12.dp
+                                }
+                            },
+
+                        )
                     },
                     cheerState = this.cheerState,
                     cheerText = this.partner.cheerText,
@@ -200,7 +213,7 @@ fun HomeFlowerMeAndPartner(
                     modifier = Modifier.constrainAs(partner) {
                         start.linkTo(partnerFlowerOwnerText.start)
                         end.linkTo(partnerFlowerOwnerText.end)
-                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 3.dp)
+                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 7.dp)
                     },
                     homeFlowerUiModel = this.partner.homeFlowerUiModel,
                 )
@@ -233,7 +246,19 @@ fun HomeFlowerMeAndPartner(
                             top.linkTo(parent.top)
                             start.linkTo(heartImage.end)
                             end.linkTo(parent.end, margin = 32.dp)
-                            bottom.linkTo(me.top, margin = 12.dp)
+                            bottom.linkTo(
+                                me.top,
+                                margin =
+                                if ((this@with.me.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                    0.dp
+                                } else {
+                                    if (cheerState in listOf(CheerState.CheerOnlyPartner, CheerState.DoNotCheerBoth)) {
+                                        32.dp
+                                    } else {
+                                        42.dp
+                                    }
+                                },
+                            )
                         },
                     cheerState = this.cheerState,
                     cheerText = this.me.cheerText,

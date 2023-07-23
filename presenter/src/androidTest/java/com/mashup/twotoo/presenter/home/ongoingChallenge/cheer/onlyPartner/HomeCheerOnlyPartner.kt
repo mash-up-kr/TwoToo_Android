@@ -83,7 +83,7 @@ class HomeCheerOnlyPartner {
     ) {
         (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).also {
             Truth.assertThat(
-                it.partner.homeFlowerUiModel.flowerType.getFlowerImage(context,screenWidth, screenHeight).image,
+                it.partner.homeFlowerUiModel.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (partnerStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_partner
@@ -96,7 +96,7 @@ class HomeCheerOnlyPartner {
             )
 
             Truth.assertThat(
-                it.me.homeFlowerUiModel.flowerType.getFlowerImage(context,screenWidth, screenHeight).image,
+                it.me.homeFlowerUiModel.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (meStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_me

@@ -91,7 +91,7 @@ fun HomeOngoingChallenge(
             homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
         )
 
-        val barrier = createTopBarrier(homeBackground, margin = 60.dp)
+        val barrier = createTopBarrier(homeBackground, margin = 80.dp)
         HomeFlowerMeAndPartner(
             modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                 start.linkTo(parent.start)
