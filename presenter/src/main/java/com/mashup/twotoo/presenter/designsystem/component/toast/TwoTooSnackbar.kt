@@ -15,12 +15,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.theme.MainLightPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.launch
 
@@ -36,17 +36,18 @@ fun SnackBarHost(modifier: Modifier, snackState: SnackbarHostState) {
 
 @Composable
 fun TwoTooSnackBarView(
-    message: String
+    message: String,
 ) {
     Card(
         shape = TwoTooTheme.shape.extraSmall,
-        backgroundColor = MainLightPink,
+        backgroundColor = TwoTooTheme.color.toastColor,
     ) {
         Text(
             text = message,
             modifier = Modifier.padding(13.dp, 12.dp),
             style = TwoTooTheme.typography.bodyNormal16,
             textAlign = TextAlign.Center,
+            color = Color.White,
         )
     }
 }
