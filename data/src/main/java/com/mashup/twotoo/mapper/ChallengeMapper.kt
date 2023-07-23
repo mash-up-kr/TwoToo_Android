@@ -2,20 +2,16 @@ package com.mashup.twotoo.mapper
 
 import com.mashup.twotoo.datasource.remote.challenge.request.ApproveChallengeRequest
 import com.mashup.twotoo.datasource.remote.challenge.request.ChallengeNoRequest
-import com.mashup.twotoo.datasource.remote.challenge.request.CreateChallengeRequest
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.User
 import com.mashup.twotoo.datasource.remote.challenge.response.UserCommit
 import com.mashup.twotoo.datasource.remote.view.response.ViewHomeResponse
-import model.challenge.CreateChallengeDomainModel
 import model.challenge.request.ApproveChallengeRequestDomainModel
 import model.challenge.request.ChallengeNoRequestDomainModel
-import model.challenge.request.CreateChallengeRequestDomainModel
 import model.challenge.response.ChallengeResponseDomainModel
 import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
-
 
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
@@ -50,13 +46,6 @@ fun ChallengeNoRequestDomainModel.toDataModel(): ChallengeNoRequest {
     )
 }
 
-fun CreateChallengeRequestDomainModel.toDataModel(): CreateChallengeRequest {
-    return CreateChallengeRequest(
-        name = this.name,
-        user2Flower = this.user2Flower,
-    )
-}
-
 fun ApproveChallengeRequestDomainModel.toDataModel(): ApproveChallengeRequest {
     return ApproveChallengeRequest(
         user1Flower = this.user1Flower,
@@ -81,12 +70,5 @@ fun UserCommit.toDomainModel(): UserCommitResponseDomainModel {
         photoUrl = this.photoUrl,
         text = this.text,
         userNo = this.userNo,
-    )
-}
-
-fun CreateChallengeDomainModel.toDataModel(): CreateChallengeRequest {
-    return CreateChallengeRequest(
-        name = this.name,
-        user2Flower = this.user2Flower,
     )
 }

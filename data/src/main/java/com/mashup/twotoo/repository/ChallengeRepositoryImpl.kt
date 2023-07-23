@@ -1,6 +1,7 @@
 package com.mashup.twotoo.repository
 
 import com.mashup.twotoo.datasource.remote.challenge.ChallengeDataSource
+import com.mashup.twotoo.datasource.remote.challenge.request.toDataModel
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
