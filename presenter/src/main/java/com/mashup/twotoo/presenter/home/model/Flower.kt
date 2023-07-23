@@ -5,7 +5,9 @@ package com.mashup.twotoo.presenter.home.model
  */
 
 import android.content.Context
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.times
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
@@ -27,32 +29,33 @@ data class Flower(
 ) : FlowerType(
     name = flowerName,
 ) {
-    override fun getFlowerImage(context: Context): FlowerImage {
+    override fun getFlowerImage(context: Context, screenWidth: Int, screenHeight: Int): FlowerImage {
         return when (userType) {
             ME -> {
                 val name = "img_home_${growType.name.lowercase()}_stage_${flowerName.name.lowercase()}_me"
                 val image = context.resources.getIdentifier(name, "drawable", context.packageName)
-
+                val (width, height) = calculateWidthAndHeight(screenWidth, screenHeight, growType)
                 when (growType) {
-                    Zero -> FlowerImage(image = R.drawable.img_home_zero_stage_me, width = 53.dp, height = 49.dp)
-                    First -> FlowerImage(image = R.drawable.img_home_first_stage_me, width = 76.dp, height = 69.dp)
-                    Second -> FlowerImage(image = R.drawable.img_home_second_stage_me, width = 77.dp, height = 117.dp)
-                    Third -> FlowerImage(image = R.drawable.img_home_third_stage_me, width = 102.dp, height = 179.dp)
-                    Fourth -> FlowerImage(image = image, width = 127.dp, height = 211.dp)
-                    Fifth -> FlowerImage(image = image, width = 127.dp, height = 211.dp)
+                    Zero -> FlowerImage(image = R.drawable.img_home_zero_stage_me, width = width, height = height)
+                    First -> FlowerImage(image = R.drawable.img_home_first_stage_me, width = width, height = height)
+                    Second -> FlowerImage(image = R.drawable.img_home_second_stage_me, width = width, height = height)
+                    Third -> FlowerImage(image = R.drawable.img_home_third_stage_me, width = width, height = height)
+                    Fourth -> FlowerImage(image = image, width = width, height = height)
+                    Fifth -> FlowerImage(image = image, width = width, height = height)
                 }
             }
             PARTNER -> {
                 val name = "img_home_${growType.name.lowercase()}_stage_${flowerName.name.lowercase()}_partner"
                 val image = context.resources.getIdentifier(name, "drawable", context.packageName)
+                val (width, height) = calculateWidthAndHeight(screenWidth, screenHeight, growType)
 
                 when (growType) {
-                    Zero -> FlowerImage(image = R.drawable.img_home_zero_stage_partner, width = 53.dp, height = 49.dp)
-                    First -> FlowerImage(image = R.drawable.img_home_first_stage_partner, width = 76.dp, height = 69.dp)
-                    Second -> FlowerImage(image = R.drawable.img_home_second_stage_partner, width = 77.dp, height = 117.dp)
-                    Third -> FlowerImage(image = R.drawable.img_home_third_stage_partner, width = 102.dp, height = 179.dp)
-                    Fourth -> FlowerImage(image = image, width = 127.dp, height = 211.dp)
-                    Fifth -> FlowerImage(image = image, width = 127.dp, height = 211.dp)
+                    Zero -> FlowerImage(image = R.drawable.img_home_zero_stage_partner, width = width, height = height)
+                    First -> FlowerImage(image = R.drawable.img_home_first_stage_partner, width = width, height = height)
+                    Second -> FlowerImage(image = R.drawable.img_home_second_stage_partner, width = width, height = height)
+                    Third -> FlowerImage(image = R.drawable.img_home_third_stage_partner, width = width, height = height)
+                    Fourth -> FlowerImage(image = image, width = width, height = height)
+                    Fifth -> FlowerImage(image = image, width = width, height = height)
                 }
             }
         }
@@ -68,5 +71,21 @@ data class Flower(
         val name = flowerName.name.lowercase()
         val flowerName = context.resources.getIdentifier(name, "string", context.packageName)
         return context.getString(flowerName)
+    }
+
+    private fun calculateWidthAndHeight(screenWidth: Int, screenHeight: Int, stage: Stage): Pair<Dp, Dp> {
+        return when (stage) {
+            Zero -> Pair((53 * screenWidth / figmaScreenWidth).dp, (49 * screenHeight / figmaScreenHeight).dp)
+            First -> Pair((76 * screenWidth / figmaScreenWidth).dp, (69 * screenHeight / figmaScreenHeight).dp)
+            Second -> Pair((77 * screenWidth / figmaScreenWidth).dp, (117 * screenHeight / figmaScreenHeight).dp)
+            Third -> Pair((102 * screenWidth / figmaScreenWidth).dp, (183 * screenHeight / figmaScreenHeight).dp)
+            Fourth -> Pair((127 * screenWidth / figmaScreenWidth).dp, (211 * screenHeight / figmaScreenHeight).dp)
+            Fifth -> Pair((127 * screenWidth / figmaScreenWidth).dp, (211 * screenHeight / figmaScreenHeight).dp)
+        }
+    }
+
+    companion object {
+        const val figmaScreenHeight = 812
+        const val figmaScreenWidth = 375
     }
 }

@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -328,7 +330,9 @@ fun HomeFlowerPartner(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val screenHeight = LocalConfiguration.current.screenHeightDp
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context, screenWidth = screenWidth, screenHeight = screenHeight)) {
         TwoTooImageView(
             modifier = modifier
                 .testTag(
@@ -337,6 +341,7 @@ fun HomeFlowerPartner(
                 .width(width)
                 .height(height),
             model = image,
+            contentScale = ContentScale.Fit,
         )
     }
 }
@@ -347,7 +352,9 @@ fun HomeFlowerMe(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val screenHeight = LocalConfiguration.current.screenHeightDp
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context, screenWidth = screenWidth, screenHeight = screenHeight)) {
         TwoTooImageView(
             modifier = modifier
                 .testTag(
@@ -356,6 +363,7 @@ fun HomeFlowerMe(
                 .width(width)
                 .height(height),
             model = image,
+            contentScale = ContentScale.Fit,
         )
     }
 }
