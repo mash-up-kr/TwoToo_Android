@@ -9,7 +9,7 @@ data class HistoryItemUiModel(
     val partnerInfo: HistoryInfoUiModel,
     val createDate: String,
 ) {
-    val isAuthenticateExpired: Boolean = createDate != DateFormatter.getFormattedStrByDate(Date())
+    val isAuthenticateExpired: Boolean = createDate != DateFormatter.getDateStrByDate(Date())
     companion object {
         val default: List<HistoryItemUiModel> = listOf(
             HistoryItemUiModel(

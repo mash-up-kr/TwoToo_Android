@@ -26,7 +26,7 @@ data class ChallengeInfoUiModel(
 
         // Todo D-day end시간 기준 확인하기
         fun toDday(endDate: String): Int {
-            val Dday = DateFormatter.getDateByStr(endDate).time - Date().time
+            val Dday = DateFormatter.getDateTimeByStr(endDate).time - Date().time
             return (Dday / (1000 * 60 * 60 * 24)).toInt()
         }
     }
