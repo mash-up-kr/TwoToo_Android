@@ -178,7 +178,7 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isAuthenticateEx
             }
         } else {
             TwoTooImageView(
-                model = { historyInfoUiModel.photoUrl },
+                model = historyInfoUiModel.photoUrl,
                 modifier = Modifier
                     .fillMaxSize()
                     .clip(
