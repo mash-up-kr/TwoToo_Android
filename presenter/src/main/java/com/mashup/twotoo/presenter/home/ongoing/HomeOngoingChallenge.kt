@@ -45,7 +45,7 @@ fun HomeOngoingChallenge(
     onCommit: () -> Unit = {},
     onCompleteButtonClick: (Int) -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    navigateToHistory: () -> Unit = {},
+    navigateToHistory: (Int) -> Unit = {},
     onClickCheerButton: () -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
@@ -72,7 +72,7 @@ fun HomeOngoingChallenge(
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
-            }.clickable { navigateToHistory() },
+            }.clickable { navigateToHistory(ongoingChallengeUiModel.challengeNo) },
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
         )
         TwoTooGoalAchievementProgressbar(
