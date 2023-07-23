@@ -1,6 +1,7 @@
 package com.mashup.twotoo.di
 
 import android.content.Context
+import com.mashup.twotoo.presenter.createChallenge.di.CreateChallengeComponent
 import com.mashup.twotoo.presenter.di.ScreenModule
 import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
@@ -40,4 +41,5 @@ interface ApplicationComponent {
     fun inviteComponent(): InviteComponent.Factory
     fun historyComponent(): HistoryComponent.Factory
     fun gardenComponent(): GardenComponent.Factory
+    fun createChallengeComponent(): CreateChallengeComponent.Factory
 }

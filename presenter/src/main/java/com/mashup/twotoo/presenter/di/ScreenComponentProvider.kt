@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.di
 
+import com.mashup.twotoo.presenter.createChallenge.di.CreateChallengeProvider
 import com.mashup.twotoo.presenter.garden.di.GardenComponentProvider
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
@@ -7,7 +8,6 @@ import com.mashup.twotoo.presenter.invite.di.InviteComponentProvider
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponentProvider
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponentProvider
-import com.mashup.twotoo.presenter.splash.di.SplashComponent
 import com.mashup.twotoo.presenter.splash.di.SplashComponentProvider
 
 /**
@@ -22,4 +22,5 @@ interface ScreenComponentProvider :
     NickNameSettingComponentProvider,
     InviteComponentProvider,
     HistoryComponentProvider,
-    GardenComponentProvider
+    GardenComponentProvider,
+    CreateChallengeProvider
