@@ -17,12 +17,14 @@ import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextFi
 
 @Composable
 fun CreateChallengeTwoStep() {
-    var text by remember { mutableStateOf("") }
+    var challengeInfo by remember { mutableStateOf("") }
     TwoTooTextField(
         modifier = Modifier.fillMaxWidth().padding(top = 46.dp).height(253.dp),
-        text = text,
+        text = challengeInfo,
         textHint = stringResource(id = R.string.input_challenge_info_placeholder),
-        updateText = { text = it },
+        updateText = {
+            if (challengeInfo.length <= 100) challengeInfo = it
+        },
     )
 }
 
