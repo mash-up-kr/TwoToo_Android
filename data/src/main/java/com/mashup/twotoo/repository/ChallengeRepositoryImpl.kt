@@ -18,14 +18,14 @@ class ChallengeRepositoryImpl @Inject constructor(
 ) : ChallengeRepository {
     override suspend fun createChallenge(createChallengeRequestDomainModel: CreateChallengeRequestDomainModel): Result<ChallengeResponseDomainModel> {
         return runCatching {
-            challengeDataSource.createChallenge(createChallengeRequestDomainModel.toDataModel()).toDomainModel()!!
+            challengeDataSource.createChallenge(createChallengeRequestDomainModel.toDataModel()).toDomainModel()
         }
     }
 
     override suspend fun getAllChallenge(): Result<List<ChallengeResponseDomainModel>> {
         return runCatching {
             challengeDataSource.getAllChallenge().map { challenge: Challenge ->
-                challenge.toDomainModel()!!
+                challenge.toDomainModel()
             }
         }
     }
@@ -51,14 +51,14 @@ class ChallengeRepositoryImpl @Inject constructor(
         return challengeDataSource.approveChallengeWithNo(
             challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
             approveChallengeRequest = approveChallengeRequestDomainModel.toDataModel(),
-        ).toDomainModel()!!
+        ).toDomainModel()
     }
 
     override suspend fun finishChallengeWithNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<ChallengeResponseDomainModel> {
         return runCatching {
             challengeDataSource.finishChallengeWithNo(
                 challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
-            ).toDomainModel()!!
+            ).toDomainModel()
         }
     }
 }

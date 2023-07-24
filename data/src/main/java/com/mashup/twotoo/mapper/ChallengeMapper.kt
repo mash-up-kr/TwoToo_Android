@@ -20,16 +20,15 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,
         challengeTotal = challengeTotal,
-        onGoingChallenge = onGoingChallenge.toDomainModel(),
+        onGoingChallenge = onGoingChallenge?.toDomainModel(),
+        user1 = user1.toDomainModel(),
         user1Commit = user1Commit?.toDomainModel(),
+        user2 = user2.toDomainModel(),
         user2Commit = user2Commit?.toDomainModel(),
     )
 }
 
-fun Challenge?.toDomainModel(): ChallengeResponseDomainModel? {
-    if (this == null) {
-        return null
-    }
+fun Challenge.toDomainModel(): ChallengeResponseDomainModel {
     return ChallengeResponseDomainModel(
         challengeNo = this.challengeNo,
         endDate = this.endDate,
@@ -67,11 +66,8 @@ fun ApproveChallengeRequestDomainModel.toDataModel(): ApproveChallengeRequest {
 
 fun User.toDomainModel(): UserResponseDomainModel {
     return UserResponseDomainModel(
-        deviceToken = this.deviceToken,
-        loginType = this.loginType,
         nickname = this.nickname,
         partnerNo = this.partnerNo,
-        socialId = this.socialId,
         userNo = this.userNo,
     )
 }
