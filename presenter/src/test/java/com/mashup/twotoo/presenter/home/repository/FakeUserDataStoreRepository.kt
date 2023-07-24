@@ -34,8 +34,8 @@ class FakeUserDataStoreRepository : UserDataStoreRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getUserInfo(): UserAuthResponseDomainModel {
-        TODO("Not yet implemented")
+    override suspend fun getUserInfo(): UserAuthResponseDomainModel? {
+      TODO("Not yet implemented")
     }
 
     override suspend fun getIsSendInvitation(): Boolean {

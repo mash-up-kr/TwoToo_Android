@@ -104,7 +104,7 @@ fun NickNameSetting(
         ) {
             onNextButtonClick(nickName)
         }
-        Spacer(modifier = Modifier.height(55.dp))
+        Spacer(modifier = Modifier.height(54.dp))
     }
 }
 
@@ -128,7 +128,7 @@ fun InputUserNickName(
         TwoTooTextField(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(46.dp),
+                .padding(vertical = 15.dp),
             text = nickName,
             textHint = stringResource(id = R.string.nickname_setting_hint),
             updateText = { text ->

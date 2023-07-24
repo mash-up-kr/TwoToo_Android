@@ -14,8 +14,8 @@ class UserDataStoreRepositoryImpl @Inject constructor(
         userPreferenceDataSource.setUserInfo(userAuthResponseDomainModel.toDataModel())
     }
 
-    override suspend fun getUserInfo(): UserAuthResponseDomainModel {
-        return userPreferenceDataSource.getUserInfo()!!.toDomainModel()
+    override suspend fun getUserInfo(): UserAuthResponseDomainModel? {
+        return userPreferenceDataSource.getUserInfo()?.toDomainModel()
     }
 
     override suspend fun getIsSendInvitation(): Boolean {

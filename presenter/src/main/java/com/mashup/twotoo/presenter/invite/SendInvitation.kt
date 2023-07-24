@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.invite
 
-import android.util.Log
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
@@ -22,7 +21,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
@@ -102,7 +100,7 @@ fun SendInvitation(
             text = stringResource(id = R.string.send_invite),
             onClick = onTextButtonClick,
         )
-        Spacer(modifier = Modifier.height(55.dp))
+        Spacer(modifier = Modifier.height(54.dp))
     }
 }
 

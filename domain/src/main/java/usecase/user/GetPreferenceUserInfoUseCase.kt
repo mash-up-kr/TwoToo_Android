@@ -7,7 +7,7 @@ import javax.inject.Inject
 class GetPreferenceUserInfoUseCase @Inject constructor(
     private val userDataStoreRepository: UserDataStoreRepository
 ) {
-    suspend operator fun invoke(): UserAuthResponseDomainModel {
+    suspend operator fun invoke(): UserAuthResponseDomainModel? {
         return userDataStoreRepository.getUserInfo()
     }
 }
