@@ -200,5 +200,7 @@
     <string name="toast_message_shot_fail">찌르기 전송에 실패했습니다</string>
     <string name="toast_message_shot_invalid">오늘의 콕 찌르기 다 소진되었어요 ㅠㅜ</string>
 
+    <!--guide-->
+    <string name="guideTitle">"투투 설명서 "</string>
 
 </resources>
