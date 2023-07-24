@@ -48,15 +48,15 @@ fun String.isBeforeChallengeState(): Boolean {
 fun HomeViewResponseDomainModel.toBeforeChallengeUiModel(
     userNo: Int,
 ): BeforeChallengeUiModel {
-    val homeGoalCountUiModel = if (userNo == onGoingChallenge?.user1?.userNo) {
+    val homeGoalCountUiModel = if (userNo == user1.userNo) {
         HomeGoalCountUiModel.default.copy(
-            partnerName = onGoingChallenge?.user2?.nickname ?: "",
-            myName = onGoingChallenge?.user1?.nickname ?: "",
+            partnerName = user2.nickname,
+            myName = user1.nickname,
         )
     } else {
         HomeGoalCountUiModel.default.copy(
-            partnerName = onGoingChallenge?.user1?.nickname ?: "",
-            myName = onGoingChallenge?.user2?.nickname ?: "",
+            partnerName = user1.nickname,
+            myName = user2.nickname,
         )
     }
 
