@@ -78,7 +78,7 @@ fun HomeOngoingChallenge(
         TwoTooGoalAchievementProgressbar(
             modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
                 start.linkTo(homeGoalField.start)
-                top.linkTo(homeGoalField.bottom)
+                top.linkTo(homeGoalField.bottom, margin = 11.dp)
             }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
             homeGoalAchievePartnerAndMeUiModel = ongoingChallengeUiModel.homeGoalAchievePartnerAndMeUiModel,
         )
@@ -91,7 +91,7 @@ fun HomeOngoingChallenge(
             homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
         )
 
-        val barrier = createTopBarrier(homeBackground, margin = 60.dp)
+        val barrier = createTopBarrier(homeBackground, margin = 80.dp)
         HomeFlowerMeAndPartner(
             modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                 start.linkTo(parent.start)

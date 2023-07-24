@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -92,8 +93,10 @@ private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
             .padding(bottom = 23.dp),
     ) {
         val context = LocalContext.current
-        val meFlower = FlowerHead(meFlower).getFlowerImage(context)
-        val partnerFlower = FlowerHead(partnerFlower).getFlowerImage(context)
+        val screenWidth = LocalConfiguration.current.screenWidthDp
+        val screenHeight = LocalConfiguration.current.screenHeightDp
+        val meFlower = FlowerHead(meFlower).getFlowerImage(context, screenWidth, screenHeight)
+        val partnerFlower = FlowerHead(partnerFlower).getFlowerImage(context, screenWidth, screenHeight)
         TwoTooImageView(
             modifier = Modifier.size(meFlower.width, meFlower.height),
             model = meFlower.image,
