@@ -24,7 +24,7 @@ class NickNameViewModel @Inject constructor(
     }
 
     fun setUserNickName(userNickName: String) = intent {
-        setNickNameUseCase.invoke(
+        setNickNameUseCase(
             UserNickNameDomainModel(
                 nickname = userNickName,
                 partnerNo = if (state.partnerNo == 0) {
