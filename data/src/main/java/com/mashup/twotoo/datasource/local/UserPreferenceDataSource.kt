@@ -5,8 +5,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
-import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
+import com.mashup.twotoo.datasource.remote.user.response.UserAuthResponse
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.first
@@ -16,22 +18,15 @@ import javax.inject.Inject
 
 class UserPreferenceDataSource @Inject constructor(
     private val dataStore: DataStore<Preferences>,
+    private val moshi: Moshi
 ) {
 
-    suspend fun getAccessToken(): String {
-        return getDataStore(stringPreferencesKey(TWOTOO_ACCESS_TOKEN)).first() ?: ""
+    suspend fun getIsSendInvitation(): Boolean {
+        return getDataStore(booleanPreferencesKey(IS_SEND_INVITATION)).first() ?: false
     }
 
-    suspend fun setAccessToken(accessToken: String) {
-        setDataStore(stringPreferencesKey(TWOTOO_ACCESS_TOKEN), accessToken)
-    }
-
-    suspend fun getUserNo(): Int {
-        return getDataStore(intPreferencesKey(USER_NO)).first() ?: 0
-    }
-
-    suspend fun setUserNo(userNo: Int) {
-        setDataStore(intPreferencesKey(USER_NO), userNo)
+    suspend fun setIsSendInvitation(isSend: Boolean) {
+        setDataStore(booleanPreferencesKey(IS_SEND_INVITATION), isSend)
     }
 
     suspend fun setVisibilityCheerDialog(visibility: Boolean) {
@@ -62,6 +57,17 @@ class UserPreferenceDataSource @Inject constructor(
         }
     }
 
+    suspend fun setUserInfo(userAuthResponse: UserAuthResponse) {
+        val json = moshi.adapter(UserAuthResponse::class.java).toJson(userAuthResponse)
+        setDataStore(stringPreferencesKey(USER_INFO), json)
+    }
+
+    suspend fun getUserInfo(): UserAuthResponse? {
+        val jsonAdapter: JsonAdapter<UserAuthResponse> = moshi.adapter(UserAuthResponse::class.java)
+        val userInfo = getDataStore(stringPreferencesKey(USER_INFO)).first()
+        return userInfo?.let { info -> jsonAdapter.fromJson(info) }
+    }
+
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
         dataStore.edit { preferences ->
             preferences[key] = value
@@ -83,9 +89,9 @@ class UserPreferenceDataSource @Inject constructor(
     }
 
     companion object {
-        private const val TWOTOO_ACCESS_TOKEN = "TWOTOO_ACCESS_TOKEN"
-        private const val USER_NO = "USER_NO"
         private const val VISIBLE_CHEER_DIALOG = "VISIBLE_CHEER_DIALOG"
         private const val VISIBLE_COMPLETE_DIALOG = "VISIBLE_COMPLETE_DIALOG"
+        private const val USER_INFO = "USER_INFO"
+        private const val IS_SEND_INVITATION = "IS_SEND_INVITATION"
     }
 }
