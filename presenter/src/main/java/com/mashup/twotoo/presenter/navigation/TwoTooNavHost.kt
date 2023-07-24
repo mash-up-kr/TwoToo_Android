@@ -5,6 +5,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import com.mashup.twotoo.presenter.createChallenge.navigation.createChallengeGraph
 import com.mashup.twotoo.presenter.garden.navigation.gardenGraph
+import com.mashup.twotoo.presenter.guid.navigation.guidGraph
 import com.mashup.twotoo.presenter.history.navigation.historyGraph
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.invite.navigation.invitationGraph
@@ -19,6 +20,7 @@ fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
     startDestination: String = NavigationRoute.SplashGraph.SplashScreen.route
+
 ) {
     val navController = appState.navController
     NavHost(
@@ -27,6 +29,7 @@ fun TwoTooNavHost(
         modifier = modifier,
     ) {
         splashGraph(navController)
+        guidGraph(navController)
         homeGraph(navController)
         gardenGraph(navController)
         userGraph(navController)

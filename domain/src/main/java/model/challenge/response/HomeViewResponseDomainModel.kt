@@ -6,6 +6,7 @@ data class HomeViewResponseDomainModel(
     val user1Commit: UserCommitResponseDomainModel?,
     val user2Commit: UserCommitResponseDomainModel?,
     val viewState: String,
+    val userStingCnt: Int,
 ) {
     companion object {
 
@@ -17,6 +18,7 @@ data class HomeViewResponseDomainModel(
                 userNo = 2,
             ),
             challengeTotal = 1,
+            userStingCnt = 0,
         )
 
         val beforeCreate = default

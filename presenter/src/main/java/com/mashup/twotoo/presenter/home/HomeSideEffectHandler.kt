@@ -29,7 +29,7 @@ fun rememberHomeSideEffectHandler(
     bottomSheetState: SheetState = rememberModalBottomSheetState(true),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToHistory: () -> Unit,
+    navigateToHistory: (Int) -> Unit,
     navigateToCreateChallenge: () -> Unit,
     openCheerBottomSheet: () -> Unit,
     setVisibilityCompleteDialog: () -> Unit,
@@ -66,7 +66,7 @@ class HomeSideEffectHandler(
     val bottomSheetState: SheetState,
     val snackbarHostState: SnackbarHostState,
     private val coroutineScope: CoroutineScope,
-    private val navigateToHistory: () -> Unit,
+    private val navigateToHistory: (Int) -> Unit,
     private val navigateToCreateChallenge: () -> Unit,
     private val openCheerBottomSheet: () -> Unit,
     private val setVisibilityCompleteDialog: () -> Unit,
@@ -104,6 +104,12 @@ class HomeSideEffectHandler(
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
                             }
+                            ToastText.ShotFail -> {
+                                context.getString(R.string.toast_message_shot_fail)
+                            }
+                            ToastText.ShotInvalid -> {
+                                context.getString(R.string.toast_message_shot_invalid)
+                            }
                         },
                     )
                 }
@@ -126,7 +132,7 @@ class HomeSideEffectHandler(
             is HomeSideEffect.OpenToHelp -> {
             }
             is HomeSideEffect.NavigateToChallengeDetail -> {
-                navigateToHistory()
+                navigateToHistory(sideEffect.challengeNo)
             }
             is HomeSideEffect.NavigationToCreateChallenge -> {
                 navigateToCreateChallenge()
