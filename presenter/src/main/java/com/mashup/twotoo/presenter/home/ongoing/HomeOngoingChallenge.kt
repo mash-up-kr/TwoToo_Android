@@ -33,6 +33,7 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeFlowerMeAndPartne
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalField
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
+import com.mashup.twotoo.presenter.util.wiggle
 
 /**
  * @Created by 김현국 2023/06/11
@@ -47,6 +48,7 @@ fun HomeOngoingChallenge(
     onBeeButtonClick: () -> Unit = {},
     navigateToHistory: () -> Unit = {},
     onClickCheerButton: () -> Unit = {},
+    onWiggleAnimationEnd: () -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
@@ -117,7 +119,10 @@ fun HomeOngoingChallenge(
             )
         } else {
             HomeBeeButton(
-                modifier = Modifier.constrainAs(beeButton) {
+                modifier = Modifier.wiggle(
+                    isWiggle = ongoingChallengeUiModel.shotInteractionState,
+                    onWiggleAnimationEnded = onWiggleAnimationEnd,
+                ).constrainAs(beeButton) {
                     top.linkTo(homeBackground.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)

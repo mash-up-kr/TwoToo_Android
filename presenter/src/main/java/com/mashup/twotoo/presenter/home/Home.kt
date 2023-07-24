@@ -78,6 +78,7 @@ fun HomeRoute(
             navigateToHistory = homeViewModel::navigateToHistory,
             onClickCompleteButton = homeViewModel::onClickCompleteButton,
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
+            onWiggleAnimationEnd = homeViewModel::onWiggleAnimationEnd,
         )
 
         with(homeSideEffectHandler) {
@@ -115,6 +116,7 @@ fun HomeScreen(
     onClickCompleteButton: (Int) -> Unit = {},
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
     onClickCheerButton: () -> Unit = {},
+    onWiggleAnimationEnd: () -> Unit = {},
 ) {
     Column(
         modifier = modifier.semantics {
@@ -142,6 +144,7 @@ fun HomeScreen(
                     onCommit = onCommit,
                     onCompleteButtonClick = onClickCompleteButton,
                     onClickCheerButton = onClickCheerButton,
+                    onWiggleAnimationEnd = onWiggleAnimationEnd,
                 )
             }
         }
