@@ -39,7 +39,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun HomeRoute(
     homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier,
-    navigateToHistory: () -> Unit = {},
+    navigateToHistory: (Int) -> Unit = {},
     navigateToCreateChallenge: () -> Unit = {},
     navigateToGuide: () -> Unit,
 ) {
@@ -111,7 +111,7 @@ fun HomeRoute(
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
-    navigateToHistory: () -> Unit = {},
+    navigateToHistory: (Int) -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
     onCommit: () -> Unit = {},

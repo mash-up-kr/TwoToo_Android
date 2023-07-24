@@ -156,6 +156,8 @@
     <string name="challenge_start">챌린지 시작</string>
     <string name="authenticate">인증하기</string>
     <string name="authenticate_waiting">기다리는 중</string>
+    <string name="authenticate_expired">인증 실패ㅜㅜ</string>
+    <string name="DDay">D-%d</string>
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
 

@@ -116,8 +116,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToHistory() = intent {
-        postSideEffect(HomeSideEffect.NavigateToChallengeDetail)
+    fun navigateToHistory(challengeNo: Int) = intent {
+        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo))
     }
 
     fun openToShotBottomSheet() = intent {
