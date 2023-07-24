@@ -1,10 +1,11 @@
 package com.mashup.twotoo.presenter.garden
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.lazy.grid.itemsIndexed
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -31,8 +32,9 @@ fun GardenRoute(
     val lifecycleOwner = LocalLifecycleOwner.current
 
     LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
             gardenViewModel.getAllChallenge()
+            Log.i("hyejin ", "resume")
         }
     }
     val state by gardenViewModel.collectAsState()
@@ -57,19 +59,27 @@ fun GardenScreen(
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
         LazyVerticalGrid(
-            modifier = Modifier.padding(paddingValues = it).padding(horizontal = 24.dp, vertical = 30.dp),
+            modifier = Modifier.padding(paddingValues = it)
+                .padding(horizontal = 24.dp, vertical = 30.dp),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(13.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp),
         ) {
-            items(state.challengeCardInfos) { challengeInfo ->
-                ChallengeCard(challengeInfo, navigateToGarden)
+            val (startAnimation, challengeNo) = state.startAnimation
+            Log.i("hyejin", "startAnimation = $startAnimation, challengeNo = $challengeNo")
+            itemsIndexed(state.challengeCardInfos) { index, challengeInfo ->
+                val isStartAnimation = state.startAnimation.first && state.startAnimation.second == challengeInfo.challengeNo
+                ChallengeCard(
+                    isStartAnimation = isStartAnimation,
+                    challengeInfo,
+                    navigateToGarden,
+                )
             }
         }
     }
 }
 
-@Preview(widthDp = 327, heightDp = 812)
+@Preview
 @Composable
 private fun PreviewGardenScreen() {
     GardenScreen(GardenState.default, navigateToGarden = {})
