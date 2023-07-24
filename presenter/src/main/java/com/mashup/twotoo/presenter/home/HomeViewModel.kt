@@ -156,6 +156,7 @@ class HomeViewModel @Inject constructor(
                 createCommitUseCase(
                     commitRequestDomainModel = CommitRequestDomainModel(
                         text = bottomSheetData.text,
+                        challengeNo = (this.state.challengeStateUiModel as OngoingChallengeUiModel).challengeNo.toString(),
                         img = bottomSheetData.image.toString(),
                     ),
                 ).onSuccess { domainModel ->

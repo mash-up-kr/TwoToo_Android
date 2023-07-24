@@ -13,6 +13,7 @@ class CommitDataSource @Inject constructor(
     ): Commit {
         return commitApi.commit(
             text = commitRequest.text,
+            challengeNo = commitRequest.challengeNo,
             img = commitRequest.img,
         )
     }
