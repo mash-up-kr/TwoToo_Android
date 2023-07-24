@@ -4,5 +4,6 @@ import okhttp3.MultipartBody
 
 data class CommitRequest(
     val text: MultipartBody.Part,
+    val challengeNo: MultipartBody.Part,
     val img: MultipartBody.Part,
 )

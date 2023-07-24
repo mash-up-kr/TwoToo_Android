@@ -27,6 +27,7 @@ fun GardenRoute(
     gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit = {},
+    navigateToGuide: () -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
 
@@ -40,6 +41,7 @@ fun GardenRoute(
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,
+        navigateToGuide = navigateToGuide,
         state = state,
     )
 }
@@ -49,10 +51,11 @@ fun GardenScreen(
     state: GardenState,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit,
+    navigateToGuide: () -> Unit,
 ) {
     Scaffold(
         topBar = {
-            TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = {})
+            TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = { navigateToGuide() })
         },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
@@ -72,5 +75,5 @@ fun GardenScreen(
 @Preview(widthDp = 327, heightDp = 812)
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(GardenState.default, navigateToGarden = {})
+    GardenScreen(GardenState.default, navigateToGarden = {}, navigateToGuide = {})
 }
