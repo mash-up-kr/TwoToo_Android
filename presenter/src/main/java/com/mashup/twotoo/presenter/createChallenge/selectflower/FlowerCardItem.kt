@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.createChallenge.selectflower
 
-import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -25,7 +23,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardUiModel
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
@@ -46,16 +43,11 @@ fun SelectFlowerLazyColumn(
         items(list.size) { idx ->
             FlowerCardItem(
                 flowerCardModel = list[idx],
+                selectedItemIndex,
                 onClickItem = { index ->
-                    Log.d(TAG, "SelectFlowerLazyColumn: ${selectedItemIndex}index$index")
-                    selectedItemIndex = if (index == selectedItemIndex) {
-                        -1 // Toggle selection if the same item is clicked again
-                    } else {
-                        index // Otherwise, select the new item
-                    }
+                    selectedItemIndex = index
                     onClickOneItem()
                 },
-                isSelected = list[idx].index == selectedItemIndex,
             )
         }
     }
@@ -65,20 +57,24 @@ fun SelectFlowerLazyColumn(
 @Composable
 fun FlowerCardItem(
     flowerCardModel: FlowerCardUiModel,
+    selectedItem: Int,
     onClickItem: (Int) -> Unit,
-    isSelected: Boolean
 ) {
-    var color by remember { mutableStateOf(Color.Transparent) }
-
     Card(
         backgroundColor = TwoTooTheme.color.mainWhite,
         shape = TwoTooTheme.shape.small,
-        border = BorderStroke(3.dp, color),
+        border = BorderStroke(
+            3.dp,
+            if (selectedItem == flowerCardModel.index) {
+                MainPink
+            } else {
+                Color.Transparent
+            },
+        ),
         modifier = Modifier
             .padding(horizontal = 13.dp, vertical = 15.dp)
             .size(157.dp),
         onClick = {
-            color = if (!isSelected) MainPink else Color.Transparent
             onClickItem(flowerCardModel.index)
         },
     ) {
@@ -117,5 +113,5 @@ private fun PreviewFlowerCardItem() {
         selectFlowerImage = R.drawable.img_challenge_select_rose,
         0,
     )
-    FlowerCardItem(model, {}, false)
+    FlowerCardItem(model, 0, {})
 }
