@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.home
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
@@ -15,8 +16,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.Dimension
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
@@ -81,6 +80,7 @@ fun HomeRoute(
             onClickCompleteButton = homeViewModel::onClickCompleteButton,
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
             navigateToGuide = navigateToGuide,
+            onWiggleAnimationEnd = homeViewModel::onWiggleAnimationEnd,
         )
 
         with(homeSideEffectHandler) {
@@ -119,19 +119,14 @@ fun HomeScreen(
     state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
     onClickCheerButton: () -> Unit = {},
     navigateToGuide: () -> Unit,
+    onWiggleAnimationEnd: () -> Unit = {},
 ) {
-    ConstraintLayout(
+    Column(
         modifier = modifier.semantics {
             testTagsAsResourceId = true
         },
     ) {
-        val (topBar, homeBeforeChallenge, homeOngoingChallenge) = createRefs()
         TwoTooMainToolbar(
-            modifier = Modifier.constrainAs(topBar) {
-                start.linkTo(parent.start)
-                top.linkTo(parent.top)
-                end.linkTo(parent.end)
-            },
             onClickHelpIcon = {
                 navigateToGuide()
             },
@@ -139,13 +134,7 @@ fun HomeScreen(
         when (state) {
             is BeforeChallengeUiModel -> {
                 HomeBeforeChallenge(
-                    modifier = Modifier.constrainAs(homeBeforeChallenge) {
-                        top.linkTo(topBar.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                        height = Dimension.fillToConstraints
-                    },
+                    modifier = Modifier.fillMaxSize(),
                     beforeChallengeUiModel = state,
                     onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
                 )
@@ -153,18 +142,13 @@ fun HomeScreen(
             is OngoingChallengeUiModel -> {
                 HomeOngoingChallenge(
                     navigateToHistory = navigateToHistory,
-                    modifier = Modifier.constrainAs(homeOngoingChallenge) {
-                        top.linkTo(topBar.bottom)
-                        start.linkTo(parent.start)
-                        end.linkTo(parent.end)
-                        bottom.linkTo(parent.bottom)
-                        height = Dimension.fillToConstraints
-                    },
+                    modifier = Modifier.fillMaxSize(),
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,
                     onCompleteButtonClick = onClickCompleteButton,
                     onClickCheerButton = onClickCheerButton,
+                    onWiggleAnimationEnd = onWiggleAnimationEnd,
                 )
             }
         }

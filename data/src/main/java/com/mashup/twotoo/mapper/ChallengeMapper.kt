@@ -16,7 +16,6 @@ import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
 import model.challenge.response.UserResponseDomainModel
 
-
 fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
     return HomeViewResponseDomainModel(
         viewState = viewState,
@@ -24,6 +23,7 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
         onGoingChallenge = onGoingChallenge.toDomainModel(),
         user1Commit = user1Commit?.toDomainModel(),
         user2Commit = user2Commit?.toDomainModel(),
+        userStingCnt = userStingCnt,
     )
 }
 

@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -34,6 +35,7 @@ class HomeModule {
         finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
         removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
         removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
+        stingUseCase: StingUseCase,
     ): HomeViewModel {
         return HomeViewModel(
             getHomeViewUseCase = getHomeViewChallengeStateUseCase,
@@ -45,6 +47,7 @@ class HomeModule {
             finishChallengeWithNoUseCase = finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase = removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase = removeVisibilityCompleteDialogUseCase,
+            stingUseCase = stingUseCase,
         )
     }
 }

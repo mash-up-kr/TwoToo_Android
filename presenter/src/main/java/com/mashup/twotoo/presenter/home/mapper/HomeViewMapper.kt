@@ -107,7 +107,7 @@ fun HomeViewResponseDomainModel.toOngoingChallengeUiModel(
         homeGoalAchievePartnerAndMeUiModel = toHomeGoalAchievePartnerAndMeUiModel(userNo = userNo),
         homeGoalCountUiModel = toHomeGoalCountUiModel(userNo = userNo),
         homeGoalFieldUiModel = toHomeGoalFieldUiModel(),
-        homeShotCountTextUiModel = HomeShotCountTextUiModel(0), // TODO CHANGE
+        homeShotCountTextUiModel = toHomeShotCountTextUiModel(),
     )
 }
 
@@ -168,6 +168,12 @@ fun HomeViewResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
     return HomeGoalFieldUiModel(
         goal = onGoingChallenge.name,
         dDay = days.toInt(),
+    )
+}
+
+fun HomeViewResponseDomainModel.toHomeShotCountTextUiModel(): HomeShotCountTextUiModel {
+    return HomeShotCountTextUiModel(
+        count = this.userStingCnt,
     )
 }
 
