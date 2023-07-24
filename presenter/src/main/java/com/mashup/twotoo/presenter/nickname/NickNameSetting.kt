@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,21 +62,23 @@ fun NickNameSettingRoute(
     val snackState = remember { SnackbarHostState() }
     val context = LocalContext.current
 
-    checkInviteLink(
-        context.findActivity().intent,
-        partnerInfo = { nickname, partnerNo ->
-            Log.d(TAG, "checkInviteLink: $nickname")
-            Log.d(TAG, "checkInviteLink: $partnerNo")
-            nickNameViewModel.setPartnerInfo(nickname, partnerNo)
-        },
-        error = { isFail ->
-            isFail?.let { error ->
-                if (error) {
-                    nickNameViewModel.toastMessage(context.getString(R.string.toast_message_deeplink_error))
-                }
-            }
-        },
-    )
+    LaunchedEffect(Unit) {
+        checkInviteLink(
+                context.findActivity().intent,
+                partnerInfo = { nickname, partnerNo ->
+                    Log.d(TAG, "checkInviteLink: $nickname")
+                    Log.d(TAG, "checkInviteLink: $partnerNo")
+                    nickNameViewModel.setPartnerInfo(nickname, partnerNo)
+                },
+                error = { isFail ->
+                    isFail?.let { error ->
+                        if (error) {
+                            nickNameViewModel.toastMessage(context.getString(R.string.toast_message_deeplink_error))
+                        }
+                    }
+                },
+        )
+    }
 
     NickNameSetting(state, snackState, onNextButtonClick = { nickName ->
         nickNameViewModel.setUserNickName(nickName)
