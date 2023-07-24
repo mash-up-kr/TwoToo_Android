@@ -1,8 +1,8 @@
 package com.mashup.twotoo.presenter.createChallenge.di
 
-import com.google.android.datatransport.runtime.dagger.Module
-import com.google.android.datatransport.runtime.dagger.Provides
 import com.mashup.twotoo.presenter.createChallenge.CreateChallengeViewModel
+import dagger.Module
+import dagger.Provides
 import usecase.challenge.CreateChallengeUseCase
 import javax.inject.Scope
 
