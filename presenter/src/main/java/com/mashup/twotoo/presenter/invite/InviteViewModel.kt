@@ -15,11 +15,13 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.user.GetPartnerInfoUseCase
 import usecase.user.GetUserInfoUseCase
+import usecase.user.SetIsSendInvitationUseCase
 import javax.inject.Inject
 
 class InviteViewModel @Inject constructor(
     private val getPartnerInfoUseCase: GetPartnerInfoUseCase,
-    private val getUserInfoUseCase: GetUserInfoUseCase
+    private val getUserInfoUseCase: GetUserInfoUseCase,
+    private val setIsSendInvitationUseCase: SetIsSendInvitationUseCase
 ) : ViewModel(), ContainerHost<InviteState, InviteSideEffect> {
     override val container = container<InviteState, InviteSideEffect>(InviteState())
 
@@ -38,16 +40,20 @@ class InviteViewModel @Inject constructor(
     /**
      * refresh -> matching user
      */
-    fun getPartnerInfo() {
-        viewModelScope.launch {
-            getPartnerInfoUseCase().onSuccess { partnerInfo ->
-                if (partnerInfo.partnerNo != null) {
-                    navigateToHome()
-                } else {
-                    toastMessage("상대방 아직 수락을 하지 않았어요!")
-                }
-            }.onFailure {
+    fun getPartnerInfo() = intent {
+        getPartnerInfoUseCase().onSuccess { partnerInfo ->
+            if (partnerInfo.partnerNo != null) {
+                navigateToHome()
+            } else {
+                toastMessage("상대방 아직 수락을 하지 않았어요!")
             }
+        }.onFailure {
+        }
+    }
+
+    fun storeIsSendInvitation(isSend: Boolean) {
+        viewModelScope.launch {
+            setIsSendInvitationUseCase(isSend)
         }
     }
 
@@ -83,7 +89,7 @@ class InviteViewModel @Inject constructor(
         postSideEffect(InviteSideEffect.NavigateToWaitingPair)
     }
 
-    fun navigateToHome() = intent {
+    private fun navigateToHome() = intent {
         postSideEffect(InviteSideEffect.NavigateToHome)
     }
 }

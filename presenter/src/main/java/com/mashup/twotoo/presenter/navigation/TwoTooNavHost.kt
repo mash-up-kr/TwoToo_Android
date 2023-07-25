@@ -20,7 +20,6 @@ fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
     startDestination: String = NavigationRoute.SplashGraph.SplashScreen.route
-
 ) {
     val navController = appState.navController
     NavHost(

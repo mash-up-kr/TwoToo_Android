@@ -1,12 +1,13 @@
 package com.mashup.twotoo.presenter.nickname
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.launch
+import com.mashup.twotoo.presenter.constant.TAG
 import model.user.UserNickNameDomainModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
+import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.user.SetNickNameUseCase
 import javax.inject.Inject
@@ -16,24 +17,37 @@ class NickNameViewModel @Inject constructor(
 ) : ViewModel(), ContainerHost<NickNameState, NickNameSideEffect> {
     override val container = container<NickNameState, NickNameSideEffect>(NickNameState())
 
-    fun setUserNickName(userNickName: String) {
-        viewModelScope.launch {
-            setNickNameUseCase.invoke(UserNickNameDomainModel(nickname = userNickName)).onSuccess { userInfo ->
-                if (userInfo.partnerNo != null) {
-                    navigateToHome()
+    fun setPartnerInfo(nickname: String, partnerNo: Int) = intent {
+        reduce {
+            state.copy(partnerNo = partnerNo, partnerNickName = nickname)
+        }
+    }
+
+    fun setUserNickName(userNickName: String) = intent {
+        setNickNameUseCase(
+            UserNickNameDomainModel(
+                nickname = userNickName,
+                partnerNo = if (state.partnerNo == 0) {
+                    null
                 } else {
-                    navigateToWaitingPair(userNickName)
-                }
-            }.onFailure {
+                    state.partnerNo
+                },
+            ),
+        ).onSuccess { userInfo ->
+            if (userInfo.partnerNo != null) {
+                postSideEffect(NickNameSideEffect.NavigateToHome)
+            } else {
+                postSideEffect(NickNameSideEffect.NavigateToSendInvitation(userNickName))
+            }
+        }.onFailure { error ->
+            error.message?.let { msg ->
+                Log.d(TAG, "viewModel: ${error.message}")
+                toastMessage(msg)
             }
         }
     }
 
-    private fun navigateToWaitingPair(userNickName: String) = intent {
-        postSideEffect(NickNameSideEffect.NavigateToSendInvitation(userNickName))
-    }
-
-    private fun navigateToHome() = intent {
-        postSideEffect(NickNameSideEffect.NavigateToHome)
+    fun toastMessage(msg: String) = intent {
+        postSideEffect(NickNameSideEffect.ToastMessage(msg))
     }
 }
