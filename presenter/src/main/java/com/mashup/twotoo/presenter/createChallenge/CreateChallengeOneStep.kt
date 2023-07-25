@@ -1,11 +1,11 @@
 package com.mashup.twotoo.presenter.createChallenge
 
-import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,29 +30,53 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.recommendChallenge.RecommendChallengeBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.DateFormatter
 import kotlinx.coroutines.launch
 
 @Composable
-fun CreateChallengeOneStep() {
+fun CreateChallengeOneStep(
+    onClickNext: (String, String, String) -> Unit
+) {
     Column(
         modifier = Modifier.padding(top = 12.dp),
     ) {
         var challengeName by remember { mutableStateOf("") }
+        var startDate by remember { mutableStateOf(DateFormatter.getCurrentDate()) }
+        var endDate by remember { mutableStateOf(DateFormatter.getDaysAfter(DateFormatter.getCurrentDate())) }
         val context = LocalContext.current
 
         InputChallengeName(challengeName, onTextValueChanged = { challengeName = it })
         RecommendChallengeButton { clickItem ->
             challengeName = context.resources.getString(clickItem)
         }
-        SettingChallengeDate()
+        SettingChallengeDate { selectedStartDate, selectedEndDate ->
+            startDate = selectedStartDate
+            endDate = selectedEndDate
+        }
+
+        Spacer(Modifier.weight(1f))
+        TwoTooTextButton(
+            text = stringResource(id = R.string.button_next),
+            enabled = challengeName.isNotEmpty(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(57.dp),
+            onClick = {
+                if (challengeName.isNotEmpty()) {
+                    onClickNext(challengeName, startDate, endDate)
+                }
+            },
+        )
+        Spacer(modifier = Modifier.height(55.dp))
     }
 }
 
@@ -84,6 +108,7 @@ fun RecommendChallengeButton(
     val sheetState = rememberModalBottomSheetState(true)
     val scope = rememberCoroutineScope()
     val closeSheet: () -> Unit = { scope.launch { sheetState.hide() } }
+    val focusManager = LocalFocusManager.current
 
     if (isBottomSheetVisible) {
         RecommendChallengeBottomSheet(
@@ -91,16 +116,13 @@ fun RecommendChallengeButton(
                     item ->
                 onClickItemName(item)
                 closeSheet.invoke()
-                if (!sheetState.isVisible) {
-                    isBottomSheetVisible = !isBottomSheetVisible
-                }
+                isBottomSheetVisible = false
+                focusManager.clearFocus()
             },
             sheetState = sheetState,
             onDismiss = {
                 closeSheet.invoke()
-                if (!sheetState.isVisible) {
-                    isBottomSheetVisible = !isBottomSheetVisible
-                }
+                isBottomSheetVisible = false
             },
         )
     }
@@ -109,7 +131,7 @@ fun RecommendChallengeButton(
         modifier = Modifier.padding(top = 16.dp, bottom = 40.dp),
         shape = TwoTooTheme.shape.medium,
         colors = ButtonDefaults.buttonColors(containerColor = TwoTooTheme.color.mainBrown),
-        onClick = { isBottomSheetVisible = !isBottomSheetVisible },
+        onClick = { isBottomSheetVisible = true },
     ) {
         Text(
             modifier = Modifier.padding(vertical = 8.dp),
@@ -122,9 +144,11 @@ fun RecommendChallengeButton(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingChallengeDate() {
+fun SettingChallengeDate(
+    period: (String, String) -> Unit,
+) {
     var selectedStartDate by remember { mutableStateOf(DateFormatter.getCurrentDate()) }
-    var endDate by remember { mutableStateOf(DateFormatter.getCurrentDate()) }
+    var endDate by remember { mutableStateOf(DateFormatter.getDaysAfter(DateFormatter.getCurrentDate())) }
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
     var isShowDatePickerVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -138,6 +162,7 @@ fun SettingChallengeDate() {
                     selectedStartDate = DateFormatter.convertToLongDate(date)
                     endDate = DateFormatter.getDaysAfter(selectedStartDate)
                     isShowDatePickerVisible = !isShowDatePickerVisible
+                    period(selectedStartDate, endDate)
                 }) {
                     Text(stringResource(id = R.string.button_confirm))
                 }
@@ -202,5 +227,5 @@ fun SettingChallengeDate() {
 @Preview
 @Composable
 private fun PreviewDate() {
-    SettingChallengeDate()
+    CreateChallengeOneStep({ name, start, end -> })
 }

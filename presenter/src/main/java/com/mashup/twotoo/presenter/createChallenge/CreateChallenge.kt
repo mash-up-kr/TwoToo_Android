@@ -1,10 +1,8 @@
 package com.mashup.twotoo.presenter.createChallenge
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -18,30 +16,57 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
-import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.DateFormatter
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun CreateChallengeRoute(
+    step: Int = 1,
+    createChallengeViewModel: CreateChallengeViewModel,
     onFinishChallengeInfo: () -> Unit
 ) {
-    CreateChallenge(onFinishChallengeInfo)
+    val state by createChallengeViewModel.collectAsState()
+    var currentStep by remember { mutableIntStateOf(step) }
+
+    CreateChallenge(
+        state,
+        currentStep,
+        updateOneStep = { challengeInfoModel ->
+            createChallengeViewModel.setChallengeInfo(challengeInfoModel, currentStep)
+            currentStep++
+        },
+        updateTwoStep = { challengeInfoModel ->
+            createChallengeViewModel.setChallengeInfo(challengeInfoModel, currentStep)
+            currentStep++
+            Log.d(TAG, "CreateChallengeRoute: $state")
+        },
+        onClickTheeStep = {
+            onFinishChallengeInfo()
+        },
+        onClickBackButton = {
+            if (currentStep > 1) currentStep--
+        },
+    )
 }
 
 @Composable
 fun CreateChallenge(
-    onFinishChallengeInfo: () -> Unit = {}
+    state: ChallengeInfoModel,
+    currentStep: Int,
+    updateOneStep: (ChallengeInfoModel) -> Unit,
+    updateTwoStep: (ChallengeInfoModel) -> Unit,
+    onClickTheeStep: () -> Unit,
+    onClickBackButton: () -> Unit
 ) {
-    var currentStep by remember { mutableIntStateOf(1) }
-    val challengeInfo = ChallengeInfoModel()
-
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
         TwoTooBackToolbar(onClickBackIcon = {
-            if (currentStep > 1) currentStep--
+            onClickBackButton()
         })
 
         Column(
@@ -63,30 +88,27 @@ fun CreateChallenge(
             )
 
             when (currentStep) {
-                1 -> CreateChallengeOneStep()
-                2 -> CreateChallengeTwoStep()
+                1 -> CreateChallengeOneStep { name, startDate, endDate ->
+                    val period = DateFormatter.formatDateRange(startDate, endDate)
+                    updateOneStep(
+                        ChallengeInfoModel(
+                            challengeName = name,
+                            startDate = startDate,
+                            endDate = endDate,
+                            period = period,
+                        ),
+                    )
+                }
+                2 -> CreateChallengeTwoStep { challengeInfo ->
+                    updateTwoStep(ChallengeInfoModel(challengeInfo = challengeInfo))
+                }
                 3 -> CreateChallengeCard(
-                    "하루 운동 30분 이상 하기",
-                    "2023/05/01 ~ 5/22",
-                    "운동사진으로 인증하기\n실패하는 사람은 뷔페 쏘기",
+                    challengeTitle = state.challengeName,
+                    challengeDesc = state.challengeInfo,
+                    challengeDate = state.period,
+                    onClickNext = { onClickTheeStep() },
                 )
             }
-
-            Spacer(Modifier.weight(1f))
-            TwoTooTextButton(
-                text = stringResource(id = R.string.button_next),
-                enabled = false,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(57.dp),
-            ) {
-                if (currentStep == 3) {
-                    onFinishChallengeInfo()
-                } else {
-                    currentStep++
-                }
-            }
-            Spacer(modifier = Modifier.height(55.dp))
         }
     }
 }
@@ -94,5 +116,5 @@ fun CreateChallenge(
 @Preview
 @Composable
 private fun PreviewCreateChallengeOneStep() {
-    CreateChallenge()
+    // CreateChallenge(CreateChallengeState(), {})
 }
