@@ -47,7 +47,7 @@ fun TwoTooMainToolbar(
                 }
             }
         },
-        modifier = modifier.then(Modifier.height(44.dp)),
+        modifier = modifier.then(Modifier.height(59.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = Color.Transparent,
         ),
