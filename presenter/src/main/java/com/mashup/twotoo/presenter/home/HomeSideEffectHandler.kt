@@ -32,10 +32,11 @@ fun rememberHomeSideEffectHandler(
     navigateToHistory: (Int) -> Unit,
     navigateToCreateChallenge: () -> Unit,
     openCheerBottomSheet: () -> Unit,
-    setVisibilityCompleteDialog: () -> Unit,
-    setVisibilityCheerDialog: () -> Unit,
+    onClickCompleteDialogConfirmButton: () -> Unit,
+    onClickCheerDialogNegativeButton: () -> Unit,
     removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
+    callViewHomeApi: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -51,10 +52,11 @@ fun rememberHomeSideEffectHandler(
             navigateToHistory = navigateToHistory,
             navigateToCreateChallenge = navigateToCreateChallenge,
             openCheerBottomSheet = openCheerBottomSheet,
-            setVisibilityCompleteDialog = setVisibilityCompleteDialog,
-            setVisibilityCheerDialog = setVisibilityCheerDialog,
+            onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
+            onClickCheerDialogNegativeButton = onClickCheerDialogNegativeButton,
             removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
+            callViewHomeApi = callViewHomeApi,
         )
     }
 }
@@ -65,14 +67,15 @@ class HomeSideEffectHandler(
     val context: Context,
     val bottomSheetState: SheetState,
     val snackbarHostState: SnackbarHostState,
-    private val coroutineScope: CoroutineScope,
+    val coroutineScope: CoroutineScope,
     private val navigateToHistory: (Int) -> Unit,
     private val navigateToCreateChallenge: () -> Unit,
     private val openCheerBottomSheet: () -> Unit,
-    private val setVisibilityCompleteDialog: () -> Unit,
-    private val setVisibilityCheerDialog: () -> Unit,
+    private val onClickCompleteDialogConfirmButton: () -> Unit,
+    private val onClickCheerDialogNegativeButton: () -> Unit,
     private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
+    private val callViewHomeApi: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -103,6 +106,9 @@ class HomeSideEffectHandler(
                             }
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
+                            }
+                            ToastText.CheerFail -> {
+                                context.getString(R.string.toast_message_cheer_fail)
                             }
                             ToastText.ShotFail -> {
                                 context.getString(R.string.toast_message_shot_fail)
@@ -138,7 +144,7 @@ class HomeSideEffectHandler(
                 navigateToCreateChallenge()
             }
             is HomeSideEffect.DismissBottomSheet -> {
-                isBottomSheetVisible = !isBottomSheetVisible
+                onDismiss()
             }
             is HomeSideEffect.RemoveVisibilityCompleteDialog -> {
                 removeVisibilityCompleteDialog()
@@ -146,26 +152,25 @@ class HomeSideEffectHandler(
             is HomeSideEffect.RemoveVisibilityCheerDialog -> {
                 removeVisibilityCheerDialog()
             }
+            is HomeSideEffect.CallViewHomeApi -> {
+                callViewHomeApi()
+            }
         }
     }
 
     fun onDismiss() {
-        coroutineScope.launch {
-            bottomSheetState.hide()
-        }.invokeOnCompletion {
-            if (!bottomSheetState.isVisible) {
-                isBottomSheetVisible = !isBottomSheetVisible
-            }
-        }
+        isBottomSheetVisible = false
     }
 
     private fun handleDialog(type: HomeDialogType) {
         when (type) {
             HomeDialogType.Cheer -> {
                 homeDialogType = DialogContent.createHomeBothAuthDialogContent(
-                    negativeAction = ::onDismissHomeDialog,
+                    negativeAction = {
+                        onClickCheerDialogNegativeButton()
+                        onDismissHomeDialog()
+                    },
                     positiveAction = {
-                        setVisibilityCheerDialog()
                         onDismissHomeDialog()
                         openCheerBottomSheet()
                     },
@@ -175,7 +180,7 @@ class HomeSideEffectHandler(
             HomeDialogType.Bloom -> {
                 homeDialogType = DialogContent.createHomeBloomBothDialogContent(
                     onConfirm = {
-                        setVisibilityCompleteDialog()
+                        onClickCompleteDialogConfirmButton()
                         onDismissHomeDialog()
                     },
                 )
@@ -184,7 +189,7 @@ class HomeSideEffectHandler(
             HomeDialogType.DoNotBloom -> {
                 homeDialogType = DialogContent.createHomeDoNotBloomBothDialogContent(
                     onConfirm = {
-                        setVisibilityCompleteDialog()
+                        onClickCompleteDialogConfirmButton()
                         onDismissHomeDialog()
                     },
                 )

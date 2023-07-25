@@ -18,8 +18,8 @@ interface CommitApi {
     ): Commit
 
     @GET("/commit{commitNo}")
-    suspend fun getCommitByNo(@Path("commitNo") commitNo: String): Commit
+    suspend fun getCommitByNo(@Path("commitNo") commitNo: Int): Commit
 
     @POST("/commit/{commitNo}/comment")
-    suspend fun cheerByNo(@Path("commitNo") commitNo: String): Commit
+    suspend fun cheerByNo(@Path("commitNo") commitNo: Int): Commit
 }

@@ -25,6 +25,7 @@ import repository.NotificationRepository
 import repository.UserDataStoreRepository
 import repository.ViewRepository
 import usecase.challenge.FinishChallengeWithNoUseCase
+import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
@@ -46,6 +47,7 @@ class HomeViewModelTest {
     private lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
     private lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
     private lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
+    private lateinit var createCheerUseCase: CreateCheerUseCase
     private lateinit var stingUseCase: StingUseCase
 
     private lateinit var fakeViewRepository: ViewRepository
@@ -74,6 +76,7 @@ class HomeViewModelTest {
             RemoveVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         removeVisibilityCompleteDialogUseCase =
             RemoveVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
+        createCheerUseCase = CreateCheerUseCase(fakeCommitRepository)
         stingUseCase = StingUseCase(fakeNotificationRepository)
     }
 
@@ -94,6 +97,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
             stingUseCase,
         )
 
@@ -128,6 +132,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
             stingUseCase,
         )
 
@@ -157,6 +162,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
             stingUseCase,
         )
 
@@ -186,6 +192,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
             stingUseCase,
         )
 
@@ -216,6 +223,7 @@ class HomeViewModelTest {
             finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase,
             stingUseCase,
         )
 

@@ -15,11 +15,13 @@ sealed class HomeSideEffect {
     data class OpenHomeDialog(val type: HomeDialogType) : HomeSideEffect()
     object RemoveVisibilityCheerDialog : HomeSideEffect()
     object RemoveVisibilityCompleteDialog : HomeSideEffect()
+    object CallViewHomeApi : HomeSideEffect()
 }
 
 enum class HomeDialogType {
     Cheer, Bloom, DoNotBloom
 }
 enum class ToastText {
-    CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, LoadHomeFail, FinishFail, ShotFail, ShotInvalid
+
+    CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, CheerFail, LoadHomeFail, FinishFail, ShotFail, ShotInvalid
 }

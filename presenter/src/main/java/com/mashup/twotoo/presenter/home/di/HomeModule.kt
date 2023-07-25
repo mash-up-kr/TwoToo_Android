@@ -4,6 +4,7 @@ import com.mashup.twotoo.presenter.home.HomeViewModel
 import dagger.Module
 import dagger.Provides
 import usecase.challenge.FinishChallengeWithNoUseCase
+import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
@@ -35,6 +36,7 @@ class HomeModule {
         finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
         removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
         removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
+        createCheerUseCase: CreateCheerUseCase,
         stingUseCase: StingUseCase,
     ): HomeViewModel {
         return HomeViewModel(
@@ -47,6 +49,7 @@ class HomeModule {
             finishChallengeWithNoUseCase = finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase = removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase = removeVisibilityCompleteDialogUseCase,
+            createCheerUseCase = createCheerUseCase,
             stingUseCase = stingUseCase,
         )
     }
