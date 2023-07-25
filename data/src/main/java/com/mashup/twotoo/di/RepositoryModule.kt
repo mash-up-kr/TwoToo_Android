@@ -2,6 +2,7 @@ package com.mashup.twotoo.di
 
 import com.mashup.twotoo.repository.ChallengeRepositoryImpl
 import com.mashup.twotoo.repository.CommitRepositoryImpl
+import com.mashup.twotoo.repository.NotificationRepositoryImpl
 import com.mashup.twotoo.repository.UserDataStoreRepositoryImpl
 import com.mashup.twotoo.repository.UserRepositoryImpl
 import com.mashup.twotoo.repository.ViewRepositoryImpl
@@ -9,6 +10,7 @@ import dagger.Binds
 import dagger.Module
 import repository.ChallengeRepository
 import repository.CommitRepository
+import repository.NotificationRepository
 import repository.UserDataStoreRepository
 import repository.UserRepository
 import repository.ViewRepository
@@ -38,7 +40,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindUserRepository(
-        userRepositoryImpl: UserRepositoryImpl
+        userRepositoryImpl: UserRepositoryImpl,
     ): UserRepository
 
     @Binds
@@ -46,4 +48,10 @@ abstract class RepositoryModule {
     abstract fun bindCommitRepository(
         commitRepositoryImpl: CommitRepositoryImpl,
     ): CommitRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindNotificationRepository(
+        notificationRepositoryImpl: NotificationRepositoryImpl,
+    ): NotificationRepository
 }

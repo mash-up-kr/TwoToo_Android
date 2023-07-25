@@ -4,15 +4,19 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
+import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
+import model.challenge.response.ChallengeDetailResponseDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeByNoUseCase
+import java.util.*
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
@@ -26,26 +30,103 @@ class HistoryViewModel @Inject constructor(
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
                 challengeDetailResponseDomainModel ->
 
-            val newHistoryItemUiModel = challengeDetailResponseDomainModel.myCommitResponseDomainModel.map {
-                HistoryItemUiModel.from(it)
+            val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
+
+            val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
+                getNewHistoryItemUiModels(challengeDetailResponseDomainModel)
+
+            val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                OwnerNickNamesUiModel.from(this.user1, this.user2)
             }
-            val newState = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
-                HistoryState(
-                    challengeInfoUiModel = ChallengeInfoUiModel.from(this),
-                    historyItemUiModel = newHistoryItemUiModel,
-                    ownerNickNamesUiModel = OwnerNickNamesUiModel.from(this.user1, this.user2),
-                )
-            }
+
             reduce {
                 state.copy(
-                    challengeInfoUiModel = newState.challengeInfoUiModel,
-                    historyItemUiModel = newState.historyItemUiModel,
-                    ownerNickNamesUiModel = newState.ownerNickNamesUiModel,
+                    challengeInfoUiModel = newChallengeInfoUiModel,
+                    historyItemUiModel = newHistoryItemUiModels,
+                    ownerNickNamesUiModel = newOwnerNickNamesUiModel,
                 )
             }
         }.onFailure {
             Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
         }
+    }
+
+    private fun getNewHistoryItemUiModels(
+        challengeDetailResponseDomainModel: ChallengeDetailResponseDomainModel,
+    ): MutableList<HistoryItemUiModel> {
+        val startDate =
+            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+        val endDate =
+            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+
+        val challengingDates =
+            if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
+                getDatesInRangeFromStartDateToEndDate(startDate, endDate)
+            } else {
+                getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
+            }
+
+        val commitPairs = with(challengeDetailResponseDomainModel) {
+            combineLists(
+                myCommitResponseDomainModel,
+                partnerCommitResponseDomainModel,
+            )
+        }
+        val historyItemsWithCommit = commitPairs.map {
+            HistoryItemUiModel.from(it.first, it.second)
+        }
+
+        return getNewHistoryItemsCombinedBetween(challengingDates, historyItemsWithCommit)
+    }
+
+    private fun getDatesInRangeFromStartDateToEndDate(startDate: Date, endDate: Date): List<String> {
+        val calendar = Calendar.getInstance()
+        calendar.time = startDate
+
+        val datesList = mutableListOf<String>()
+
+        while (calendar.time <= endDate) {
+            datesList.add(DateFormatter.getDateStrByDate(calendar.time))
+            calendar.add(Calendar.DAY_OF_MONTH, 1)
+        }
+
+        datesList.reverse() // start from current date
+        return datesList
+    }
+
+    private fun getNewHistoryItemsCombinedBetween(
+        challengingDates: List<String>,
+        combineHistoryItemUiModels: List<HistoryItemUiModel>,
+    ): MutableList<HistoryItemUiModel> {
+        val newHistoryItemUiModels: MutableList<HistoryItemUiModel> = mutableListOf()
+        for (date in challengingDates) {
+            val commit = combineHistoryItemUiModels.firstOrNull { date == it.createDate }
+            if (commit != null) {
+                newHistoryItemUiModels.add(commit)
+            } else {
+                newHistoryItemUiModels.add(
+                    HistoryItemUiModel(
+                        partnerInfo = HistoryInfoUiModel.empty,
+                        myInfo = HistoryInfoUiModel.empty,
+                        createDate = date,
+                    ),
+                )
+            }
+        }
+        return newHistoryItemUiModels
+    }
+
+    private fun <T, R> combineLists(list1: List<T>, list2: List<R>): List<Pair<T?, R?>> {
+        val maxSize = maxOf(list1.size, list2.size)
+        val combinedList = mutableListOf<Pair<T?, R?>>()
+
+        for (i in 0 until maxSize) {
+            val element1 = list1.getOrNull(i)
+            val element2 = list2.getOrNull(i)
+            combinedList.add(element1 to element2)
+        }
+
+        return combinedList
     }
 
     fun updateChallengeDetail(commitNo: Int) = intent {
@@ -66,7 +147,7 @@ class HistoryViewModel @Inject constructor(
         }
 
         if (commit == null) {
-            Log.e("HistoryViewModel", "해당 커밋이 존재하지 않습니다")
+            Log.d("HistoryViewModel", "해당 커밋이 존재하지 않습니다")
             return@intent
         }
 
@@ -81,7 +162,6 @@ class HistoryViewModel @Inject constructor(
                 historyDetailInfoUiModel = HistoryDetailInfoUiModel(
                     infoUiModel = commit,
                     ownerNickNamesUiModel = ownerNickName,
-                    createdDate = "2023년 4월 20일",
                 ),
             )
         }

@@ -6,6 +6,7 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.repository.FakeChallengeRepository
 import com.mashup.twotoo.presenter.home.repository.FakeCommitRepository
+import com.mashup.twotoo.presenter.home.repository.FakeNotificationRepository
 import com.mashup.twotoo.presenter.home.repository.FakeUserDataStoreRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewApprovedButBeforeStartDateRepository
 import com.mashup.twotoo.presenter.home.repository.FakeViewBeforeCreateRepository
@@ -20,11 +21,13 @@ import org.junit.Before
 import org.junit.Test
 import repository.ChallengeRepository
 import repository.CommitRepository
+import repository.NotificationRepository
 import repository.UserDataStoreRepository
 import repository.ViewRepository
 import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -45,17 +48,20 @@ class HomeViewModelTest {
     private lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
     private lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
     private lateinit var createCheerUseCase: CreateCheerUseCase
+    private lateinit var stingUseCase: StingUseCase
 
     private lateinit var fakeViewRepository: ViewRepository
     private lateinit var fakeCommitRepository: CommitRepository
     private lateinit var fakeUserDataStoreRepository: UserDataStoreRepository
     private lateinit var fakeChallengeRepository: ChallengeRepository
+    private lateinit var fakeNotificationRepository: NotificationRepository
 
     @Before
     fun initUserDataStoreRepository() {
         fakeUserDataStoreRepository = FakeUserDataStoreRepository()
         fakeCommitRepository = FakeCommitRepository()
         fakeChallengeRepository = FakeChallengeRepository()
+        fakeNotificationRepository = FakeNotificationRepository()
         getVisibilityCheerDialogUseCase =
             GetVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         getVisibilityCompleteDialogUseCase =
@@ -71,6 +77,7 @@ class HomeViewModelTest {
         removeVisibilityCompleteDialogUseCase =
             RemoveVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
         createCheerUseCase = CreateCheerUseCase(fakeCommitRepository)
+        stingUseCase = StingUseCase(fakeNotificationRepository)
     }
 
     @Test
@@ -91,6 +98,7 @@ class HomeViewModelTest {
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
+            stingUseCase,
         )
 
         viewModel.getHomeViewChallenge().join()
@@ -125,6 +133,7 @@ class HomeViewModelTest {
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
+            stingUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -154,6 +163,7 @@ class HomeViewModelTest {
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
+            stingUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -183,6 +193,7 @@ class HomeViewModelTest {
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
+            stingUseCase,
         )
 
         viewModel.container.stateFlow.test {
@@ -213,6 +224,7 @@ class HomeViewModelTest {
             removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
+            stingUseCase,
         )
 
         viewModel.container.stateFlow.test {

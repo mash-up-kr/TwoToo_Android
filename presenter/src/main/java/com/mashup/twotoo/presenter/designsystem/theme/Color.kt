@@ -36,6 +36,7 @@ val Gray500 = Color(0xFFA09E9C)
 val Gray400 = Color(0xFFD9D8D7)
 val Gray300 = Color(0xFFE9E8E8)
 val Gray200 = Color(0xFFF2F1F0)
+val ToastColor = Color(0xFF504E4C)
 
 @Stable
 class ColorScheme(
@@ -51,6 +52,7 @@ class ColorScheme(
     gray400: Color,
     gray300: Color,
     gray200: Color,
+    toastColor: Color,
 ) {
     var mainBrown by mutableStateOf(mainBrown, structuralEqualityPolicy())
         internal set
@@ -76,6 +78,8 @@ class ColorScheme(
         internal set
     var gray200 by mutableStateOf(gray200, structuralEqualityPolicy())
         internal set
+    var toastColor by mutableStateOf(toastColor, structuralEqualityPolicy())
+        internal set
 
     fun copy(
         mainBrown: Color = this.mainBrown,
@@ -90,6 +94,7 @@ class ColorScheme(
         gray400: Color = this.gray400,
         gray300: Color = this.gray300,
         gray200: Color = this.gray200,
+        toastColor: Color = this.toastColor,
     ): ColorScheme = ColorScheme(
         mainBrown,
         mainPink,
@@ -103,6 +108,7 @@ class ColorScheme(
         gray400,
         gray300,
         gray200,
+        toastColor,
     )
 }
 
@@ -133,6 +139,7 @@ fun ColorScheme.updateColorSchemeFrom(other: ColorScheme) {
     gray400 = other.gray400
     gray300 = other.gray300
     gray200 = other.gray200
+    toastColor = other.toastColor
 }
 
 enum class ThemeColor {
@@ -164,6 +171,7 @@ fun lightColors(
     gray400: Color = Gray400,
     gray300: Color = Gray300,
     gray200: Color = Gray200,
+    toastColor: Color = ToastColor,
 ): ColorScheme = ColorScheme(
     mainBrown,
     mainPink,
@@ -177,6 +185,7 @@ fun lightColors(
     gray400,
     gray300,
     gray200,
+    toastColor,
 )
 
 val LocalTwoTooColor = staticCompositionLocalOf {

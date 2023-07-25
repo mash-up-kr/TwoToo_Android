@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
@@ -22,21 +23,26 @@ fun NavController.navigateToOnBoarding(navOptions: NavOptions? = null) {
 fun NavGraphBuilder.onBoardingGraph(
     navController: NavController
 ) {
-    composable(route = NavigationRoute.OnBoardingGraph.OnboardingScreen.route) {
-        val onBoardingComponent = componentProvider<OnboardingComponentProvider>().provideOnboardingComponent()
-        val onBoardingViewModel = daggerViewModel {
-            onBoardingComponent.getViewModel()
-        }
-        OnBoardingRoute(onBoardingViewModel) { route ->
-            when (route) {
-                NavigationRoute.HomeGraph.HomeScreen.route -> {
-                    navController.navigateToHome()
-                }
-                NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
-                    navController.navigateToOnNickNameSetting()
-                }
-                NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
-                    navController.navigateToInvitation()
+    navigation(
+        startDestination = NavigationRoute.OnBoardingGraph.OnboardingScreen.route,
+        route = NavigationRoute.OnBoardingGraph.route,
+    ) {
+        composable(route = NavigationRoute.OnBoardingGraph.OnboardingScreen.route) {
+            val onBoardingComponent = componentProvider<OnboardingComponentProvider>().provideOnboardingComponent()
+            val onBoardingViewModel = daggerViewModel {
+                onBoardingComponent.getViewModel()
+            }
+            OnBoardingRoute(onBoardingViewModel) { route ->
+                when (route) {
+                    NavigationRoute.HomeGraph.HomeScreen.route -> {
+                        navController.navigateToHome()
+                    }
+                    NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
+                        navController.navigateToOnNickNameSetting()
+                    }
+                    NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
+                        navController.navigateToInvitation()
+                    }
                 }
             }
         }

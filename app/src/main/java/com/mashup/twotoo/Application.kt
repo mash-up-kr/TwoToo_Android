@@ -11,6 +11,7 @@ import com.mashup.twotoo.presenter.invite.di.InviteComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponent
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponent
+import com.mashup.twotoo.presenter.splash.di.SplashComponent
 
 class Application : Application(), ScreenComponentProvider {
     val applicationComponent: ApplicationComponent by lazy {
@@ -20,6 +21,10 @@ class Application : Application(), ScreenComponentProvider {
     override fun onCreate() {
         super.onCreate()
         KakaoSdk.init(this, BuildConfig.NATIVE_APP_KEY)
+    }
+
+    override fun provideSplashComponent(): SplashComponent {
+        return applicationComponent.splashComponent().create()
     }
 
     override fun provideHomeComponent(): HomeComponent {

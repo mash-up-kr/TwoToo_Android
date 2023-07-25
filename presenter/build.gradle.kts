@@ -83,6 +83,7 @@ dependencies {
     testImplementation(libs.turbine)
     testImplementation(libs.orbit.test)
     testImplementation(libs.kotlin.coroutine.test)
+    implementation(libs.accompanist.webview)
 }
 
 fun getApiKey(propertyKey: String): String {

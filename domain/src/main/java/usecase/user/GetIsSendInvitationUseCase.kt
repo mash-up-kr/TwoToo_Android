@@ -3,10 +3,10 @@ package usecase.user
 import repository.UserDataStoreRepository
 import javax.inject.Inject
 
-class GetUserNoUseCase @Inject constructor(
+class GetIsSendInvitationUseCase @Inject constructor(
     private val userDataStoreRepository: UserDataStoreRepository
 ) {
-    suspend operator fun invoke(): Int {
-        return userDataStoreRepository.getUserNo()
+    suspend operator fun invoke(): Boolean {
+        return userDataStoreRepository.getIsSendInvitation()
     }
 }

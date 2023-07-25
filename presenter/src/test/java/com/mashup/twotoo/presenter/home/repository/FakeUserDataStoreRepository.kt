@@ -1,23 +1,10 @@
 package com.mashup.twotoo.presenter.home.repository
 
+import model.user.UserAuthResponseDomainModel
 import repository.UserDataStoreRepository
 
 class FakeUserDataStoreRepository : UserDataStoreRepository {
-    override suspend fun getAccessToken(): String {
-        TODO("Not yet implemented")
-    }
 
-    override suspend fun setAccessToken(accessToken: String) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun setUserNo(userNo: Int) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun getUserNo(): Int {
-        TODO("Not yet implemented")
-    }
 
     override suspend fun setVisibilityCheerDialog(visibility: Boolean) {
         TODO("Not yet implemented")
@@ -40,6 +27,22 @@ class FakeUserDataStoreRepository : UserDataStoreRepository {
     }
 
     override suspend fun removeVisibilityCompleteDialog() {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setUserInfo(userAuthResponseDomainModel: UserAuthResponseDomainModel) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUserInfo(): UserAuthResponseDomainModel? {
+      TODO("Not yet implemented")
+    }
+
+    override suspend fun getIsSendInvitation(): Boolean {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun setIsSendInvitation(isSend: Boolean) {
         TODO("Not yet implemented")
     }
 }

@@ -13,6 +13,7 @@ interface CommitApi {
     @POST("/commit")
     suspend fun commit(
         @Part text: MultipartBody.Part,
+        @Part challengeNo: MultipartBody.Part,
         @Part img: MultipartBody.Part,
     ): Commit
 

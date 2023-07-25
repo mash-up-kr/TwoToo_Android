@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 import android.net.Uri
 import androidx.annotation.StringRes
 import com.mashup.twotoo.presenter.R
-import java.io.File
 
 sealed interface BottomSheetType {
 

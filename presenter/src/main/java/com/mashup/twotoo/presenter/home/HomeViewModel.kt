@@ -20,6 +20,7 @@ import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
+import model.notification.request.NotificationRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -29,6 +30,7 @@ import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -54,6 +56,7 @@ class HomeViewModel @Inject constructor(
     private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
     private val createCheerUseCase: CreateCheerUseCase,
+    private val stingUseCase: StingUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
@@ -130,8 +133,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToHistory() = intent {
-        postSideEffect(HomeSideEffect.NavigateToChallengeDetail)
+    fun navigateToHistory(challengeNo: Int) = intent {
+        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo))
     }
 
     fun openToShotBottomSheet() = intent {
@@ -179,6 +182,7 @@ class HomeViewModel @Inject constructor(
                 createCommitUseCase(
                     commitRequestDomainModel = CommitRequestDomainModel(
                         text = bottomSheetData.text,
+                        challengeNo = (this.state.challengeStateUiModel as OngoingChallengeUiModel).challengeNo.toString(),
                         img = bottomSheetData.image.toString(),
                     ),
                 ).onSuccess { domainModel ->
@@ -190,6 +194,16 @@ class HomeViewModel @Inject constructor(
                             ToastText.CommitSuccess,
                         ),
                     )
+                    reduce {
+                        val currentState = state.challengeStateUiModel as OngoingChallengeUiModel
+                        currentState.let {
+                            state.copy(
+                                challengeStateUiModel = it.copy(
+                                    shotInteractionState = true,
+                                ),
+                            )
+                        }
+                    }
                     // TODO GET VIEW API 재호출
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
@@ -207,14 +221,38 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.ShotData -> {
+                with((state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeShotCountTextUiModel?.count) {
+                    if ((this == null) || (this <= 0)) {
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.ShotInvalid,
+                            ),
+                        )
+                        return@intent
+                    }
+                }
                 // 서버 데이터 전송
-
-                // toast sideEffect
-                postSideEffect(
-                    HomeSideEffect.Toast(
-                        ToastText.ShotSuccess,
+                stingUseCase(
+                    notificationRequestDomainModel = NotificationRequestDomainModel(
+                        message = bottomSheetData.text,
                     ),
-                )
+                ).onSuccess {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.ShotSuccess,
+                        ),
+                    )
+                }
+                    .onFailure {
+                        postSideEffect(
+                            HomeSideEffect.Toast(
+                                ToastText.ShotFail,
+                            ),
+                        )
+                    }
             }
             is BottomSheetData.CheerData -> {
                 // 서버 데이터 전송
@@ -273,6 +311,19 @@ class HomeViewModel @Inject constructor(
             postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
+        }
+    }
+
+    fun onWiggleAnimationEnd() = intent {
+        reduce {
+            val currentState = state.challengeStateUiModel as OngoingChallengeUiModel
+            currentState.let {
+                state.copy(
+                    challengeStateUiModel = it.copy(
+                        shotInteractionState = false,
+                    ),
+                )
+            }
         }
     }
 
