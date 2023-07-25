@@ -71,7 +71,7 @@ fun HomeRoute(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
     ) {
         HomeScreen(
             state = state.challengeStateUiModel,
