@@ -31,6 +31,7 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
+import usecase.user.GetPreferenceUserInfoUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -57,15 +58,17 @@ class HomeViewModel @Inject constructor(
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
     private val createCheerUseCase: CreateCheerUseCase,
     private val stingUseCase: StingUseCase,
+    private val getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
+            val userNo = getPreferenceUserInfoUseCase()?.userNo ?: return@intent
             reduce {
                 state.copy(
-                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(0),
+                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(userNo),
                 )
             }
 
@@ -221,15 +224,17 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.ShotData -> {
-                with((state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeShotCountTextUiModel?.count) {
-                    if ((this == null) || (this <= 0)) {
-                        postSideEffect(
-                            HomeSideEffect.Toast(
-                                ToastText.ShotInvalid,
-                            ),
-                        )
-                        return@intent
-                    }
+                if ((state.challengeStateUiModel as OngoingChallengeUiModel).homeShotCountTextUiModel.count == 0) {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    delay(100)
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.ShotInvalid,
+                        ),
+                    )
+                    return@intent
                 }
                 // 서버 데이터 전송
                 stingUseCase(
@@ -244,6 +249,10 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.Toast(
                             ToastText.ShotSuccess,
                         ),
+                    )
+
+                    postSideEffect(
+                        HomeSideEffect.CallViewHomeApi,
                     )
                 }
                     .onFailure {

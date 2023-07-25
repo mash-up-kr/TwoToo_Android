@@ -174,7 +174,7 @@ fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel 
 
 fun HomeViewResponseDomainModel.toHomeShotCountTextUiModel(): HomeShotCountTextUiModel {
     return HomeShotCountTextUiModel(
-        count = this.userStingCnt,
+        count = 5 - this.userStingCnt,
     )
 }
 
