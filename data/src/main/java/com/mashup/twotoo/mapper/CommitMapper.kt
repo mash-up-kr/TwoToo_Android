@@ -25,10 +25,12 @@ fun Commit.toDomainModel(): CommitResponseDomainModel {
 
 fun CommitRequestDomainModel.toDataModel(context: Context): CommitRequest {
     val textMultiPart = MultipartBody.Part.createFormData("text", this.text)
+    val challengeNoMultiPart = MultipartBody.Part.createFormData("challengeNo", this.challengeNo)
     val requestBody = ContentUriRequestBody(context = context, Uri.parse(this.img))
     val imgMultiPart = MultipartBody.Part.createFormData("img", requestBody.getFileName(), requestBody)
     return CommitRequest(
         text = textMultiPart,
+        challengeNo = challengeNoMultiPart,
         img = imgMultiPart,
     )
 }

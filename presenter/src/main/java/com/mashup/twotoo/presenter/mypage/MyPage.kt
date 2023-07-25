@@ -33,6 +33,7 @@ fun MyPageRoute(
     state: Int,
     modifier: Modifier = Modifier,
     onClickMyPageItem: (MyPageItem) -> Unit,
+    navigateToGuide: () -> Unit,
 ) {
     MyPageScreen(
         modifier = modifier.testTag(
@@ -40,6 +41,7 @@ fun MyPageRoute(
         ),
         homeGoalCountUiModel = HomeGoalCountUiModel.default,
         onClickMyPageItem = onClickMyPageItem,
+        navigateToGuide = navigateToGuide,
     )
 }
 
@@ -48,7 +50,7 @@ fun MyPageScreen(
     homeGoalCountUiModel: HomeGoalCountUiModel,
     modifier: Modifier = Modifier,
     onClickMyPageItem: (MyPageItem) -> Unit,
-
+    navigateToGuide: () -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -57,7 +59,7 @@ fun MyPageScreen(
         TwoTooMainToolbar(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.mypage),
-            onClickHelpIcon = {},
+            onClickHelpIcon = { navigateToGuide() },
         )
         Spacer(modifier = Modifier.height(25.dp))
         HomeGoalCount(
@@ -97,6 +99,6 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageRoute(0, onClickMyPageItem = {})
+        MyPageRoute(0, onClickMyPageItem = {}, navigateToGuide = {})
     }
 }

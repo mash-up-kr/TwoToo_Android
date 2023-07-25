@@ -22,7 +22,7 @@ fun HomeGoalField(
     modifier: Modifier = Modifier,
 ) {
     ConstraintLayout(
-        modifier = modifier.padding(vertical = 16.dp).background(
+        modifier = modifier.background(
             color = TwoTooTheme.color.mainYellow,
             shape = TwoTooTheme.shape.small,
         ),

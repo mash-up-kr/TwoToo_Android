@@ -7,12 +7,15 @@ import com.mashup.twotoo.presenter.invite.di.InviteComponentProvider
 import com.mashup.twotoo.presenter.mypage.di.UserComponentProvider
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponentProvider
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponentProvider
+import com.mashup.twotoo.presenter.splash.di.SplashComponent
+import com.mashup.twotoo.presenter.splash.di.SplashComponentProvider
 
 /**
  * App Module에서 Component를 알기 위한 인터페이스를 정의합니다.
  */
 
 interface ScreenComponentProvider :
+    SplashComponentProvider,
     HomeComponentProvider,
     UserComponentProvider,
     OnboardingComponentProvider,

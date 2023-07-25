@@ -20,14 +20,12 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import usecase.token.SetAccessTokenUseCase
-import usecase.user.SetUserNoUseCase
+import usecase.user.SetPreferenceUserInfoUseCase
 import usecase.user.UserAuthUseCase
 import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
-    private val setAccessTokenUseCase: SetAccessTokenUseCase,
-    private val setUserNoUseCase: SetUserNoUseCase,
+    private val setPreferenceUserInfoUseCase: SetPreferenceUserInfoUseCase,
     private val userAuthUseCase: UserAuthUseCase
 ) : ViewModel(), ContainerHost<OnBoardingModel, OnboardingSideEffect> {
     override val container = container<OnBoardingModel, OnboardingSideEffect>(OnBoardingModel())
@@ -57,9 +55,8 @@ class OnBoardingViewModel @Inject constructor(
 
     fun signUpWithKakaoAccount(deviceToken: String, socialId: String) = intent {
         val userAuthModel = UserAuthRequestDomainModel(deviceToken = deviceToken, socialId = socialId)
-        userAuthUseCase.invoke(userAuthModel).onSuccess { userInfo ->
-            setAccessTokenUseCase.invoke(userInfo.accessToken)
-            setUserNoUseCase.invoke(userInfo.userNo)
+        userAuthUseCase(userAuthModel).onSuccess { userInfo ->
+            setPreferenceUserInfoUseCase(userInfo)
             when (userInfo.state) {
                 OnboardingState.NEED_NICKNAME.name -> {
                     postSideEffect(OnboardingSideEffect.NavigateToNickNameSetting)

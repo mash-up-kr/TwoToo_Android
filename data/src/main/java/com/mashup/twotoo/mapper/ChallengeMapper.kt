@@ -25,6 +25,7 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
         user1Commit = user1Commit?.toDomainModel(),
         user2 = user2.toDomainModel(),
         user2Commit = user2Commit?.toDomainModel(),
+        userStingCnt = userStingCnt,
     )
 }
 

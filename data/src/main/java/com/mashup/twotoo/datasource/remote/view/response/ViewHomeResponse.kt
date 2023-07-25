@@ -15,4 +15,5 @@ data class ViewHomeResponse(
     @Json(name = "user2") val user2: User,
     @Json(name = "user2Commit") val user2Commit: UserCommit?,
     @Json(name = "viewState") val viewState: String,
+    @Json(name = "userStingCnt") val userStingCnt: Int,
 )

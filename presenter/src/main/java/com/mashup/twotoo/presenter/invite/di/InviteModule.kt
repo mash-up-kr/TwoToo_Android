@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import usecase.user.GetPartnerInfoUseCase
 import usecase.user.GetUserInfoUseCase
+import usecase.user.SetIsSendInvitationUseCase
 import javax.inject.Scope
 
 @Module
@@ -14,9 +15,14 @@ class InviteModule {
     @InviteScope
     fun provideViewModel(
         getPartnerInfoUseCase: GetPartnerInfoUseCase,
-        getUserInfoUseCase: GetUserInfoUseCase
+        getUserInfoUseCase: GetUserInfoUseCase,
+        setIsSendInvitationUseCase: SetIsSendInvitationUseCase
     ): InviteViewModel {
-        return InviteViewModel(getPartnerInfoUseCase, getUserInfoUseCase)
+        return InviteViewModel(
+            getPartnerInfoUseCase,
+            getUserInfoUseCase,
+            setIsSendInvitationUseCase,
+        )
     }
 }
 
