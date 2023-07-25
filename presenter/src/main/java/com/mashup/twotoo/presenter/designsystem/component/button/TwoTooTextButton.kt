@@ -33,7 +33,11 @@ fun TwoTooTextButton(
         } else {
             ButtonDefaults.buttonColors(containerColor = TwoTooTheme.color.gray400)
         },
-        onClick = { onClick() },
+        onClick = {
+            if (enabled) {
+                onClick()
+            }
+        },
     ) {
         Text(
             text = text,
