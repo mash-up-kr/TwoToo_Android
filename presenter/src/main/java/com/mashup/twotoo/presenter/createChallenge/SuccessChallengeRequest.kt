@@ -24,7 +24,9 @@ import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButto
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 
 @Composable
-fun SuccessChallengeRequest() {
+fun SuccessChallengeRequest(
+    onClickConfirm: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -48,13 +50,14 @@ fun SuccessChallengeRequest() {
         )
         TwoTooTextButton(
             text = stringResource(id = R.string.button_confirm),
-            enabled = false,
+            enabled = true,
             modifier = Modifier
                 .padding(bottom = 55.dp, start = 24.dp, end = 24.dp)
                 .fillMaxWidth()
                 .height(57.dp)
                 .align(Alignment.BottomCenter),
-        ) {}
+            onClick = { onClickConfirm() },
+        )
     }
 }
 
@@ -90,5 +93,5 @@ private fun SuccessChallengeCont(
 @Preview
 @Composable
 private fun PreviewSuccessChallengeRequest() {
-    SuccessChallengeRequest()
+    SuccessChallengeRequest({})
 }
