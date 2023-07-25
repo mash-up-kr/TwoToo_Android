@@ -7,5 +7,7 @@ import com.squareup.moshi.JsonClass
 open class UserInfoResponse(
     @Json(name = "userNo") val userNo: Int = 0,
     @Json(name = "nickname") val nickname: String = "",
-    @Json(name = "partnerNo") val partnerNo: Int? = 0
+    @Json(name = "partnerNo") val partnerNo: Int? = 0,
+    @Json(name = "partnerNickname") val partnerNickName: String = "",
+    @Json(name = "totalChallengeCount") val totalChallengeCount: Int = 0,
 )

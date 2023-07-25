@@ -5,13 +5,18 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
@@ -20,19 +25,29 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
 import com.mashup.twotoo.presenter.mypage.model.MyPageItem
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MyPageRoute(
-    state: Int,
-    modifier: Modifier = Modifier,
-    onClickMyPageItem: (MyPageItem) -> Unit,
+    userViewModel: UserViewModel,
     navigateToGuide: () -> Unit,
+    onClickMyPageItem: (MyPageItem) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val lifecycleOwner = LocalLifecycleOwner.current
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            userViewModel.getUserInfo()
+        }
+    }
+
+    val state by userViewModel.collectAsState()
+
     MyPageScreen(
         modifier = modifier.testTag(
             stringResource(id = R.string.mypage),
         ),
-        homeGoalCountUiModel = HomeGoalCountUiModel.default,
+        state = state,
         onClickMyPageItem = onClickMyPageItem,
         navigateToGuide = navigateToGuide,
     )
@@ -40,8 +55,8 @@ fun MyPageRoute(
 
 @Composable
 fun MyPageScreen(
-    homeGoalCountUiModel: HomeGoalCountUiModel,
     modifier: Modifier = Modifier,
+    state: UserState,
     onClickMyPageItem: (MyPageItem) -> Unit,
     navigateToGuide: () -> Unit,
 ) {
@@ -61,7 +76,7 @@ fun MyPageScreen(
         )
         Spacer(modifier = Modifier.height(29.dp))
         HomeGoalCount(
-            homeGoalCountUiModel,
+            homeGoalCountUiModel = state.homeGoalCountUiModel,
             horizontalAlignment = Alignment.CenterHorizontally,
             textLineSpacerHeight = 10.dp,
         )
@@ -78,8 +93,7 @@ fun MyPageScreen(
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-
-                text = homeGoalCountUiModel.myName ?: "",
+                text = state.homeGoalCountUiModel.myName ?: "",
                 style = TwoTooTheme.typography.headLineNormal18,
                 color = TwoTooTheme.color.mainBrown,
             )
@@ -103,6 +117,6 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageRoute(0, onClickMyPageItem = {}, navigateToGuide = {})
+        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), onClickMyPageItem = {}, navigateToGuide = {})
     }
 }
