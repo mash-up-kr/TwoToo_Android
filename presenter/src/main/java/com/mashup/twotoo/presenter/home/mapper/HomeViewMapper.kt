@@ -192,7 +192,7 @@ fun HomeViewResponseDomainModel.isCompleteState(): Boolean {
 fun HomeViewResponseDomainModel.getUserCommit(
     userNo: Int,
 ): Pair<UserCommitResponseDomainModel?, UserCommitResponseDomainModel?> {
-    return if (user1Commit!!.userNo == userNo) {
+    return if (user1.userNo == userNo) {
         Pair(user1Commit, user2Commit)
     } else {
         Pair(user2Commit, user1Commit)
