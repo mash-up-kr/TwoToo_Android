@@ -17,7 +17,7 @@ import com.mashup.twotoo.presenter.ui.TwoTooAppState
 fun TwoTooNavHost(
     appState: TwoTooAppState,
     modifier: Modifier = Modifier,
-    startDestination: String = NavigationRoute.GardenGraph.route,
+    startDestination: String = NavigationRoute.OnBoardingGraph.OnboardingScreen.route,
 ) {
     val navController = appState.navController
     NavHost(

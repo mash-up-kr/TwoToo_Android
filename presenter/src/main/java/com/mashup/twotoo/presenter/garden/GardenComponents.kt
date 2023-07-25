@@ -34,26 +34,22 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 import com.mashup.twotoo.presenter.garden.model.FlowerHead
 import com.mashup.twotoo.presenter.model.FlowerName
-import kotlinx.coroutines.delay
 
 @Composable
-fun ChallengeCard(isStartAnimation: Boolean, challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: (Int) -> Unit) {
-    // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
-    var startAnimation by remember { mutableStateOf(isStartAnimation) }
-    LaunchedEffect(true) {
-        delay(2000)
-        startAnimation = false
-    }
-
+fun ChallengeCard(
+    isStartAnimation: Boolean,
+    challengeCardInfoUiModel: ChallengeCardInfoUiModel,
+    navigateToGarden: (Int) -> Unit,
+) {
     // 애니메이션 진행 중에만 border 적용
-    val borderColor = if (startAnimation) TwoTooTheme.color.mainLightPink else Color.Transparent
+    val borderColor = if (isStartAnimation) TwoTooTheme.color.mainLightPink else Color.Transparent
 
     // 애니메이션을 위한 Offset 값
     val offsetY = remember {
-        if (startAnimation) Animatable(-20f) else Animatable(0f)
+        if (isStartAnimation) Animatable(-20f) else Animatable(0f)
     }
-    LaunchedEffect(startAnimation) {
-        if (startAnimation) {
+    LaunchedEffect(isStartAnimation) {
+        if (isStartAnimation) {
             // 애니메이션이 진행 중인 경우 애니메이션 시작
             offsetY.animateTo(
                 targetValue = 20f,
@@ -151,5 +147,5 @@ private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
 @Preview
 @Composable
 fun PreviewChallengeCardView() {
-    ChallengeCard(false, ChallengeCardInfoUiModel.default[0]) {}
+    ChallengeCard(false, ChallengeCardInfoUiModel.default[0], {})
 }

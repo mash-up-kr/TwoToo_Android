@@ -1,15 +1,12 @@
 package com.mashup.twotoo.presenter.garden
 
-import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.itemsIndexed
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
@@ -21,6 +18,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -30,11 +28,9 @@ fun GardenRoute(
     navigateToGarden: (Int) -> Unit = {},
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-
     LaunchedEffect(Unit) {
         lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.RESUMED) {
             gardenViewModel.getAllChallenge()
-            Log.i("hyejin ", "resume")
         }
     }
     val state by gardenViewModel.collectAsState()
@@ -43,6 +39,7 @@ fun GardenRoute(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,
         state = state,
+        stopAnimation = gardenViewModel::stopAnimation,
     )
 }
 
@@ -51,7 +48,10 @@ fun GardenScreen(
     state: GardenState,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit,
+    stopAnimation: () -> Unit,
 ) {
+    // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
+
     Scaffold(
         topBar = {
             TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = {})
@@ -65,14 +65,17 @@ fun GardenScreen(
             horizontalArrangement = Arrangement.spacedBy(13.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp),
         ) {
-            val (startAnimation, challengeNo) = state.startAnimation
-            Log.i("hyejin", "startAnimation = $startAnimation, challengeNo = $challengeNo")
-            itemsIndexed(state.challengeCardInfos) { index, challengeInfo ->
+            items(items = state.challengeCardInfos, key = { it.challengeNo }) { challengeInfo ->
                 val isStartAnimation = state.startAnimation.first && state.startAnimation.second == challengeInfo.challengeNo
+                LaunchedEffect(true) {
+                    delay(2000)
+                    stopAnimation()
+                }
                 ChallengeCard(
                     isStartAnimation = isStartAnimation,
-                    challengeInfo,
-                    navigateToGarden,
+                    challengeCardInfoUiModel = challengeInfo,
+                    navigateToGarden = navigateToGarden,
+
                 )
             }
         }
@@ -82,5 +85,5 @@ fun GardenScreen(
 @Preview
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(GardenState.default, navigateToGarden = {})
+    GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {})
 }

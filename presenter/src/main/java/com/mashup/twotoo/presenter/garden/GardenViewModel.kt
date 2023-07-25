@@ -19,7 +19,7 @@ class GardenViewModel(
 
     fun getAllChallenge() = intent {
         getAllChallengeUseCase().onSuccess { challenges ->
-            val challengeCardInfos = challenges.mapIndexed { index, challengeResponseDomainModel ->
+            val challengeCardInfos = challenges.filter { it.isFinished }.mapIndexed { index, challengeResponseDomainModel ->
                 challengeResponseDomainModel.toUiModel(index)
             }.run {
                 reversed()
@@ -37,6 +37,14 @@ class GardenViewModel(
                 GardenSideEffect.Toast(
                     "정원 정보를 읽어오는데 실패했습니다ㅜ_ㅠ",
                 ),
+            )
+        }
+    }
+
+    fun stopAnimation() = intent {
+        reduce {
+            state.copy(
+                startAnimation = Pair(false, 0),
             )
         }
     }
