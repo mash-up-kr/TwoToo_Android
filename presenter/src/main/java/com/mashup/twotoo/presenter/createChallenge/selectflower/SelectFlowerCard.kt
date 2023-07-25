@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.createChallenge.selectflower
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,31 +22,60 @@ import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
+import com.mashup.twotoo.presenter.createChallenge.CreateChallengeSideEffect
+import com.mashup.twotoo.presenter.createChallenge.CreateChallengeViewModel
+import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SelectFlowerCardRoute(
-    onStartButtonClick: () -> Unit
+    createChallengeViewModel: CreateChallengeViewModel,
+    onClickBackButton: () -> Unit,
+    onSuccessCreateChallenge: () -> Unit,
 ) {
-    SelectFlowerCard(onStartButtonClick)
+    SelectFlowerCard(
+        onStartButtonClick = { flowerName ->
+            createChallengeViewModel.setChallengeInfo(ChallengeInfoModel(selectFlowerName = flowerName), 4)
+            createChallengeViewModel.createChallenge()
+        },
+        onClickBackButton,
+    )
+
+    createChallengeViewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is CreateChallengeSideEffect.NavigateToSuccessCreate -> {
+                Log.d(TAG, "SelectFlowerCardRoute: success")
+                onSuccessCreateChallenge()
+            }
+            is CreateChallengeSideEffect.ToastMessage -> {}
+            else -> {}
+        }
+    }
 }
 
 @Composable
 fun SelectFlowerCard(
-    onStartButtonClick: () -> Unit = {}
+    onStartButtonClick: (String) -> Unit = {},
+    onClickBackButton: () -> Unit = {}
 ) {
     var isVisibleStartButton by remember { mutableStateOf(false) }
+    var flowerName by remember { mutableStateOf("") }
     Column {
-        TwoTooBackToolbar(onClickBackIcon = {})
+        TwoTooBackToolbar(onClickBackIcon = {
+            onClickBackButton()
+        })
         Box {
             Column(modifier = Modifier.padding(top = 11.dp)) {
                 SelectFlowerTitle()
                 SelectFlowerLazyColumn(
-                    onClickOneItem = {
+                    onClickOneItem = { selectName ->
                         isVisibleStartButton = true
+                        flowerName = selectName
                     },
                 )
             }
@@ -59,7 +89,7 @@ fun SelectFlowerCard(
                         .height(57.dp)
                         .align(Alignment.BottomCenter),
                 ) {
-                    onStartButtonClick()
+                    onStartButtonClick(flowerName)
                 }
             }
         }

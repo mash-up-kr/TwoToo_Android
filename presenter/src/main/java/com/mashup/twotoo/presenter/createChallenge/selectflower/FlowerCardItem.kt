@@ -27,10 +27,11 @@ import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardUiModel
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
 fun SelectFlowerLazyColumn(
-    onClickOneItem: () -> Unit
+    onClickOneItem: (String) -> Unit
 ) {
     val list = FlowerCardUiModel.getFlowerCardModel()
     var selectedItemIndex by remember { mutableIntStateOf(-1) }
@@ -46,7 +47,7 @@ fun SelectFlowerLazyColumn(
                 selectedItemIndex,
                 onClickItem = { index ->
                     selectedItemIndex = index
-                    onClickOneItem()
+                    onClickOneItem(list[selectedItemIndex].flowerName.value)
                 },
             )
         }
@@ -91,7 +92,7 @@ fun FlowerCardItem(
             )
             Text(
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                text = stringResource(id = flowerCardModel.name),
+                text = stringResource(id = flowerCardModel.resourceName),
                 style = TwoTooTheme.typography.headLineNormal24,
                 color = TwoTooTheme.color.mainBrown,
             )
@@ -108,7 +109,8 @@ fun FlowerCardItem(
 @Composable
 private fun PreviewFlowerCardItem() {
     val model = FlowerCardUiModel(
-        name = R.string.rose,
+        flowerName = FlowerName.Rose,
+        resourceName = R.string.rose,
         desc = R.string.rose_language,
         selectFlowerImage = R.drawable.img_challenge_select_rose,
         0,
