@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.ongoingChallenge.cheer.onlyPartner
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -26,6 +27,8 @@ class HomeCheerOnlyPartner {
     val composeTestRule = createComposeRule()
 
     private lateinit var context: Context
+    private var screenHeight: Int = 0
+    private var screenWidth: Int = 0
 
     /**
      * 파트너만 응원을 했을 때 상태입니다.
@@ -80,7 +83,7 @@ class HomeCheerOnlyPartner {
     ) {
         (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).also {
             Truth.assertThat(
-                it.partner.homeFlowerUiModel.flowerType.getFlowerImage(context).image,
+                it.partner.homeFlowerUiModel.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (partnerStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_partner
@@ -93,7 +96,7 @@ class HomeCheerOnlyPartner {
             )
 
             Truth.assertThat(
-                it.me.homeFlowerUiModel.flowerType.getFlowerImage(context).image,
+                it.me.homeFlowerUiModel.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (meStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_me
@@ -149,6 +152,8 @@ class HomeCheerOnlyPartner {
         )
         composeTestRule.setContent {
             context = LocalContext.current
+            screenHeight = LocalConfiguration.current.screenHeightDp
+            screenWidth = LocalConfiguration.current.screenWidthDp
             TwoTooTheme {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),

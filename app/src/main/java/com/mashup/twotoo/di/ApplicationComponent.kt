@@ -9,6 +9,7 @@ import com.mashup.twotoo.presenter.invite.di.InviteComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponent
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponent
+import com.mashup.twotoo.presenter.splash.di.SplashComponent
 import dagger.BindsInstance
 import dagger.Component
 import javax.inject.Singleton
@@ -31,6 +32,7 @@ interface ApplicationComponent {
         fun create(@BindsInstance context: Context): ApplicationComponent
     }
 
+    fun splashComponent(): SplashComponent.Factory
     fun homeComponent(): HomeComponent.Factory
     fun userComponent(): UserComponent.Factory
     fun onBoardingComponent(): OnboardingComponent.Factory

@@ -19,7 +19,7 @@ fun NavController.navigateToInvitation(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.InvitationGraph.route, navOptions = navOptions)
 }
 
-private fun NavController.navigateToWaitingAcceptPair(navOptions: NavOptions? = null) {
+fun NavController.navigateToWaitingAcceptPair(navOptions: NavOptions? = null) {
     this.navigate(route = NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route, navOptions = navOptions)
 }
 fun NavGraphBuilder.invitationGraph(

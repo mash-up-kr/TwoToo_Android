@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -8,6 +7,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -21,6 +21,7 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.addFocusCleaner
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -37,6 +38,7 @@ fun SendMsgBottomSheetContent(
         mutableStateOf("")
     }
 
+    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -49,7 +51,7 @@ fun SendMsgBottomSheetContent(
         }
     }
     Column(
-        modifier = modifier.fillMaxWidth().imePadding().padding(horizontal = 20.dp),
+        modifier = modifier.fillMaxWidth().addFocusCleaner(focusManager).imePadding().padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
@@ -70,19 +72,24 @@ fun SendMsgBottomSheetContent(
             Spacer(modifier = Modifier.height(24.5.dp))
         }
         TwoTooTextButton(
-            modifier = Modifier.fillMaxWidth().height(57.dp).clickable {
-                onClickButton(
-                    when (type) {
-                        is Shot -> {
-                            ShotData(text = textFieldState)
-                        }
-                        is Cheer -> {
-                            CheerData(text = textFieldState)
-                        }
-                    },
-                )
-            },
+            modifier = Modifier.fillMaxWidth().height(57.dp),
             text = stringResource(id = R.string.bottomSheetCheerAndShotButtonText),
+            onClick = {
+                focusManager.clearFocus()
+                coroutineScope.launch {
+                    delay(200)
+                    onClickButton(
+                        when (type) {
+                            is Shot -> {
+                                ShotData(text = textFieldState)
+                            }
+                            is Cheer -> {
+                                CheerData(text = textFieldState)
+                            }
+                        },
+                    )
+                }
+            },
         )
         Spacer(modifier = Modifier.height(14.dp))
     }

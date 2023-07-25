@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Twotoo</string>
+    <string name="app_name">TwoToo</string>
     <string name="garden">Garden</string>
     <string name="home">Home</string>
 
@@ -156,6 +156,8 @@
     <string name="challenge_start">챌린지 시작</string>
     <string name="authenticate">인증하기</string>
     <string name="authenticate_waiting">기다리는 중</string>
+    <string name="authenticate_expired">인증 실패ㅜㅜ</string>
+    <string name="DDay">D-%d</string>
     <!-- Garend -->
     <string name="garden_title">우리의 정원</string>
 
@@ -195,8 +197,14 @@
     <string name="toast_message_commit_fail">오늘의 인증을 실패했습니다ㅠ</string>
     <string name="toast_message_shot_success">상대방에게 찌르기 문구가 보내졌습니다</string>
     <string name="toast_message_cheer_success">칭찬 한마디가 등록되었습니다</string>
+    <string name="toast_message_cheer_fail">칭찬 등록에 실패했습니다</string>
     <string name="toast_message_load_home_fail">홈 정보를 불러오기 실패했습니다</string>
     <string name="toast_message_finish_challenge_fail">챌린지 완료에 실패했습니다</string>
+    <string name="toast_message_deeplink_error">잘못된 링크입니다</string>
+    <string name="toast_message_shot_fail">찌르기 전송에 실패했습니다</string>
+    <string name="toast_message_shot_invalid">오늘의 콕 찌르기 다 소진되었어요 ㅠㅜ</string>
 
+    <!--guide-->
+    <string name="guideTitle">"투투 설명서 "</string>
 
 </resources>

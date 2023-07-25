@@ -13,12 +13,13 @@ interface CommitApi {
     @POST("/commit")
     suspend fun commit(
         @Part text: MultipartBody.Part,
+        @Part challengeNo: MultipartBody.Part,
         @Part img: MultipartBody.Part,
     ): Commit
 
     @GET("/commit{commitNo}")
-    suspend fun getCommitByNo(@Path("commitNo") commitNo: String): Commit
+    suspend fun getCommitByNo(@Path("commitNo") commitNo: Int): Commit
 
     @POST("/commit/{commitNo}/comment")
-    suspend fun cheerByNo(@Path("commitNo") commitNo: String): Commit
+    suspend fun cheerByNo(@Path("commitNo") commitNo: Int): Commit
 }

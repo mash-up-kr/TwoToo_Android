@@ -7,6 +7,7 @@ import com.mashup.twotoo.presenter.invite.di.InviteComponent
 import com.mashup.twotoo.presenter.mypage.di.UserComponent
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponent
 import com.mashup.twotoo.presenter.onboarding.di.OnboardingComponent
+import com.mashup.twotoo.presenter.splash.di.SplashComponent
 import dagger.Module
 
 /**
@@ -16,6 +17,7 @@ import dagger.Module
 @Module(
     subcomponents =
     [
+        SplashComponent::class,
         HomeComponent::class, UserComponent::class, HistoryComponent::class,
         GardenComponent::class,
         OnboardingComponent::class,

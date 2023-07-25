@@ -41,13 +41,13 @@ fun HomeGoalCount(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(9.dp),
             ) {
-                Text(homeGoalCountUiModel.partnerName)
+                Text(homeGoalCountUiModel.partnerName ?: "")
                 TwoTooImageView(
                     modifier = Modifier.width(14.dp).height(14.dp),
                     model = R.drawable.ic_heart,
                     previewPlaceholder = R.drawable.ic_heart,
                 )
-                Text(homeGoalCountUiModel.myName)
+                Text(homeGoalCountUiModel.myName ?: "")
             }
             if (isChallengeCountVisible) {
                 Spacer(modifier = Modifier.height(textLineSpacerHeight))

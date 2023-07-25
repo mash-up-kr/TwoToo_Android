@@ -26,6 +26,7 @@ fun GardenRoute(
     gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit = {},
+    navigateToGuide: () -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(Unit) {
@@ -38,6 +39,7 @@ fun GardenRoute(
     GardenScreen(
         modifier = modifier.testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,
+        navigateToGuide = navigateToGuide,
         state = state,
         stopAnimation = gardenViewModel::stopAnimation,
     )
@@ -49,12 +51,13 @@ fun GardenScreen(
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit,
     stopAnimation: () -> Unit,
+    navigateToGuide: () -> Unit,
 ) {
     // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
 
     Scaffold(
         topBar = {
-            TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = {})
+            TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = { navigateToGuide() })
         },
         containerColor = TwoTooTheme.color.backgroundYellow,
     ) {
@@ -85,5 +88,5 @@ fun GardenScreen(
 @Preview
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {})
+    GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {},navigateToGuide = {})
 }

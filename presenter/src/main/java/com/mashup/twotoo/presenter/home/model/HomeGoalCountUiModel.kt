@@ -5,9 +5,9 @@ package com.mashup.twotoo.presenter.home.model
  */
 
 data class HomeGoalCountUiModel(
-    val partnerName: String,
-    val myName: String,
-    val count: Int,
+    val partnerName: String?,
+    val myName: String?,
+    val count: Int?,
 ) {
     companion object {
         val default = HomeGoalCountUiModel(

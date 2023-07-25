@@ -5,6 +5,7 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.garden.GardenRoute
 import com.mashup.twotoo.presenter.garden.di.GardenComponentProvider
+import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
@@ -23,6 +24,7 @@ fun NavGraphBuilder.gardenGraph(navController: NavController) {
 
             GardenRoute(
                 navigateToGarden = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
+                navigateToGuide = { navController.navigateToGuide() },
                 gardenViewModel = gardenViewModel,
             )
         }

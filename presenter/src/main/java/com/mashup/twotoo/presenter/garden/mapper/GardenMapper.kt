@@ -16,10 +16,6 @@ fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel
     )
 }
 
-fun String.toDateStr(): String {
-    return DateFormatter.getDateStrBy(this)
-}
-
 fun ChallengeResponseDomainModel.toPeriod(): String {
-    return "${startDate.toDateStr()} ~ ${endDate.toDateStr()}"
+    return "${DateFormatter.getDateStrByStr(startDate)} ~ ${DateFormatter.getDateStrByStr(endDate)}"
 }
