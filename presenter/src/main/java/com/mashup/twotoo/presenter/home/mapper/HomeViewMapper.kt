@@ -48,15 +48,15 @@ fun String.isBeforeChallengeState(): Boolean {
 fun HomeViewResponseDomainModel.toBeforeChallengeUiModel(
     userNo: Int,
 ): BeforeChallengeUiModel {
-    val homeGoalCountUiModel = if (userNo == user1.userNo) {
+    val homeGoalCountUiModel = if (userNo == myInfo.userNo) {
         HomeGoalCountUiModel.default.copy(
-            partnerName = user2.nickname,
-            myName = user1.nickname,
+            partnerName = partnerInfo.nickname,
+            myName = myInfo.nickname,
         )
     } else {
         HomeGoalCountUiModel.default.copy(
-            partnerName = user1.nickname,
-            myName = user2.nickname,
+            partnerName = myInfo.nickname,
+            myName = partnerInfo.nickname,
         )
     }
 
@@ -174,7 +174,7 @@ fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel 
 
 fun HomeViewResponseDomainModel.toHomeShotCountTextUiModel(): HomeShotCountTextUiModel {
     return HomeShotCountTextUiModel(
-        count = 5 - this.userStingCnt,
+        count = 5 - this.myStingCnt,
     )
 }
 
@@ -182,7 +182,7 @@ fun HomeViewResponseDomainModel.isCheerState(): Boolean {
     /*
     모두 인증을 했을 경우에만 cheerState로 이동
      */
-    return user1Commit != null && user2Commit != null
+    return myCommit != null && partnerCommit != null
 }
 
 fun HomeViewResponseDomainModel.isCompleteState(): Boolean {
@@ -192,10 +192,10 @@ fun HomeViewResponseDomainModel.isCompleteState(): Boolean {
 fun HomeViewResponseDomainModel.getUserCommit(
     userNo: Int,
 ): Pair<UserCommitResponseDomainModel?, UserCommitResponseDomainModel?> {
-    return if (user1.userNo == userNo) {
-        Pair(user1Commit, user2Commit)
+    return if (myInfo.userNo == userNo) {
+        Pair(myCommit, partnerCommit)
     } else {
-        Pair(user2Commit, user1Commit)
+        Pair(partnerCommit, myCommit)
     }
 }
 
@@ -274,7 +274,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
-                        name = partnerNickName,
+                        name = meNickName,
                         flowerType = meFlower,
                     ),
                     cheerText = partner.partnerComment.multiLineConverter(), // 파트너의 문구에서 나의 문구를 찾아야함.
@@ -297,7 +297,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
-                        name = partnerNickName,
+                        name = meNickName,
                         flowerType = meFlower,
                     ),
                     commitNo = me.commitNo,
@@ -318,7 +318,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
-                        name = partnerNickName,
+                        name = meNickName,
                         flowerType = meFlower,
                     ),
                     commitNo = me.commitNo,
@@ -337,7 +337,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 ),
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
-                        name = partnerNickName,
+                        name = meNickName,
                         flowerType = meFlower,
                     ),
                 ),

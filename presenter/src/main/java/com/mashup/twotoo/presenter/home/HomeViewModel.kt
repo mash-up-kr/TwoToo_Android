@@ -18,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
+import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.notification.request.NotificationRequestDomainModel
@@ -77,7 +78,7 @@ class HomeViewModel @Inject constructor(
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
                             val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).partner.cheerText
-                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isNotBlank()) {
+                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isBlank()) {
                                 // 응원텍스트가 있다면 표시하지 않습니다.
                                 postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
                             }
@@ -207,7 +208,6 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-                    // TODO GET VIEW API 재호출
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
                     )
@@ -264,12 +264,8 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.CheerData -> {
-                // 서버 데이터 전송
-                val commitNo = (
-                    (state.challengeStateUiModel as? OngoingChallengeUiModel)
-                        ?.homeChallengeStateUiModel?.challengeStateUiModel as? HomeCheerUiModel
-                    )?.partner?.commitNo
-                if (commitNo == null) {
+                val cheerText = bottomSheetData.text
+                if (cheerText.isBlank()) {
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
@@ -280,17 +276,24 @@ class HomeViewModel @Inject constructor(
                     )
                     return@intent
                 }
+                val commitNo = (
+                    (state.challengeStateUiModel as OngoingChallengeUiModel)
+                        .homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel
+                    ).partner.commitNo
+
                 createCheerUseCase(
-                    commitNoRequestDomainModel = CommitNoRequestDomainModel(
-                        commitNo = commitNo,
-                    ),
+                    commitNoRequestDomainModel = CommitNoRequestDomainModel(commitNo = commitNo),
+                    cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
                 ).onSuccess {
                     postSideEffect(
                         HomeSideEffect.Toast(
                             ToastText.CheerSuccess,
                         ),
                     )
-                    // home viewUpdate
+                    postSideEffect(
+                        HomeSideEffect.RemoveVisibilityCheerDialog,
+                    )
+                    delay(100)
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
                     )

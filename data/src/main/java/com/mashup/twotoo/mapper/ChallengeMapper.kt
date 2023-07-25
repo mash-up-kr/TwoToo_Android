@@ -21,11 +21,11 @@ fun ViewHomeResponse.toDomainModel(): HomeViewResponseDomainModel {
         viewState = viewState,
         challengeTotal = challengeTotal,
         onGoingChallenge = onGoingChallenge?.toDomainModel(),
-        user1 = user1.toDomainModel(),
-        user1Commit = user1Commit?.toDomainModel(),
-        user2 = user2.toDomainModel(),
-        user2Commit = user2Commit?.toDomainModel(),
-        userStingCnt = userStingCnt,
+        myInfo = myInfo.toDomainModel(),
+        myCommit = myCommit?.toDomainModel(),
+        partnerInfo = partnerInfo.toDomainModel(),
+        partnerCommit = partnerCommit?.toDomainModel(),
+        myStingCnt = myStingCnt,
     )
 }
 
