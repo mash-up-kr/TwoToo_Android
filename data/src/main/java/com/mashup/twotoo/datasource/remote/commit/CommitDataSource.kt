@@ -1,5 +1,6 @@
 package com.mashup.twotoo.datasource.remote.commit
 
+import com.mashup.twotoo.datasource.remote.commit.request.CheerRequest
 import com.mashup.twotoo.datasource.remote.commit.request.CommitNoRequest
 import com.mashup.twotoo.datasource.remote.commit.request.CommitRequest
 import com.mashup.twotoo.datasource.remote.commit.response.Commit
@@ -26,7 +27,11 @@ class CommitDataSource @Inject constructor(
 
     suspend fun cheerByNo(
         commitNoRequest: CommitNoRequest,
+        cheerRequest: CheerRequest,
     ): Commit {
-        return commitApi.cheerByNo(commitNo = commitNoRequest.commitNo)
+        return commitApi.cheerByNo(
+            commitNo = commitNoRequest.commitNo,
+            cheerRequest = cheerRequest,
+        )
     }
 }
