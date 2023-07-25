@@ -275,7 +275,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 me = CheerWithFlower.meNotEmpty.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
-                        flowerType = partnerFlower,
+                        flowerType = meFlower,
                     ),
                     cheerText = partner.partnerComment.multiLineConverter(), // 파트너의 문구에서 나의 문구를 찾아야함.
                     commitNo = me.commitNo,
@@ -298,7 +298,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
-                        flowerType = partnerFlower,
+                        flowerType = meFlower,
                     ),
                     commitNo = me.commitNo,
                 ),
@@ -319,7 +319,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
-                        flowerType = partnerFlower,
+                        flowerType = meFlower,
                     ),
                     commitNo = me.commitNo,
                 ),
@@ -338,7 +338,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(
                 me = CheerWithFlower.meNotYet.copy(
                     homeFlowerUiModel = HomeFlowerUiModel.me.copy(
                         name = partnerNickName,
-                        flowerType = partnerFlower,
+                        flowerType = meFlower,
                     ),
                 ),
             )
