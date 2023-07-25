@@ -17,10 +17,12 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeByNoUseCase
 import java.util.*
+import usecase.challenge.QuiteChallengeUseCase
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
     private val getChallengeByNoUseCase: GetChallengeByNoUseCase,
+    private val quiteChallengeUseCase: QuiteChallengeUseCase,
 ) : ContainerHost<HistoryState, Nothing>, ViewModel() {
     override val container: Container<HistoryState, Nothing> = container(
         HistoryState(),
@@ -164,6 +166,14 @@ class HistoryViewModel @Inject constructor(
                     ownerNickNamesUiModel = ownerNickName,
                 ),
             )
+        }
+    }
+
+    fun quiteChallenge(challengeNo: Int) = intent {
+        quiteChallengeUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
+            Log.i("HistoryViewModel", "quiteChallenge: 챌린지 삭제완료")
+        }.onFailure {
+            Log.i("HistoryViewModel", "quiteChallenge: 챌린지 삭제 실패")
         }
     }
 }
