@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.home.navigation.homeGraph
@@ -35,13 +36,31 @@ fun NavGraphBuilder.onBoardingGraph(
             OnBoardingRoute(onBoardingViewModel) { route ->
                 when (route) {
                     NavigationRoute.HomeGraph.HomeScreen.route -> {
-                        navController.navigateToHome()
+                        navController.navigateToHome(
+                            navOptions = navOptions {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                            },
+                        )
                     }
                     NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
-                        navController.navigateToOnNickNameSetting()
+                        navController.navigateToOnNickNameSetting(
+                            navOptions = navOptions {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                            },
+                        )
                     }
                     NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
-                        navController.navigateToInvitation()
+                        navController.navigateToInvitation(
+                            navOptions = navOptions {
+                                popUpTo(navController.graph.startDestinationId) {
+                                    inclusive = true
+                                }
+                            },
+                        )
                     }
                 }
             }

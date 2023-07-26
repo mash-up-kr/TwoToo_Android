@@ -1,12 +1,11 @@
 package com.mashup.twotoo.presenter.invite.navigation
 
-import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import com.mashup.twotoo.presenter.constant.TAG
+import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.invite.SendInvitationRoute
@@ -37,7 +36,13 @@ fun NavGraphBuilder.invitationGraph(
                 inviteComponent.getViewModel()
             }
             SendInvitationRoute(inviteViewModel) {
-                navController.navigateToWaitingAcceptPair()
+                navController.navigateToWaitingAcceptPair(
+                    navOptions = navOptions {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    },
+                )
             }
         }
         composable(route = NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route) {
@@ -46,7 +51,13 @@ fun NavGraphBuilder.invitationGraph(
                 inviteComponent.getViewModel()
             }
             WaitingAcceptPairRoute(inviteViewModel) {
-                navController.navigateToHome()
+                navController.navigateToHome(
+                    navOptions = navOptions {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true
+                        }
+                    },
+                )
             }
         }
     }

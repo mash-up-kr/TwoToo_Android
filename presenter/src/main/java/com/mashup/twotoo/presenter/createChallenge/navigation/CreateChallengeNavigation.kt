@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.createChallenge.CreateChallengeRoute
 import com.mashup.twotoo.presenter.createChallenge.SuccessChallengeRequest
@@ -44,6 +45,7 @@ fun NavGraphBuilder.createChallengeGraph(
             }
             CreateChallengeRoute(
                 createChallengeViewModel = createChallengeViewModel,
+                onBackToHome = { navController.popBackStack() },
             ) {
                 navController.navigateToSelectFlowerCard()
             }
@@ -66,7 +68,13 @@ fun NavGraphBuilder.createChallengeGraph(
                     navController.popBackStack()
                 },
                 onSuccessCreateChallenge = {
-                    navController.navigateToSuccessChallengeRequest()
+                    navController.navigateToSuccessChallengeRequest(
+                        navOptions = navOptions {
+                            popUpTo(NavigationRoute.CreateChallengeGraph.route) {
+                                inclusive = true
+                            }
+                        },
+                    )
                 },
             )
         }
