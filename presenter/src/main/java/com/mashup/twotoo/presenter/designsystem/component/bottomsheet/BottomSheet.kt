@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -25,7 +26,6 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.addFocusCleaner
 import kotlinx.coroutines.launch
 import java.io.File
 import java.util.Objects
@@ -178,13 +178,18 @@ fun TwoTooSendMsgBottomSheet(
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
     onClickButton: (BottomSheetData) -> Unit = {},
 ) {
+    val focusManager = LocalFocusManager.current
     TwoTooBottomSheetImpl(
         bottomSheetState = bottomSheetState,
-        onDismiss = onDismiss,
+        onDismiss = {
+            focusManager.clearFocus()
+            onDismiss()
+        },
     ) {
         SendMsgBottomSheetContent(
             type = type,
             onClickButton = onClickButton,
+            focusManager = focusManager,
         )
     }
 }
