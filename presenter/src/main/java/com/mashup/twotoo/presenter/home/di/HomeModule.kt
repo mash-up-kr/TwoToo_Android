@@ -7,7 +7,6 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetPreferenceUserInfoUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -39,7 +38,6 @@ class HomeModule {
         removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
         createCheerUseCase: CreateCheerUseCase,
         stingUseCase: StingUseCase,
-        getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase,
     ): HomeViewModel {
         return HomeViewModel(
             getHomeViewUseCase = getHomeViewChallengeStateUseCase,
@@ -53,7 +51,6 @@ class HomeModule {
             removeVisibilityCompleteDialogUseCase = removeVisibilityCompleteDialogUseCase,
             createCheerUseCase = createCheerUseCase,
             stingUseCase = stingUseCase,
-            getPreferenceUserInfoUseCase = getPreferenceUserInfoUseCase,
         )
     }
 }

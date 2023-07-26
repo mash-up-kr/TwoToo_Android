@@ -59,17 +59,15 @@ class HomeViewModel @Inject constructor(
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
     private val createCheerUseCase: CreateCheerUseCase,
     private val stingUseCase: StingUseCase,
-    private val getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
-            val userNo = getPreferenceUserInfoUseCase()?.userNo ?: return@intent
             reduce {
                 state.copy(
-                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(userNo),
+                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
                 )
             }
 
