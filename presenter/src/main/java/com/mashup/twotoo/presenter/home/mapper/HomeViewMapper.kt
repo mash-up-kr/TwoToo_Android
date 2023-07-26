@@ -380,23 +380,23 @@ fun ChallengeResponseDomainModel.getGrowType(
 
 fun Int.toGrowState(): Stage {
     return when (this) {
-        in 0..5 -> {
+        in 0..0 -> {
             Stage.Zero
         }
 
-        in 5..9 -> {
+        in 1..4 -> {
             Stage.First
         }
 
-        in 10..14 -> {
+        in 5..9 -> {
             Stage.Second
         }
 
-        in 15..16 -> {
+        in 10..15 -> {
             Stage.Third
         }
 
-        in 17..21 -> {
+        in 16..21 -> {
             Stage.Fourth
         }
 
