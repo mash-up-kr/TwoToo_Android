@@ -139,8 +139,8 @@ fun HomeFlowerMeAndPartner(
                             modifier = Modifier
                                 .width(14.dp)
                                 .height(14.dp),
-                            model = R.drawable.ic_heart,
-                            previewPlaceholder = R.drawable.ic_heart,
+                            model = R.drawable.img_heart,
+                            previewPlaceholder = R.drawable.img_heart,
                         )
                     }
                 }
@@ -188,7 +188,7 @@ fun HomeFlowerMeAndPartner(
 
             is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 HomeCheerPartner(
-                    modifier = Modifier.constrainAs(partnerCheer) {
+                    modifier = Modifier.width(140.dp).constrainAs(partnerCheer) {
                         start.linkTo(parent.start, margin = 32.dp)
                         end.linkTo(heartImage.start)
                         bottom.linkTo(
@@ -235,17 +235,17 @@ fun HomeFlowerMeAndPartner(
                             bottom.linkTo(partner.bottom, margin = 50.dp)
                         }
                         .size(28.dp),
-                    model = R.drawable.ic_heart,
-                    previewPlaceholder = R.drawable.ic_heart,
+                    model = R.drawable.img_heart,
+                    previewPlaceholder = R.drawable.img_heart,
                 )
 
                 HomeCheerMe(
                     modifier = Modifier
-                        .width(150.dp)
+                        .width(140.dp)
                         .constrainAs(meCheer) {
                             top.linkTo(parent.top)
                             start.linkTo(heartImage.end)
-                            end.linkTo(parent.end, margin = 32.dp)
+                            end.linkTo(parent.end, margin = 19.dp)
                             bottom.linkTo(
                                 me.top,
                                 margin =
