@@ -132,8 +132,9 @@ fun ChallengeCardInfoBottom(
                     10.dp,
                 ),
             ).height(77.dp)
-                .padding(top = 25.dp, start = 26.dp),
+                .padding(top = 25.dp, end = 50.dp),
         ),
+        textAlign = TextAlign.Center,
         text = stringResource(id = R.string.twotoo_challenge),
         style = TwoTooTheme.typography.bodyNormal16,
         color = TwoTooTheme.color.mainBrown,
