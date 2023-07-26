@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -91,7 +92,7 @@ fun ChallengeCardInfoTop(
     challengeDesc: String,
 ) {
     Column(
-        modifier = Modifier.wrapContentWidth()
+        modifier = Modifier.wrapContentWidth().defaultMinSize(minWidth = 242.dp)
             .padding(horizontal = 23.dp),
     ) {
         Text(
