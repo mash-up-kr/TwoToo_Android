@@ -54,11 +54,8 @@ fun ApproveChallengeRequestDomainModel.toDataModel(): ApproveChallengeRequest {
 
 fun User.toDomainModel(): UserResponseDomainModel {
     return UserResponseDomainModel(
-        deviceToken = this.deviceToken,
-        loginType = this.loginType,
         nickname = this.nickname,
         partnerNo = this.partnerNo,
-        socialId = this.socialId,
         userNo = this.userNo,
     )
 }
