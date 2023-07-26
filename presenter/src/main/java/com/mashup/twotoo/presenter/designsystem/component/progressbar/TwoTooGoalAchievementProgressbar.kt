@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -83,10 +84,11 @@ fun GoalAchievementRow(
             )
             Spacer(modifier = Modifier.width(11.dp))
             Text(
-                modifier = Modifier,
+                modifier = Modifier.width(25.dp),
                 text = "${(homeGoalAchieveUiModel.progress * 100).toInt()}%",
                 color = Color(0xFFA4A4A4),
                 style = TwoTooTheme.typography.bodyNormal12,
+                textAlign = TextAlign.Center,
             )
             Spacer(modifier = Modifier.width(12.dp))
         }
