@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.LocalContentColor
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -39,15 +41,37 @@ fun HomeGoalCount(
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(9.dp),
+                horizontalArrangement = Arrangement.End,
             ) {
-                Text(homeGoalCountUiModel.partnerName ?: "")
+                Row(
+                    modifier = Modifier.width(21.dp).height(22.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = homeGoalCountUiModel.partnerName ?: "",
+                        textAlign = TextAlign.Center,
+                    )
+                }
+                Spacer(modifier = Modifier.width(6.dp))
                 TwoTooImageView(
                     modifier = Modifier.width(14.dp).height(14.dp),
                     model = R.drawable.img_heart,
                     previewPlaceholder = R.drawable.img_heart,
                 )
-                Text(homeGoalCountUiModel.myName ?: "")
+                Spacer(modifier = Modifier.width(6.dp))
+                Row(
+                    modifier = Modifier.width(21.dp).height(22.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center,
+                ) {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        text = homeGoalCountUiModel.myName ?: "",
+                        textAlign = TextAlign.Center,
+                    )
+                }
             }
             if (isChallengeCountVisible) {
                 Spacer(modifier = Modifier.height(textLineSpacerHeight))
