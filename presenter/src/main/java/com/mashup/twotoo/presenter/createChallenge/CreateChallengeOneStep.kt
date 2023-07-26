@@ -35,6 +35,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.createChallenge.recommendChallenge.RecommendChallengeBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
@@ -44,21 +45,22 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun CreateChallengeOneStep(
+    state: ChallengeInfoModel = ChallengeInfoModel(),
     onClickNext: (String, String, String) -> Unit
 ) {
     Column(
         modifier = Modifier.padding(top = 12.dp),
     ) {
-        var challengeName by remember { mutableStateOf("") }
-        var startDate by remember { mutableStateOf(DateFormatter.getCurrentDate()) }
-        var endDate by remember { mutableStateOf(DateFormatter.getDaysAfter(DateFormatter.getCurrentDate())) }
+        var challengeName by remember { mutableStateOf(state.challengeName) }
+        var startDate by remember { mutableStateOf(state.startDate) }
+        var endDate by remember { mutableStateOf(state.endDate) }
         val context = LocalContext.current
 
         InputChallengeName(challengeName, onTextValueChanged = { challengeName = it })
         RecommendChallengeButton { clickItem ->
             challengeName = context.resources.getString(clickItem)
         }
-        SettingChallengeDate { selectedStartDate, selectedEndDate ->
+        SettingChallengeDate(startDate, endDate) { selectedStartDate, selectedEndDate ->
             startDate = selectedStartDate
             endDate = selectedEndDate
         }
@@ -145,10 +147,12 @@ fun RecommendChallengeButton(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingChallengeDate(
+    initStartDate: String,
+    initEndDate: String,
     period: (String, String) -> Unit,
 ) {
-    var selectedStartDate by remember { mutableStateOf(DateFormatter.getCurrentDate()) }
-    var endDate by remember { mutableStateOf(DateFormatter.getDaysAfter(DateFormatter.getCurrentDate())) }
+    var selectedStartDate by remember { mutableStateOf(initStartDate) }
+    var endDate by remember { mutableStateOf(initEndDate) }
     val datePickerState = rememberDatePickerState(initialSelectedDateMillis = System.currentTimeMillis())
     var isShowDatePickerVisible by rememberSaveable { mutableStateOf(false) }
 
@@ -227,5 +231,5 @@ fun SettingChallengeDate(
 @Preview
 @Composable
 private fun PreviewDate() {
-    CreateChallengeOneStep({ name, start, end -> })
+    CreateChallengeOneStep() { name, start, end -> }
 }

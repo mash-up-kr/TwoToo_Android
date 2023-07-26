@@ -16,14 +16,16 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 
 @Composable
 fun CreateChallengeTwoStep(
+    state: ChallengeInfoModel = ChallengeInfoModel(),
     onClickNext: (String) -> Unit
 ) {
-    var challengeInfo by remember { mutableStateOf("") }
+    var challengeInfo by remember { mutableStateOf(state.challengeInfo) }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -54,5 +56,5 @@ fun CreateChallengeTwoStep(
 @Composable
 @Preview
 private fun PreviewCreateChallengeTwoStep() {
-    CreateChallengeTwoStep({})
+    CreateChallengeTwoStep() {}
 }

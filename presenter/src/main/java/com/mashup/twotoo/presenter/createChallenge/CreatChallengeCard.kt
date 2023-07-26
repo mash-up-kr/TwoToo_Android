@@ -40,6 +40,7 @@ fun CreateChallengeCard(
     challengeTitle: String,
     challengeDate: String,
     challengeDesc: String,
+    isNextButtonVisible: Boolean = true,
     onClickNext: () -> Unit
 ) {
     var width by remember { mutableIntStateOf(0) }
@@ -71,17 +72,19 @@ fun CreateChallengeCard(
                 contentScale = ContentScale.FillBounds,
             )
         }
-        Spacer(Modifier.weight(1f))
-        TwoTooTextButton(
-            text = stringResource(id = R.string.button_next),
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(57.dp),
-            onClick = {
-                onClickNext()
-            },
-        )
-        Spacer(modifier = Modifier.height(55.dp))
+        if (isNextButtonVisible) {
+            Spacer(Modifier.weight(1f))
+            TwoTooTextButton(
+                text = stringResource(id = R.string.button_next),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(57.dp),
+                onClick = {
+                    onClickNext()
+                },
+            )
+            Spacer(modifier = Modifier.height(55.dp))
+        }
     }
 }
 
