@@ -46,8 +46,18 @@ fun SelectFlowerLazyColumn(
                 flowerCardModel = list[idx],
                 selectedItemIndex,
                 onClickItem = { index ->
-                    selectedItemIndex = index
-                    onClickOneItem(list[selectedItemIndex].flowerName.value)
+                    selectedItemIndex = if (selectedItemIndex == index) {
+                        -1
+                    } else {
+                        index
+                    }
+                    onClickOneItem(
+                        if (selectedItemIndex == -1) {
+                            ""
+                        } else {
+                            list[selectedItemIndex].flowerName.value
+                        },
+                    )
                 },
             )
         }

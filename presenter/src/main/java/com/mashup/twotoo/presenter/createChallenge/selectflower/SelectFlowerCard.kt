@@ -74,8 +74,12 @@ fun SelectFlowerCard(
                 SelectFlowerTitle()
                 SelectFlowerLazyColumn(
                     onClickOneItem = { selectName ->
-                        isVisibleStartButton = true
-                        flowerName = selectName
+                        if (selectName.isNotEmpty()) {
+                            isVisibleStartButton = true
+                            flowerName = selectName
+                        } else {
+                            isVisibleStartButton = false
+                        }
                     },
                 )
             }
