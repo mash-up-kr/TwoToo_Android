@@ -5,11 +5,11 @@ import model.challenge.request.CreateChallengeRequestDomainModel
 
 data class ChallengeInfoModel(
     var challengeName: String = "",
-    var startDate: String = "",
-    val endDate: String = "",
+    var startDate: String = DateFormatter.getCurrentDate(),
+    val endDate: String = DateFormatter.getDaysAfter(DateFormatter.getCurrentDate()),
     val period: String = "",
     var challengeInfo: String = "",
-    val selectFlowerName: String = ""
+    val selectFlowerName: String = "",
 )
 
 fun ChallengeInfoModel.toDomainModel(): CreateChallengeRequestDomainModel {
