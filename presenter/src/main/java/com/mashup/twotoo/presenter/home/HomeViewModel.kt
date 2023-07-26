@@ -137,6 +137,18 @@ class HomeViewModel @Inject constructor(
         }
     }
 
+    fun setInvisibleCheerDialogSideEffect() {
+        viewModelScope.launch {
+            setVisibilityCheerDialogUseCase(true)
+        }
+    }
+
+    fun setInvisibleCompleteDialogSideEffect() {
+        viewModelScope.launch {
+            setVisibilityCompleteDialogUseCase(true)
+        }
+    }
+
     fun navigateToHistory(challengeNo: Int) = intent {
         postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo))
     }
@@ -298,6 +310,10 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.CallViewHomeApi,
                     )
                 }.onFailure {
+                    postSideEffect(
+                        HomeSideEffect.SetInVisibleCheerDialog,
+                    )
+
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
