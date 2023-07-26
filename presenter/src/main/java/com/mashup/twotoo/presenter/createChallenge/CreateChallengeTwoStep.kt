@@ -40,14 +40,11 @@ fun CreateChallengeTwoStep(
         Spacer(Modifier.weight(1f))
         TwoTooTextButton(
             text = stringResource(id = R.string.button_next),
-            enabled = challengeInfo.isNotEmpty(),
             modifier = Modifier
                 .fillMaxWidth()
                 .height(57.dp),
             onClick = {
-                if (challengeInfo.isNotEmpty()) {
-                    onClickNext(challengeInfo)
-                }
+                onClickNext(challengeInfo)
             },
         )
         Spacer(modifier = Modifier.height(55.dp))
