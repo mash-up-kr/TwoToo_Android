@@ -78,7 +78,7 @@ fun HomeOngoingChallenge(
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
         )
         TwoTooGoalAchievementProgressbar(
-            modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
+            modifier = Modifier.width(203.dp).height(62.dp).constrainAs(goalAchievement) {
                 start.linkTo(homeGoalField.start)
                 top.linkTo(homeGoalField.bottom, margin = 11.dp)
             }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
