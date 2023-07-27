@@ -91,7 +91,6 @@ fun HomeRoute(
         with(homeSideEffectHandler) {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
-                    bottomSheetState = bottomSheetState,
                     type = bottomSheetType,
                     onDismiss = ::onDismiss,
                     onClickButton = homeViewModel::onClickSendBottomSheetDataButton,
