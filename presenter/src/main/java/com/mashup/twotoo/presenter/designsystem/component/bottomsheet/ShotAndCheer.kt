@@ -6,7 +6,6 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
@@ -22,13 +21,11 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.addFocusCleaner
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
 fun SendMsgBottomSheetContent(
-    focusManager: FocusManager,
     type: SendType,
     modifier: Modifier = Modifier,
     onClickButton: (BottomSheetData) -> Unit = {},
@@ -40,23 +37,22 @@ fun SendMsgBottomSheetContent(
         mutableStateOf("")
     }
 
-//    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
+    val focusManager = LocalFocusManager.current
 
     LocalView.current.viewTreeObserver.addOnWindowFocusChangeListener { isFocusable ->
         if (isFocusable) {
-            coroutineScope.launch {
-                delay(250)
-                focusRequester.requestFocus()
-            }
+            focusRequester.requestFocus()
         }
     }
+
     Column(
-        modifier = modifier.fillMaxWidth().addFocusCleaner(focusManager).imePadding().padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.fillMaxWidth().fillMaxHeight(0.85f).padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(46.dp))
         Header(titleText = titleText)
         Spacer(modifier = Modifier.height(20.5.dp))
         TwoTooTextField(
@@ -101,10 +97,8 @@ fun SendMsgBottomSheetContent(
 @Composable
 private fun PreviewShotList() {
     TwoTooTheme {
-        val focusManager = LocalFocusManager.current
         SendMsgBottomSheetContent(
             type = Shot(),
-            focusManager = focusManager,
         )
     }
 }
