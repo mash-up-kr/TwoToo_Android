@@ -51,6 +51,7 @@ class HomeOngoingFirstChallengeTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
@@ -99,6 +100,7 @@ class HomeOngoingFirstChallengeTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }

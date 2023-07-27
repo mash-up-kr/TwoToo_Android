@@ -157,6 +157,7 @@ class HomeCheerBothTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
