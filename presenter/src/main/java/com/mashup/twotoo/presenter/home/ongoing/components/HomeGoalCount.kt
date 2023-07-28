@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
@@ -44,7 +45,7 @@ fun HomeGoalCount(
                 horizontalArrangement = Arrangement.End,
             ) {
                 Row(
-                    modifier = Modifier.width(21.dp).height(22.dp),
+                    modifier = Modifier.width(26.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -62,7 +63,7 @@ fun HomeGoalCount(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Row(
-                    modifier = Modifier.width(21.dp).height(22.dp),
+                    modifier = Modifier.width(26.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
