@@ -42,5 +42,7 @@ fun UserInfoResponse.toDomainModel(): UserInfoDomainModel {
         userNo = this.userNo,
         nickname = this.nickname,
         partnerNo = this.partnerNo,
+        partnerNickname = this.partnerNickName,
+        totalChallengeCount = this.totalChallengeCount,
     )
 }

@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.util
 
+import android.annotation.SuppressLint
 import android.util.Log
 import com.mashup.twotoo.presenter.constant.TAG
 import java.text.SimpleDateFormat

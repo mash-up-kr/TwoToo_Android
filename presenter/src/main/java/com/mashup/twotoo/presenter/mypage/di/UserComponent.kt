@@ -1,6 +1,6 @@
 package com.mashup.twotoo.presenter.mypage.di
 
-import com.mashup.twotoo.presenter.mypage.navigation.UserViewModel
+import com.mashup.twotoo.presenter.mypage.UserViewModel
 import dagger.Subcomponent
 
 /**

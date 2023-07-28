@@ -1,6 +1,8 @@
 package com.mashup.twotoo.presenter.garden
 
+import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -11,13 +13,15 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
@@ -33,11 +37,42 @@ import com.mashup.twotoo.presenter.garden.model.FlowerHead
 import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
-fun ChallengeCard(challengeCardInfoUiModel: ChallengeCardInfoUiModel, navigateToGarden: (Int) -> Unit) {
+fun ChallengeCard(
+    isStartAnimation: Boolean,
+    challengeCardInfoUiModel: ChallengeCardInfoUiModel,
+    navigateToGarden: (Int) -> Unit,
+) {
+    // 애니메이션 진행 중에만 border 적용
+    val borderColor = if (isStartAnimation) TwoTooTheme.color.mainLightPink else Color.Transparent
+
+    // 애니메이션을 위한 Offset 값
+    val offsetY = remember {
+        if (isStartAnimation) Animatable(-20f) else Animatable(0f)
+    }
+    LaunchedEffect(isStartAnimation) {
+        if (isStartAnimation) {
+            // 애니메이션이 진행 중인 경우 애니메이션 시작
+            offsetY.animateTo(
+                targetValue = 20f,
+                animationSpec = infiniteRepeatable(tween(durationMillis = 300, easing = FastOutLinearInEasing), RepeatMode.Reverse),
+            )
+        } else {
+            // 애니메이션이 멈춘 경우 애니메이션 종료
+            offsetY.stop()
+        }
+    }
+
     Box(
-        modifier = Modifier.height(216.dp).width(156.dp).clip(TwoTooRound6).background(TwoTooTheme.color.mainWhite).clickable {
-            navigateToGarden(challengeCardInfoUiModel.challengeNo)
-        },
+        modifier = Modifier
+            .graphicsLayer(translationY = offsetY.value)
+            .border(2.dp, borderColor, RoundedCornerShape(8.dp))
+            .height(216.dp)
+            .width(156.dp)
+            .clip(TwoTooRound6)
+            .background(TwoTooTheme.color.mainWhite)
+            .clickable {
+                navigateToGarden(challengeCardInfoUiModel.challengeNo)
+            },
     ) {
         ChallengeInfo(challengeCardInfoUiModel)
         TwoTooImageView(
@@ -115,5 +150,5 @@ private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
 @Preview
 @Composable
 fun PreviewChallengeCardView() {
-    ChallengeCard(ChallengeCardInfoUiModel.default[0]) {}
+    ChallengeCard(false, ChallengeCardInfoUiModel.default[0], {})
 }
