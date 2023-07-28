@@ -35,10 +35,11 @@ fun HistoryRoute(
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
 ) {
-    Log.i("HistoryRoute", "challengeNo = $challengeNo")
+    Log.d("HistoryRoute", "challengeNo = $challengeNo")
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(Unit) {
         lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            Log.i("HistoryRoute", "repeatOnLifecycle state= start")
             historyViewModel.getChallengeByUser(challengeNo)
         }
     }
@@ -49,6 +50,7 @@ fun HistoryRoute(
         isHomeGoalAchievementShow = false,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
+        quiteChallenge = { historyViewModel.quiteChallenge(challengeNo) },
         state = state,
     )
 }
@@ -58,6 +60,7 @@ fun HistoryScreen(
     isHomeGoalAchievementShow: Boolean,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
+    quiteChallenge: () -> Unit,
     state: HistoryState,
 ) {
     var showSelectListDialog by remember { mutableStateOf(false) }
@@ -129,7 +132,11 @@ fun HistoryScreen(
                     negativeAction = {
                         showChallengeDropDialog = false
                     },
-                    positiveAction = {},
+                    positiveAction = {
+                        quiteChallenge()
+                        showChallengeDropDialog = false
+                        onClickBackButton()
+                    },
                 ),
             )
         }
@@ -145,6 +152,7 @@ private fun PreviewHistoryScreen() {
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
+            quiteChallenge = {},
         )
     }
 }
@@ -158,6 +166,7 @@ private fun PreviewHistoryScreenEmpty() {
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
+            quiteChallenge = {},
         )
     }
 }
@@ -171,6 +180,7 @@ private fun PreviewHistoryScreenWithProgressBar() {
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
+            quiteChallenge = {},
         )
     }
 }

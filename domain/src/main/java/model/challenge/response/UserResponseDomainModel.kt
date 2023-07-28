@@ -5,7 +5,7 @@ package model.challenge.response
  */
 data class UserResponseDomainModel(
     val nickname: String,
-    val partnerNo: Int,
+    val partnerNo: Int?,
     val userNo: Int,
 ) {
     companion object {
@@ -17,7 +17,7 @@ data class UserResponseDomainModel(
         val user2 = UserResponseDomainModel(
             nickname = "유저2",
             partnerNo = 1,
-            userNo = 2,
+            userNo = 1,
         )
     }
 }

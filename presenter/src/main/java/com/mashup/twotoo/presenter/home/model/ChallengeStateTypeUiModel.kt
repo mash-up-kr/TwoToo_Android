@@ -84,6 +84,7 @@ data class BeforeChallengeUiModel(
 
 data class OngoingChallengeUiModel(
     val challengeNo: Int = 0,
+    val shotInteractionState: Boolean = false,
     val homeChallengeStateUiModel: HomeChallengeStateUiModel,
     val homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel,
     val homeGoalCountUiModel: HomeGoalCountUiModel,
@@ -160,12 +161,12 @@ data class HomeChallengeStateUiModel(
 
         val cheerBoth = HomeChallengeStateUiModel(
             challengeState = Cheer,
-            challengeStateUiModel = HomeCheerUiModel.default.copy(
+            challengeStateUiModel = HomeCheerUiModel.cheerBoth.copy(
                 partner = CheerWithFlower.partnerNotEmpty.copy(
-                    cheerText = "앞으로 더 화이팅이야😘",
+                    cheerText = "앞으로더화이팅이야😘",
                 ),
                 me = CheerWithFlower.meNotEmpty.copy(
-                    cheerText = "오늘도 너무 고생했어😌",
+                    cheerText = "오늘도너무고생했어😌",
                 ),
             ),
         )

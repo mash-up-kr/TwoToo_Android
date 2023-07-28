@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.createChallenge.navigation.navigateToCreateChallenge
 import com.mashup.twotoo.presenter.di.daggerViewModel
+import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
@@ -33,9 +34,9 @@ fun NavGraphBuilder.homeGraph(
             HomeRoute(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
-                // Todo home challengeNo 연결 해야함
-                navigateToHistory = { navController.navigateToHistory(challengeNo = 1) },
+                navigateToHistory = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
                 navigateToCreateChallenge = { navController.navigateToCreateChallenge() },
+                navigateToGuide = { navController.navigateToGuide() },
             )
         }
     }
