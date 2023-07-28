@@ -2,10 +2,12 @@ package com.mashup.twotoo.mapper
 
 import android.content.Context
 import android.net.Uri
+import com.mashup.twotoo.datasource.remote.commit.request.CheerRequest
 import com.mashup.twotoo.datasource.remote.commit.request.CommitNoRequest
 import com.mashup.twotoo.datasource.remote.commit.request.CommitRequest
 import com.mashup.twotoo.datasource.remote.commit.response.Commit
 import com.mashup.twotoo.util.ContentUriRequestBody
+import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
@@ -38,5 +40,11 @@ fun CommitRequestDomainModel.toDataModel(context: Context): CommitRequest {
 fun CommitNoRequestDomainModel.toDataModel(): CommitNoRequest {
     return CommitNoRequest(
         commitNo = this.commitNo,
+    )
+}
+
+fun CheerRequestDomainModel.toDataModel(): CheerRequest {
+    return CheerRequest(
+        comment = this.cheerText,
     )
 }

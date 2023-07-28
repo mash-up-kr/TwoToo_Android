@@ -37,6 +37,8 @@ fun rememberHomeSideEffectHandler(
     removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
     callViewHomeApi: () -> Unit,
+    setInvisibleCheerDialog: () -> Unit,
+    setInvisibleCompleteDialog: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -57,6 +59,8 @@ fun rememberHomeSideEffectHandler(
             removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
             callViewHomeApi = callViewHomeApi,
+            setInvisibleCheerDialog = setInvisibleCheerDialog,
+            setInvisibleCompleteDialog = setInvisibleCompleteDialog,
         )
     }
 }
@@ -76,6 +80,8 @@ class HomeSideEffectHandler(
     private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
     private val callViewHomeApi: () -> Unit,
+    private val setInvisibleCheerDialog: () -> Unit,
+    private val setInvisibleCompleteDialog: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -154,6 +160,12 @@ class HomeSideEffectHandler(
             }
             is HomeSideEffect.CallViewHomeApi -> {
                 callViewHomeApi()
+            }
+            is HomeSideEffect.SetInVisibleCheerDialog -> {
+                setInvisibleCheerDialog()
+            }
+            is HomeSideEffect.SetInVisibleCompleteDialog -> {
+                setInvisibleCompleteDialog()
             }
         }
     }
