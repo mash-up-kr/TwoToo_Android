@@ -17,7 +17,7 @@ data class UserResponseDomainModel(
         val user2 = UserResponseDomainModel(
             nickname = "유저2",
             partnerNo = 1,
-            userNo = 1,
+            userNo = 2,
         )
     }
 }

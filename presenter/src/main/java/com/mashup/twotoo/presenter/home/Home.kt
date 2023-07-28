@@ -54,6 +54,8 @@ fun HomeRoute(
         removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
         removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,
         callViewHomeApi = homeViewModel::getHomeViewChallenge,
+        setInvisibleCheerDialog = homeViewModel::setInvisibleCheerDialogSideEffect,
+        setInvisibleCompleteDialog = homeViewModel::setInvisibleCompleteDialogSideEffect,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()
@@ -71,7 +73,7 @@ fun HomeRoute(
     }
 
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier,
     ) {
         HomeScreen(
             state = state.challengeStateUiModel,

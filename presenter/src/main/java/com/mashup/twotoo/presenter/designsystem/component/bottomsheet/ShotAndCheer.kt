@@ -6,6 +6,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
@@ -27,6 +28,7 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SendMsgBottomSheetContent(
+    focusManager: FocusManager,
     type: SendType,
     modifier: Modifier = Modifier,
     onClickButton: (BottomSheetData) -> Unit = {},
@@ -38,7 +40,7 @@ fun SendMsgBottomSheetContent(
         mutableStateOf("")
     }
 
-    val focusManager = LocalFocusManager.current
+//    val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
     val coroutineScope = rememberCoroutineScope()
 
@@ -99,8 +101,10 @@ fun SendMsgBottomSheetContent(
 @Composable
 private fun PreviewShotList() {
     TwoTooTheme {
+        val focusManager = LocalFocusManager.current
         SendMsgBottomSheetContent(
             type = Shot(),
+            focusManager = focusManager,
         )
     }
 }

@@ -18,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
+import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.notification.request.NotificationRequestDomainModel
@@ -31,6 +32,7 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
+import usecase.user.GetPreferenceUserInfoUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -65,7 +67,7 @@ class HomeViewModel @Inject constructor(
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
             reduce {
                 state.copy(
-                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(0),
+                    challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
                 )
             }
 
@@ -74,7 +76,7 @@ class HomeViewModel @Inject constructor(
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
                             val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).partner.cheerText
-                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isNotBlank()) {
+                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isBlank()) {
                                 // 응원텍스트가 있다면 표시하지 않습니다.
                                 postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
                             }
@@ -130,6 +132,18 @@ class HomeViewModel @Inject constructor(
     fun removeVisibilityCheerDialogSideEffect() {
         viewModelScope.launch {
             removeVisibilityCheerDialogUseCase()
+        }
+    }
+
+    fun setInvisibleCheerDialogSideEffect() {
+        viewModelScope.launch {
+            setVisibilityCheerDialogUseCase(true)
+        }
+    }
+
+    fun setInvisibleCompleteDialogSideEffect() {
+        viewModelScope.launch {
+            setVisibilityCompleteDialogUseCase(true)
         }
     }
 
@@ -204,7 +218,6 @@ class HomeViewModel @Inject constructor(
                             )
                         }
                     }
-                    // TODO GET VIEW API 재호출
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
                     )
@@ -221,15 +234,17 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.ShotData -> {
-                with((state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeShotCountTextUiModel?.count) {
-                    if ((this == null) || (this <= 0)) {
-                        postSideEffect(
-                            HomeSideEffect.Toast(
-                                ToastText.ShotInvalid,
-                            ),
-                        )
-                        return@intent
-                    }
+                if ((state.challengeStateUiModel as OngoingChallengeUiModel).homeShotCountTextUiModel.count == 0) {
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    delay(100)
+                    postSideEffect(
+                        HomeSideEffect.Toast(
+                            ToastText.ShotInvalid,
+                        ),
+                    )
+                    return@intent
                 }
                 // 서버 데이터 전송
                 stingUseCase(
@@ -245,6 +260,10 @@ class HomeViewModel @Inject constructor(
                             ToastText.ShotSuccess,
                         ),
                     )
+
+                    postSideEffect(
+                        HomeSideEffect.CallViewHomeApi,
+                    )
                 }
                     .onFailure {
                         postSideEffect(
@@ -255,12 +274,8 @@ class HomeViewModel @Inject constructor(
                     }
             }
             is BottomSheetData.CheerData -> {
-                // 서버 데이터 전송
-                val commitNo = (
-                    (state.challengeStateUiModel as? OngoingChallengeUiModel)
-                        ?.homeChallengeStateUiModel?.challengeStateUiModel as? HomeCheerUiModel
-                    )?.partner?.commitNo
-                if (commitNo == null) {
+                val cheerText = bottomSheetData.text
+                if (cheerText.isBlank()) {
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
@@ -271,21 +286,32 @@ class HomeViewModel @Inject constructor(
                     )
                     return@intent
                 }
+                val commitNo = (
+                    (state.challengeStateUiModel as OngoingChallengeUiModel)
+                        .homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel
+                    ).partner.commitNo
+
                 createCheerUseCase(
-                    commitNoRequestDomainModel = CommitNoRequestDomainModel(
-                        commitNo = commitNo,
-                    ),
+                    commitNoRequestDomainModel = CommitNoRequestDomainModel(commitNo = commitNo),
+                    cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
                 ).onSuccess {
                     postSideEffect(
                         HomeSideEffect.Toast(
                             ToastText.CheerSuccess,
                         ),
                     )
-                    // home viewUpdate
+                    postSideEffect(
+                        HomeSideEffect.RemoveVisibilityCheerDialog,
+                    )
+                    delay(100)
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
                     )
                 }.onFailure {
+                    postSideEffect(
+                        HomeSideEffect.SetInVisibleCheerDialog,
+                    )
+
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )

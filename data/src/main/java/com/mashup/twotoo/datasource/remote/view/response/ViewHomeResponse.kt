@@ -8,12 +8,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ViewHomeResponse(
+    @Json(name = "viewState") val viewState: String,
     @Json(name = "challengeTotal") val challengeTotal: Int,
     @Json(name = "onGoingChallenge") val onGoingChallenge: Challenge?,
-    @Json(name = "user1") val user1: User,
-    @Json(name = "user1Commit") val user1Commit: UserCommit?,
-    @Json(name = "user2") val user2: User,
-    @Json(name = "user2Commit") val user2Commit: UserCommit?,
-    @Json(name = "viewState") val viewState: String,
-    @Json(name = "userStingCnt") val userStingCnt: Int,
+    @Json(name = "myInfo") val myInfo: User,
+    @Json(name = "myCommit") val myCommit: UserCommit?,
+    @Json(name = "partnerInfo") val partnerInfo: User,
+    @Json(name = "partnerCommit") val partnerCommit: UserCommit?,
+    @Json(name = "myStingCnt") val myStingCnt: Int,
 )
