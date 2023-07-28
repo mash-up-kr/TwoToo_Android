@@ -8,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -59,7 +60,7 @@ fun GardenScreen(
         topBar = {
             TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = { navigateToGuide() })
         },
-        containerColor = TwoTooTheme.color.backgroundYellow,
+        containerColor = Color.Transparent,
     ) {
         LazyVerticalGrid(
             modifier = Modifier.padding(paddingValues = it)
@@ -88,5 +89,7 @@ fun GardenScreen(
 @Preview
 @Composable
 private fun PreviewGardenScreen() {
-    GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {},navigateToGuide = {})
+    TwoTooTheme {
+        GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {},navigateToGuide = {})
+    }
 }

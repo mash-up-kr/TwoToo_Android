@@ -22,7 +22,7 @@ fun TwoTooBackToolbar(
     title: String = "",
     titleModifier: Modifier = Modifier,
     @DrawableRes backIconId: Int = R.drawable.ic_back,
-    color: Color = TwoTooTheme.color.backgroundYellow,
+    color: Color = Color.Transparent,
     actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(

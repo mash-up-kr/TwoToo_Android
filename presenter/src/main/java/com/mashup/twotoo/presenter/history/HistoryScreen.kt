@@ -81,7 +81,7 @@ fun HistoryScreen(
                     }
                 }
             },
-            containerColor = TwoTooTheme.color.backgroundYellow,
+            containerColor = Color.Transparent,
         ) {
             Column(modifier = Modifier.fillMaxSize().padding(paddingValues = it)) {
                 ChallengeInfo(
