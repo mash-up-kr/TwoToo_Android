@@ -23,6 +23,7 @@ fun HomeBeforeChallengeTitle(
     stateTitle: StateTitleUiModel,
     modifier: Modifier = Modifier,
 ) {
+    val partnerName = stateTitle.partnerName
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -30,7 +31,12 @@ fun HomeBeforeChallengeTitle(
     ) {
         Text(
             modifier = Modifier.testTag(stringResource(id = R.string.homeBeforeChallengeTitle)),
-            text = stringResource(id = stateTitle.title),
+            text = if (partnerName != null) {
+                partnerName + stringResource(id = stateTitle.title)
+            } else {
+                stringResource(id = stateTitle.title)
+            },
+
             style = TwoTooTheme.typography.headLineNormal28,
             color = TwoTooTheme.color.mainBrown,
             textAlign = TextAlign.Center,
