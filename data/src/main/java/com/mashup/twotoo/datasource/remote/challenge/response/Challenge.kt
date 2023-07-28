@@ -17,4 +17,5 @@ data class Challenge(
     @Json(name = "user2Flower") val user2Flower: String,
     @Json(name = "isApproved") val isApproved: Boolean,
     @Json(name = "isFinished") val isFinished: Boolean,
+    @Json(name = "description") val description: String? = ""
 )
