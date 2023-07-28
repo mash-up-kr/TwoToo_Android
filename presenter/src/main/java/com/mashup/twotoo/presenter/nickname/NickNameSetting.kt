@@ -64,19 +64,19 @@ fun NickNameSettingRoute(
 
     LaunchedEffect(Unit) {
         checkInviteLink(
-                context.findActivity().intent,
-                partnerInfo = { nickname, partnerNo ->
-                    Log.d(TAG, "checkInviteLink: $nickname")
-                    Log.d(TAG, "checkInviteLink: $partnerNo")
-                    nickNameViewModel.setPartnerInfo(nickname, partnerNo)
-                },
-                error = { isFail ->
-                    isFail?.let { error ->
-                        if (error) {
-                            nickNameViewModel.toastMessage(context.getString(R.string.toast_message_deeplink_error))
-                        }
+            context.findActivity().intent,
+            partnerInfo = { nickname, partnerNo ->
+                Log.d(TAG, "checkInviteLink: $nickname")
+                Log.d(TAG, "checkInviteLink: $partnerNo")
+                nickNameViewModel.setPartnerInfo(nickname, partnerNo)
+            },
+            error = { isFail ->
+                isFail?.let { error ->
+                    if (error) {
+                        nickNameViewModel.toastMessage(context.getString(R.string.toast_message_deeplink_error))
                     }
-                },
+                }
+            },
         )
     }
 

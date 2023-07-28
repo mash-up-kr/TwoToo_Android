@@ -33,7 +33,7 @@ fun NavGraphBuilder.nickNameSettingGraph(
                     NavigationRoute.HomeGraph.HomeScreen.route -> {
                         navController.navigateToHome(
                             navOptions = navOptions {
-                                popUpTo(navController.graph.startDestinationId) {
+                                popUpTo(navController.graph.id) {
                                     inclusive = true
                                 }
                             },
@@ -42,7 +42,7 @@ fun NavGraphBuilder.nickNameSettingGraph(
                     NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
                         navController.navigateToInvitation(
                             navOptions = navOptions {
-                                popUpTo(navController.graph.startDestinationId) {
+                                popUpTo(navController.graph.id) {
                                     inclusive = true
                                 }
                             },
