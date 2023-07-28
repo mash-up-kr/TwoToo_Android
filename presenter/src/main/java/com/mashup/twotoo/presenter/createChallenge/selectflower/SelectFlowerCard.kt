@@ -62,6 +62,9 @@ fun SelectFlowerCardRoute(
                 Log.d(TAG, "SelectFlowerCardRoute: success")
                 onSuccessCreateChallenge()
             }
+            is CreateChallengeSideEffect.NavigateToHome -> {
+                onSuccessCreateChallenge()
+            }
             is CreateChallengeSideEffect.ToastMessage -> {}
             else -> {}
         }
