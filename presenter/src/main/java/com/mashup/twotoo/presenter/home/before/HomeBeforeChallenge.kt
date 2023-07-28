@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.home.before
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -82,7 +81,8 @@ fun HomeBeforeChallenge(
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
                 bottom.linkTo(parent.bottom, margin = 51.dp)
-            }.clickable {
+            },
+            onClick = {
                 onClickBeforeChallengeTextButton(
                     beforeChallengeUiModel.state,
                 )

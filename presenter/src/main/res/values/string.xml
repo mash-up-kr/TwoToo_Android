@@ -102,7 +102,10 @@
     <string name="invite_resend_desc">*만약 초대링크를 잃어버리셨다면, 초대장 다시보내기를 해보세요</string>
 
     <!--create challenge -->
-    <string name="create_challenge_step">%d/3\n챌린지 정보를 작성해주세요</string>
+    <string name="create_challenge_step">%d/3</string>
+    <string name="create_challenge_title_1">챌린지 정보를 작성해주세요</string>
+    <string name="create_challenge_title_2">챌린지 정보를 추가해보세요</string>
+    <string name="create_challenge_title_3">챌린지 정보를 확인해주세요</string>
     <string name="create_challenge_desc_1">시작일을 기준으로 22일동안 진행되는 챌린지 입니다</string>
     <string name="create_challenge_desc_2">(선택) 목표를 달성하기 위한 둘만의 룰을 작성해보세요</string>
     <string name="create_challenge_desc_3">생성한 챌린지는 수정이 어려우니 한번 더 확인해주세요</string>
@@ -120,6 +123,7 @@
     <string name="select_flower_desc">어떤 꽃인지는 챌린지 종료 후 확인할 수 있습니다 :)</string>
     <string name="send_challenge_request">챌린지 요청을 보냈습니다</string>
     <string name="success_challenge_request_desc">상대방이 수락하면, 챌린지가 시작됩니다</string>
+    <string name="challenge_info">챌린지 정보</string>
 
     <string name="recommend_challenge_say_love">💗 사랑한다고 얘기 해주기</string>
     <string name="recommend_challenge_share_daily">📝 하루 한 문장 일상 공유하기</string>

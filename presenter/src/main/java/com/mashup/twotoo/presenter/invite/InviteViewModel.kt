@@ -42,12 +42,13 @@ class InviteViewModel @Inject constructor(
      */
     fun getPartnerInfo() = intent {
         getPartnerInfoUseCase().onSuccess { partnerInfo ->
-            if (partnerInfo.partnerNo != null) {
+            if (partnerInfo.partnerNo != 0) {
                 navigateToHome()
             } else {
                 toastMessage("상대방 아직 수락을 하지 않았어요!")
             }
         }.onFailure {
+            toastMessage("상대방 아직 수락을 하지 않았어요!")
         }
     }
 

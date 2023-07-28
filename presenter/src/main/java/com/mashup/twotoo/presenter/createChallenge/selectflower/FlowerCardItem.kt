@@ -1,8 +1,9 @@
-package com.mashup.twotoo.presenter.createChallenge
+package com.mashup.twotoo.presenter.createChallenge.selectflower
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.grid.GridCells
@@ -12,7 +13,7 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -26,18 +27,38 @@ import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardUiModel
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
-fun SelectFlowerLazyColumn() {
+fun SelectFlowerLazyColumn(
+    onClickOneItem: (String) -> Unit
+) {
     val list = FlowerCardUiModel.getFlowerCardModel()
+    var selectedItemIndex by remember { mutableIntStateOf(-1) }
 
     LazyVerticalGrid(
+        modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(horizontal = 8.dp),
         columns = GridCells.Fixed(2),
     ) {
         items(list.size) { idx ->
             FlowerCardItem(
                 flowerCardModel = list[idx],
+                selectedItemIndex,
+                onClickItem = { index ->
+                    selectedItemIndex = if (selectedItemIndex == index) {
+                        -1
+                    } else {
+                        index
+                    }
+                    onClickOneItem(
+                        if (selectedItemIndex == -1) {
+                            ""
+                        } else {
+                            list[selectedItemIndex].flowerName.value
+                        },
+                    )
+                },
             )
         }
     }
@@ -46,18 +67,27 @@ fun SelectFlowerLazyColumn() {
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun FlowerCardItem(
-    flowerCardModel: FlowerCardUiModel
+    flowerCardModel: FlowerCardUiModel,
+    selectedItem: Int,
+    onClickItem: (Int) -> Unit,
 ) {
-    var color by remember { mutableStateOf(Color.White) }
-
     Card(
         backgroundColor = TwoTooTheme.color.mainWhite,
         shape = TwoTooTheme.shape.small,
-        border = BorderStroke(3.dp, color),
+        border = BorderStroke(
+            3.dp,
+            if (selectedItem == flowerCardModel.index) {
+                MainPink
+            } else {
+                Color.Transparent
+            },
+        ),
         modifier = Modifier
             .padding(horizontal = 13.dp, vertical = 15.dp)
             .size(157.dp),
-        onClick = { color = MainPink },
+        onClick = {
+            onClickItem(flowerCardModel.index)
+        },
     ) {
         Column(
             modifier = Modifier
@@ -72,7 +102,7 @@ fun FlowerCardItem(
             )
             Text(
                 modifier = Modifier.padding(top = 16.dp, bottom = 8.dp),
-                text = stringResource(id = flowerCardModel.name),
+                text = stringResource(id = flowerCardModel.resourceName),
                 style = TwoTooTheme.typography.headLineNormal24,
                 color = TwoTooTheme.color.mainBrown,
             )
@@ -89,9 +119,11 @@ fun FlowerCardItem(
 @Composable
 private fun PreviewFlowerCardItem() {
     val model = FlowerCardUiModel(
-        name = R.string.rose,
+        flowerName = FlowerName.Rose,
+        resourceName = R.string.rose,
         desc = R.string.rose_language,
         selectFlowerImage = R.drawable.img_challenge_select_rose,
+        0,
     )
-    FlowerCardItem(model)
+    FlowerCardItem(model, 0, {})
 }

@@ -1,113 +1,133 @@
 package com.mashup.twotoo.presenter.createChallenge
 
-import androidx.compose.foundation.layout.Box
+import android.content.Context
+import android.util.Log
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.paint
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
-import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.DateFormatter
+import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun CreateChallengeRoute(
-    onFinishChallengeInfo: () -> Unit
+    step: Int = 1,
+    createChallengeViewModel: CreateChallengeViewModel,
+    onBackToHome: () -> Unit,
+    onFinishChallengeInfo: () -> Unit,
 ) {
-    CreateChallenge(onFinishChallengeInfo)
+    val state by createChallengeViewModel.collectAsState()
+    var currentStep by remember { mutableIntStateOf(step) }
+
+    CreateChallenge(
+        state,
+        currentStep,
+        updateOneStep = { challengeInfoModel ->
+            createChallengeViewModel.setChallengeInfo(challengeInfoModel, currentStep)
+            currentStep++
+        },
+        updateTwoStep = { challengeInfoModel ->
+            createChallengeViewModel.setChallengeInfo(challengeInfoModel, currentStep)
+            currentStep++
+            Log.d(TAG, "CreateChallengeRoute: $state")
+        },
+        onClickTheeStep = {
+            onFinishChallengeInfo()
+        },
+        onClickBackButton = {
+            if (currentStep > 1) {
+                currentStep--
+            } else {
+                onBackToHome()
+            }
+        },
+    )
 }
 
 @Composable
 fun CreateChallenge(
-    onFinishChallengeInfo: () -> Unit = {}
+    state: ChallengeInfoModel,
+    currentStep: Int,
+    updateOneStep: (ChallengeInfoModel) -> Unit,
+    updateTwoStep: (ChallengeInfoModel) -> Unit,
+    onClickTheeStep: () -> Unit,
+    onClickBackButton: () -> Unit
 ) {
-    var currentStep by remember { mutableStateOf(1) }
-    val challengeInfo = ChallengeInfoModel()
+    val context = LocalContext.current
 
-    Scaffold(
-        topBar = {
-            TwoTooBackToolbar(onClickBackIcon = {
-                if (currentStep > 1) currentStep--
-            })
-        },
-    ) { padding ->
-        Box(
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        TwoTooBackToolbar(onClickBackIcon = {
+            onClickBackButton()
+        })
+
+        Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
-                .paint(
-                    painterResource(id = R.drawable.image_background),
-                    contentScale = ContentScale.FillBounds,
-                ),
+                .padding(top = 8.dp, start = 24.dp, end = 24.dp),
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(horizontal = 24.dp),
-            ) {
-                Text(
-                    text = stringResource(id = R.string.create_challenge_step, currentStep),
-                    textAlign = TextAlign.Left,
-                    style = TwoTooTheme.typography.headLineNormal28,
-                    color = TwoTooTheme.color.mainBrown,
-                )
-                Text(
-                    text = stringResource(id = R.string.create_challenge_desc_1),
-                    style = TwoTooTheme.typography.bodyNormal14,
-                    color = TwoTooTheme.color.gray600,
-                    modifier = Modifier.padding(top = 12.dp),
-                )
+            Text(
+                text = stringResource(id = getCurrentStepString("title", currentStep, context), currentStep),
+                textAlign = TextAlign.Left,
+                style = TwoTooTheme.typography.headLineNormal28,
+                color = TwoTooTheme.color.mainBrown,
+            )
+            Text(
+                text = stringResource(id = getCurrentStepString("desc", currentStep, context)),
+                style = TwoTooTheme.typography.bodyNormal14,
+                color = TwoTooTheme.color.gray600,
+                modifier = Modifier.padding(top = 12.dp),
+            )
 
-                when (currentStep) {
-                    1 -> CreateChallengeOneStep()
-                    2 -> CreateChallengeTwoStep()
-                    3 -> CreateChallengeCard(
-                        "하루 운동 30분 이상 하기",
-                        "2023/05/01 ~ 5/22",
-                        "운동사진으로 인증하기\n실패하는 사람은 뷔페 쏘기",
+            when (currentStep) {
+                1 -> CreateChallengeOneStep(state) { name, startDate, endDate ->
+                    val period = DateFormatter.formatDateRange(startDate, endDate)
+                    updateOneStep(
+                        ChallengeInfoModel(
+                            challengeName = name,
+                            startDate = startDate,
+                            endDate = endDate,
+                            period = period,
+                        ),
                     )
                 }
-
-                Spacer(Modifier.weight(1f))
-                TwoTooTextButton(
-                    text = stringResource(id = R.string.button_next),
-                    enabled = false,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(57.dp),
-                ) {
-                    if (currentStep == 3) {
-                        onFinishChallengeInfo()
-                    } else {
-                        currentStep++
-                    }
+                2 -> CreateChallengeTwoStep(state) { challengeInfo ->
+                    updateTwoStep(ChallengeInfoModel(challengeInfo = challengeInfo))
                 }
-                Spacer(modifier = Modifier.height(55.dp))
+                3 -> CreateChallengeCard(
+                    challengeTitle = state.challengeName,
+                    challengeDesc = state.challengeInfo,
+                    challengeDate = state.period,
+                    onClickNext = { onClickTheeStep() },
+                )
             }
         }
     }
 }
 
+fun getCurrentStepString(name: String, currentStep: Int, context: Context): Int {
+    val titleName = "create_challenge_${name}_$currentStep"
+    return context.resources.getIdentifier(titleName, "string", context.packageName)
+}
+
 @Preview
 @Composable
 private fun PreviewCreateChallengeOneStep() {
-    CreateChallenge()
+    // CreateChallenge(CreateChallengeState(), {})
 }

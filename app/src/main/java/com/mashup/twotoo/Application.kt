@@ -3,6 +3,7 @@ import android.app.Application
 import com.kakao.sdk.common.KakaoSdk
 import com.mashup.twotoo.di.ApplicationComponent
 import com.mashup.twotoo.di.DaggerApplicationComponent
+import com.mashup.twotoo.presenter.createChallenge.di.CreateChallengeComponent
 import com.mashup.twotoo.presenter.di.ScreenComponentProvider
 import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
@@ -52,5 +53,9 @@ class Application : Application(), ScreenComponentProvider {
     }
     override fun provideGardenComponent(): GardenComponent {
         return applicationComponent.gardenComponent().create()
+    }
+
+    override fun provideCreateChallengeComponent(): CreateChallengeComponent {
+        return applicationComponent.createChallengeComponent().create()
     }
 }

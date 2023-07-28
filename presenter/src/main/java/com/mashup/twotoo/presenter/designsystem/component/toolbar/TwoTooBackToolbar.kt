@@ -62,7 +62,7 @@ fun TwoTooBackToolbar(
         },
         modifier = modifier.then(Modifier.height(56.dp)),
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = color,
+            containerColor = Color.Transparent,
         ),
     )
 }

@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.di
 
+import com.mashup.twotoo.presenter.createChallenge.di.CreateChallengeComponent
 import com.mashup.twotoo.presenter.garden.di.GardenComponent
 import com.mashup.twotoo.presenter.history.di.HistoryComponent
 import com.mashup.twotoo.presenter.home.di.HomeComponent
@@ -23,6 +24,7 @@ import dagger.Module
         OnboardingComponent::class,
         NickNameSettingComponent::class,
         InviteComponent::class,
+        CreateChallengeComponent::class,
     ],
 )
 class ScreenModule
