@@ -1,7 +1,5 @@
 package com.mashup.twotoo.presenter.home.model
 
-import android.util.Log
-import com.mashup.twotoo.presenter.constant.TAG
 import model.challenge.response.ChallengeResponseDomainModel
 
 data class HomeChallengeInfoModel(
