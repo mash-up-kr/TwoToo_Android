@@ -4,6 +4,7 @@ import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.CreateChallengeRequestDomainModel
 
 data class ChallengeInfoModel(
+    var currentStep: Int = 1,
     var challengeName: String = "",
     var startDate: String = DateFormatter.getCurrentDate(),
     val endDate: String = DateFormatter.getDaysAfter(DateFormatter.getCurrentDate()),
