@@ -1,7 +1,6 @@
 package com.mashup.twotoo.presenter.createChallenge.navigation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
@@ -12,7 +11,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import androidx.navigation.navOptions
 import androidx.navigation.navigation
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.CreateChallengeRoute
 import com.mashup.twotoo.presenter.createChallenge.SuccessChallengeRequest
 import com.mashup.twotoo.presenter.createChallenge.di.CreateChallengeProvider
@@ -26,7 +24,6 @@ import com.mashup.twotoo.presenter.util.MoshiUtils
 import com.mashup.twotoo.presenter.util.componentProvider
 
 fun NavController.navigateToCreateChallenge(homeState: BeforeChallengeState, challengeInfo: String, navOptions: NavOptions? = null) {
-    Log.d(TAG, "navigateToCreateChallengeNavigation: $challengeInfo")
     this.navigate(route = "${NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route}/${homeState.name}/$challengeInfo", navOptions = navOptions)
 }
 
@@ -40,7 +37,7 @@ private fun NavController.navigateToSuccessChallengeRequest(navOptions: NavOptio
 
 @SuppressLint("UnrememberedGetBackStackEntry")
 fun NavGraphBuilder.createChallengeGraph(
-    navController: NavController
+    navController: NavController,
 ) {
     navigation(
         startDestination = "${NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route}/{homeState}/{challengeInfo}",
@@ -56,33 +53,33 @@ fun NavGraphBuilder.createChallengeGraph(
             val homeState = navBackStackEntry.arguments?.getString("homeState") ?: BeforeChallengeState.EMPTY.name
             val challengeInfoJson = navBackStackEntry.arguments?.getString("challengeInfo") ?: ""
             val challengeInfo = MoshiUtils.fromJson<HomeChallengeInfoModel>(challengeInfoJson) ?: HomeChallengeInfoModel()
-            var step = 1
             val challengeComponent = componentProvider<CreateChallengeProvider>().provideCreateChallengeComponent()
             val createChallengeViewModel = daggerViewModel {
                 challengeComponent.getViewModel()
             }
-            Log.d(TAG, "createChallengeGraph: $challengeInfo")
-            when (homeState) {
-                BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> {
-                    step = 1
-                }
-                else -> {
-                    step = 3
-                    createChallengeViewModel.setHomeChallengeInfo(challengeInfo)
+            val navOptions = navOptions {
+                popUpTo(navController.graph.startDestinationId) {
+                    inclusive = true
                 }
             }
 
             CreateChallengeRoute(
                 homeState = homeState,
-                step = step,
+                challengeInfo = challengeInfo,
                 createChallengeViewModel = createChallengeViewModel,
                 onBackToHome = { navController.popBackStack() },
-            ) {
-                navController.navigateToSelectFlowerCard(
-                    challengeNo = challengeInfo.challengeNo,
-                    homeState = homeState,
-                )
-            }
+                onFinishChallengeInfo = {
+                    navController.navigateToSelectFlowerCard(
+                        challengeNo = challengeInfo.challengeNo,
+                        homeState = homeState,
+                        navOptions = if (homeState == BeforeChallengeState.RESPONSE.name) {
+                            navOptions
+                        } else {
+                            null
+                        },
+                    )
+                },
+            )
         }
         composable(
             route = "${NavigationRoute.CreateChallengeGraph.SelectFlowerCardScreen.route}/{homeState}/{challengeNo}",

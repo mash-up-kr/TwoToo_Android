@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.createChallenge.model.toDomainModel
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import com.mashup.twotoo.presenter.util.DateFormatter.convertIsoTimeToString
@@ -25,6 +26,29 @@ class CreateChallengeViewModel@Inject constructor(
 ) : ViewModel(), ContainerHost<ChallengeInfoModel, CreateChallengeSideEffect> {
     override val container = container<ChallengeInfoModel, CreateChallengeSideEffect>(ChallengeInfoModel())
 
+    fun initChallengeStep(beforeChallengeState: String, challengeInfo: HomeChallengeInfoModel) = intent {
+        reduce {
+            val step = when (beforeChallengeState) {
+                BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> {
+                    1
+                }
+                else -> {
+                    setHomeChallengeInfo(challengeInfo)
+                    3
+                }
+            }
+            state.copy(currentStep = step)
+        }
+    }
+
+    fun updateCurrentStep(num: Int) = intent {
+        reduce {
+            state.copy(
+                currentStep = state.currentStep + num,
+            )
+        }
+    }
+
     fun setCreateChallengeInfo(challengeInfo: ChallengeInfoModel, step: Int) = intent {
         reduce {
             when (step) {
@@ -35,19 +59,22 @@ class CreateChallengeViewModel@Inject constructor(
                     period = challengeInfo.period,
                 )
                 }
-                2 -> { state.copy(
-                    challengeInfo = challengeInfo.challengeInfo,
-                )
+                2 -> {
+                    state.copy(
+                        challengeInfo = challengeInfo.challengeInfo,
+                    )
                 }
-                else -> { state.copy(
-                    selectFlowerName = challengeInfo.selectFlowerName,
-                )
+                else -> {
+                    state.copy(
+                        selectFlowerName = challengeInfo.selectFlowerName,
+                    )
                 }
             }
         }
     }
 
     fun setHomeChallengeInfo(homeChallengeInfoModel: HomeChallengeInfoModel) = intent {
+        Log.d(TAG, "setHomeChallengeInfo: $homeChallengeInfoModel")
         reduce {
             state.copy(
                 challengeName = homeChallengeInfoModel.name,

@@ -1,16 +1,13 @@
 package com.mashup.twotoo.presenter.createChallenge
 
 import android.content.Context
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -18,45 +15,47 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun CreateChallengeRoute(
     homeState: String = BeforeChallengeState.EMPTY.name,
-    step: Int = 1,
+    challengeInfo: HomeChallengeInfoModel,
     createChallengeViewModel: CreateChallengeViewModel,
     onBackToHome: () -> Unit,
     onFinishChallengeInfo: () -> Unit,
 ) {
     val state by createChallengeViewModel.collectAsState()
-    var currentStep by remember { mutableIntStateOf(step) }
+
+    LaunchedEffect(Unit) {
+        createChallengeViewModel.initChallengeStep(homeState, challengeInfo)
+    }
 
     CreateChallenge(
         homeState = homeState,
         state = state,
-        currentStep = currentStep,
+        currentStep = state.currentStep,
         updateOneStep = { challengeInfoModel ->
-            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, currentStep)
-            currentStep++
+            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, state.currentStep)
+            createChallengeViewModel.updateCurrentStep(1)
         },
         updateTwoStep = { challengeInfoModel ->
-            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, currentStep)
-            currentStep++
-            Log.d(TAG, "CreateChallengeRoute: $state")
+            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, state.currentStep)
+            createChallengeViewModel.updateCurrentStep(1)
         },
         onClickTheeStep = {
             onFinishChallengeInfo()
         },
         onClickBackButton = {
             if (homeState == BeforeChallengeState.EMPTY.name || homeState == BeforeChallengeState.TERMINATION.name) {
-                if (currentStep > 1) {
-                    currentStep--
+                if (state.currentStep > 1) {
+                    createChallengeViewModel.updateCurrentStep(-1)
                 } else {
                     onBackToHome()
                 }
@@ -75,7 +74,7 @@ fun CreateChallenge(
     updateOneStep: (ChallengeInfoModel) -> Unit,
     updateTwoStep: (ChallengeInfoModel) -> Unit,
     onClickTheeStep: () -> Unit,
-    onClickBackButton: () -> Unit
+    onClickBackButton: () -> Unit,
 ) {
     val context = LocalContext.current
     val isNextButtonVisible = homeState == BeforeChallengeState.RESPONSE.name ||
