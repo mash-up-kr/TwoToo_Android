@@ -1,9 +1,9 @@
 package com.mashup.twotoo.presenter.mypage.di
 
-import androidx.lifecycle.ViewModel
-import com.mashup.twotoo.presenter.mypage.navigation.UserViewModel
-import dagger.Binds
+import com.mashup.twotoo.presenter.mypage.UserViewModel
 import dagger.Module
+import dagger.Provides
+import usecase.user.GetUserInfoUseCase
 import javax.inject.Scope
 
 /**
@@ -11,11 +11,17 @@ import javax.inject.Scope
  */
 
 @Module
-abstract class UserModule {
+class UserModule {
 
-    @Binds
+    @Provides
     @UserScope
-    abstract fun provideUserViewModel(userViewModel: UserViewModel): ViewModel
+    fun provideUserViewModel(
+        getUserInfoUseCase: GetUserInfoUseCase,
+    ): UserViewModel {
+        return UserViewModel(
+            getUserInfoUseCase = getUserInfoUseCase,
+        )
+    }
 }
 
 @Scope
