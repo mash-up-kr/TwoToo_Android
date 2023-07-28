@@ -3,16 +3,20 @@ package com.mashup.twotoo.presenter.invite
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -24,8 +28,10 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooOutlineTextButton
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
+import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -35,6 +41,8 @@ fun WaitingAcceptPairRoute(
     onSuccessMatchingPartner: () -> Unit
 ) {
     val state by inviteViewModel.collectAsState()
+    val coroutineScope = rememberCoroutineScope()
+    val snackState = remember { SnackbarHostState() }
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
     }
 
@@ -47,6 +55,7 @@ fun WaitingAcceptPairRoute(
         }
     }
     WaitingAcceptPair(
+        snackState = snackState,
         onClickRefreshState = {
             inviteViewModel.getPartnerInfo()
         },
@@ -57,7 +66,11 @@ fun WaitingAcceptPairRoute(
 
     inviteViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
-            is InviteSideEffect.Toast -> {}
+            is InviteSideEffect.Toast -> {
+                coroutineScope.launch {
+                    snackState.showSnackbar(sideEffect.toastMessage)
+                }
+            }
             is InviteSideEffect.NavigateToWaitingPair -> {}
             is InviteSideEffect.NavigateToHome -> {
                 onSuccessMatchingPartner()
@@ -68,40 +81,47 @@ fun WaitingAcceptPairRoute(
 
 @Composable
 fun WaitingAcceptPair(
+    snackState: SnackbarHostState,
     onClickRefreshState: () -> Unit,
     onClickResendInvitation: () -> Unit,
 ) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceAround,
-    ) {
-        TwoTooMainToolbar()
-        Text(
-            modifier = Modifier.padding(top = 120.dp, bottom = 28.dp),
-            text = stringResource(id = R.string.invite_waiting_other),
-            textAlign = TextAlign.Center,
-            style = TwoTooTheme.typography.headLineNormal28,
-            color = TwoTooTheme.color.mainBrown,
-        )
-        Text(
-            text = stringResource(id = R.string.invite_refresh),
-            textAlign = TextAlign.Center,
-            style = TwoTooTheme.typography.bodyNormal16,
-            color = TwoTooTheme.color.gray600,
-        )
-        TwoTooImageView(
+    Box {
+        Column(
             modifier = Modifier
-                .size(185.dp, 128.dp)
-                .padding(top = 32.dp),
-            model = R.drawable.invite_waiting_heart,
-            previewPlaceholder = R.drawable.img_waiting_mate_flower,
-            contentScale = ContentScale.Crop,
+                .fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.SpaceAround,
+        ) {
+            TwoTooMainToolbar()
+            Text(
+                modifier = Modifier.padding(top = 120.dp, bottom = 28.dp),
+                text = stringResource(id = R.string.invite_waiting_other),
+                textAlign = TextAlign.Center,
+                style = TwoTooTheme.typography.headLineNormal28,
+                color = TwoTooTheme.color.mainBrown,
+            )
+            Text(
+                text = stringResource(id = R.string.invite_refresh),
+                textAlign = TextAlign.Center,
+                style = TwoTooTheme.typography.bodyNormal16,
+                color = TwoTooTheme.color.gray600,
+            )
+            TwoTooImageView(
+                modifier = Modifier
+                    .size(185.dp, 128.dp)
+                    .padding(top = 32.dp),
+                model = R.drawable.invite_waiting_heart,
+                previewPlaceholder = R.drawable.img_waiting_mate_flower,
+                contentScale = ContentScale.Crop,
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            WaitingInviteBottom(onClickRefreshState, onClickResendInvitation)
+            Spacer(modifier = Modifier.height(54.dp))
+        }
+        SnackBarHost(
+            Modifier.align(Alignment.BottomCenter).padding(bottom = 54.dp),
+            snackState,
         )
-        Spacer(modifier = Modifier.weight(1f))
-        WaitingInviteBottom(onClickRefreshState, onClickResendInvitation)
-        Spacer(modifier = Modifier.height(54.dp))
     }
 }
 
