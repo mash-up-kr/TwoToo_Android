@@ -10,6 +10,7 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -67,7 +68,6 @@ class HomeViewModel @Inject constructor(
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
-            Log.d(TAG, "getHomeViewChallenge: ${ homeViewResponseDomainModel.onGoingChallenge} ")
             reduce {
                 state.copy(
                     homeChallengeInfoModel = homeViewResponseDomainModel.onGoingChallenge.toUiModel(),
@@ -321,7 +321,7 @@ class HomeViewModel @Inject constructor(
             ),
         ).onSuccess {
             postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
-            postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
+            postSideEffect(HomeSideEffect.NavigationToCreateChallenge(BeforeChallengeState.TERMINATION, HomeChallengeInfoModel()))
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
         }
