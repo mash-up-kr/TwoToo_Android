@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.designsystem.component.bottomsheet
 
+import androidx.compose.animation.core.Animatable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -7,6 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
@@ -23,6 +25,8 @@ import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextFi
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import tech.thdev.compose.extensions.keyboard.state.foundation.collectIsKeyboardAsState
+import tech.thdev.compose.extensions.keyboard.state.localowners.LocalMutableExKeyboardStateSourceOwner
 
 @Composable
 fun SendMsgBottomSheetContent(
@@ -46,9 +50,24 @@ fun SendMsgBottomSheetContent(
             focusRequester.requestFocus()
         }
     }
+    val keyboardState by LocalMutableExKeyboardStateSourceOwner.current.collectIsKeyboardAsState()
+
+    val screenHeight = LocalConfiguration.current.screenHeightDp
+    var isCreated by remember { mutableStateOf(true) }
+
+    val animateHeight = remember { Animatable(screenHeight * 0.76f) }
+
+    LaunchedEffect(keyboardState) {
+        if (!keyboardState && !isCreated) {
+            animateHeight.animateTo(screenHeight * 0.35f)
+        } else {
+            animateHeight.animateTo(screenHeight * 0.76f)
+            isCreated = false
+        }
+    }
 
     Column(
-        modifier = modifier.fillMaxWidth().fillMaxHeight(0.85f).padding(horizontal = 20.dp),
+        modifier = modifier.fillMaxWidth().height(animateHeight.value.dp).padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {

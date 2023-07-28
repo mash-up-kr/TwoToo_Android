@@ -22,13 +22,18 @@ import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
+import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.launch
+import tech.thdev.compose.extensions.keyboard.state.MutableExKeyboardStateSource
+import tech.thdev.compose.extensions.keyboard.state.foundation.removeFocusWhenKeyboardIsHidden
+import tech.thdev.compose.extensions.keyboard.state.localowners.LocalMutableExKeyboardStateSourceOwner
 import java.io.File
 import java.util.Objects
 
@@ -148,7 +153,7 @@ fun TwoTooAuthBottomSheet(
                     }
                 },
                 onClickButton = onClickButton,
-                modifier = Modifier.background(
+                modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
                     color = Color(0xFFFCF5E6),
                     shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
                 ),
@@ -179,7 +184,7 @@ fun TwoTooSendMsgBottomSheet(
         onDismiss = onDismiss,
     ) {
         SendMsgBottomSheetContent(
-            modifier = Modifier.background(
+            modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
                 color = Color(0xFFFCF5E6),
                 shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
             ),
@@ -196,8 +201,17 @@ fun TwoTooBottomSheetImpl(
 ) {
     BottomSheetDialog(
         onDismissRequest = onDismiss,
+        properties = BottomSheetDialogProperties(
+            behaviorProperties = BottomSheetBehaviorProperties(
+                state = BottomSheetBehaviorProperties.State.Expanded,
+            ),
+        ),
     ) {
-        bottomSheetContent()
+        CompositionLocalProvider(
+            LocalMutableExKeyboardStateSourceOwner provides MutableExKeyboardStateSource(),
+        ) {
+            bottomSheetContent()
+        }
     }
 }
 

@@ -34,9 +34,6 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,

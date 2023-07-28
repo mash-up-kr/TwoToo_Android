@@ -20,8 +20,6 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.addFocusCleaner
-import com.mashup.twotoo.presenter.util.keyboardAsState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -35,17 +33,11 @@ fun AuthenticateContent(
 ) {
     var animateSwitch by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    val keyBoardOpenState by keyboardAsState()
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(keyBoardOpenState) {
-        if (!keyBoardOpenState) {
-            animateSwitch = false
-            focusManager.clearFocus()
-        }
-    }
+
     Column(
         modifier = modifier
-            .fillMaxWidth().fillMaxHeight(0.8f).addFocusCleaner(focusManager).padding(horizontal = 20.dp),
+            .fillMaxWidth().fillMaxHeight(0.76f).padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
