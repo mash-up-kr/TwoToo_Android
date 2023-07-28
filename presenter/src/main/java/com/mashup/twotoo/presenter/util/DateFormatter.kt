@@ -48,16 +48,19 @@ object DateFormatter {
     }
 
     fun formatDateRange(startDate: String, endDate: String): String {
-        val inputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
-        val outputFormat = SimpleDateFormat("yy/MM/dd", Locale.KOREA)
+        if (startDate.isNotEmpty() && endDate.isNotEmpty()) {
+            val inputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
+            val outputFormat = SimpleDateFormat("yy/MM/dd", Locale.KOREA)
 
-        val startDateObj = inputFormat.parse(startDate)
-        val endDateObj = inputFormat.parse(endDate)
+            val startDateObj = inputFormat.parse(startDate)
+            val endDateObj = inputFormat.parse(endDate)
 
-        val formattedStartDate = startDateObj?.let { outputFormat.format(it) }
-        val formattedEndDate = endDateObj?.let { outputFormat.format(it) }
+            val formattedStartDate = startDateObj?.let { outputFormat.format(it) }
+            val formattedEndDate = endDateObj?.let { outputFormat.format(it) }
 
-        return "$formattedStartDate ~ $formattedEndDate"
+            return "$formattedStartDate ~ $formattedEndDate"
+        }
+        return ""
     }
 
     fun convertToIsoTime(dateTime: String): String? {
@@ -68,5 +71,17 @@ object DateFormatter {
         isoFormatter.timeZone = TimeZone.getTimeZone("UTC")
         Log.d(TAG, "convertToIsoTime:${isoFormatter.format(date)} ")
         return date?.let { isoFormatter.format(it) }
+    }
+
+    fun convertIsoTimeToString(isoTime: String): String? {
+        if (isoTime.isNotEmpty()) {
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
+            dateFormat.timeZone = TimeZone.getTimeZone("UTC")
+            val sourceDate = dateFormat.parse(isoTime)
+
+            val targetDateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
+            return sourceDate?.let { targetDateFormat.format(it) }
+        }
+        return ""
     }
 }
