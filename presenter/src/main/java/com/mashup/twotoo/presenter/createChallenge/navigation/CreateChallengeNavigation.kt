@@ -88,11 +88,12 @@ fun NavGraphBuilder.createChallengeGraph(
             route = "${NavigationRoute.CreateChallengeGraph.SelectFlowerCardScreen.route}/{homeState}/{challengeNo}",
             arguments = listOf(
                 navArgument("homeState") { type = NavType.StringType },
+                navArgument("challengeNo") { type = NavType.IntType },
             ),
         ) { navBackStackEntry ->
             val homeState = navBackStackEntry.arguments?.getString("homeState") ?: BeforeChallengeState.EMPTY.name
             val challengeNo = navBackStackEntry.arguments?.getInt("challengeNo") ?: 0
-            val parentRoute = "${NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route}/{homeState}/{challengeNo}"
+            val parentRoute = "${NavigationRoute.CreateChallengeGraph.CreateChallengeScreen.route}/{homeState}/{challengeInfo}"
             val parentEntry = remember {
                 navController.getBackStackEntry(parentRoute)
             }
