@@ -154,7 +154,7 @@ fun TwoTooAuthBottomSheet(
                 },
                 onClickButton = onClickButton,
                 modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
-                    color = Color(0xFFFCF5E6),
+                    color = TwoTooTheme.color.backgroundYellow,
                     shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
                 ),
             )
@@ -185,7 +185,7 @@ fun TwoTooSendMsgBottomSheet(
     ) {
         SendMsgBottomSheetContent(
             modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
-                color = Color(0xFFFCF5E6),
+                color = TwoTooTheme.color.backgroundYellow,
                 shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
             ),
             type = type,
