@@ -38,10 +38,12 @@ class ChallengeRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Int {
-        return challengeDataSource.deleteChallengeByNo(
-            challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
-        )
+    override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<Int> {
+        return runCatching {
+            challengeDataSource.deleteChallengeByNo(
+                challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
+            )
+        }
     }
 
     override suspend fun approveChallenge(

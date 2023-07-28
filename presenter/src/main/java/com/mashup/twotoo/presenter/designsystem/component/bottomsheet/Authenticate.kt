@@ -93,6 +93,7 @@ fun AuthenticateContent(
             modifier = Modifier
                 .fillMaxWidth().height(57.dp),
             text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
+            enabled = textFieldState.isNotBlank() && imageUri != null,
             onClick = {
                 focusManager.clearFocus()
                 coroutineScope.launch {

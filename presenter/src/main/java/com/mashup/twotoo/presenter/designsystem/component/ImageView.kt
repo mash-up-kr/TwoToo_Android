@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,8 +20,10 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.skydoves.landscapist.ImageOptions
@@ -79,11 +82,17 @@ fun TwoTooImageViewImpl(
     failurePlaceHolder: @Composable (BoxScope.(GlideImageState.Failure) -> Unit) = {},
     contentScale: ContentScale? = null,
 ) {
-    Box(
+    ConstraintLayout(
         modifier = modifier,
     ) {
+        val (image, plusLine, photoHint) = createRefs()
         GlideImage(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize().constrainAs(image) {
+                start.linkTo(parent.start)
+                top.linkTo(parent.top)
+                end.linkTo(parent.end)
+                bottom.linkTo(parent.bottom)
+            },
             imageModel = { model.invoke() },
             previewPlaceholder = previewPlaceholder ?: R.drawable.empty_image_color_placeholder,
             imageOptions = ImageOptions(
@@ -96,12 +105,25 @@ fun TwoTooImageViewImpl(
         if (enableSetImage) {
             PlusLine(
                 modifier = Modifier
-                    .fillMaxSize(0.5f)
-                    .align(Alignment.Center)
+                    .fillMaxSize(0.1f).constrainAs(plusLine) {
+                        start.linkTo(parent.start)
+                        top.linkTo(parent.top)
+                        bottom.linkTo(parent.bottom)
+                        end.linkTo(parent.end)
+                    }
                     .clickable {
                         onClickPlusButton()
                     },
-
+            )
+            Text(
+                modifier = Modifier.constrainAs(photoHint) {
+                    top.linkTo(plusLine.bottom, margin = 14.dp)
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                },
+                text = stringResource(id = R.string.photoHint),
+                color = TwoTooTheme.color.mainWhite,
+                style = TwoTooTheme.typography.bodyNormal16,
             )
         }
     }
@@ -115,22 +137,19 @@ fun PlusLine(
         modifier = modifier,
     ) {
         Canvas(modifier = Modifier.fillMaxSize()) {
-            // Fetching width and height for
-            // setting start x and end y
             val canvasWidth = size.width
             val canvasHeight = size.height
 
-            // drawing a line between start(x,y) and end(x,y)
             drawLine(
-                start = Offset(x = (canvasWidth / 2) - (canvasWidth / 7), y = (canvasHeight / 2)),
-                end = Offset(x = (canvasWidth / 2) + (canvasWidth / 7), y = (canvasHeight / 2)),
+                start = Offset(x = 0f, y = canvasHeight / 2),
+                end = Offset(x = canvasWidth, y = canvasHeight / 2),
                 color = Color.White,
                 cap = StrokeCap.Round,
                 strokeWidth = 4.dp.toPx(),
             )
             drawLine(
-                start = Offset(x = (canvasWidth / 2), y = (canvasHeight / 2) - (canvasHeight / 7)),
-                end = Offset(x = (canvasWidth / 2), y = (canvasHeight / 2) + (canvasHeight / 7)),
+                start = Offset(x = (canvasWidth / 2), y = 0f),
+                end = Offset(x = (canvasWidth / 2), y = canvasHeight),
                 color = Color.White,
                 cap = StrokeCap.Round,
                 strokeWidth = 4.dp.toPx(),
