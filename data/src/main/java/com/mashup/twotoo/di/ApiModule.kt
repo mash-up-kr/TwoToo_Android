@@ -2,6 +2,7 @@ package com.mashup.twotoo.di
 
 import com.mashup.twotoo.datasource.remote.challenge.ChallengeApi
 import com.mashup.twotoo.datasource.remote.commit.CommitApi
+import com.mashup.twotoo.datasource.remote.notification.NotificationApi
 import com.mashup.twotoo.datasource.remote.user.UserApi
 import com.mashup.twotoo.datasource.remote.view.ViewApi
 import dagger.Module
@@ -33,5 +34,11 @@ class ApiModule {
     @Singleton
     fun provideCommitApi(retrofit: Retrofit): CommitApi {
         return retrofit.create(CommitApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNotificationApi(retrofit: Retrofit): NotificationApi {
+        return retrofit.create(NotificationApi::class.java)
     }
 }

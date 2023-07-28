@@ -14,6 +14,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -137,8 +139,8 @@ fun HomeFlowerMeAndPartner(
                             modifier = Modifier
                                 .width(14.dp)
                                 .height(14.dp),
-                            model = R.drawable.ic_heart,
-                            previewPlaceholder = R.drawable.ic_heart,
+                            model = R.drawable.img_heart,
+                            previewPlaceholder = R.drawable.img_heart,
                         )
                     }
                 }
@@ -186,10 +188,23 @@ fun HomeFlowerMeAndPartner(
 
             is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 HomeCheerPartner(
-                    modifier = Modifier.constrainAs(partnerCheer) {
+                    modifier = Modifier.width(140.dp).constrainAs(partnerCheer) {
                         start.linkTo(parent.start, margin = 32.dp)
                         end.linkTo(heartImage.start)
-                        bottom.linkTo(partner.top, margin = 12.dp)
+                        bottom.linkTo(
+                            partner.top,
+                            margin =
+                            if ((this@with.partner.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                0.dp
+                            } else {
+                                if (cheerState in listOf(CheerState.CheerOnlyMe, CheerState.DoNotCheerBoth)) {
+                                    18.dp
+                                } else {
+                                    12.dp
+                                }
+                            },
+
+                        )
                     },
                     cheerState = this.cheerState,
                     cheerText = this.partner.cheerText,
@@ -198,7 +213,7 @@ fun HomeFlowerMeAndPartner(
                     modifier = Modifier.constrainAs(partner) {
                         start.linkTo(partnerFlowerOwnerText.start)
                         end.linkTo(partnerFlowerOwnerText.end)
-                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 3.dp)
+                        bottom.linkTo(partnerFlowerOwnerText.top, margin = 7.dp)
                     },
                     homeFlowerUiModel = this.partner.homeFlowerUiModel,
                 )
@@ -220,18 +235,30 @@ fun HomeFlowerMeAndPartner(
                             bottom.linkTo(partner.bottom, margin = 50.dp)
                         }
                         .size(28.dp),
-                    model = R.drawable.ic_heart,
-                    previewPlaceholder = R.drawable.ic_heart,
+                    model = R.drawable.img_heart,
+                    previewPlaceholder = R.drawable.img_heart,
                 )
 
                 HomeCheerMe(
                     modifier = Modifier
-                        .width(150.dp)
+                        .width(140.dp)
                         .constrainAs(meCheer) {
                             top.linkTo(parent.top)
                             start.linkTo(heartImage.end)
-                            end.linkTo(parent.end, margin = 32.dp)
-                            bottom.linkTo(me.top, margin = 12.dp)
+                            end.linkTo(parent.end, margin = 19.dp)
+                            bottom.linkTo(
+                                me.top,
+                                margin =
+                                if ((this@with.me.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                    0.dp
+                                } else {
+                                    if (cheerState in listOf(CheerState.CheerOnlyPartner, CheerState.DoNotCheerBoth)) {
+                                        32.dp
+                                    } else {
+                                        42.dp
+                                    }
+                                },
+                            )
                         },
                     cheerState = this.cheerState,
                     cheerText = this.me.cheerText,
@@ -328,7 +355,9 @@ fun HomeFlowerPartner(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val screenHeight = LocalConfiguration.current.screenHeightDp
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context, screenWidth = screenWidth, screenHeight = screenHeight)) {
         TwoTooImageView(
             modifier = modifier
                 .testTag(
@@ -337,6 +366,7 @@ fun HomeFlowerPartner(
                 .width(width)
                 .height(height),
             model = image,
+            contentScale = ContentScale.Fit,
         )
     }
 }
@@ -347,7 +377,9 @@ fun HomeFlowerMe(
     modifier: Modifier = Modifier,
 ) {
     val context = LocalContext.current
-    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context)) {
+    val screenWidth = LocalConfiguration.current.screenWidthDp
+    val screenHeight = LocalConfiguration.current.screenHeightDp
+    with(homeFlowerUiModel.flowerType.getFlowerImage(context = context, screenWidth = screenWidth, screenHeight = screenHeight)) {
         TwoTooImageView(
             modifier = modifier
                 .testTag(
@@ -356,6 +388,7 @@ fun HomeFlowerMe(
                 .width(width)
                 .height(height),
             model = image,
+            contentScale = ContentScale.Fit,
         )
     }
 }

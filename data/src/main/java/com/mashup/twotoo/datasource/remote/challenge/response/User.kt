@@ -6,6 +6,6 @@ import com.squareup.moshi.JsonClass
 @JsonClass(generateAdapter = true)
 data class User(
     @Json(name = "nickname") val nickname: String,
-    @Json(name = "partnerNo") val partnerNo: Int,
+    @Json(name = "partnerNo") val partnerNo: Int?,
     @Json(name = "userNo") val userNo: Int,
 )

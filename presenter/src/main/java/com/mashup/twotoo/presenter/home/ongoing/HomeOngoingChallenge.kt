@@ -33,6 +33,7 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeFlowerMeAndPartne
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalField
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
+import com.mashup.twotoo.presenter.util.wiggle
 
 /**
  * @Created by 김현국 2023/06/11
@@ -45,8 +46,9 @@ fun HomeOngoingChallenge(
     onCommit: () -> Unit = {},
     onCompleteButtonClick: (Int) -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    navigateToHistory: () -> Unit = {},
+    navigateToHistory: (Int) -> Unit = {},
     onClickCheerButton: () -> Unit = {},
+    onWiggleAnimationEnd: () -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
@@ -72,13 +74,13 @@ fun HomeOngoingChallenge(
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
-            }.clickable { navigateToHistory() },
+            }.clickable { navigateToHistory(ongoingChallengeUiModel.challengeNo) },
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
         )
         TwoTooGoalAchievementProgressbar(
-            modifier = Modifier.width(210.dp).height(59.dp).constrainAs(goalAchievement) {
+            modifier = Modifier.width(203.dp).height(62.dp).constrainAs(goalAchievement) {
                 start.linkTo(homeGoalField.start)
-                top.linkTo(homeGoalField.bottom)
+                top.linkTo(homeGoalField.bottom, margin = 11.dp)
             }.background(color = Color.White, shape = RoundedCornerShape(15.dp)),
             homeGoalAchievePartnerAndMeUiModel = ongoingChallengeUiModel.homeGoalAchievePartnerAndMeUiModel,
         )
@@ -91,7 +93,7 @@ fun HomeOngoingChallenge(
             homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
         )
 
-        val barrier = createTopBarrier(homeBackground, margin = 60.dp)
+        val barrier = createTopBarrier(homeBackground, margin = 80.dp)
         HomeFlowerMeAndPartner(
             modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                 start.linkTo(parent.start)
@@ -117,7 +119,10 @@ fun HomeOngoingChallenge(
             )
         } else {
             HomeBeeButton(
-                modifier = Modifier.constrainAs(beeButton) {
+                modifier = Modifier.wiggle(
+                    isWiggle = ongoingChallengeUiModel.shotInteractionState,
+                    onWiggleAnimationEnded = onWiggleAnimationEnd,
+                ).constrainAs(beeButton) {
                     top.linkTo(homeBackground.top)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)

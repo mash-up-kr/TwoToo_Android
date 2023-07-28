@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.ongoingChallenge.auth.doNotBoth
 import android.content.Context
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithTag
@@ -25,6 +26,8 @@ class HomeOngoingDoNotAuthBothTest {
     val composeTestRule = createComposeRule()
 
     private lateinit var context: Context
+    private var screenHeight: Int = 0
+    private var screenWidth: Int = 0
 
     /**
      * * 첫번째 챌린지 일때 텍스트 테스트
@@ -56,7 +59,7 @@ class HomeOngoingDoNotAuthBothTest {
     ) {
         (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).also {
             Truth.assertThat(
-                it.partner.flowerType.getFlowerImage(context).image,
+                it.partner.flowerType.getFlowerImage(context,screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (partnerStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_partner
@@ -69,7 +72,7 @@ class HomeOngoingDoNotAuthBothTest {
             )
 
             Truth.assertThat(
-                it.me.flowerType.getFlowerImage(context).image,
+                it.me.flowerType.getFlowerImage(context,screenWidth, screenHeight).image,
             ).isEqualTo(
                 when (meStage) {
                     Stage.Zero -> R.drawable.img_home_zero_stage_me
@@ -122,6 +125,8 @@ class HomeOngoingDoNotAuthBothTest {
         )
         composeTestRule.setContent {
             context = LocalContext.current
+            screenHeight = LocalConfiguration.current.screenHeightDp
+            screenWidth = LocalConfiguration.current.screenWidthDp
             TwoTooTheme {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),

@@ -8,6 +8,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -32,7 +33,7 @@ fun TwoTooGoalAchievementProgressbar(
             homeGoalAchieveUiModel = homeGoalAchievePartnerAndMeUiModel.partner,
         )
         Spacer(
-            modifier = Modifier.height(4.dp),
+            modifier = Modifier.height(2.dp),
         )
         GoalAchievementRow(
             modifier = Modifier.fillMaxWidth(),
@@ -48,24 +49,29 @@ fun GoalAchievementRow(
 ) {
     ConstraintLayout(modifier) {
         val (name, rowArea) = createRefs()
-        Text(
+        Row(
             modifier = Modifier.constrainAs(name) {
                 end.linkTo(rowArea.start)
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
-            },
-            style = TwoTooTheme.typography.bodyNormal14,
-            text = homeGoalAchieveUiModel.name,
-            color = when (homeGoalAchieveUiModel.type) {
-                ME -> {
-                    TwotooPink
-                }
-                PARTNER -> {
-                    Color(0xFF555050)
-                }
-            },
-        )
+            }.width(21.dp).height(22.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Text(
+                style = TwoTooTheme.typography.bodyNormal14,
+                text = homeGoalAchieveUiModel.name,
+                color = when (homeGoalAchieveUiModel.type) {
+                    ME -> {
+                        TwotooPink
+                    }
+                    PARTNER -> {
+                        Color(0xFF555050)
+                    }
+                },
+            )
+        }
         Row(
             modifier = Modifier.constrainAs(rowArea) {
                 end.linkTo(parent.end)
@@ -75,20 +81,26 @@ fun GoalAchievementRow(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             LinearProgressIndicator(
-                modifier = Modifier.width(111.dp).height(9.dp),
+                modifier = Modifier.width(100.dp).height(9.dp),
                 progress = homeGoalAchieveUiModel.progress,
                 color = TwoTooTheme.color.mainPink,
                 trackColor = Color(0xFFF5DBD0),
                 strokeCap = StrokeCap.Round,
             )
-            Spacer(modifier = Modifier.width(11.dp))
-            Text(
-                modifier = Modifier,
-                text = "${(homeGoalAchieveUiModel.progress * 100).toInt()}%",
-                color = Color(0xFFA4A4A4),
-                style = TwoTooTheme.typography.bodyNormal12,
-            )
-            Spacer(modifier = Modifier.width(12.dp))
+            Spacer(modifier = Modifier.width(8.dp))
+            Row(
+                modifier = Modifier.width(25.dp).height(12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.Center,
+            ) {
+                Text(
+                    text = "${(homeGoalAchieveUiModel.progress * 100).toInt()}%",
+                    color = Color(0xFFA4A4A4),
+                    style = TwoTooTheme.typography.bodyNormal12,
+                    textAlign = TextAlign.Center,
+                )
+            }
+            Spacer(modifier = Modifier.width(14.dp))
         }
     }
 }

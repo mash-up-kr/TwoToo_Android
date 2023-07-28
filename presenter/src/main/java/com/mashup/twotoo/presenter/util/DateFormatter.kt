@@ -7,14 +7,23 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 object DateFormatter {
-    private const val DATE_FORMAT = "yyyy-MM-dd"
 
-    @SuppressLint("SimpleDateFormat")
-    private val dateFormat = SimpleDateFormat(DATE_FORMAT)
+    fun getDateStrByStr(date: String): String {
+        val dateTime = getDateTimeByStr(date)
+        return getDateStrByDate(dateTime)
+    }
 
-    fun getDateStrBy(date: String): String {
-        val date = dateFormat.parse(date)
-        return dateFormat.format(date)
+    fun getDateTimeByStr(date: String): Date {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
+    }
+
+    fun getDateStrByDate(date: Date): String {
+        return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
+    }
+
+    fun get24HourStrByStr(date: String): String {
+        val dateTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(dateTime)
     }
 
     fun convertToLongDate(selectedDateMillis: Long?): String {

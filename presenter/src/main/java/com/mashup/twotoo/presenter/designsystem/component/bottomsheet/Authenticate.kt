@@ -22,6 +22,8 @@ import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextFi
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.addFocusCleaner
 import com.mashup.twotoo.presenter.util.keyboardAsState
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @Composable
 fun AuthenticateContent(
@@ -33,6 +35,7 @@ fun AuthenticateContent(
     var animateSwitch by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
     val keyBoardOpenState by keyboardAsState()
+    val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(keyBoardOpenState) {
         if (!keyBoardOpenState) {
             animateSwitch = false
@@ -91,14 +94,19 @@ fun AuthenticateContent(
             modifier = Modifier
                 .fillMaxWidth().height(57.dp),
             text = stringResource(id = R.string.bottomSheetAuthenticateButtonText),
+            enabled = textFieldState.isNotBlank() && imageUri != null,
             onClick = {
-                imageUri?.let { uri ->
-                    onClickButton(
-                        BottomSheetData.AuthenticateData(
-                            image = uri,
-                            text = textFieldState,
-                        ),
-                    )
+                focusManager.clearFocus()
+                coroutineScope.launch {
+                    delay(200)
+                    imageUri?.let { uri ->
+                        onClickButton(
+                            BottomSheetData.AuthenticateData(
+                                image = uri,
+                                text = textFieldState,
+                            ),
+                        )
+                    }
                 }
             },
         )

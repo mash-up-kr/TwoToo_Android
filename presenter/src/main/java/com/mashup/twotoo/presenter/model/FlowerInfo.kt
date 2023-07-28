@@ -39,7 +39,7 @@ fun String.toFlowerName(): FlowerName =
     FlowerName.findBy(this)
 
 abstract class FlowerType(val name: FlowerName) {
-    abstract fun getFlowerImage(context: Context): FlowerImage
+    abstract fun getFlowerImage(context: Context, screenWidth: Int, screenHeight: Int): FlowerImage
 }
 
 data class FlowerImage(

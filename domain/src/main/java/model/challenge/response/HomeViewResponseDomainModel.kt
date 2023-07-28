@@ -1,22 +1,28 @@
 package model.challenge.response
 
 data class HomeViewResponseDomainModel(
-    val challengeTotal: Int,
-    val onGoingChallenge: ChallengeResponseDomainModel,
-    val user1Commit: UserCommitResponseDomainModel?,
-    val user2Commit: UserCommitResponseDomainModel?,
     val viewState: String,
+    val challengeTotal: Int,
+    val onGoingChallenge: ChallengeResponseDomainModel?,
+    val myInfo: UserResponseDomainModel,
+    val myCommit: UserCommitResponseDomainModel?,
+    val partnerInfo: UserResponseDomainModel,
+    val partnerCommit: UserCommitResponseDomainModel?,
+    val myStingCnt: Int,
 ) {
     companion object {
 
         val default = HomeViewResponseDomainModel(
             viewState = "BEFORE_CREATE",
             onGoingChallenge = ChallengeResponseDomainModel.default,
-            user1Commit = UserCommitResponseDomainModel.default,
-            user2Commit = UserCommitResponseDomainModel.default.copy(
+            myInfo = UserResponseDomainModel.user1,
+            myCommit = UserCommitResponseDomainModel.default,
+            partnerInfo = UserResponseDomainModel.user2,
+            partnerCommit = UserCommitResponseDomainModel.default.copy(
                 userNo = 2,
             ),
             challengeTotal = 1,
+            myStingCnt = 0,
         )
 
         val beforeCreate = default

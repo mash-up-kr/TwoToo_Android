@@ -37,9 +37,9 @@ fun SplashRoute(
     }
 
     splashViewModel.collectSideEffect { sideEffect ->
-        delay(SplashWaitTime)
         when (sideEffect) {
             SplashSideEffect.NavigateToOnboarding -> {
+                delay(SplashWaitTime)
                 onStateChangeSuccess(NavigationRoute.OnBoardingGraph.OnboardingScreen.route)
             }
             SplashSideEffect.NavigateToNickNameSetting -> {

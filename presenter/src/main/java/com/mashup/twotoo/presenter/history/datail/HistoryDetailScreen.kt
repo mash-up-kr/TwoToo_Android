@@ -74,7 +74,7 @@ fun HistoryDetailScreen(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Text(
-                        text = historyDetailInfoUiModel.createdDate,
+                        text = historyDetailInfoUiModel.infoUiModel.createdDate,
                         style = TwoTooTheme.typography.headLineNormal24,
                     )
                     Icon(

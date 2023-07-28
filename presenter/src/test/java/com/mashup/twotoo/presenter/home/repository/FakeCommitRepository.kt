@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.repository
 
+import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
@@ -10,7 +11,10 @@ class FakeCommitRepository : CommitRepository {
         TODO("Not yet implemented")
     }
 
-    override suspend fun cheer(commitNoRequestDomainModel: CommitNoRequestDomainModel): CommitResponseDomainModel {
+    override suspend fun cheer(
+        commitNoRequestDomainModel: CommitNoRequestDomainModel,
+        cheerRequestDomainModel: CheerRequestDomainModel,
+    ): Result<CommitResponseDomainModel> {
         TODO("Not yet implemented")
     }
 

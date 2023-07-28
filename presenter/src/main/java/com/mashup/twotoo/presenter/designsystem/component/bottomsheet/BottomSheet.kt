@@ -14,6 +14,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -177,13 +178,18 @@ fun TwoTooSendMsgBottomSheet(
     bottomSheetState: SheetState = rememberModalBottomSheetState(),
     onClickButton: (BottomSheetData) -> Unit = {},
 ) {
+    val focusManager = LocalFocusManager.current
     TwoTooBottomSheetImpl(
         bottomSheetState = bottomSheetState,
-        onDismiss = onDismiss,
+        onDismiss = {
+            focusManager.clearFocus()
+            onDismiss()
+        },
     ) {
         SendMsgBottomSheetContent(
             type = type,
             onClickButton = onClickButton,
+            focusManager = focusManager,
         )
     }
 }

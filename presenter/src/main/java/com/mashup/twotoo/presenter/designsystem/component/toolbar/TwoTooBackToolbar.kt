@@ -20,7 +20,9 @@ fun TwoTooBackToolbar(
     onClickBackIcon: () -> Unit,
     modifier: Modifier = Modifier,
     title: String = "",
+    titleModifier: Modifier = Modifier,
     @DrawableRes backIconId: Int = R.drawable.ic_back,
+    color: Color = TwoTooTheme.color.backgroundYellow,
     actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(
@@ -31,6 +33,7 @@ fun TwoTooBackToolbar(
             ) {
                 Text(
                     text = title,
+                    modifier = titleModifier,
                     color = TwoTooTheme.color.mainBrown,
                     style = TwoTooTheme.typography.headLineNormal24,
                     textAlign = TextAlign.Center,
@@ -97,5 +100,5 @@ private fun BackToolbarWithNavAndTitlePreview() {
 @Composable
 @Preview
 private fun TwoTooBackToolbar() {
-    TwoTooBackToolbar(onClickBackIcon = {})
+    TwoTooBackToolbar(onClickBackIcon = {}, title = "투투 설명서")
 }

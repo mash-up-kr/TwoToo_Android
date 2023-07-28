@@ -4,6 +4,7 @@ import android.content.Context
 import com.mashup.twotoo.datasource.remote.commit.CommitDataSource
 import com.mashup.twotoo.mapper.toDataModel
 import com.mashup.twotoo.mapper.toDomainModel
+import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
@@ -26,10 +27,14 @@ class CommitRepositoryImpl @Inject constructor(
 
     override suspend fun cheer(
         commitNoRequestDomainModel: CommitNoRequestDomainModel,
-    ): CommitResponseDomainModel {
-        return commitDataSource.cheerByNo(
-            commitNoRequest = commitNoRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+        cheerRequestDomainModel: CheerRequestDomainModel,
+    ): Result<CommitResponseDomainModel> {
+        return runCatching {
+            commitDataSource.cheerByNo(
+                commitNoRequest = commitNoRequestDomainModel.toDataModel(),
+                cheerRequest = cheerRequestDomainModel.toDataModel(),
+            ).toDomainModel()
+        }
     }
 
     override suspend fun getCommit(

@@ -1,13 +1,11 @@
 package com.mashup.twotoo.presenter.garden.navigation
 
-import androidx.navigation.NavController
-import androidx.navigation.NavGraphBuilder
-import androidx.navigation.NavOptions
+import androidx.navigation.*
 import androidx.navigation.compose.composable
-import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.garden.GardenRoute
 import com.mashup.twotoo.presenter.garden.di.GardenComponentProvider
+import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
@@ -24,7 +22,11 @@ fun NavGraphBuilder.gardenGraph(navController: NavController) {
                 gardenComponent.getViewModel()
             }
 
-            GardenRoute(navigateToGarden = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) }, gardenViewModel = gardenViewModel)
+            GardenRoute(
+                navigateToGarden = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
+                navigateToGuide = { navController.navigateToGuide() },
+                gardenViewModel = gardenViewModel,
+            )
         }
     }
 }

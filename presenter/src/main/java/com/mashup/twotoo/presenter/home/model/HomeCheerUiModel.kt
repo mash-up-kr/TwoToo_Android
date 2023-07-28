@@ -44,6 +44,7 @@ data class HomeCheerUiModel(
 data class CheerWithFlower(
     val homeFlowerUiModel: HomeFlowerUiModel,
     val cheerText: String = "",
+    val commitNo: Int = -1,
 ) {
     companion object {
         val meNotYet = CheerWithFlower(
@@ -63,7 +64,8 @@ data class CheerWithFlower(
 
         val partnerNotEmpty = CheerWithFlower(
             homeFlowerUiModel = HomeFlowerUiModel.partner,
-            cheerText = "파트너의 응원",
+            cheerText = "파트너의응원입니다.\n파트너의응원입니다",
+
         )
     }
 }
