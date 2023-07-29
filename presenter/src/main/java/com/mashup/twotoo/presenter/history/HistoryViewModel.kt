@@ -43,6 +43,7 @@ class HistoryViewModel @Inject constructor(
             ),
         ).onSuccess {
             Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Success")
+            getChallengeByUser(this.state.challengeInfoUiModel.challengeNo)
         }.onFailure {
             Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Failed, message=${it.message}")
         }
