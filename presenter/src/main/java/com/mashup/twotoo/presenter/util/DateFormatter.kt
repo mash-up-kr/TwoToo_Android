@@ -3,7 +3,10 @@ package com.mashup.twotoo.presenter.util
 import android.util.Log
 import com.mashup.twotoo.presenter.constant.TAG
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object DateFormatter {
 
@@ -92,5 +95,12 @@ object DateFormatter {
             return sourceDate?.let { targetDateFormat.format(it) }
         }
         return ""
+    }
+
+    fun unixTimeToUtcTime(currentTimeMillis: Long): Long {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = currentTimeMillis
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        return calendar.timeInMillis
     }
 }
