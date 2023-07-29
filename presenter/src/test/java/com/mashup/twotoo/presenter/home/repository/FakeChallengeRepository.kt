@@ -27,7 +27,7 @@ class FakeChallengeRepository : ChallengeRepository {
     override suspend fun approveChallenge(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
         approveChallengeRequestDomainModel: ApproveChallengeRequestDomainModel,
-    ): ChallengeResponseDomainModel {
+    ): Result<ChallengeResponseDomainModel> {
         TODO("Not yet implemented")
     }
 
