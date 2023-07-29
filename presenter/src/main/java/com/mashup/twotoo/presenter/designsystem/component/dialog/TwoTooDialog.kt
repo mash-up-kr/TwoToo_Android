@@ -147,3 +147,18 @@ private fun PreviewHomeDoNotBloomBothDialog() {
         )
     }
 }
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewHomeCancelChallenge() {
+    val content = DialogContent.createHistoryLeaveChallengeDialogContent(
+        negativeAction = {},
+        positiveAction = {},
+    )
+    TwoTooTheme {
+        TwoTooDialog(
+            onDismissRequest = {},
+            content = content,
+        )
+    }
+}

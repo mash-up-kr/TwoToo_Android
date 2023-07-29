@@ -75,6 +75,7 @@ fun SendInvitation(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.SpaceAround,
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         TwoTooMainToolbar()
         Text(
             text = stringResource(id = R.string.invite_title),
