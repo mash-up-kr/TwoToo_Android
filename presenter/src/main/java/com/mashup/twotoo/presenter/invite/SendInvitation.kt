@@ -11,11 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -34,19 +34,11 @@ fun SendInvitationRoute(
     sendInvitationOnSuccess: () -> Unit = {},
 ) {
     val state by inviteViewModel.collectAsState()
-
+    val context = LocalContext.current
     val launcher = rememberLauncherForActivityResult(ActivityResultContracts.StartActivityForResult()) { activityResult ->
         inviteViewModel.navigateToWaitingAcceptPair()
     }
 
-    LaunchedEffect(key1 = state) {
-        if (state.userNo != 0) {
-            inviteViewModel.storeIsSendInvitation(true)
-            inviteViewModel.createInviteCode(state.userNo, state.userNickName) { intent ->
-                launcher.launch(intent)
-            }
-        }
-    }
     SendInvitation(
         onTextButtonClick = {
             inviteViewModel.getUserInfo()
@@ -61,6 +53,15 @@ fun SendInvitationRoute(
                 sendInvitationOnSuccess()
             }
             is InviteSideEffect.NavigateToHome -> {}
+            is InviteSideEffect.SendSharedInvitation -> {
+                if (state.userNo != 0) {
+                    inviteViewModel.storeIsSendInvitation(true)
+                    inviteViewModel.createInviteCode(context, state.userNo, state.userNickName) { intent ->
+                        launcher.launch(intent)
+                    }
+                }
+            }
+            is InviteSideEffect.MatchingPartner -> {}
         }
     }
 }

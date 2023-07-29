@@ -1,7 +1,5 @@
 package com.mashup.twotoo.presenter.nickname
 
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -34,8 +32,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
@@ -47,6 +43,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
+import com.mashup.twotoo.presenter.util.checkInviteLink
 import com.mashup.twotoo.presenter.util.findActivity
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -217,25 +214,6 @@ fun InviteGuide(partnerNickName: String) {
             }
         },
     )
-}
-
-private fun checkInviteLink(intent: Intent, partnerInfo: (String, Int) -> Unit, error: (Boolean?) -> Unit) {
-    Firebase.dynamicLinks.getDynamicLink(intent).addOnSuccessListener { linkData ->
-        var deepLink: Uri? = null
-        linkData?.let { data ->
-            deepLink = data.link
-        }
-        deepLink?.let { uri ->
-            val nickname = uri.getQueryParameter("nickname") ?: ""
-            val partnerNo = uri.getQueryParameter("userNo") ?: ""
-            if (nickname.isNotEmpty() && partnerNo.isNotEmpty()) {
-                partnerInfo(nickname, partnerNo.toInt())
-                error(false)
-            } else {
-                error(true)
-            }
-        }
-    }
 }
 
 @Preview
