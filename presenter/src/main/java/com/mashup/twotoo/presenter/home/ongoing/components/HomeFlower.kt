@@ -69,22 +69,27 @@ fun HomeFlowerMeAndPartner(
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (homeChallengeStateUiModel.challengeState == Complete) {
-                    HomeFlowerLanguage(
-                        modifier = Modifier.constrainAs(partnerFlowerLanguage) {
-                            bottom.linkTo(partner.top)
-                            start.linkTo(partner.start)
-                            end.linkTo(partner.end)
-                        },
-                        homeFlowerUiModel = this.partner,
-                    )
-                    HomeFlowerLanguage(
-                        modifier = Modifier.constrainAs(meFlowerLanguage) {
-                            bottom.linkTo(me.top)
-                            start.linkTo(me.start)
-                            end.linkTo(me.end)
-                        },
-                        homeFlowerUiModel = this.me,
-                    )
+                    if ((this.partner.flowerType as Flower).growType >= Stage.Fourth) {
+                        HomeFlowerLanguage(
+                            modifier = Modifier.constrainAs(partnerFlowerLanguage) {
+                                bottom.linkTo(partner.top)
+                                start.linkTo(partner.start)
+                                end.linkTo(partner.end)
+                            },
+                            homeFlowerUiModel = this.partner,
+                        )
+                    }
+
+                    if ((this.me.flowerType as Flower).growType >= Stage.Fourth) {
+                        HomeFlowerLanguage(
+                            modifier = Modifier.constrainAs(meFlowerLanguage) {
+                                bottom.linkTo(me.top)
+                                start.linkTo(me.start)
+                                end.linkTo(me.end)
+                            },
+                            homeFlowerUiModel = this.me,
+                        )
+                    }
                 }
 
                 if (this.authType == FirstCreateChallenge || this.authType == FirstCreateChallengeButAuthOnlyPartner) {
@@ -147,7 +152,7 @@ fun HomeFlowerMeAndPartner(
                     }
                 }
 
-                if (this.authType != AuthOnlyMe && this.authType != AuthBoth) {
+                if (this.authType != AuthOnlyMe && this.authType != AuthBoth && homeChallengeStateUiModel.challengeState != Complete) {
                     TwoTooImageView(
                         modifier = Modifier
                             .testTag(
