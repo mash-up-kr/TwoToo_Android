@@ -33,7 +33,7 @@ fun HomeBeforeChallenge(
 ) {
     val screenHeight = LocalConfiguration.current.screenHeightDp
     ConstraintLayout(
-        modifier = modifier,
+        modifier = modifier.fillMaxSize(),
     ) {
         val (homeGoalCount, homeBeforeChallengeTitle, homeBeforeChallengeImage, textButton) = createRefs()
 

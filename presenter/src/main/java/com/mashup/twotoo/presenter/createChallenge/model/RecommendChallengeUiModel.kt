@@ -9,7 +9,7 @@ data class RecommendChallengeUiModel(
     companion object {
         fun getRecommendChallengeList(): List<RecommendChallengeUiModel> {
             return listOf(
-                RecommendChallengeUiModel(R.string.recommend_challenge_say_love),
+                RecommendChallengeUiModel(R.string.recommend_challenge_busy_day),
                 RecommendChallengeUiModel(R.string.recommend_challenge_share_daily),
                 RecommendChallengeUiModel(R.string.recommend_challenge_oneday_praise),
                 RecommendChallengeUiModel(R.string.recommend_challenge_mirror_selfie),

@@ -189,28 +189,62 @@ fun HomeFlowerMeAndPartner(
             }
 
             is HomeCheerUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
-                HomeCheerPartner(
-                    modifier = Modifier.width(140.dp).constrainAs(partnerCheer) {
-                        start.linkTo(parent.start, margin = 32.dp)
-                        end.linkTo(heartImage.start)
-                        bottom.linkTo(
-                            partner.top,
-                            margin =
-                            if ((this@with.partner.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
-                                0.dp
-                            } else {
-                                if (cheerState in listOf(CheerState.CheerOnlyMe, CheerState.DoNotCheerBoth)) {
-                                    18.dp
-                                } else {
-                                    12.dp
-                                }
-                            },
+                when (cheerState) {
+                    CheerState.CheerOnlyPartner, CheerState.CheerBoth -> {
+                        HomeCheerSpeechBubble(
+                            modifier = Modifier.width(140.dp).testTag(
+                                stringResource(R.string.homeCheerChallengePartnerBubble),
+                            ).constrainAs(partnerCheer) {
+                                start.linkTo(parent.start, margin = 32.dp)
+                                end.linkTo(heartImage.start)
+                                bottom.linkTo(
+                                    partner.top,
+                                    margin =
+                                    if ((this@with.partner.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                        0.dp
+                                    } else {
+                                        if (cheerState in listOf(CheerState.CheerOnlyMe, CheerState.DoNotCheerBoth)) {
+                                            18.dp
+                                        } else {
+                                            12.dp
+                                        }
+                                    },
 
+                                )
+                            },
+                            userType = PARTNER,
+                            cheerText = this.partner.cheerText,
                         )
-                    },
-                    cheerState = this.cheerState,
-                    cheerText = this.partner.cheerText,
-                )
+                    }
+                    CheerState.DoNotCheerBoth, CheerState.CheerOnlyMe -> {
+                        TwoTooImageView(
+                            modifier = Modifier.constrainAs(partnerCheer) {
+                                start.linkTo(parent.start, margin = 32.dp)
+                                end.linkTo(heartImage.start)
+                                bottom.linkTo(
+                                    partner.top,
+                                    margin =
+                                    if ((this@with.partner.homeFlowerUiModel.flowerType as Flower).growType >= Stage.Third) {
+                                        0.dp
+                                    } else {
+                                        if (cheerState in listOf(CheerState.CheerOnlyMe, CheerState.DoNotCheerBoth)) {
+                                            18.dp
+                                        } else {
+                                            12.dp
+                                        }
+                                    },
+
+                                )
+                            }
+                                .testTag(
+                                    stringResource(R.string.homeCheerChallengePartnerBeforeCheerBubble),
+                                )
+                                .size(44.dp),
+                            model = R.drawable.img_cheer_partner_empty,
+                            previewPlaceholder = R.drawable.img_cheer_partner_empty,
+                        )
+                    }
+                }
                 HomeFlowerPartner(
                     modifier = Modifier.constrainAs(partner) {
                         start.linkTo(partnerFlowerOwnerText.start)
@@ -308,11 +342,10 @@ fun HomeCheerPartner(
         }
         CheerState.DoNotCheerBoth, CheerState.CheerOnlyMe -> {
             TwoTooImageView(
-                modifier = modifier
+                modifier = Modifier
                     .testTag(
                         stringResource(R.string.homeCheerChallengePartnerBeforeCheerBubble),
                     )
-                    .padding(bottom = 18.dp)
                     .size(44.dp),
                 model = R.drawable.img_cheer_partner_empty,
                 previewPlaceholder = R.drawable.img_cheer_partner_empty,
