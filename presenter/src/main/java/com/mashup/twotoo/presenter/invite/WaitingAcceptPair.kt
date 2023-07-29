@@ -55,7 +55,7 @@ fun WaitingAcceptPairRoute(
         snackState = snackState,
         onClickRefreshState = {
             checkInviteLink(
-                context.findActivity().intent,
+                intent = context.findActivity().intent,
                 partnerInfo = { nickname, partnerNo ->
                     Log.d(TAG, "checkInviteLink: $nickname")
                     Log.d(TAG, "checkInviteLink: $partnerNo")

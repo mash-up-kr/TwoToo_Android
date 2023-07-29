@@ -61,6 +61,7 @@ fun NickNameSettingRoute(
 
     LaunchedEffect(Unit) {
         checkInviteLink(
+            true,
             context.findActivity().intent,
             partnerInfo = { nickname, partnerNo ->
                 Log.d(TAG, "checkInviteLink: $nickname")
