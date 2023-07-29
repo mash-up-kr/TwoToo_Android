@@ -56,7 +56,7 @@
     <string name="homeBeforeChallengeButton">챌린지 생성 전 버튼 텍스트</string>
     <string name="homeBeforeChallengeSubTitle">챌린지 생성 전 서브 타이틀</string>
     <string name="homeBeforeChallengeEmpty">연인과 함께할 22일 챌린지를\n시작해보세요</string>
-    <string name="homeBeforeChallengeEmptyButtonText">챌린지 시작히기</string>
+    <string name="homeBeforeChallengeEmptyButtonText">챌린지 시작하기</string>
     <string name="homeBeforeChallengeRequest">상대방의 응답을\n기다리고 있습니다</string>
     <string name="homeBeforeChallengeRequestButtonText">챌린지 확인하기</string>
     <string name="homeBeforeChallengeResponse">님이 보낸\n챌린지를 확인해주세요</string>
