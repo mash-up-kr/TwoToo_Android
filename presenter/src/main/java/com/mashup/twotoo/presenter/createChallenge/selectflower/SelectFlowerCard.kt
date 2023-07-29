@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.createChallenge.selectflower
 import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -79,6 +80,7 @@ fun SelectFlowerCard(
     var isVisibleStartButton by remember { mutableStateOf(false) }
     var flowerName by remember { mutableStateOf("") }
     Column {
+        Spacer(modifier = Modifier.height(5.dp))
         TwoTooBackToolbar(onClickBackIcon = {
             onClickBackButton()
         })

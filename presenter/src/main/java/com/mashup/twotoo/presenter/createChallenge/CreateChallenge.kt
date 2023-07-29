@@ -2,7 +2,9 @@ package com.mashup.twotoo.presenter.createChallenge
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -87,6 +89,7 @@ fun CreateChallenge(
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         CreateChallengeToolbar(
             homeState = homeState,
             onClickBackButton = onClickBackButton,
