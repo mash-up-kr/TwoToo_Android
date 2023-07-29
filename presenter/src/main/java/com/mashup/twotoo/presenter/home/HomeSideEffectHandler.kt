@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.home
 
 import android.content.Context
+import android.util.Log
 import androidx.compose.material.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
@@ -11,8 +12,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.ToastText
@@ -25,7 +29,7 @@ fun rememberHomeSideEffectHandler(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: (Int) -> Unit,
-    navigateToCreateChallenge: () -> Unit,
+    navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
     onClickCheerDialogNegativeButton: () -> Unit,
@@ -64,7 +68,7 @@ class HomeSideEffectHandler(
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
     private val navigateToHistory: (Int) -> Unit,
-    private val navigateToCreateChallenge: () -> Unit,
+    private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val openCheerBottomSheet: () -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
     private val onClickCheerDialogNegativeButton: () -> Unit,
@@ -138,7 +142,8 @@ class HomeSideEffectHandler(
                 navigateToHistory(sideEffect.challengeNo)
             }
             is HomeSideEffect.NavigationToCreateChallenge -> {
-                navigateToCreateChallenge()
+                Log.d(TAG, "handleSideEffect:${sideEffect.challengeInfo} ")
+                navigateToCreateChallenge(sideEffect.homeState, sideEffect.challengeInfo)
             }
             is HomeSideEffect.DismissBottomSheet -> {
                 onDismiss()

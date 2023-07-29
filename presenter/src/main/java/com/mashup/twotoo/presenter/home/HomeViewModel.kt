@@ -1,13 +1,16 @@
 package com.mashup.twotoo.presenter.home
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -15,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import com.mashup.twotoo.presenter.home.model.toUiModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
@@ -32,7 +36,6 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetPreferenceUserInfoUseCase
 import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
@@ -67,6 +70,7 @@ class HomeViewModel @Inject constructor(
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
             reduce {
                 state.copy(
+                    homeChallengeInfoModel = homeViewResponseDomainModel.onGoingChallenge.toUiModel(),
                     challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
                 )
             }
@@ -170,24 +174,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun onClickBeforeChallengeTextButton(beforeChallengeState: BeforeChallengeState) = intent {
-        // TODO create Challenge navigation 연결
-        when (beforeChallengeState) {
-            BeforeChallengeState.EMPTY -> {
-                postSideEffect(HomeSideEffect.NavigationToCreateChallenge)
-            }
-            BeforeChallengeState.REQUEST -> {
-                // Todo 챌린지 확인 페이지 이동
-            }
-            BeforeChallengeState.RESPONSE -> {
-                // Todo 챌린지 확인 페이지 이동 Step3
-            }
-            BeforeChallengeState.WAIT -> {
-                // Todo 챌린지 확인 페이지 이동
-            }
-            BeforeChallengeState.TERMINATION -> {
-                postSideEffect(HomeSideEffect.NavigationToCreateChallenge)
-            }
-        }
+        postSideEffect(HomeSideEffect.NavigationToCreateChallenge(beforeChallengeState, state.homeChallengeInfoModel))
     }
 
     fun onClickSendBottomSheetDataButton(bottomSheetData: BottomSheetData) = intent {
@@ -334,7 +321,7 @@ class HomeViewModel @Inject constructor(
             ),
         ).onSuccess {
             postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
-            postSideEffect(HomeSideEffect.NavigationToCreateChallenge) // todo 변경
+            postSideEffect(HomeSideEffect.NavigationToCreateChallenge(BeforeChallengeState.TERMINATION, HomeChallengeInfoModel()))
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
         }

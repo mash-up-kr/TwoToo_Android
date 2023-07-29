@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.home.navigation
 
+import android.util.Log
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
@@ -7,13 +8,16 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.navigation.navigateToCreateChallenge
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
+import com.mashup.twotoo.presenter.util.MoshiUtils
 import com.mashup.twotoo.presenter.util.componentProvider
 
 fun NavController.navigateToHome(navOptions: NavOptions? = null) {
@@ -35,8 +39,12 @@ fun NavGraphBuilder.homeGraph(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
                 navigateToHistory = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
-                navigateToCreateChallenge = { navController.navigateToCreateChallenge() },
                 navigateToGuide = { navController.navigateToGuide() },
+                navigateToCreateChallenge = { homeState, challengeInfo ->
+                    val challengeInfoJson = MoshiUtils.toJson<HomeChallengeInfoModel>(challengeInfo)
+                    Log.d(TAG, "navigateToCreateChallenge: $challengeInfoJson")
+                    navController.navigateToCreateChallenge(homeState, challengeInfoJson)
+                },
             )
         }
     }

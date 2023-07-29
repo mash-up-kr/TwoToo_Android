@@ -28,6 +28,7 @@ import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 import kotlinx.coroutines.launch
@@ -39,7 +40,7 @@ fun HomeRoute(
     homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier,
     navigateToHistory: (Int) -> Unit = {},
-    navigateToCreateChallenge: () -> Unit = {},
+    navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     navigateToGuide: () -> Unit,
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(

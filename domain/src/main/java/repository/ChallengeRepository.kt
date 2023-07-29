@@ -28,7 +28,7 @@ interface ChallengeRepository {
     suspend fun approveChallenge(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
         approveChallengeRequestDomainModel: ApproveChallengeRequestDomainModel,
-    ): ChallengeResponseDomainModel
+    ): Result<ChallengeResponseDomainModel>
 
     suspend fun finishChallengeWithNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,

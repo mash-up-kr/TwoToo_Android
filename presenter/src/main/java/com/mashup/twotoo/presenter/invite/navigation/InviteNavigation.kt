@@ -38,7 +38,7 @@ fun NavGraphBuilder.invitationGraph(
             SendInvitationRoute(inviteViewModel) {
                 navController.navigateToWaitingAcceptPair(
                     navOptions = navOptions {
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     },
@@ -53,7 +53,7 @@ fun NavGraphBuilder.invitationGraph(
             WaitingAcceptPairRoute(inviteViewModel) {
                 navController.navigateToHome(
                     navOptions = navOptions {
-                        popUpTo(navController.graph.startDestinationId) {
+                        popUpTo(navController.graph.id) {
                             inclusive = true
                         }
                     },

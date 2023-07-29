@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
@@ -27,24 +28,30 @@ fun NavGraphBuilder.splashGraph(
             splashComponent.getViewModel()
         }
 
+        val navOptions = navOptions {
+            popUpTo(navController.graph.startDestinationId) {
+                inclusive = true
+            }
+        }
+
         SplashRoute(
             splashViewModel,
         ) { route ->
             when (route) {
                 NavigationRoute.HomeGraph.HomeScreen.route -> {
-                    navController.navigateToHome()
+                    navController.navigateToHome(navOptions = navOptions)
                 }
                 NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
-                    navController.navigateToOnNickNameSetting()
+                    navController.navigateToOnNickNameSetting(navOptions = navOptions)
                 }
                 NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
-                    navController.navigateToInvitation()
+                    navController.navigateToInvitation(navOptions = navOptions)
                 }
                 NavigationRoute.InvitationGraph.WaitingAcceptPairScreen.route -> {
-                    navController.navigateToWaitingAcceptPair()
+                    navController.navigateToWaitingAcceptPair(navOptions = navOptions)
                 }
                 NavigationRoute.OnBoardingGraph.OnboardingScreen.route -> {
-                    navController.navigateToOnBoarding()
+                    navController.navigateToOnBoarding(navOptions = navOptions)
                 }
             }
         }

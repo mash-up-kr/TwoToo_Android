@@ -30,18 +30,28 @@ import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButto
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun SelectFlowerCardRoute(
+    challengeNo: Int = 0,
+    homeState: String,
     createChallengeViewModel: CreateChallengeViewModel,
     onClickBackButton: () -> Unit,
     onSuccessCreateChallenge: () -> Unit,
 ) {
     SelectFlowerCard(
         onStartButtonClick = { flowerName ->
-            createChallengeViewModel.setChallengeInfo(ChallengeInfoModel(selectFlowerName = flowerName), 4)
-            createChallengeViewModel.createChallenge()
+            when (homeState) {
+                BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> {
+                    createChallengeViewModel.setCreateChallengeInfo(ChallengeInfoModel(selectFlowerName = flowerName), 4)
+                    createChallengeViewModel.createChallenge()
+                }
+                BeforeChallengeState.RESPONSE.name -> {
+                    createChallengeViewModel.approveChallenge(challengeNo, flowerName)
+                }
+            }
         },
         onClickBackButton,
     )
@@ -50,6 +60,9 @@ fun SelectFlowerCardRoute(
         when (sideEffect) {
             is CreateChallengeSideEffect.NavigateToSuccessCreate -> {
                 Log.d(TAG, "SelectFlowerCardRoute: success")
+                onSuccessCreateChallenge()
+            }
+            is CreateChallengeSideEffect.NavigateToHome -> {
                 onSuccessCreateChallenge()
             }
             is CreateChallengeSideEffect.ToastMessage -> {}

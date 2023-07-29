@@ -40,6 +40,7 @@ fun Challenge.toDomainModel(): ChallengeResponseDomainModel {
         user2 = this.user2.toDomainModel(),
         user2CommitCnt = this.user2CommitCnt,
         user2Flower = this.user2Flower,
+        description = this.description ?: ""
     )
 }
 

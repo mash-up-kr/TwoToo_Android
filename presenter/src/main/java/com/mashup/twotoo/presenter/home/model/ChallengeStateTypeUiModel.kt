@@ -17,6 +17,7 @@ import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
  */
 
 data class HomeStateUiModel(
+    val homeChallengeInfoModel: HomeChallengeInfoModel = HomeChallengeInfoModel(),
     val challengeStateUiModel: ChallengeStateTypeUiModel,
 ) {
     companion object {
