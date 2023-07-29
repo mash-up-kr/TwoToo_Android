@@ -124,7 +124,7 @@ class HistoryViewModel @Inject constructor(
             DateFormatter.dateConvertToPlusNineDate(_startDate)
         val endDate =
             DateFormatter.dateConvertToPlusNineDate(_endDate)
-            
+
         val challengingDates =
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
