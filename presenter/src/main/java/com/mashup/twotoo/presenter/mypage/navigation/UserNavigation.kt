@@ -26,7 +26,7 @@ fun NavGraphBuilder.userGraph(navController: NavController) {
 
             MyPageRoute(
                 userViewModel = userViewModel,
-                navigateToGuide = { url -> navController.navigateToGuide(url) },
+                navigateToGuide = { route -> navController.navigateToGuide(route) },
             )
         }
     }

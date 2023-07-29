@@ -40,7 +40,7 @@ fun NavGraphBuilder.homeGraph(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
                 navigateToHistory = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
-                navigateToGuide = { navController.navigateToGuide(route = GuideUrlItem.Announcement.route) },
+                navigateToGuide = { navController.navigateToGuide(route = GuideUrlItem.UsingGuide.name) },
                 navigateToCreateChallenge = { homeState, challengeInfo ->
                     val challengeInfoJson = MoshiUtils.toJson<HomeChallengeInfoModel>(challengeInfo)
                     Log.d(TAG, "navigateToCreateChallenge: $challengeInfoJson")

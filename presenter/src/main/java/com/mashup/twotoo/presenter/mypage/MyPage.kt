@@ -32,6 +32,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
+import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -72,7 +73,7 @@ fun MyPageScreen(
         TwoTooMainToolbar(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.mypage),
-            onClickHelpIcon = { navigateToGuide("https://www.notion.so/") },
+            onClickHelpIcon = { navigateToGuide(GuideUrlItem.UsingGuide.name) },
         )
         TwoTooImageView(
             modifier = Modifier.size(width = 149.dp, height = 129.dp),

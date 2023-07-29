@@ -28,7 +28,7 @@ fun NavGraphBuilder.gardenGraph(navController: NavController) {
 
             GardenRoute(
                 navigateToGarden = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
-                navigateToGuide = { navController.navigateToGuide(GuideUrlItem.Announcement.route) },
+                navigateToGuide = { navController.navigateToGuide(GuideUrlItem.UsingGuide.name) },
                 gardenViewModel = gardenViewModel,
             )
         }
