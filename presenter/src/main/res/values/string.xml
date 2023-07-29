@@ -163,8 +163,9 @@
     <string name="authenticate_waiting">기다리는 중</string>
     <string name="authenticate_expired">인증 실패ㅜㅜ</string>
     <string name="DDay">D-%d</string>
+    <string name="challengeEmptyDescription">챌린지를 완료해\n히스토리를 만들어보세요 :)</string>
     <!-- Garend -->
-    <string name="garden_title">우리의 정원</string>
+    <string name="garden_title">우리의 히스토리</string>
 
     <!-- toast -->
     <string name="other_not_accept">상대방이 아직 수락을 하지 않았어요!</string>
