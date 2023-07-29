@@ -87,6 +87,7 @@ dependencies {
     implementation(libs.moshi.kotlin)
     implementation(libs.bottomsheetdialog)
     implementation(libs.compose.keyboard.state)
+    implementation(libs.lottie)
 }
 
 fun getApiKey(propertyKey: String): String {
