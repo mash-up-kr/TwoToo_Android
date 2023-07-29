@@ -11,10 +11,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
+import com.mashup.twotoo.presenter.util.AutoResizeText
+import com.mashup.twotoo.presenter.util.FontSizeRange
 
 @Composable
 fun HomeGoalField(
@@ -28,7 +31,7 @@ fun HomeGoalField(
         ),
     ) {
         val (goalText, dDayText) = createRefs()
-        Text(
+        AutoResizeText(
             modifier = Modifier.constrainAs(goalText) {
                 top.linkTo(parent.top, margin = 16.dp)
                 start.linkTo(parent.start)
@@ -37,6 +40,10 @@ fun HomeGoalField(
             text = homeGoalFieldUiModel.goal,
             color = TwotooPink,
             style = TwoTooTheme.typography.headLineNormal28,
+            fontSizeRange = FontSizeRange(
+                min = 20.sp,
+                max = 28.sp,
+            ),
         )
         Text(
             modifier = Modifier

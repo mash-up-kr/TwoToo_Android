@@ -11,6 +11,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -18,6 +19,8 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
+import com.mashup.twotoo.presenter.util.AutoResizeText
+import com.mashup.twotoo.presenter.util.FontSizeRange
 
 @Composable
 fun TwoTooGoalAchievementProgressbar(
@@ -59,7 +62,7 @@ fun GoalAchievementRow(
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
-            Text(
+            AutoResizeText(
                 style = TwoTooTheme.typography.bodyNormal14,
                 text = homeGoalAchieveUiModel.name,
                 color = when (homeGoalAchieveUiModel.type) {
@@ -70,6 +73,10 @@ fun GoalAchievementRow(
                         Color(0xFF555050)
                     }
                 },
+                fontSizeRange = FontSizeRange(
+                    min = 10.sp,
+                    max = 22.sp,
+                ),
             )
         }
         Row(

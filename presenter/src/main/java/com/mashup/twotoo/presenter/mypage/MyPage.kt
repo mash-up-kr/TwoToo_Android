@@ -64,6 +64,7 @@ fun MyPageScreen(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         TwoTooMainToolbar(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.mypage),

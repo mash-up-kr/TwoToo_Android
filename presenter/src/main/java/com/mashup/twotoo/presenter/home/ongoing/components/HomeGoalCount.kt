@@ -4,14 +4,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Alignment
@@ -20,10 +17,13 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
+import com.mashup.twotoo.presenter.util.AutoResizeText
+import com.mashup.twotoo.presenter.util.FontSizeRange
 
 @Composable
 fun HomeGoalCount(
@@ -50,9 +50,15 @@ fun HomeGoalCount(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Text(
+                    AutoResizeText(
                         text = homeGoalCountUiModel.partnerName ?: "",
                         textAlign = TextAlign.Center,
+                        fontSizeRange = FontSizeRange(
+                            max = 14.sp,
+                            min = 10.sp,
+                        ),
+                        style = LocalTextStyle.current,
+                        color = LocalContentColor.current,
                     )
                 }
                 Spacer(modifier = Modifier.width(6.dp))
@@ -67,15 +73,30 @@ fun HomeGoalCount(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
-                    Text(
+                    AutoResizeText(
                         text = homeGoalCountUiModel.myName ?: "",
                         textAlign = TextAlign.Center,
+                        fontSizeRange = FontSizeRange(
+                            max = 14.sp,
+                            min = 10.sp,
+                        ),
+                        style = LocalTextStyle.current,
+                        color = LocalContentColor.current,
                     )
                 }
             }
             if (isChallengeCountVisible) {
                 Spacer(modifier = Modifier.height(textLineSpacerHeight))
-                Text(text = "${homeGoalCountUiModel.count}번째 챌린지 중")
+                AutoResizeText(
+                    text = "${homeGoalCountUiModel.count}번째 챌린지 중",
+                    fontSizeRange = FontSizeRange(
+                        max = 14.sp,
+                        min = 10.sp,
+                    ),
+                    style = LocalTextStyle.current,
+                    color = LocalContentColor.current,
+                )
+
             }
         }
     }
