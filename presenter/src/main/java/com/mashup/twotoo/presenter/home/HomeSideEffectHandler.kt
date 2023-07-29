@@ -3,9 +3,6 @@ package com.mashup.twotoo.presenter.home
 import android.content.Context
 import android.util.Log
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.SheetState
-import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.getValue
@@ -26,11 +23,9 @@ import com.mashup.twotoo.presenter.home.model.ToastText
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun rememberHomeSideEffectHandler(
     context: Context = LocalContext.current,
-    bottomSheetState: SheetState = rememberModalBottomSheetState(true),
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: (Int) -> Unit,
@@ -46,13 +41,11 @@ fun rememberHomeSideEffectHandler(
 ): HomeSideEffectHandler {
     return remember(
         context,
-        bottomSheetState,
         snackbarHostState,
         coroutineScope,
     ) {
         HomeSideEffectHandler(
             context = context,
-            bottomSheetState = bottomSheetState,
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
             navigateToHistory = navigateToHistory,
@@ -70,10 +63,8 @@ fun rememberHomeSideEffectHandler(
 }
 
 @Stable
-@OptIn(ExperimentalMaterial3Api::class)
 class HomeSideEffectHandler(
     val context: Context,
-    val bottomSheetState: SheetState,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
     private val navigateToHistory: (Int) -> Unit,

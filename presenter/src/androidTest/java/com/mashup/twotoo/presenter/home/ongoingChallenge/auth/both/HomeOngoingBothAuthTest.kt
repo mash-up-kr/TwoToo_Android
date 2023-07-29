@@ -130,6 +130,7 @@ class HomeOngoingBothAuthTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }

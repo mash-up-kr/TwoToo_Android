@@ -131,6 +131,7 @@ class HomeOngoingAuthOnlyPartnerTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }

@@ -114,6 +114,7 @@ data class OngoingChallengeUiModel(
 data class StateTitleUiModel(
     @StringRes val title: Int,
     @StringRes val subTitle: Int? = null,
+    val partnerName: String? = null,
 ) {
     companion object {
         val empty = StateTitleUiModel(

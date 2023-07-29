@@ -35,9 +35,6 @@ import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-)
 @Composable
 fun HomeRoute(
     homeViewModel: HomeViewModel,
@@ -92,7 +89,6 @@ fun HomeRoute(
         with(homeSideEffectHandler) {
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
-                    bottomSheetState = bottomSheetState,
                     type = bottomSheetType,
                     onDismiss = ::onDismiss,
                     onClickButton = homeViewModel::onClickSendBottomSheetDataButton,

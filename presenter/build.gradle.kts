@@ -85,6 +85,8 @@ dependencies {
     testImplementation(libs.kotlin.coroutine.test)
     implementation(libs.accompanist.webview)
     implementation(libs.moshi.kotlin)
+    implementation(libs.bottomsheetdialog)
+    implementation(libs.compose.keyboard.state)
 }
 
 fun getApiKey(propertyKey: String): String {
