@@ -1,16 +1,17 @@
 package com.mashup.twotoo.presenter.util
 
 import android.content.Context
-import android.util.Log
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
 import com.kakao.sdk.common.model.ClientErrorCause
 import com.kakao.sdk.user.UserApiClient
-import com.mashup.twotoo.presenter.constant.TAG
+import com.kakao.sdk.user.model.User
 import kotlinx.coroutines.channels.ProducerScope
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 fun UserApiClient.Companion.login(context: Context): Flow<LoginState> = callbackFlow {
     trySend(LoginState.Loading)
@@ -59,24 +60,14 @@ private fun ProducerScope<LoginState>.loginWithKakaoAccount(context: Context) =
         close()
     }
 
-fun getKakaoUserInfoFlow() = callbackFlow<String?> {
+suspend fun fetchUserInfoAsync(): User? = suspendCoroutine { continuation ->
     UserApiClient.instance.me { user, error ->
         if (error != null) {
-            Log.e(TAG, "사용자 정보 요청 실패", error)
-            trySend(error.message.toString())
-        } else if (user != null) {
-            Log.i(
-                TAG,
-                "사용자 정보 요청 성공" +
-                    "\n회원번호: ${user.id}" +
-                    "\n이메일: ${user.kakaoAccount?.email}",
-            )
-            user.kakaoAccount?.email?.let { id ->
-                trySend(id)
-            }
+            continuation.resume(null)
+        } else {
+            continuation.resume(user)
         }
     }
-    awaitClose()
 }
 
 sealed class LoginState {

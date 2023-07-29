@@ -3,17 +3,15 @@ package com.mashup.twotoo.presenter.onboarding
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.kakao.sdk.user.UserApiClient
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.onboarding.model.OnboardingState
 import com.mashup.twotoo.presenter.util.Logging.getFcmTokenFlow
 import com.mashup.twotoo.presenter.util.LoginState
-import com.mashup.twotoo.presenter.util.getKakaoUserInfoFlow
+import com.mashup.twotoo.presenter.util.fetchUserInfoAsync
 import com.mashup.twotoo.presenter.util.login
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.launch
 import model.user.UserAuthRequestDomainModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -31,25 +29,30 @@ class OnBoardingViewModel @Inject constructor(
     override val container = container<OnBoardingModel, OnboardingSideEffect>(OnBoardingModel())
 
     fun loginWithKakao(context: Context) = intent {
-        viewModelScope.launch {
-            val kakaoLogin = UserApiClient.login(context)
-            val fcmToken = getFcmTokenFlow()
-            val userInfo = getKakaoUserInfoFlow()
-            combine(kakaoLogin, fcmToken, userInfo) { loginState, deviceToken, socialId ->
-                reduce {
-                    when (loginState) {
-                        is LoginState.Success -> {
-                            state.copy(isSuccessLogin = true, deviceToken = deviceToken, socialId = socialId ?: "")
-                        }
-                        is LoginState.Error -> {
-                            state.copy(isSuccessLogin = false, deviceToken = deviceToken, socialId = socialId ?: "")
-                        }
-                        is LoginState.Loading -> {
-                            state.copy(isSuccessLogin = false, deviceToken = deviceToken, socialId = socialId ?: "")
-                        }
-                    }
+        val kakaoLogin = UserApiClient.login(context)
+        val fcmToken = getFcmTokenFlow()
+        combine(kakaoLogin, fcmToken) { loginState, deviceToken ->
+            when (loginState) {
+                is LoginState.Success -> {
+                    updateLoginState(true, deviceToken)
                 }
-            }.collectLatest { }
+                is LoginState.Error -> {
+                    updateLoginState(false, deviceToken)
+                }
+                is LoginState.Loading -> {
+                    updateLoginState(false, deviceToken)
+                }
+            }
+        }.collectLatest { }
+    }
+
+    suspend fun updateLoginState(isSuccess: Boolean, deviceToken: String) {
+        val user = fetchUserInfoAsync()
+        intent {
+            reduce {
+                Log.d(TAG, "updateLoginState: socialId${user?.kakaoAccount?.email}")
+                state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = user?.kakaoAccount?.email ?: "")
+            }
         }
     }
 
