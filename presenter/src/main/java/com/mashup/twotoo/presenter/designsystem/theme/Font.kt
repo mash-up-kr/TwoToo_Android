@@ -29,6 +29,7 @@ val omyudaTextStyle = OmyudaTypography(
         fontFamily = omyuda,
         fontWeight = FontWeight.Normal,
         fontSize = 28.sp,
+        lineHeight = 40.sp,
     ),
     headLineNormal24 = TextStyle(
         fontFamily = omyuda,
@@ -49,7 +50,7 @@ val omyudaTextStyle = OmyudaTypography(
         fontFamily = omyuda,
         fontWeight = FontWeight.Normal,
         fontSize = 16.sp,
-        lineHeight = 22.sp,
+        lineHeight = 16.sp,
     ),
     bodyNormal14 = TextStyle(
         fontFamily = omyuda,

@@ -2,6 +2,8 @@ package com.mashup.twotoo.presenter.designsystem.component.textfield
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
@@ -46,11 +48,14 @@ fun TwoTooTextField(
         maxLines = maxLine,
         onValueChange = updateText,
         placeholder = {
-            Text(
-                text = textHint,
-                style = TwoTooTheme.typography.bodyNormal16,
-                color = TwoTooTheme.color.gray500,
-            )
+            Column {
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = textHint,
+                    style = TwoTooTheme.typography.bodyNormal16,
+                    color = TwoTooTheme.color.gray500,
+                )
+            }
         },
     )
 }

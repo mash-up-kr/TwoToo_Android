@@ -45,12 +45,10 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
                 // Handle message within 10 seconds
                 handleNow()
             }
-        }
 
-        remoteMessage.notification?.let {
-            Log.d(TAG, "onMessageReceived: Message Notification Title = ${it.title}, Body= ${it.body}")
-            val (title, body) = covertNullToDefaultMessage(it.title, it.body)
-            sendNotification(title, body)
+            val title = remoteMessage.data.getOrDefault("title", "")
+            val message = remoteMessage.data.getOrDefault("message", "")
+            sendNotification(title, message)
         }
     }
     private fun needsToBeScheduled() = false

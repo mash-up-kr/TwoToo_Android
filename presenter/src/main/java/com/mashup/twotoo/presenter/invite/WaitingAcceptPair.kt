@@ -113,6 +113,7 @@ fun WaitingAcceptPair(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceAround,
         ) {
+            Spacer(modifier = Modifier.height(5.dp))
             TwoTooMainToolbar()
             Text(
                 modifier = Modifier.padding(top = 120.dp, bottom = 28.dp),

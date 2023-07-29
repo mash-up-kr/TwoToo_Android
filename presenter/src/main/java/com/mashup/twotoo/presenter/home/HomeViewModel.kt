@@ -79,7 +79,7 @@ class HomeViewModel @Inject constructor(
                 with(state.challengeStateUiModel as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
-                            val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).partner.cheerText
+                            val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).me.cheerText
                             if (!getVisibilityCheerDialogUseCase() && myCheerText.isBlank()) {
                                 // 응원텍스트가 있다면 표시하지 않습니다.
                                 postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
@@ -283,12 +283,16 @@ class HomeViewModel @Inject constructor(
                     cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
                 ).onSuccess {
                     postSideEffect(
+                        HomeSideEffect.SetInVisibleCheerDialog,
+                    )
+                    postSideEffect(
+                        HomeSideEffect.DismissBottomSheet,
+                    )
+                    delay(100)
+                    postSideEffect(
                         HomeSideEffect.Toast(
                             ToastText.CheerSuccess,
                         ),
-                    )
-                    postSideEffect(
-                        HomeSideEffect.RemoveVisibilityCheerDialog,
                     )
                     delay(100)
                     postSideEffect(
@@ -296,7 +300,7 @@ class HomeViewModel @Inject constructor(
                     )
                 }.onFailure {
                     postSideEffect(
-                        HomeSideEffect.SetInVisibleCheerDialog,
+                        HomeSideEffect.RemoveVisibilityCheerDialog,
                     )
 
                     postSideEffect(
