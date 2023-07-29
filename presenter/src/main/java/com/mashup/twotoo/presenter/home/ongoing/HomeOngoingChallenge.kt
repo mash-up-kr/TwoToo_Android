@@ -2,7 +2,7 @@ package com.mashup.twotoo.presenter.home.ongoing
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -11,7 +11,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
-import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
@@ -53,21 +51,12 @@ fun HomeOngoingChallenge(
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
             homeGoalField, goalAchievement, goalCount,
-            homeBackground, beeButton, shotCount, homeFlower,
-            textButton,
+            beeButton, shotCount, homeFlower,
+            textButton, parentBottomSpacer,
         ) = createRefs()
 
-        TwoTooImageView(
-            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(homeBackground) {
-                bottom.linkTo(parent.bottom)
-                start.linkTo(parent.start)
-                end.linkTo(parent.end)
-            },
-            previewPlaceholder = R.drawable.image_home_background,
-            model = R.drawable.image_home_background,
-            contentScale = ContentScale.FillBounds,
-        )
-
+        val homebackgroundGuide = createGuidelineFromBottom(0.33f)
+        val homebackgroundMarginGuide = createGuidelineFromBottom(0.28f)
         HomeGoalField(
             modifier = Modifier.constrainAs(homeGoalField) {
                 top.linkTo(parent.top, margin = 11.dp)
@@ -93,12 +82,11 @@ fun HomeOngoingChallenge(
             homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
         )
 
-        val barrier = createTopBarrier(homeBackground, margin = 80.dp)
         HomeFlowerMeAndPartner(
             modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
-                bottom.linkTo(barrier)
+                bottom.linkTo(homebackgroundMarginGuide)
             },
             onCommit = onCommit,
             homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
@@ -123,7 +111,7 @@ fun HomeOngoingChallenge(
                     isWiggle = ongoingChallengeUiModel.shotInteractionState,
                     onWiggleAnimationEnded = onWiggleAnimationEnd,
                 ).constrainAs(beeButton) {
-                    top.linkTo(homeBackground.top)
+                    top.linkTo(homebackgroundGuide)
                     start.linkTo(parent.start)
                     end.linkTo(parent.end)
                     bottom.linkTo(parent.bottom)
@@ -140,6 +128,13 @@ fun HomeOngoingChallenge(
                 homeShotCountTextUiModel = ongoingChallengeUiModel.homeShotCountTextUiModel,
             )
         }
+        Spacer(
+            modifier = Modifier.constrainAs(parentBottomSpacer) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+        )
     }
 }
 

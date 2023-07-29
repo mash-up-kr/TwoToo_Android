@@ -55,7 +55,7 @@ fun GoalAchievementRow(
                 top.linkTo(parent.top)
                 bottom.linkTo(parent.bottom)
                 start.linkTo(parent.start)
-            }.width(21.dp).height(22.dp),
+            }.widthIn(21.dp, 46.dp).height(22.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -100,7 +100,7 @@ fun GoalAchievementRow(
                     textAlign = TextAlign.Center,
                 )
             }
-            Spacer(modifier = Modifier.width(14.dp))
+            Spacer(modifier = Modifier.width(8.dp))
         }
     }
 }

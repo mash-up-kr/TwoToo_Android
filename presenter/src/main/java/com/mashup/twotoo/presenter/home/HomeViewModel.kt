@@ -1,9 +1,7 @@
 package com.mashup.twotoo.presenter.home
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
@@ -64,7 +62,9 @@ class HomeViewModel @Inject constructor(
     private val stingUseCase: StingUseCase,
 ) : ViewModel(), ContainerHost<HomeStateUiModel, HomeSideEffect> {
 
-    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(HomeStateUiModel.before)
+    override val container: Container<HomeStateUiModel, HomeSideEffect> = container(
+        initialState = HomeStateUiModel.init,
+    )
 
     fun getHomeViewChallenge() = intent {
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->

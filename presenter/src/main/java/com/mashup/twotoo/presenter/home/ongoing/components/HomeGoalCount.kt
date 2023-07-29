@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.LocalContentColor
 import androidx.compose.material3.LocalTextStyle
@@ -45,12 +46,11 @@ fun HomeGoalCount(
                 horizontalArrangement = Arrangement.End,
             ) {
                 Row(
-                    modifier = Modifier.width(26.dp).height(22.dp),
+                    modifier = Modifier.widthIn(21.dp, 40.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
                         text = homeGoalCountUiModel.partnerName ?: "",
                         textAlign = TextAlign.Center,
                     )
@@ -63,12 +63,11 @@ fun HomeGoalCount(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Row(
-                    modifier = Modifier.width(26.dp).height(22.dp),
+                    modifier = Modifier.widthIn(21.dp, 40.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
                     Text(
-                        modifier = Modifier.fillMaxWidth(),
                         text = homeGoalCountUiModel.myName ?: "",
                         textAlign = TextAlign.Center,
                     )
@@ -87,7 +86,10 @@ fun HomeGoalCount(
 private fun PreviewGoalCount() {
     TwoTooTheme {
         HomeGoalCount(
-            homeGoalCountUiModel = HomeGoalCountUiModel.default,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default.copy(
+                partnerName = "공주공주",
+                myName = "김김김김",
+            ),
         )
     }
 }

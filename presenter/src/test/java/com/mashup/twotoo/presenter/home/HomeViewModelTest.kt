@@ -2,6 +2,7 @@ package com.mashup.twotoo.presenter.home
 
 import app.cash.turbine.TurbineTestContext
 import app.cash.turbine.test
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.repository.FakeChallengeRepository
@@ -104,7 +105,7 @@ class HomeViewModelTest {
         viewModel.getHomeViewChallenge().join()
         scope.launch {
             viewModel.container.stateFlow.collect {
-                assertEquals(it.challengeStateUiModel, BeforeChallengeUiModel.empty)
+                assertEquals(it.challengeStateUiModel, BeforeChallengeState.Init)
             }
         }
     }
@@ -112,7 +113,7 @@ class HomeViewModelTest {
     private suspend fun TurbineTestContext<HomeStateUiModel>.assertInitState() {
         assertEquals(
             (awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
-            BeforeChallengeUiModel.empty.state,
+            BeforeChallengeUiModel.init.state,
         )
     }
 

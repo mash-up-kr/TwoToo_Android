@@ -12,7 +12,7 @@ data class HomeGoalAchievePartnerAndMeUiModel(
         val default = HomeGoalAchievePartnerAndMeUiModel(
             partner = HomeGoalAchieveUiModel.default,
             me = HomeGoalAchieveUiModel.default.copy(
-                name = "나",
+                name = "공주공주",
                 type = UserType.ME,
                 progress = 0.6f,
             ),
@@ -27,7 +27,7 @@ data class HomeGoalAchieveUiModel(
 ) {
     companion object {
         val default = HomeGoalAchieveUiModel(
-            name = "공주",
+            name = "공주공주",
             type = UserType.PARTNER,
             progress = 0.7f,
         )
