@@ -52,7 +52,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun NickNameSettingRoute(
     nickNameViewModel: NickNameViewModel,
-    onLoginSuccess: (String) -> Unit
+    onLoginSuccess: (String) -> Unit,
 ) {
     val state by nickNameViewModel.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -112,6 +112,7 @@ fun NickNameSetting(
             verticalArrangement = Arrangement.SpaceBetween,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
+            Spacer(modifier = Modifier.height(5.dp))
             TwoTooMainToolbar()
             if (state.partnerNickName.isNotEmpty()) {
                 TwoTooImageView(
@@ -156,7 +157,7 @@ fun NickNameSetting(
 @Composable
 fun InputUserNickName(
     nickName: String,
-    onTextValueChanged: (String) -> Unit
+    onTextValueChanged: (String) -> Unit,
 ) {
     val nickNameMaxLength = 4
 
