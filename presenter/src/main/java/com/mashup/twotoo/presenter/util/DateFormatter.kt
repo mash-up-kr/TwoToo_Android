@@ -78,7 +78,6 @@ object DateFormatter {
         val calendar = Calendar.getInstance()
         calendar.time = date
         calendar.add(Calendar.HOUR_OF_DAY, -9)
-        calendar.add(Calendar.DAY_OF_MONTH, -1)
         val updateDate = calendar.time
 
         val isoFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
