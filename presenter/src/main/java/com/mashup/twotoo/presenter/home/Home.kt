@@ -1,24 +1,27 @@
 package com.mashup.twotoo.presenter.home
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
@@ -123,20 +126,41 @@ fun HomeScreen(
     navigateToGuide: () -> Unit,
     onWiggleAnimationEnd: () -> Unit = {},
 ) {
-    Column(
+    ConstraintLayout(
         modifier = modifier.semantics {
             testTagsAsResourceId = true
         },
     ) {
+        val (toolbar, background, content) = createRefs()
         TwoTooMainToolbar(
+            modifier = Modifier.constrainAs(toolbar) {
+                top.linkTo(parent.top)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
             onClickHelpIcon = {
                 navigateToGuide()
             },
         )
+        TwoTooImageView(
+            modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(background) {
+                bottom.linkTo(parent.bottom)
+                start.linkTo(parent.start)
+                end.linkTo(parent.end)
+            },
+            previewPlaceholder = R.drawable.image_home_background,
+            model = R.drawable.image_home_background,
+            contentScale = ContentScale.FillBounds,
+        )
         when (state) {
             is BeforeChallengeUiModel -> {
                 HomeBeforeChallenge(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().constrainAs(content) {
+                        top.linkTo(toolbar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    },
                     beforeChallengeUiModel = state,
                     onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
                 )
@@ -144,7 +168,12 @@ fun HomeScreen(
             is OngoingChallengeUiModel -> {
                 HomeOngoingChallenge(
                     navigateToHistory = navigateToHistory,
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier.fillMaxSize().constrainAs(content) {
+                        top.linkTo(toolbar.bottom)
+                        start.linkTo(parent.start)
+                        end.linkTo(parent.end)
+                        bottom.linkTo(parent.bottom)
+                    },
                     ongoingChallengeUiModel = state,
                     onBeeButtonClick = onBeeButtonClick,
                     onCommit = onCommit,

@@ -21,6 +21,9 @@ data class HomeStateUiModel(
     val challengeStateUiModel: ChallengeStateTypeUiModel,
 ) {
     companion object {
+        val init = HomeStateUiModel(
+            challengeStateUiModel = BeforeChallengeUiModel.init,
+        )
         val before = HomeStateUiModel(
             challengeStateUiModel = BeforeChallengeUiModel.empty,
         )
@@ -32,7 +35,7 @@ data class HomeStateUiModel(
 sealed interface ChallengeStateTypeUiModel
 
 enum class BeforeChallengeState {
-    EMPTY, REQUEST, RESPONSE, WAIT, TERMINATION
+    Init, EMPTY, REQUEST, RESPONSE, WAIT, TERMINATION
 }
 
 data class BeforeChallengeUiModel(
@@ -43,6 +46,14 @@ data class BeforeChallengeUiModel(
     @StringRes val buttonText: Int,
 ) : ChallengeStateTypeUiModel {
     companion object {
+        val init = BeforeChallengeUiModel(
+            state = BeforeChallengeState.Init,
+            homeGoalCountUiModel = HomeGoalCountUiModel.default.copy("", "", 0),
+            stateTitleUiModel = StateTitleUiModel.empty,
+            stateImage = R.drawable.img_challenge_empty,
+            buttonText = R.string.homeBeforeChallengeEmptyButtonText,
+
+        )
         val empty = BeforeChallengeUiModel(
             state = EMPTY,
             homeGoalCountUiModel = HomeGoalCountUiModel.default,
