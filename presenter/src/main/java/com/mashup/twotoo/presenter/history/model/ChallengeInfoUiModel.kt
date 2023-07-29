@@ -5,12 +5,14 @@ import model.challenge.response.ChallengeResponseDomainModel
 import java.util.Date
 
 data class ChallengeInfoUiModel(
+    val challengeNo: Int = 0,
     val day: Int = 0,
     val name: String = "",
     val detail: String = "",
 ) {
     companion object {
         val default = ChallengeInfoUiModel(
+            0,
             1,
             "30분 이상 운동하기",
             "운동 사진으로 인증하기\n인증 실패하는지 확인",
@@ -18,6 +20,7 @@ data class ChallengeInfoUiModel(
 
         fun from(challenge: ChallengeResponseDomainModel): ChallengeInfoUiModel {
             return ChallengeInfoUiModel(
+                challengeNo = challenge.challengeNo,
                 day = toDday(challenge.endDate, challenge.isFinished),
                 name = challenge.name,
                 detail = challenge.description,

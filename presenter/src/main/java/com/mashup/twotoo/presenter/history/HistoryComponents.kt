@@ -116,16 +116,24 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
 }
 
 @Composable
-fun HistoryItems(items: List<HistoryItemUiModel>, navigateToHistoryDetail: (Int) -> Unit) {
+fun HistoryItems(
+    items: List<HistoryItemUiModel>,
+    navigateToHistoryDetail: (Int) -> Unit,
+    showBottomSheet: () -> Unit = {},
+) {
     LazyColumn {
         items(items) { item ->
-            HistoryItem(item, navigateToHistoryDetail)
+            HistoryItem(item, navigateToHistoryDetail, showBottomSheet)
         }
     }
 }
 
 @Composable
-private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistoryDetail: (Int) -> Unit) {
+private fun HistoryItem(
+    historyItemUiModel: HistoryItemUiModel,
+    navigateToHistoryDetail: (Int) -> Unit,
+    showBottomSheet: () -> Unit = {},
+) {
     // Todo 센터고정에서 가로 24dp 패딩으로 변경해야함.(디자인 팀에게 dp사이즈 수정 요청)
     Row(
         modifier = Modifier
@@ -139,6 +147,7 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
             isAuthenticateExpired = historyItemUiModel.isAuthenticateExpired,
             isMyHistoryInfo = false,
             navigateToHistoryDetail = navigateToHistoryDetail,
+            showBottomSheet = showBottomSheet,
         )
         Box(
             modifier = Modifier
@@ -160,12 +169,19 @@ private fun HistoryItem(historyItemUiModel: HistoryItemUiModel, navigateToHistor
             isAuthenticateExpired = historyItemUiModel.isAuthenticateExpired,
             isMyHistoryInfo = true,
             navigateToHistoryDetail = navigateToHistoryDetail,
+            showBottomSheet = showBottomSheet,
         )
     }
 }
 
 @Composable
-private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isAuthenticateExpired: Boolean, isMyHistoryInfo: Boolean, navigateToHistoryDetail: (Int) -> Unit) {
+private fun HistoryInfo(
+    historyInfoUiModel: HistoryInfoUiModel,
+    isAuthenticateExpired: Boolean,
+    isMyHistoryInfo: Boolean,
+    navigateToHistoryDetail: (Int) -> Unit,
+    showBottomSheet: () -> Unit,
+) {
     Box(
         modifier = Modifier
             .size(127.dp)
@@ -181,7 +197,7 @@ private fun HistoryInfo(historyInfoUiModel: HistoryInfoUiModel, isAuthenticateEx
             if (isAuthenticateExpired) {
                 ExpiredHistoryInfo()
             } else {
-                EmptyHistoryInfo(isMyHistoryInfo)
+                EmptyHistoryInfo(isMyHistoryInfo, showBottomSheet)
             }
         } else {
             TwoTooImageView(
@@ -227,12 +243,13 @@ private fun BoxScope.ExpiredHistoryInfo() {
 }
 
 @Composable
-private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean) {
+private fun BoxScope.EmptyHistoryInfo(isMyHistoryInfo: Boolean, showBottomSheet: () -> Unit) {
     if (isMyHistoryInfo) {
         CardText(
             modifier = Modifier
                 .align(Alignment.Center)
                 .clickable {
+                    showBottomSheet()
                 },
             text = stringResource(id = R.string.authenticate),
             fontColor = TwoTooTheme.color.mainWhite,
@@ -291,6 +308,7 @@ private fun PreviewHistoryItemEmpty() {
         isMyHistoryInfo = true,
         navigateToHistoryDetail = { },
         isAuthenticateExpired = false,
+        showBottomSheet = {},
     )
 }
 
@@ -302,6 +320,7 @@ private fun PreviewHistoryItemPartnerEmpty() {
         isMyHistoryInfo = false,
         navigateToHistoryDetail = { },
         isAuthenticateExpired = false,
+        showBottomSheet = {},
     )
 }
 
