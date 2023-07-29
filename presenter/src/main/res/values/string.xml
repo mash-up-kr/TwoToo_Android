@@ -152,6 +152,7 @@
     <string name="resend_invite">초대장 다시 보내기</string>
 
     <!-- history -->
+    <string name="finish">완료</string>
     <string name="challenge_done">챌린지 그만두기</string>
     <string name="done">그만두기</string>
     <string name="cancel">취소</string>

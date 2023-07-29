@@ -86,7 +86,14 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
     Column(modifier = Modifier.padding(horizontal = 24.dp)) {
         Row(modifier = Modifier.padding(top = 9.dp), verticalAlignment = Alignment.CenterVertically) {
             CardText(
-                text = stringResource(id = R.string.DDay, challengeInfoUiModel.day),
+                text = if (challengeInfoUiModel.day == 0) {
+                    stringResource(id = R.string.finish)
+                } else {
+                    stringResource(
+                        id = R.string.DDay,
+                        challengeInfoUiModel.day,
+                    )
+                },
                 fontColor = TwoTooTheme.color.gray500,
                 shape = TwoTooRound4,
                 textStyle = TwoTooTheme.typography.bodyNormal16,
