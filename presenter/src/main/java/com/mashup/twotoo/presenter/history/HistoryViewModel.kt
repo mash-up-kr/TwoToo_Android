@@ -121,9 +121,9 @@ class HistoryViewModel @Inject constructor(
         partnerCommits: List<CommitResponseDomainModel>,
     ): MutableList<HistoryItemUiModel> {
         val startDate =
-            DateFormatter.dateConvertToPlusNineDate(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+            DateFormatter.dateConvertToPlusNineDate(_startDate)
         val endDate =
-            DateFormatter.dateConvertToPlusNineDate(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+            DateFormatter.dateConvertToPlusNineDate(_endDate)
             
         val challengingDates =
             if (isFinished) {
