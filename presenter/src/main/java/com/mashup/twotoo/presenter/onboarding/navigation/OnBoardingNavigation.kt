@@ -47,7 +47,7 @@ fun NavGraphBuilder.onBoardingGraph(
                     NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
                         navController.navigateToOnNickNameSetting(
                             navOptions = navOptions {
-                                popUpTo(navController.graph.startDestinationId) {
+                                popUpTo(navController.graph.id) {
                                     inclusive = true
                                 }
                             },

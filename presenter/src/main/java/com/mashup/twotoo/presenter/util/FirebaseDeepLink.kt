@@ -37,7 +37,7 @@ fun createInviteDeepLink(userNo: Int, nickName: String, inviteLink: (Uri?) -> Un
     }
 }
 
-fun checkInviteLink(intent: Intent, partnerInfo: (String, Int) -> Unit, error: (Boolean?) -> Unit) {
+fun checkInviteLink(isInvite: Boolean = false, intent: Intent, partnerInfo: (String, Int) -> Unit, error: (Boolean?) -> Unit) {
     Firebase.dynamicLinks.getDynamicLink(intent).addOnSuccessListener { linkData ->
         var deepLink: Uri? = null
         linkData?.let { data ->
@@ -54,7 +54,7 @@ fun checkInviteLink(intent: Intent, partnerInfo: (String, Int) -> Unit, error: (
                 error(true)
             }
         } else {
-            error(true)
+            if (!isInvite) error(true)
         }
     }
 }

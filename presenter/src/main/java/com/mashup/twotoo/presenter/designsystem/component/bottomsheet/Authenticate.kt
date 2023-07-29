@@ -38,7 +38,7 @@ fun AuthenticateContent(
     Column(
         modifier = modifier
             .fillMaxWidth().fillMaxHeight(0.76f).padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.Top,
+        verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(46.dp))
@@ -54,7 +54,7 @@ fun AuthenticateContent(
             Column {
                 Spacer(modifier = Modifier.height(16.dp))
                 TwoTooImageViewWithSetter(
-                    modifier = Modifier
+                    modifier = Modifier.fillMaxHeight(0.6f)
                         .aspectRatio(1f)
                         .clip(
                             TwoTooTheme.shape.extraSmall,
@@ -109,6 +109,7 @@ fun AuthenticateContent(
                 }
             },
         )
+        Spacer(modifier = Modifier.height(16.dp))
     }
 }
 
