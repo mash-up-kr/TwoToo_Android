@@ -36,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
+import com.mashup.twotoo.presenter.createChallenge.model.RecommendChallengeUiModel
 import com.mashup.twotoo.presenter.createChallenge.recommendChallenge.RecommendChallengeBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
@@ -46,7 +47,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun CreateChallengeOneStep(
     state: ChallengeInfoModel = ChallengeInfoModel(),
-    onClickNext: (String, String, String) -> Unit
+    onClickNext: (String, String, String) -> Unit,
 ) {
     Column(
         modifier = Modifier.padding(top = 12.dp),
@@ -59,6 +60,7 @@ fun CreateChallengeOneStep(
         InputChallengeName(challengeName, onTextValueChanged = { challengeName = it })
         RecommendChallengeButton { clickItem ->
             challengeName = context.resources.getString(clickItem)
+                .substring(RecommendChallengeUiModel.startTextIndex).trim()
         }
         SettingChallengeDate(startDate, endDate) { selectedStartDate, selectedEndDate ->
             startDate = selectedStartDate
@@ -104,7 +106,7 @@ fun InputChallengeName(text: String, onTextValueChanged: (String) -> Unit) {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RecommendChallengeButton(
-    onClickItemName: (Int) -> Unit
+    onClickItemName: (Int) -> Unit,
 ) {
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(false) }
     val sheetState = rememberModalBottomSheetState(true)
