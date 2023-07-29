@@ -121,7 +121,9 @@ fun HistoryItems(
     navigateToHistoryDetail: (Int) -> Unit,
     showBottomSheet: () -> Unit = {},
 ) {
-    LazyColumn {
+    LazyColumn(
+        contentPadding = PaddingValues(bottom = 56.dp),
+    ) {
         items(items) { item ->
             HistoryItem(item, navigateToHistoryDetail, showBottomSheet)
         }
