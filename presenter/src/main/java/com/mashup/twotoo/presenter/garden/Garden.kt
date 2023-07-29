@@ -6,7 +6,9 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -62,9 +64,10 @@ fun GardenScreen(
         },
         containerColor = Color.Transparent,
     ) {
+        val topBarPadding = it.calculateTopPadding()
         LazyVerticalGrid(
-            modifier = Modifier.padding(paddingValues = it)
-                .padding(horizontal = 24.dp, vertical = 30.dp),
+            modifier = modifier.padding(top = topBarPadding)
+                .padding(horizontal = 24.dp),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(13.dp),
             verticalArrangement = Arrangement.spacedBy(13.dp),
@@ -90,6 +93,11 @@ fun GardenScreen(
 @Composable
 private fun PreviewGardenScreen() {
     TwoTooTheme {
-        GardenScreen(GardenState.default, navigateToGarden = {}, stopAnimation = {},navigateToGuide = {})
+        GardenScreen(
+            GardenState.default,
+            navigateToGarden = {},
+            stopAnimation = {},
+            navigateToGuide = {},
+        )
     }
 }
