@@ -125,7 +125,7 @@
     <string name="success_challenge_request_desc">상대방이 수락하면, 챌린지가 시작됩니다</string>
     <string name="challenge_info">챌린지 정보</string>
 
-    <string name="recommend_challenge_say_love">💗 사랑한다고 얘기 해주기</string>
+    <string name="recommend_challenge_busy_day">🔥 오늘의 갓생 인증하기</string>
     <string name="recommend_challenge_share_daily">📝 하루 한 문장 일상 공유하기</string>
     <string name="recommend_challenge_oneday_praise">👍 하루에 한번 칭찬 해주기</string>
     <string name="recommend_challenge_mirror_selfie">📷 거울 셀카 찍기</string>
