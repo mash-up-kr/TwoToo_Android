@@ -14,7 +14,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -113,58 +112,53 @@ fun HistoryScreen(
     var showSelectListDialog by remember { mutableStateOf(false) }
     var showChallengeDropDialog by remember { mutableStateOf(false) }
     Box {
-        Scaffold(
-            topBar = {
-                TwoTooBackToolbar(
-                    onClickBackIcon = {
-                        onClickBackButton()
-                    },
-                ) {
-                    IconButton(onClick = { showSelectListDialog = true }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.ic_more),
-                            contentDescription = null,
-                        )
-                    }
-                }
-            },
-            containerColor = Color.Transparent,
+        Column(
+            modifier = Modifier.fillMaxSize(),
+
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = it),
+            Spacer(modifier = Modifier.padding(top = 5.dp))
+            TwoTooBackToolbar(
+                onClickBackIcon = {
+                    onClickBackButton()
+                },
             ) {
-                ChallengeInfo(
-                    state.challengeInfoUiModel,
-                )
-                if (isHomeGoalAchievementShow) {
-                    TwoTooGoalAchievementProgressbar(
-                        modifier = Modifier
-                            .padding(top = 12.dp, start = 24.dp)
-                            .width(210.dp)
-                            .height(59.dp)
-                            .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                        homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+                IconButton(onClick = { showSelectListDialog = true }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_more),
+                        contentDescription = null,
                     )
                 }
-                OwnerNickNames(state.ownerNickNamesUiModel)
-                Spacer(modifier = Modifier.height(12.dp))
-                Divider(
-                    color = Color.White,
+            }
+            Spacer(modifier = Modifier.height(9.dp))
+            ChallengeInfo(
+                state.challengeInfoUiModel,
+            )
+            if (isHomeGoalAchievementShow) {
+                TwoTooGoalAchievementProgressbar(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .width(1.dp)
-                        .padding(horizontal = 24.dp),
+                        .padding(top = 12.dp, start = 24.dp)
+                        .width(210.dp)
+                        .height(59.dp)
+                        .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
+                    homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
                 )
-                Box {
-                    DottedLine()
-                    HistoryItems(
-                        state.historyItemUiModel,
-                        navigateToHistoryDetail,
-                        ::showBottomSheet,
-                    )
-                }
+            }
+            OwnerNickNames(state.ownerNickNamesUiModel)
+            Spacer(modifier = Modifier.height(12.dp))
+            Divider(
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .width(1.dp)
+                    .padding(horizontal = 24.dp),
+            )
+            Box {
+                DottedLine()
+                HistoryItems(
+                    state.historyItemUiModel,
+                    navigateToHistoryDetail,
+                    ::showBottomSheet,
+                )
             }
         }
         if (showSelectListDialog) {

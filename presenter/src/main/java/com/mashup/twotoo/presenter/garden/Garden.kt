@@ -1,16 +1,18 @@
 package com.mashup.twotoo.presenter.garden
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -40,7 +42,7 @@ fun GardenRoute(
     val state by gardenViewModel.collectAsState()
 
     GardenScreen(
-        modifier = modifier.testTag(stringResource(id = R.string.garden)),
+        modifier = modifier.fillMaxSize().testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,
         navigateToGuide = navigateToGuide,
         state = state,
@@ -58,15 +60,11 @@ fun GardenScreen(
 ) {
     // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
 
-    Scaffold(
-        topBar = {
-            TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = { navigateToGuide() })
-        },
-        containerColor = Color.Transparent,
-    ) {
-        val topBarPadding = it.calculateTopPadding()
+    Column(modifier = modifier) {
+        Spacer(modifier = Modifier.height(5.dp))
+        TwoTooMainToolbar(text = stringResource(id = R.string.garden_title), onClickHelpIcon = { navigateToGuide() })
         LazyVerticalGrid(
-            modifier = modifier.padding(top = topBarPadding)
+            modifier = Modifier.fillMaxSize()
                 .padding(horizontal = 24.dp),
             columns = GridCells.Fixed(2),
             horizontalArrangement = Arrangement.spacedBy(13.dp),

@@ -29,7 +29,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun OnBoardingRoute(
     onBoardingViewModel: OnBoardingViewModel,
-    onLoginSuccess: (String) -> Unit = {}
+    onLoginSuccess: (String) -> Unit = {},
 ) {
     val state by onBoardingViewModel.collectAsState()
     val context = LocalContext.current
@@ -70,6 +70,7 @@ fun OnBoardingScreen(
         verticalArrangement = Arrangement.SpaceBetween,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(5.dp))
         TwoTooMainToolbar()
         HorizontalPagerContent(pagerState = pagerState)
 
