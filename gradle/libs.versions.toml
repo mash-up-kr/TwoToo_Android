@@ -35,6 +35,8 @@ image_cropper = "4.3.3"
 firebase-bom = "32.2.0"
 turbine = "1.0.0"
 coroutine_test = "1.7.2"
+bottomsheetdialog = "1.2.1"
+extensions-compose-keyboard-state = "1.4.3"
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -111,6 +113,11 @@ image-cropper = { module = "com.vanniktech:android-image-cropper", version.ref =
 
 #turbine
 turbine = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
+
+#bottomsheetdialog
+bottomsheetdialog = { module ="com.holix.android:bottomsheetdialog-compose", version.ref = "bottomsheetdialog" }
+
+compose-keyboard-state = { module = "tech.thdev:extensions-compose-keyboard-state", version.ref = "extensions-compose-keyboard-state" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }

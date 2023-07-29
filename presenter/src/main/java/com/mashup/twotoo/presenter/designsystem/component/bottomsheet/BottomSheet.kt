@@ -7,35 +7,40 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.canhub.cropper.CropImageContract
 import com.canhub.cropper.CropImageContractOptions
 import com.canhub.cropper.CropImageOptions
+import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
+import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Shot
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.launch
+import tech.thdev.compose.extensions.keyboard.state.MutableExKeyboardStateSource
+import tech.thdev.compose.extensions.keyboard.state.foundation.removeFocusWhenKeyboardIsHidden
+import tech.thdev.compose.extensions.keyboard.state.localowners.LocalMutableExKeyboardStateSourceOwner
 import java.io.File
 import java.util.Objects
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooBottomSheet(
     type: BottomSheetType,
     onDismiss: () -> Unit,
-    bottomSheetState: SheetState = rememberModalBottomSheetState(),
     onClickButton: (BottomSheetData) -> Unit = {},
 ) {
     when (type) {
@@ -43,25 +48,21 @@ fun TwoTooBottomSheet(
             type = type,
             onClickButton = onClickButton,
             onDismiss = onDismiss,
-            bottomSheetState = bottomSheetState,
         )
 
         is SendType -> TwoTooSendMsgBottomSheet(
             type = type,
             onClickButton = onClickButton,
             onDismiss = onDismiss,
-            bottomSheetState = bottomSheetState,
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooAuthBottomSheet(
     type: Authenticate,
     onClickButton: (BottomSheetData) -> Unit,
     onDismiss: () -> Unit,
-    bottomSheetState: SheetState,
 ) {
     var imageUri by remember {
         mutableStateOf<Uri?>(null)
@@ -136,7 +137,6 @@ fun TwoTooAuthBottomSheet(
 
     Box(modifier = Modifier.fillMaxSize()) {
         TwoTooBottomSheetImpl(
-            bottomSheetState = bottomSheetState,
             onDismiss = onDismiss,
         ) {
             AuthenticateContent(
@@ -153,6 +153,10 @@ fun TwoTooAuthBottomSheet(
                     }
                 },
                 onClickButton = onClickButton,
+                modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
+                    color = TwoTooTheme.color.backgroundYellow,
+                    shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
+                ),
             )
         }
         if (setImageDialogVisible) {
@@ -170,54 +174,45 @@ fun TwoTooAuthBottomSheet(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooSendMsgBottomSheet(
     type: SendType,
     onDismiss: () -> Unit,
-    bottomSheetState: SheetState = rememberModalBottomSheetState(),
     onClickButton: (BottomSheetData) -> Unit = {},
 ) {
-    val focusManager = LocalFocusManager.current
     TwoTooBottomSheetImpl(
-        bottomSheetState = bottomSheetState,
-        onDismiss = {
-            focusManager.clearFocus()
-            onDismiss()
-        },
+        onDismiss = onDismiss,
     ) {
         SendMsgBottomSheetContent(
+            modifier = Modifier.removeFocusWhenKeyboardIsHidden().background(
+                color = TwoTooTheme.color.backgroundYellow,
+                shape = RoundedCornerShape(topStart = 60f, topEnd = 60f),
+            ),
             type = type,
             onClickButton = onClickButton,
-            focusManager = focusManager,
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TwoTooBottomSheetImpl(
-    bottomSheetState: SheetState,
     onDismiss: () -> Unit,
     bottomSheetContent: @Composable () -> Unit,
 ) {
-    ModalBottomSheet(
-        sheetState = bottomSheetState,
+    BottomSheetDialog(
         onDismissRequest = onDismiss,
-        containerColor = Color(0xFFFCF5E6),
+        properties = BottomSheetDialogProperties(
+            behaviorProperties = BottomSheetBehaviorProperties(
+                state = BottomSheetBehaviorProperties.State.Expanded,
+            ),
+        ),
     ) {
-        bottomSheetContent()
+        CompositionLocalProvider(
+            LocalMutableExKeyboardStateSourceOwner provides MutableExKeyboardStateSource(),
+        ) {
+            bottomSheetContent()
+        }
     }
-}
-
-@Composable
-fun TestButton(
-    modifier: Modifier = Modifier,
-) {
-    Text(
-        modifier = modifier,
-        text = "버튼입니다.",
-    )
 }
 
 /**
@@ -245,7 +240,6 @@ fun OpenAuthenticate() {
             }
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
-                    bottomSheetState = bottomSheetState,
                     type = Authenticate(),
                     onDismiss = {
                         coroutineScope.launch {
@@ -285,7 +279,6 @@ private fun OpenShot() {
             }
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
-                    bottomSheetState = bottomSheetState,
                     type = Shot(),
                     onDismiss = {
                         coroutineScope.launch {
@@ -322,7 +315,6 @@ private fun OpenCheer() {
             }
             if (isBottomSheetVisible) {
                 TwoTooBottomSheet(
-                    bottomSheetState = bottomSheetState,
                     type = Cheer(),
                     onDismiss = {
                         coroutineScope.launch {

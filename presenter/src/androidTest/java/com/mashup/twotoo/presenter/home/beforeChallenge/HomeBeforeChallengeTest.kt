@@ -30,6 +30,7 @@ class HomeBeforeChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
@@ -66,6 +67,7 @@ class HomeBeforeChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
@@ -99,6 +101,7 @@ class HomeBeforeChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
@@ -133,6 +136,7 @@ class HomeBeforeChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }
@@ -172,6 +176,7 @@ class HomeBeforeChallengeTest {
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
+                    navigateToGuide = {}
                 )
             }
         }

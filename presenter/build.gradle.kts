@@ -84,6 +84,8 @@ dependencies {
     testImplementation(libs.orbit.test)
     testImplementation(libs.kotlin.coroutine.test)
     implementation(libs.accompanist.webview)
+    implementation(libs.bottomsheetdialog)
+    implementation(libs.compose.keyboard.state)
 }
 
 fun getApiKey(propertyKey: String): String {

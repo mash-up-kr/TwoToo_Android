@@ -20,8 +20,6 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.util.addFocusCleaner
-import com.mashup.twotoo.presenter.util.keyboardAsState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -30,24 +28,20 @@ fun AuthenticateContent(
     type: Authenticate,
     onClickPlusButton: () -> Unit,
     onClickButton: (BottomSheetData) -> Unit,
+    modifier: Modifier = Modifier,
     imageUri: Uri? = null,
 ) {
     var animateSwitch by remember { mutableStateOf(false) }
     val focusManager = LocalFocusManager.current
-    val keyBoardOpenState by keyboardAsState()
     val coroutineScope = rememberCoroutineScope()
-    LaunchedEffect(keyBoardOpenState) {
-        if (!keyBoardOpenState) {
-            animateSwitch = false
-            focusManager.clearFocus()
-        }
-    }
+
     Column(
-        modifier = Modifier
-            .fillMaxWidth().fillMaxHeight(0.8f).addFocusCleaner(focusManager).padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.SpaceAround,
+        modifier = modifier
+            .fillMaxWidth().fillMaxHeight(0.76f).padding(horizontal = 20.dp),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
+        Spacer(modifier = Modifier.height(46.dp))
         Header(
             titleText = stringResource(id = type.title),
         )
@@ -57,25 +51,29 @@ fun AuthenticateContent(
                 targetHeight = { 0 },
             ),
         ) {
-            TwoTooImageViewWithSetter(
-                modifier = Modifier
-                    .aspectRatio(1f)
-                    .clip(
-                        TwoTooTheme.shape.extraSmall,
-                    ),
-                imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
-                onClickPlusButton = {
-                    onClickPlusButton()
-                },
-                previewPlaceholder = R.drawable.empty_image_color_placeholder,
-                failurePlaceHolder = {},
-                loadingPlaceHolder = {},
-            )
+            Column {
+                Spacer(modifier = Modifier.height(16.dp))
+                TwoTooImageViewWithSetter(
+                    modifier = Modifier
+                        .aspectRatio(1f)
+                        .clip(
+                            TwoTooTheme.shape.extraSmall,
+                        ),
+                    imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
+                    onClickPlusButton = {
+                        onClickPlusButton()
+                    },
+                    previewPlaceholder = R.drawable.empty_image_color_placeholder,
+                    failurePlaceHolder = {},
+                    loadingPlaceHolder = {},
+                )
+            }
         }
 
         var textFieldState by rememberSaveable {
             mutableStateOf("")
         }
+        Spacer(modifier = Modifier.height(16.dp))
         TextWrapper(
             modifier = Modifier
                 .fillMaxWidth().height(85.dp),
@@ -90,6 +88,7 @@ fun AuthenticateContent(
                 }
             },
         )
+        Spacer(modifier = Modifier.height(29.dp))
         TwoTooTextButton(
             modifier = Modifier
                 .fillMaxWidth().height(57.dp),
