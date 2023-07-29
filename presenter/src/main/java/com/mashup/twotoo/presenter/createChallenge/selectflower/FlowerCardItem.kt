@@ -37,7 +37,7 @@ fun SelectFlowerLazyColumn(
     var selectedItemIndex by remember { mutableIntStateOf(-1) }
 
     LazyVerticalGrid(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(bottom = 56.dp),
         contentPadding = PaddingValues(horizontal = 8.dp),
         columns = GridCells.Fixed(2),
     ) {
