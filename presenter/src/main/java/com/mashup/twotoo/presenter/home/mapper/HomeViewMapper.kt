@@ -360,13 +360,13 @@ fun ChallengeResponseDomainModel.getFlowerType(
         val user1 = Flower(
             flowerName = user1Flower.toFlowerName(),
             userType = UserType.PARTNER,
-            growType = meGrowType,
+            growType = partnerGrowType,
         )
 
         val user2 = Flower(
             flowerName = user2Flower.toFlowerName(),
             userType = UserType.ME,
-            growType = partnerGrowType,
+            growType = meGrowType,
         )
         Pair(user2, user1)
     }
