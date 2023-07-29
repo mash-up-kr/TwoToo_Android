@@ -2,6 +2,7 @@ package com.mashup.twotoo.presenter.history
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
@@ -10,17 +11,21 @@ import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.response.ChallengeDetailResponseDomainModel
+import model.commit.request.CommitRequestDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeByNoUseCase
-import java.util.*
 import usecase.challenge.QuiteChallengeUseCase
+import usecase.commit.CreateCommitUseCase
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
+    private val createCommitUseCase: CreateCommitUseCase,
     private val getChallengeByNoUseCase: GetChallengeByNoUseCase,
     private val quiteChallengeUseCase: QuiteChallengeUseCase,
 ) : ContainerHost<HistoryState, Nothing>, ViewModel() {
@@ -28,18 +33,35 @@ class HistoryViewModel @Inject constructor(
         HistoryState(),
     )
 
-    fun getChallengeByUser(challengeNo: Int) = intent {
-        getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
-                challengeDetailResponseDomainModel ->
+    fun onClickBottomSheetDataButton(bottomSheetData: BottomSheetData) = intent {
+        val bottomSheetAuthenticateData = (bottomSheetData as BottomSheetData.AuthenticateData)
+        createCommitUseCase(
+            commitRequestDomainModel = CommitRequestDomainModel(
+                text = bottomSheetAuthenticateData.text,
+                challengeNo = this.state.challengeInfoUiModel.challengeNo.toString(),
+                img = bottomSheetAuthenticateData.image.toString(),
+            ),
+        ).onSuccess {
+            Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Success")
+            getChallengeByUser(this.state.challengeInfoUiModel.challengeNo)
+        }.onFailure {
+            Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Failed, message=${it.message}")
+        }
+    }
 
-            val newChallengeInfoUiModel = ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
+    fun getChallengeByUser(challengeNo: Int) = intent {
+        getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess { challengeDetailResponseDomainModel ->
+
+            val newChallengeInfoUiModel =
+                ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
 
             val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
                 getNewHistoryItemUiModels(challengeDetailResponseDomainModel)
 
-            val newOwnerNickNamesUiModel = with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
-                OwnerNickNamesUiModel.from(this.user1, this.user2)
-            }
+            val newOwnerNickNamesUiModel =
+                with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                    OwnerNickNamesUiModel.from(this.user1, this.user2)
+                }
 
             reduce {
                 state.copy(
