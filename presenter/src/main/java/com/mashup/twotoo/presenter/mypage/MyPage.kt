@@ -1,7 +1,15 @@
 package com.mashup.twotoo.presenter.mypage
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -24,14 +32,12 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
-import com.mashup.twotoo.presenter.mypage.model.MyPageItem
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun MyPageRoute(
     userViewModel: UserViewModel,
-    navigateToGuide: () -> Unit,
-    onClickMyPageItem: (MyPageItem) -> Unit,
+    navigateToGuide: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -48,7 +54,6 @@ fun MyPageRoute(
             stringResource(id = R.string.mypage),
         ),
         state = state,
-        onClickMyPageItem = onClickMyPageItem,
         navigateToGuide = navigateToGuide,
     )
 }
@@ -57,8 +62,7 @@ fun MyPageRoute(
 fun MyPageScreen(
     modifier: Modifier = Modifier,
     state: UserState,
-    onClickMyPageItem: (MyPageItem) -> Unit,
-    navigateToGuide: () -> Unit,
+    navigateToGuide: (String) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -68,7 +72,7 @@ fun MyPageScreen(
         TwoTooMainToolbar(
             modifier = Modifier.fillMaxWidth(),
             text = stringResource(id = R.string.mypage),
-            onClickHelpIcon = { navigateToGuide() },
+            onClickHelpIcon = { navigateToGuide("https://www.notion.so/") },
         )
         TwoTooImageView(
             modifier = Modifier.size(width = 149.dp, height = 129.dp),
@@ -109,7 +113,7 @@ fun MyPageScreen(
         Spacer(modifier = Modifier.height(11.dp))
         MyPageItemList(
             modifier = Modifier.fillMaxWidth(),
-            onClickMyPageItem = onClickMyPageItem,
+            navigateToGuide = navigateToGuide,
         )
     }
 }
@@ -118,6 +122,6 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), onClickMyPageItem = {}, navigateToGuide = {})
+        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), navigateToGuide = {})
     }
 }

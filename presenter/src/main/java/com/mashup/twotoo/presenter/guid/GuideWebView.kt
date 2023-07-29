@@ -18,12 +18,15 @@ import androidx.compose.ui.viewinterop.AndroidView
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 
 @Composable
 fun GuideRoute(
-    modifier: Modifier = Modifier,
+    route: String,
     onClickBackButton: () -> Unit,
+    modifier: Modifier = Modifier,
 ) {
+    val url = GuideUrlItem.findUrlBy(route)
     Column {
         TwoTooBackToolbar(
             modifier = Modifier.fillMaxWidth(),
@@ -34,18 +37,21 @@ fun GuideRoute(
         )
         GuideWebView(
             modifier = modifier.fillMaxSize(),
+            url = url,
         )
     }
 }
 
 @SuppressLint("SetJavaScriptEnabled")
 @Composable
-fun GuideWebView(modifier: Modifier = Modifier) {
+fun GuideWebView(
+    url: String,
+    modifier: Modifier = Modifier,
+) {
     val context = LocalContext.current
     val webView = remember {
         WebView(context)
     }
-    val url = "https://www.notion.so/"
     AndroidView(
         factory = { webView },
         modifier = modifier,
@@ -61,5 +67,5 @@ fun GuideWebView(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun PreviewGuideWebView() {
-    GuideRoute(Modifier, {})
+    GuideRoute(modifier = Modifier, onClickBackButton = {}, route = "")
 }
