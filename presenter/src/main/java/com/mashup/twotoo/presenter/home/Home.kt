@@ -32,6 +32,8 @@ import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 import kotlinx.coroutines.launch
@@ -205,6 +207,50 @@ fun PreviewHomeScreenAfterChallenge() {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
             state = OngoingChallengeUiModel.default,
+            navigateToGuide = {},
+        )
+    }
+}
+
+
+@Preview(showBackground = true, device = "id:pixel_2")
+@Composable
+fun PreviewHomeScreenAfterChallengeText() {
+    TwoTooTheme {
+        HomeScreen(
+            modifier = Modifier.fillMaxSize(),
+            state = OngoingChallengeUiModel.default.copy(
+                homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
+                    partner = HomeGoalAchieveUiModel.default.copy(
+                        "주주주주"
+                    ),
+                    me = HomeGoalAchieveUiModel.default.copy(
+                        "주주"
+                    )
+                )
+            ),
+            navigateToGuide = {},
+        )
+    }
+}
+
+
+@Preview(showBackground = true, device = "id:pixel_2")
+@Composable
+fun PreviewHomeScreenAfterChallengeText2() {
+    TwoTooTheme {
+        HomeScreen(
+            modifier = Modifier.fillMaxSize(),
+            state = OngoingChallengeUiModel.default.copy(
+                homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
+                    partner = HomeGoalAchieveUiModel.default.copy(
+                        "주주"
+                    ),
+                    me = HomeGoalAchieveUiModel.default.copy(
+                        "주주"
+                    )
+                )
+            ),
             navigateToGuide = {},
         )
     }

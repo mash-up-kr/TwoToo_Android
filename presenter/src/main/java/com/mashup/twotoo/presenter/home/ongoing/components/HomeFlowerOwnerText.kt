@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -28,11 +29,10 @@ fun HomeFlowerOwnerText(
         modifier = modifier.background(
             color = TwoTooTheme.color.backgroundYellow,
             shape = TwoTooTheme.shape.small,
-        ).width(44.dp).height(30.dp).padding(horizontal = 10.dp, vertical = 3.dp),
+        ).wrapContentWidth().height(30.dp).padding(horizontal = 10.dp, vertical = 3.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
-            modifier = Modifier,
             color = when (userType) {
                 PARTNER -> {
                     TwoTooTheme.color.mainBrown

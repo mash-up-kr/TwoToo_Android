@@ -81,7 +81,7 @@ fun HomeOngoingChallenge(
             },
             homeGoalCountUiModel = ongoingChallengeUiModel.homeGoalCountUiModel,
         )
-        
+
         HomeFlowerMeAndPartner(
             modifier = Modifier.fillMaxWidth().constrainAs(homeFlower) {
                 start.linkTo(parent.start)

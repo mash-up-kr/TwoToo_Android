@@ -79,7 +79,7 @@ data class HomeFlowerUiModel(
     companion object {
 
         val default = HomeFlowerUiModel(
-            name = "왕자",
+            name = "왕자왕자",
             flowerType = Flower(
                 flowerName = FlowerName.Tulip,
                 userType = UserType.ME,
