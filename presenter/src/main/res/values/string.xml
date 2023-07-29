@@ -59,7 +59,7 @@
     <string name="homeBeforeChallengeEmptyButtonText">챌린지 시작히기</string>
     <string name="homeBeforeChallengeRequest">상대방의 응답을\n기다리고 있습니다</string>
     <string name="homeBeforeChallengeRequestButtonText">챌린지 확인하기</string>
-    <string name="homeBeforeChallengeResponse">공주님이 보낸\n챌린지를 확인해주세요</string>
+    <string name="homeBeforeChallengeResponse">님이 보낸\n챌린지를 확인해주세요</string>
     <string name="homeBeforeChallengeResponseButtonText">챌린지 확인하기</string>
     <string name="homeBeforeChallengeWait">챌린지 대기중이에요</string>
     <string name="homeBeforeChallengeWaitSubTitle">아직 챌린지 시작 전이에요!\n시작날짜에 다시 들어와주세요!</string>

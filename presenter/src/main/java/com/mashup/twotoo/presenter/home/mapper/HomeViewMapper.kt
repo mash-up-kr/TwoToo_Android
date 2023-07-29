@@ -15,6 +15,7 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
 import com.mashup.twotoo.presenter.home.model.HomeShotCountTextUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
+import com.mashup.twotoo.presenter.home.model.StateTitleUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.model.Stage
 import com.mashup.twotoo.presenter.model.toFlowerName
@@ -66,6 +67,9 @@ fun HomeViewResponseDomainModel.toBeforeChallengeUiModel(): BeforeChallengeUiMod
         "BEFORE_MY_APPROVE" -> {
             BeforeChallengeUiModel.response.copy(
                 homeGoalCountUiModel = homeGoalCountUiModel,
+                stateTitleUiModel = StateTitleUiModel.response.copy(
+                    partnerName = partnerInfo.nickname,
+                ),
             )
         }
 
