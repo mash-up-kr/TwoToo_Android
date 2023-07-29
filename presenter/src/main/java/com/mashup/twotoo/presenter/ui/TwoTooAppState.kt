@@ -59,7 +59,7 @@ class TwoTooAppState(
         }
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
-            popUpTo(navController.graph.findStartDestination().id) {
+            popUpTo(navController.graph.id) {
                 saveState = true
             }
             launchSingleTop = true
