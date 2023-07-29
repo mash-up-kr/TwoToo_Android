@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.createChallenge
 import android.content.Context
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,7 +35,9 @@ fun CreateChallengeRoute(
     val state by createChallengeViewModel.collectAsState()
 
     LaunchedEffect(Unit) {
-        createChallengeViewModel.initChallengeStep(homeState, challengeInfo)
+        if (!state.isBack) {
+            createChallengeViewModel.initChallengeStep(homeState, challengeInfo)
+        }
     }
 
     CreateChallenge(
@@ -151,8 +154,10 @@ fun CreateChallengeToolbar(homeState: String, onClickBackButton: () -> Unit) {
         BeforeChallengeState.RESPONSE.name, BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> ""
         else -> { "" }
     }
+
     TwoTooBackToolbar(
         title = toolbarTitle,
+        titleModifier = Modifier.offset(x = -16.dp),
         onClickBackIcon = {
             onClickBackButton()
         },

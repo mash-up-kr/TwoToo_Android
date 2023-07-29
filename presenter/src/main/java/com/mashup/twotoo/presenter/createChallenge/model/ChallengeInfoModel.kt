@@ -5,6 +5,7 @@ import model.challenge.request.CreateChallengeRequestDomainModel
 
 data class ChallengeInfoModel(
     var currentStep: Int = 1,
+    var isBack: Boolean = false,
     var challengeName: String = "",
     var startDate: String = DateFormatter.getCurrentDate(),
     val endDate: String = DateFormatter.getDaysAfter(DateFormatter.getCurrentDate()),

@@ -105,6 +105,7 @@ fun NavGraphBuilder.createChallengeGraph(
                 homeState = homeState,
                 createChallengeViewModel = createChallengeViewModel,
                 onClickBackButton = {
+                    createChallengeViewModel.setIsBackState()
                     navController.popBackStack()
                 },
                 onSuccessCreateChallenge = {
