@@ -79,9 +79,9 @@ class HistoryViewModel @Inject constructor(
         challengeDetailResponseDomainModel: ChallengeDetailResponseDomainModel,
     ): MutableList<HistoryItemUiModel> {
         val startDate =
-            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+            DateFormatter.dateConvertToPlusNineDate(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
         val endDate =
-            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+            DateFormatter.dateConvertToPlusNineDate(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
 
         val challengingDates =
             if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
@@ -110,7 +110,7 @@ class HistoryViewModel @Inject constructor(
         val datesList = mutableListOf<String>()
 
         while (calendar.time <= endDate) {
-            datesList.add(DateFormatter.getDateStrByDate(calendar.time))
+            datesList.add(DateFormatter.getDateStrMonthDay(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 

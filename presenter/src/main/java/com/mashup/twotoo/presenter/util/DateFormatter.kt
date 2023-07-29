@@ -15,6 +15,26 @@ object DateFormatter {
         return getDateStrByDate(dateTime)
     }
 
+    fun dateConvertToPlusNineTime(date: String): String {
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateTime
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        val updateDate = calendar.time
+        val test = SimpleDateFormat("MM-dd", Locale.getDefault()).format(updateDate)
+        return test
+    }
+
+    fun dateConvertToPlusNineDate(date: String): Date {
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateTime
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        return calendar.time
+    }
+
     fun getDateTimeByStr(date: String): Date {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
     }
@@ -23,8 +43,13 @@ object DateFormatter {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 
+    fun getDateStrMonthDay(date:Date): String{
+        return SimpleDateFormat("MM-dd", Locale.getDefault()).format(date)
+    }
+
     fun get24HourStrByStr(date: String): String {
-        val dateTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
         val calendar = Calendar.getInstance()
         calendar.time = dateTime
         calendar.add(Calendar.HOUR_OF_DAY, 9)
