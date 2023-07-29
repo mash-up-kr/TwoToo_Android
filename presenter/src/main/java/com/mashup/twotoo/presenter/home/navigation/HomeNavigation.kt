@@ -16,6 +16,7 @@ import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
+import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.MoshiUtils
 import com.mashup.twotoo.presenter.util.componentProvider
@@ -39,7 +40,7 @@ fun NavGraphBuilder.homeGraph(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
                 navigateToHistory = { challengeNo -> navController.navigateToHistory(challengeNo = challengeNo) },
-                navigateToGuide = { navController.navigateToGuide() },
+                navigateToGuide = { navController.navigateToGuide(route = GuideUrlItem.UsingGuide.name) },
                 navigateToCreateChallenge = { homeState, challengeInfo ->
                     val challengeInfoJson = MoshiUtils.toJson<HomeChallengeInfoModel>(challengeInfo)
                     Log.d(TAG, "navigateToCreateChallenge: $challengeInfoJson")

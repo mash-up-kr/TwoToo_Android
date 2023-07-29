@@ -22,14 +22,14 @@ import com.mashup.twotoo.presenter.mypage.model.MyPageItem
 
 @Composable
 fun MyPageItemList(
-    onClickMyPageItem: (MyPageItem) -> Unit,
+    navigateToGuide: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(modifier = modifier) {
         MyPageItem.values().forEach { myPageItem ->
             MyPageItemRow(
                 myPageItem = myPageItem,
-                onClickMyPageItem = onClickMyPageItem,
+                navigateToGuide = navigateToGuide,
             )
         }
     }
@@ -38,10 +38,11 @@ fun MyPageItemList(
 @Composable
 fun MyPageItemRow(
     myPageItem: MyPageItem,
-    onClickMyPageItem: (MyPageItem) -> Unit,
+    navigateToGuide: (String) -> Unit,
 ) {
     Row(
-        modifier = Modifier.fillMaxWidth().height(46.dp).clickable { onClickMyPageItem(myPageItem) },
+        modifier = Modifier.fillMaxWidth().height(46.dp)
+            .clickable { navigateToGuide(myPageItem.route) },
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.width(24.dp))
