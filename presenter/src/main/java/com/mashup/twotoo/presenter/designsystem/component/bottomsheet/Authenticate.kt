@@ -38,7 +38,7 @@ fun AuthenticateContent(
     Column(
         modifier = modifier
             .fillMaxWidth().fillMaxHeight(0.76f).padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.SpaceBetween,
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(46.dp))

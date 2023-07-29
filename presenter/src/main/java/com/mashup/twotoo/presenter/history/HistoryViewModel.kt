@@ -121,10 +121,10 @@ class HistoryViewModel @Inject constructor(
         partnerCommits: List<CommitResponseDomainModel>,
     ): MutableList<HistoryItemUiModel> {
         val startDate =
-            DateFormatter.getDateTimeByStr(_startDate)
+            DateFormatter.dateConvertToPlusNineDate(_startDate)
         val endDate =
-            DateFormatter.getDateTimeByStr(_endDate)
-
+            DateFormatter.dateConvertToPlusNineDate(_endDate)
+            
         val challengingDates =
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
@@ -152,7 +152,7 @@ class HistoryViewModel @Inject constructor(
         val datesList = mutableListOf<String>()
 
         while (calendar.time <= endDate) {
-            datesList.add(DateFormatter.getDateStrByDate(calendar.time))
+            datesList.add(DateFormatter.getDateStrMonthDay(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 

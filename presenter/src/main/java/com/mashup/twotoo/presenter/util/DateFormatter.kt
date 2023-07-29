@@ -1,13 +1,38 @@
 package com.mashup.twotoo.presenter.util
 
+import android.util.Log
+import com.mashup.twotoo.presenter.constant.TAG
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
+import java.util.TimeZone
 
 object DateFormatter {
 
     fun getDateStrByStr(date: String): String {
         val dateTime = getDateTimeByStr(date)
         return getDateStrByDate(dateTime)
+    }
+
+    fun dateConvertToPlusNineTime(date: String): String {
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateTime
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        val updateDate = calendar.time
+        val test = SimpleDateFormat("MM-dd", Locale.getDefault()).format(updateDate)
+        return test
+    }
+
+    fun dateConvertToPlusNineDate(date: String): Date {
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateTime
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        return calendar.time
     }
 
     fun getDateTimeByStr(date: String): Date {
@@ -18,15 +43,26 @@ object DateFormatter {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(date)
     }
 
+    fun getDateStrMonthDay(date:Date): String{
+        return SimpleDateFormat("MM-dd", Locale.getDefault()).format(date)
+    }
+
     fun get24HourStrByStr(date: String): String {
-        val dateTime = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
-        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(dateTime)
+        val dateTime =
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
+        val calendar = Calendar.getInstance()
+        calendar.time = dateTime
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        val updateDate = calendar.time
+
+        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(updateDate)
     }
 
     fun convertToLongDate(selectedDateMillis: Long?): String {
         selectedDateMillis?.let { selectedDate ->
             val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
             val date = Date(selectedDate)
+            Log.d(TAG, "convertToLongDate: ${dateFormat.format(date)}")
             return dateFormat.format(date)
         }
         return ""
@@ -64,9 +100,14 @@ object DateFormatter {
     fun convertToIsoTime(dateTime: String): String? {
         val formatter = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
         val date = formatter.parse(dateTime)
+        val calendar = Calendar.getInstance()
+        calendar.time = date
+        calendar.add(Calendar.HOUR_OF_DAY, -9)
+        val updateDate = calendar.time
 
         val isoFormatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.KOREA)
-        return date?.let { isoFormatter.format(it) }
+        Log.d(TAG, "convertToIsoTime: ${isoFormatter.format(updateDate)}")
+        return updateDate?.let { isoFormatter.format(it) }
     }
 
     fun convertIsoTimeToString(isoTime: String): String? {
@@ -78,5 +119,12 @@ object DateFormatter {
             return sourceDate?.let { targetDateFormat.format(it) }
         }
         return ""
+    }
+
+    fun unixTimeToUtcTime(currentTimeMillis: Long): Long {
+        val calendar = Calendar.getInstance()
+        calendar.timeInMillis = currentTimeMillis
+        calendar.add(Calendar.HOUR_OF_DAY, 9)
+        return calendar.timeInMillis
     }
 }
