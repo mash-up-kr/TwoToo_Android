@@ -26,6 +26,12 @@ class CreateChallengeViewModel@Inject constructor(
 ) : ViewModel(), ContainerHost<ChallengeInfoModel, CreateChallengeSideEffect> {
     override val container = container<ChallengeInfoModel, CreateChallengeSideEffect>(ChallengeInfoModel())
 
+    fun setIsBackState() = intent {
+        reduce {
+            state.copy(isBack = true)
+        }
+    }
+
     fun initChallengeStep(beforeChallengeState: String, challengeInfo: HomeChallengeInfoModel) = intent {
         reduce {
             val step = when (beforeChallengeState) {

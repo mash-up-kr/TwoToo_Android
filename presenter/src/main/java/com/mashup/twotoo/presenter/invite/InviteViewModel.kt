@@ -1,13 +1,16 @@
 package com.mashup.twotoo.presenter.invite
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.util.createInviteDeepLink
 import kotlinx.coroutines.launch
+import model.user.UserNickNameDomainModel
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -16,23 +19,37 @@ import org.orbitmvi.orbit.viewmodel.container
 import usecase.user.GetPartnerInfoUseCase
 import usecase.user.GetUserInfoUseCase
 import usecase.user.SetIsSendInvitationUseCase
+import usecase.user.SetNickNameUseCase
 import javax.inject.Inject
 
 class InviteViewModel @Inject constructor(
     private val getPartnerInfoUseCase: GetPartnerInfoUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase,
-    private val setIsSendInvitationUseCase: SetIsSendInvitationUseCase
+    private val setIsSendInvitationUseCase: SetIsSendInvitationUseCase,
+    private val setNickNameUseCase: SetNickNameUseCase
 ) : ViewModel(), ContainerHost<InviteState, InviteSideEffect> {
     override val container = container<InviteState, InviteSideEffect>(InviteState())
 
     /**
      * get UserInfo
      */
-    fun getUserInfo() = intent {
+    fun getUserInfo(isDeeplink: Boolean = false, partnerNo: Int = 0) = intent {
         getUserInfoUseCase().onSuccess { userInfo ->
             reduce {
-                state.copy(userNo = userInfo.userNo, userNickName = userInfo.nickname)
+                state.copy(userNo = userInfo.userNo, userNickName = userInfo.nickname, partnerNo = partnerNo)
             }
+            if (isDeeplink) {
+                postSideEffect(InviteSideEffect.MatchingPartner)
+            } else {
+                postSideEffect(InviteSideEffect.SendSharedInvitation)
+            }
+        }.onFailure {
+        }
+    }
+
+    fun matchingPartner() = intent {
+        setNickNameUseCase(UserNickNameDomainModel(state.userNickName, state.partnerNo)).onSuccess {
+            navigateToHome()
         }.onFailure {
         }
     }
@@ -59,6 +76,7 @@ class InviteViewModel @Inject constructor(
     }
 
     fun createInviteCode(
+        context: Context,
         userNo: Int,
         nickname: String,
         onSuccessUri: (Intent?) -> Unit
@@ -66,17 +84,17 @@ class InviteViewModel @Inject constructor(
         Log.d(TAG, "createInviteCode: $userNo$nickname")
         createInviteDeepLink(userNo, nickname) { uri ->
             if (uri != null) {
-                onSuccessUri(shareInviteUrl(uri))
+                onSuccessUri(shareInviteUrl(context, uri))
             } else {
                 toastMessage("")
             }
         }
     }
 
-    private fun shareInviteUrl(inviteLink: Uri?): Intent? {
+    private fun shareInviteUrl(context: Context, inviteLink: Uri?): Intent? {
         val sendIntent: Intent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_TEXT, inviteLink.toString())
+            putExtra(Intent.EXTRA_TEXT, context.resources.getString(R.string.invite_msg_title, inviteLink))
             type = "text/plain"
         }
         return Intent.createChooser(sendIntent, "twotoo")
