@@ -13,15 +13,26 @@ enum class MyPageItem(@StringRes val value: Int, val route: String) {
     Makers(value = R.string.makers, route = GuideUrlItem.Makers.name),
 }
 
-enum class GuideUrlItem(val url: String) {
-    Announcement(url = "https://two2too2.github.io/"),
-    UsingGuide(url = "https://two2too2.github.io/"),
-    Inquiry(url = "https://forms.gle/S4rB86H8DcwLCPoZA"),
-    Makers(url = "https://two2too2.github.io/creater.html"), ;
+enum class GuideUrlItem(val url: String, val title: String) {
+    Announcement(url = "https://two2too2.github.io/", title = "공지사항"),
+    UsingGuide(url = "https://two2too2.github.io/", title = "투투 설명서"),
+    Inquiry(
+        url = "https://docs.google.com/forms/d/e/1FAIpQLSeUGNUGzl3MnGUAIR-rtfgYYrDYRIoKh_Ozpd4prqA1qIBKRw/viewform?usp=sf_link",
+        title = "투투에 문의하기",
+    ),
+    Makers(
+        url = "https://two2too2.github.io/creater.html",
+        title = "만든이들",
+    ), ;
 
     companion object {
         fun findUrlBy(route: String): String {
             return GuideUrlItem.values().firstOrNull { it.name == route }?.url ?: Announcement.url
+        }
+
+        fun findTitleBy(route: String): String {
+            return GuideUrlItem.values().firstOrNull { it.name == route }?.title
+                ?: Announcement.title
         }
     }
 }
