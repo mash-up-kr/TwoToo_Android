@@ -50,8 +50,8 @@ class OnBoardingViewModel @Inject constructor(
         val user = fetchUserInfoAsync()
         intent {
             reduce {
-                Log.d(TAG, "updateLoginState: socialId${user?.kakaoAccount?.email}")
-                state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = user?.kakaoAccount?.email ?: "")
+                Log.d(TAG, "updateLoginState: socialId${user?.id}")
+                state.copy(isSuccessLogin = isSuccess, deviceToken = deviceToken, socialId = user?.id.toString() ?: "")
             }
         }
     }
