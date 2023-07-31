@@ -72,7 +72,7 @@ class HomeViewModel @Inject constructor(
                 indicatorState = true,
             )
         }
-        delay(1000)
+        delay(500)
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
             reduce {
                 state.copy(
