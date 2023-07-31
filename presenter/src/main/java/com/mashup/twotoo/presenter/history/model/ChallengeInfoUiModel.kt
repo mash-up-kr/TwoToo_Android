@@ -9,6 +9,7 @@ data class ChallengeInfoUiModel(
     val day: Int = 0,
     val name: String = "",
     val detail: String = "",
+    val isFinished: Boolean = false,
 ) {
     companion object {
         val default = ChallengeInfoUiModel(
@@ -24,6 +25,7 @@ data class ChallengeInfoUiModel(
                 day = toDday(challenge.endDate, challenge.isFinished),
                 name = challenge.name,
                 detail = challenge.description,
+                isFinished = challenge.isFinished,
             )
         }
 

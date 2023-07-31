@@ -111,6 +111,7 @@ fun HistoryScreen(
     }
     var showSelectListDialog by remember { mutableStateOf(false) }
     var showChallengeDropDialog by remember { mutableStateOf(false) }
+
     Box {
         Column(
             modifier = Modifier.fillMaxSize(),
@@ -122,7 +123,9 @@ fun HistoryScreen(
                     onClickBackButton()
                 },
             ) {
-                IconButton(onClick = { showSelectListDialog = true }) {
+                IconButton(onClick = {
+                    if (!state.challengeInfoUiModel.isFinished) { showSelectListDialog = true }
+                }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
                         contentDescription = null,
