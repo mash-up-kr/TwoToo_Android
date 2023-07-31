@@ -2,7 +2,6 @@ package com.mashup.twotoo.presenter.history.model
 
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.response.ChallengeResponseDomainModel
-import java.util.Date
 
 data class ChallengeInfoUiModel(
     val challengeNo: Int = 0,
@@ -31,7 +30,7 @@ data class ChallengeInfoUiModel(
         fun toDday(endDate: String, isFinished: Boolean): Int = if (isFinished) {
             0
         } else {
-            val Dday = DateFormatter.getDateTimeByStr(endDate).time - Date().time
+            val Dday = DateFormatter.getDateTimeByStr(endDate).time - DateFormatter.getCurrentTimeWithPlusNine().time
             (Dday / (1000 * 60 * 60 * 24)).toInt()
         }
     }
