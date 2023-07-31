@@ -71,6 +71,7 @@ fun GardenScreen(
             text = stringResource(id = R.string.garden_title),
             onClickHelpIcon = { navigateToGuide() },
         )
+        Spacer(modifier = Modifier.height(24.dp))
         if (state.challengeCardInfos.isEmpty()) {
             Box(
                 modifier = Modifier.fillMaxSize(),

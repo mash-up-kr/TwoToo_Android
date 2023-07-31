@@ -10,8 +10,8 @@ import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
-import model.challenge.response.ChallengeDetailResponseDomainModel
 import model.commit.request.CommitRequestDomainModel
+import model.commit.response.CommitResponseDomainModel
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -20,11 +20,13 @@ import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeByNoUseCase
 import usecase.challenge.QuiteChallengeUseCase
 import usecase.commit.CreateCommitUseCase
+import usecase.user.GetUserInfoUseCase
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
+    private val getUserInfoUseCase: GetUserInfoUseCase,
     private val createCommitUseCase: CreateCommitUseCase,
     private val getChallengeByNoUseCase: GetChallengeByNoUseCase,
     private val quiteChallengeUseCase: QuiteChallengeUseCase,
@@ -51,16 +53,52 @@ class HistoryViewModel @Inject constructor(
 
     fun getChallengeByUser(challengeNo: Int) = intent {
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess { challengeDetailResponseDomainModel ->
+            val userInfo = getUserInfoUseCase().getOrNull()
+            if (userInfo == null) {
+                Log.e("HistoryViewModel", "getChallengeByUser: not saved userInfo")
+                return@onSuccess
+            }
+            val userNo = userInfo.userNo
+
+            // Todo domain attribute name pater, me 말고 user1, user2로 바꾸기 또는 데이터 만들어서 아래 userName이랑 같이 관리하기
+            val (myCommits, partnerCommits) =
+                with(challengeDetailResponseDomainModel) {
+                    if (userNo == this.challengeResponseDomainModel.user1.userNo) {
+                        Pair(
+                            this.myCommitResponseDomainModel,
+                            this.partnerCommitResponseDomainModel,
+                        )
+                    } else {
+                        Pair(
+                            this.partnerCommitResponseDomainModel,
+                            this.myCommitResponseDomainModel,
+                        )
+                    }
+                }
 
             val newChallengeInfoUiModel =
                 ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
 
             val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
-                getNewHistoryItemUiModels(challengeDetailResponseDomainModel)
+                getNewHistoryItemUiModels(
+                    _startDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate,
+                    _endDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate,
+                    isFinished = challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished,
+                    myCommits = myCommits,
+                    partnerCommits = partnerCommits,
+                )
 
             val newOwnerNickNamesUiModel =
                 with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
-                    OwnerNickNamesUiModel.from(this.user1, this.user2)
+                    val (myInfo, partnerInfo) = if (userNo == this.user1.userNo) {
+                        Pair(
+                            this.user1,
+                            this.user2,
+                        )
+                    } else {
+                        Pair(this.user2, this.user1)
+                    }
+                    OwnerNickNamesUiModel.from(myInfo, partnerInfo)
                 }
 
             reduce {
@@ -76,26 +114,30 @@ class HistoryViewModel @Inject constructor(
     }
 
     private fun getNewHistoryItemUiModels(
-        challengeDetailResponseDomainModel: ChallengeDetailResponseDomainModel,
+        _startDate: String,
+        _endDate: String,
+        isFinished: Boolean,
+        myCommits: List<CommitResponseDomainModel>,
+        partnerCommits: List<CommitResponseDomainModel>,
     ): MutableList<HistoryItemUiModel> {
         val startDate =
-            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate)
+            DateFormatter.dateConvertToPlusNineDate(_startDate)
         val endDate =
-            DateFormatter.getDateTimeByStr(challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate)
+            DateFormatter.dateConvertToPlusNineDate(_endDate)
 
         val challengingDates =
-            if (challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished) {
+            if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
             } else {
                 getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
             }
 
-        val commitPairs = with(challengeDetailResponseDomainModel) {
+        val commitPairs =
             combineLists(
-                myCommitResponseDomainModel,
-                partnerCommitResponseDomainModel,
+                myCommits,
+                partnerCommits,
             )
-        }
+
         val historyItemsWithCommit = commitPairs.map {
             HistoryItemUiModel.from(it.first, it.second)
         }
@@ -110,7 +152,7 @@ class HistoryViewModel @Inject constructor(
         val datesList = mutableListOf<String>()
 
         while (calendar.time <= endDate) {
-            datesList.add(DateFormatter.getDateStrByDate(calendar.time))
+            datesList.add(DateFormatter.getDateStrMonthDay(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
 

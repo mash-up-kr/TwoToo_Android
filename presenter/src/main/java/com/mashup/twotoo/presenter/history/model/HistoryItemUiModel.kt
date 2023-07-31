@@ -40,14 +40,12 @@ data class HistoryItemUiModel(
                 partnerInfo = partnerCommit?.let {
                     HistoryInfoUiModel.from(it)
                 } ?: HistoryInfoUiModel.empty,
-                createDate = myCommit?.let { DateFormatter.getDateStrByStr(it.createdAt) } ?: "",
+                createDate = myCommit?.let { DateFormatter.dateConvertToPlusNineTime(it.createdAt) } ?: "",
             )
         }
 
         fun toSortDate(date: String): String {
-            val (month, day) = date.split("-").run {
-                (this[1].toInt() to this[2].toInt())
-            }
+            val (month, day) = date.split("-")
             return "$month/$day"
         }
     }
