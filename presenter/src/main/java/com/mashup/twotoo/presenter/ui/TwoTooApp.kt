@@ -46,8 +46,8 @@ fun TwoTooApp(
                     destinations = appState.topLevelDestinations,
                     onNavigateToDestination = appState::navigationToTopLevelDestination,
                     currentDestination = appState.currentDestination,
-                    containerColor = appState.getContainerColorByDestination,
-                    unSelectedColor = appState.getUnSelectedColorByDestination,
+                    containerColor = TwoTooTheme.color.mainPink,
+                    unSelectedColor = TwoTooTheme.color.backgroundYellow,
                 )
             }
         },
