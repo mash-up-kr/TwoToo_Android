@@ -67,9 +67,16 @@ class HomeViewModel @Inject constructor(
     )
 
     fun getHomeViewChallenge() = intent {
+        reduce {
+            state.copy(
+                indicatorState = true,
+            )
+        }
+        delay(1000)
         getHomeViewUseCase().onSuccess { homeViewResponseDomainModel ->
             reduce {
                 state.copy(
+                    indicatorState = false,
                     homeChallengeInfoModel = homeViewResponseDomainModel.onGoingChallenge.toUiModel(),
                     challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
                 )
@@ -115,6 +122,11 @@ class HomeViewModel @Inject constructor(
                 }
             }
         }.onFailure {
+            reduce {
+                state.copy(
+                    indicatorState = false,
+                )
+            }
             postSideEffect(HomeSideEffect.Toast(ToastText.LoadHomeFail))
         }
     }
