@@ -4,9 +4,10 @@ import androidx.annotation.StringRes
 import com.mashup.twotoo.presenter.R
 
 data class RecommendChallengeUiModel(
-    @StringRes val name: Int
+    @StringRes val name: Int,
 ) {
     companion object {
+        const val startTextIndex = 2
         fun getRecommendChallengeList(): List<RecommendChallengeUiModel> {
             return listOf(
                 RecommendChallengeUiModel(R.string.recommend_challenge_busy_day),
