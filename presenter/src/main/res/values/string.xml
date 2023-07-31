@@ -118,7 +118,7 @@
     <string name="challenge_end_date">종료일</string>
     <string name="twotoo_challenge">Twotoo challenge</string>
     <string name="during_challenge">챌린지를 하는동안\n</string>
-    <string name="pair">상대방</string>
+    <string name="pair">짝꿍</string>
     <string name="select_flower">이 키울 꽃을 골라주세요</string>
     <string name="select_flower_desc">어떤 꽃인지는 챌린지 종료 후 확인할 수 있습니다 :)</string>
     <string name="send_challenge_request">챌린지 요청을 보냈습니다</string>
