@@ -10,16 +10,14 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.HomeScreen
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
-import com.mashup.twotoo.presenter.home.preview.parameter.PreviewCheerHomeParameterProvider
+import com.mashup.twotoo.presenter.home.preview.parameter.PreviewCompleteHomeParameterProvider
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.twotoo.TwoTooBottomBar
 import com.mashup.twotoo.presenter.util.DevicePreview
 
 @DevicePreview
 @Composable
-fun PreviewHomeScreenCheerChallenge(
-    @PreviewParameter(PreviewCheerHomeParameterProvider::class) homeStateUiModel: HomeStateUiModel,
-) {
+fun PreviewCompleteChallengePreview(@PreviewParameter(PreviewCompleteHomeParameterProvider::class) homeStateUiModel: HomeStateUiModel) {
     TwoTooTheme {
         Scaffold(
             modifier = Modifier.fillMaxSize(),

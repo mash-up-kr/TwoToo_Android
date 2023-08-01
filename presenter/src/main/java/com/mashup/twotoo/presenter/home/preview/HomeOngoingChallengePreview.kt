@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.PreviewParameter
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.HomeScreen
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
+import com.mashup.twotoo.presenter.home.preview.parameter.PreviewOngoingAuthHomeParameterProvider
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.twotoo.TwoTooBottomBar
 import com.mashup.twotoo.presenter.util.DevicePreview
@@ -17,7 +18,7 @@ import com.mashup.twotoo.presenter.util.DevicePreview
 @DevicePreview
 @Composable
 fun PreviewHomeScreenAfterChallenge(
-    @PreviewParameter(PreviewOngoingHomeParameterProvider::class) homeStateUiModel: HomeStateUiModel,
+    @PreviewParameter(PreviewOngoingAuthHomeParameterProvider::class) homeStateUiModel: HomeStateUiModel,
 ) {
     TwoTooTheme {
         Scaffold(
