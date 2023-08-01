@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.garden.mapper.toUiModel
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
+import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -18,6 +19,10 @@ class GardenViewModel(
     override val container: Container<GardenState, GardenSideEffect> = container(GardenState())
 
     fun getAllChallenge() = intent {
+        reduce {
+            state.copy(loadingIndicatorState = true)
+        }
+        delay(300)
         getAllChallengeUseCase().onSuccess { challenges ->
             val challengeCardInfos = challenges.filter { it.isFinished }.mapIndexed { index, challengeResponseDomainModel ->
                 challengeResponseDomainModel.toUiModel(index)
@@ -29,10 +34,17 @@ class GardenViewModel(
                 state.copy(
                     startAnimation = startAnimation,
                     challengeCardInfos = challengeCardInfos,
+                    loadingIndicatorState = false,
+                    hasNotRealChallenge = challengeCardInfos.isEmpty()
                 )
             }
         }.onFailure {
             Log.e(TAG, "${it.message} 실패!!")
+            reduce {
+                state.copy(
+                    loadingIndicatorState = false,
+                )
+            }
             postSideEffect(
                 GardenSideEffect.Toast(
                     "정원 정보를 읽어오는데 실패했습니다ㅜ_ㅠ",

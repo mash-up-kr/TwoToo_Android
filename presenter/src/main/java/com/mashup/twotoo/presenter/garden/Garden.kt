@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.delay
@@ -72,41 +74,50 @@ fun GardenScreen(
             onClickHelpIcon = { navigateToGuide() },
         )
         Spacer(modifier = Modifier.height(24.dp))
-        if (state.challengeCardInfos.isEmpty()) {
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center,
-            ) {
-                Text(
-                    text = stringResource(id = R.string.challengeEmptyDescription),
-                    style = TwoTooTheme.typography.bodyNormal16,
-                    color = TwoTooTheme.color.gray500,
-                    textAlign = TextAlign.Center,
-                    lineHeight = 24.sp,
-                )
-            }
-        } else {
-            LazyVerticalGrid(
-                modifier = Modifier.fillMaxSize()
-                    .padding(horizontal = 24.dp),
-                columns = GridCells.Fixed(2),
-                horizontalArrangement = Arrangement.spacedBy(13.dp),
-                verticalArrangement = Arrangement.spacedBy(13.dp),
-            ) {
-                items(items = state.challengeCardInfos, key = { it.challengeNo }) { challengeInfo ->
-                    val isStartAnimation =
-                        state.startAnimation.first && state.startAnimation.second == challengeInfo.challengeNo
-                    LaunchedEffect(true) {
-                        delay(2000)
-                        stopAnimation()
-                    }
-                    ChallengeCard(
-                        isStartAnimation = isStartAnimation,
-                        challengeCardInfoUiModel = challengeInfo,
-                        navigateToGarden = navigateToGarden,
-
+        Box(
+            modifier = Modifier.fillMaxSize(),
+        ) {
+            if (state.hasNotRealChallenge) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center,
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.challengeEmptyDescription),
+                        style = TwoTooTheme.typography.bodyNormal16,
+                        color = TwoTooTheme.color.gray500,
+                        textAlign = TextAlign.Center,
+                        lineHeight = 24.sp,
                     )
                 }
+            } else {
+                LazyVerticalGrid(
+                    modifier = Modifier.fillMaxSize()
+                        .padding(horizontal = 24.dp),
+                    columns = GridCells.Fixed(2),
+                    horizontalArrangement = Arrangement.spacedBy(13.dp),
+                    verticalArrangement = Arrangement.spacedBy(13.dp),
+                ) {
+                    items(items = state.challengeCardInfos, key = { it.challengeNo }) { challengeInfo ->
+                        val isStartAnimation =
+                            state.startAnimation.first && state.startAnimation.second == challengeInfo.challengeNo
+                        LaunchedEffect(true) {
+                            delay(2000)
+                            stopAnimation()
+                        }
+                        ChallengeCard(
+                            isStartAnimation = isStartAnimation,
+                            challengeCardInfoUiModel = challengeInfo,
+                            navigateToGarden = navigateToGarden,
+
+                        )
+                    }
+                }
+            }
+            if (state.loadingIndicatorState) {
+                FlowerLoadingIndicator(
+                    modifier = Modifier.width(128.dp).height(144.dp).align(Alignment.Center),
+                )
             }
         }
     }
