@@ -153,7 +153,7 @@ fun SelectFlowerTitle() {
             },
         )
         Text(
-            modifier = Modifier.padding(top = 8.dp, bottom = 30.dp),
+            modifier = Modifier.padding(top = 12.dp, bottom = 30.dp),
             text = stringResource(id = R.string.select_flower_desc),
             style = TwoTooTheme.typography.bodyNormal14,
             color = TwoTooTheme.color.gray600,
