@@ -9,6 +9,8 @@ data class ChallengeCardInfoUiModel(
     val period: String,
     val meFlower: FlowerName,
     val partnerFlower: FlowerName,
+    val user1CommitCnt: Int = 0,
+    val user2CommitCnt: Int = 0
 ) {
     companion object {
         // Todo 14지우고 garden Card challengeNo와 매핑해야함.

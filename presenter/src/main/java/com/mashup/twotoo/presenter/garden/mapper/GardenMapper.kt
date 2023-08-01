@@ -13,6 +13,8 @@ fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel
         period = toPeriod(),
         meFlower = user1Flower.toFlowerName(),
         partnerFlower = user2Flower.toFlowerName(),
+        user1CommitCnt = user1CommitCnt,
+        user2CommitCnt = user2CommitCnt
     )
 }
 
