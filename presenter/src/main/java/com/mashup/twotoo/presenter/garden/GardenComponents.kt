@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.garden
 
+import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -34,7 +35,6 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound6
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 import com.mashup.twotoo.presenter.garden.model.FlowerHead
-import com.mashup.twotoo.presenter.model.FlowerName
 
 @Composable
 fun ChallengeCard(
@@ -84,7 +84,7 @@ fun ChallengeCard(
             contentScale = ContentScale.Crop,
             previewPlaceholder = R.drawable.challenge_card_ground,
         )
-        Flowers(challengeCardInfoUiModel.meFlower, challengeCardInfoUiModel.partnerFlower)
+        Flowers(challengeCardInfoUiModel)
     }
 }
 
@@ -121,7 +121,7 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
 }
 
 @Composable
-private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
+private fun BoxScope.Flowers(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
     Row(
         modifier = Modifier
             .align(Alignment.BottomCenter)
@@ -130,17 +130,23 @@ private fun BoxScope.Flowers(meFlower: FlowerName, partnerFlower: FlowerName) {
         val context = LocalContext.current
         val screenWidth = LocalConfiguration.current.screenWidthDp
         val screenHeight = LocalConfiguration.current.screenHeightDp
-        val meFlower = FlowerHead(meFlower).getFlowerImage(context, screenWidth, screenHeight)
-        val partnerFlower = FlowerHead(partnerFlower).getFlowerImage(context, screenWidth, screenHeight)
+        val meFlower = FlowerHead(challengeCardInfoUiModel.meFlower).getFlowerImage(context, screenWidth, screenHeight)
+        val partnerFlower = FlowerHead(challengeCardInfoUiModel.partnerFlower).getFlowerImage(context, screenWidth, screenHeight)
+        val isUser1Success = challengeCardInfoUiModel.user1CommitCnt > 15
+        val isUser2Success = challengeCardInfoUiModel.user2CommitCnt > 15
+
+        Log.d("TWOTOO", "Flowers:  ${challengeCardInfoUiModel.user1CommitCnt}")
+        Log.d("TWOTOO", "Flowers2222:  ${challengeCardInfoUiModel.user2CommitCnt}")
+
         TwoTooImageView(
             modifier = Modifier.size(meFlower.width, meFlower.height),
-            model = meFlower.image,
+            model = if (isUser1Success) meFlower.image else R.drawable.img_not_success,
             contentScale = ContentScale.Fit,
             previewPlaceholder = R.drawable.img_head_fig_sm,
         )
         TwoTooImageView(
             modifier = Modifier.size(partnerFlower.width, partnerFlower.height),
-            model = partnerFlower.image,
+            model = if (isUser2Success) partnerFlower.image else R.drawable.img_not_success,
             contentScale = ContentScale.Fit,
             previewPlaceholder = R.drawable.img_head_camellia_sm,
         )
