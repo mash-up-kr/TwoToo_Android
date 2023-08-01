@@ -35,7 +35,7 @@ class GardenViewModel(
                     startAnimation = startAnimation,
                     challengeCardInfos = challengeCardInfos,
                     loadingIndicatorState = false,
-                    hasNotRealChallenge = challengeCardInfos.isEmpty()
+                    hasNotRealChallenge = challengeCardInfos.isEmpty(),
                 )
             }
         }.onFailure {

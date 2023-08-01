@@ -70,7 +70,7 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             ),
         ) {
                 navBackStackEntry ->
-            val parentRoute = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}"
+            val parentRoute = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}?progress={progress}"
             val parentEntry = remember {
                 navController.getBackStackEntry(parentRoute)
             }
