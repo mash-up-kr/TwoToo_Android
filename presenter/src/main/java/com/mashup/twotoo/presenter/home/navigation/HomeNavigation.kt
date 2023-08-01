@@ -11,6 +11,7 @@ import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.navigation.navigateToCreateChallenge
 import com.mashup.twotoo.presenter.di.daggerViewModel
+import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
 import com.mashup.twotoo.presenter.home.HomeRoute
@@ -45,6 +46,9 @@ fun NavGraphBuilder.homeGraph(
                     val challengeInfoJson = MoshiUtils.toJson<HomeChallengeInfoModel>(challengeInfo)
                     Log.d(TAG, "navigateToCreateChallenge: $challengeInfoJson")
                     navController.navigateToCreateChallenge(homeState, challengeInfoJson)
+                },
+                navigateToGarden = {
+                    navController.navigateToGarden()
                 },
             )
         }

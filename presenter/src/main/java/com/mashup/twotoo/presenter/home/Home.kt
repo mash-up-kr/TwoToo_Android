@@ -50,7 +50,8 @@ fun HomeRoute(
     modifier: Modifier = Modifier,
     navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit = { _, _ -> },
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
-    navigateToGuide: () -> Unit,
+    navigateToGuide: () -> Unit = {},
+    navigateToGarden: () -> Unit = {},
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
@@ -63,6 +64,7 @@ fun HomeRoute(
         callViewHomeApi = homeViewModel::getHomeViewChallenge,
         setInvisibleCheerDialog = homeViewModel::setInvisibleCheerDialogSideEffect,
         setInvisibleCompleteDialog = homeViewModel::setInvisibleCompleteDialogSideEffect,
+        navigateToGarden = navigateToGarden,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()
@@ -206,4 +208,3 @@ fun HomeScreen(
         }
     }
 }
-

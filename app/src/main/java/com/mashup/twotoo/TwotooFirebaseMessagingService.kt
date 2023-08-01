@@ -47,7 +47,7 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
             }
 
             val title = remoteMessage.data.getOrDefault("title", "")
-            val message = remoteMessage.data.getOrDefault("message", "")
+            val message = remoteMessage.data.getOrDefault("body", "")
             sendNotification(title, message)
         }
     }
@@ -94,7 +94,7 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.mipmap.ic_launcher) // TODO 노티 아이콘 디자인 나오면 변경
+            .setSmallIcon(R.drawable.img_app_icon)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)

@@ -34,6 +34,7 @@ fun rememberHomeSideEffectHandler(
     callViewHomeApi: () -> Unit,
     setInvisibleCheerDialog: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
+    navigateToGarden: () -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -54,6 +55,7 @@ fun rememberHomeSideEffectHandler(
             callViewHomeApi = callViewHomeApi,
             setInvisibleCheerDialog = setInvisibleCheerDialog,
             setInvisibleCompleteDialog = setInvisibleCompleteDialog,
+            navigateToGarden = navigateToGarden,
         )
     }
 }
@@ -73,6 +75,7 @@ class HomeSideEffectHandler(
     private val callViewHomeApi: () -> Unit,
     private val setInvisibleCheerDialog: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
+    private val navigateToGarden: () -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -158,6 +161,9 @@ class HomeSideEffectHandler(
             }
             is HomeSideEffect.SetInVisibleCompleteDialog -> {
                 setInvisibleCompleteDialog()
+            }
+            is HomeSideEffect.NavigateToGarden -> {
+                navigateToGarden()
             }
         }
     }

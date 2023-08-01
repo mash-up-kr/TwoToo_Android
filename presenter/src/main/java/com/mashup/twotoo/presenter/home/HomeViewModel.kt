@@ -8,7 +8,6 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
-import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -338,7 +337,7 @@ class HomeViewModel @Inject constructor(
             ),
         ).onSuccess {
             postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
-            postSideEffect(HomeSideEffect.NavigationToCreateChallenge(BeforeChallengeState.TERMINATION, HomeChallengeInfoModel()))
+            postSideEffect(HomeSideEffect.NavigateToGarden)
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
         }

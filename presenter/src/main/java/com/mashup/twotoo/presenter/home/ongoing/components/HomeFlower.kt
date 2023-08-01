@@ -93,7 +93,9 @@ fun HomeFlowerMeAndPartner(
                     }
                 }
 
-                if (this.authType == FirstCreateChallenge || this.authType == FirstCreateChallengeButAuthOnlyPartner) {
+                if ((this.authType == FirstCreateChallenge && homeChallengeStateUiModel.challengeState != Complete) ||
+                    (this.authType == FirstCreateChallengeButAuthOnlyPartner && homeChallengeStateUiModel.challengeState != Complete)
+                ) {
                     TextHint(
                         modifier = Modifier
                             .testTag(
