@@ -105,6 +105,7 @@ fun CreateChallenge(
                     textAlign = TextAlign.Left,
                     style = TwoTooTheme.typography.headLineNormal28,
                     color = TwoTooTheme.color.mainBrown,
+                    modifier = Modifier.padding(bottom = 8.dp)
                 )
             }
             if (homeState == BeforeChallengeState.TERMINATION.name || homeState == BeforeChallengeState.EMPTY.name ||
@@ -113,7 +114,7 @@ fun CreateChallenge(
                 Text(
                     text = stringResource(id = getCurrentStepString("title", currentStep, context), currentStep),
                     textAlign = TextAlign.Left,
-                    style = TwoTooTheme.typography.headLineNormal28,
+                    style = TwoTooTheme.typography.headLineNormal24,
                     color = TwoTooTheme.color.mainBrown,
                 )
                 Text(

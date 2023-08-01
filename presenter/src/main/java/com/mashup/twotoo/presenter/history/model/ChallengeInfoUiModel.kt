@@ -2,13 +2,13 @@ package com.mashup.twotoo.presenter.history.model
 
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.response.ChallengeResponseDomainModel
-import java.util.Date
 
 data class ChallengeInfoUiModel(
     val challengeNo: Int = 0,
     val day: Int = 0,
     val name: String = "",
     val detail: String = "",
+    val isFinished: Boolean = false,
 ) {
     companion object {
         val default = ChallengeInfoUiModel(
@@ -24,6 +24,7 @@ data class ChallengeInfoUiModel(
                 day = toDday(challenge.endDate, challenge.isFinished),
                 name = challenge.name,
                 detail = challenge.description,
+                isFinished = challenge.isFinished,
             )
         }
 
@@ -31,7 +32,7 @@ data class ChallengeInfoUiModel(
         fun toDday(endDate: String, isFinished: Boolean): Int = if (isFinished) {
             0
         } else {
-            val Dday = DateFormatter.getDateTimeByStr(endDate).time - Date().time
+            val Dday = DateFormatter.getDateTimeByStr(endDate).time - DateFormatter.getCurrentTimeWithPlusNine().time
             (Dday / (1000 * 60 * 60 * 24)).toInt()
         }
     }

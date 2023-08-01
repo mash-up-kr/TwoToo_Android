@@ -51,7 +51,7 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 fun HomeRoute(
     homeViewModel: HomeViewModel,
     modifier: Modifier = Modifier,
-    navigateToHistory: (Int) -> Unit = {},
+    navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit = { _, _ -> },
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     navigateToGuide: () -> Unit,
 ) {

@@ -15,11 +15,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
-import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
-import com.mashup.twotoo.presenter.home.model.HomeDialogType
-import com.mashup.twotoo.presenter.home.model.HomeSideEffect
-import com.mashup.twotoo.presenter.home.model.ToastText
+import com.mashup.twotoo.presenter.home.model.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -28,7 +24,7 @@ fun rememberHomeSideEffectHandler(
     context: Context = LocalContext.current,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToHistory: (Int) -> Unit,
+    navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
@@ -67,7 +63,7 @@ class HomeSideEffectHandler(
     val context: Context,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
-    private val navigateToHistory: (Int) -> Unit,
+    private val navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val openCheerBottomSheet: () -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
@@ -139,7 +135,7 @@ class HomeSideEffectHandler(
             is HomeSideEffect.OpenToHelp -> {
             }
             is HomeSideEffect.NavigateToChallengeDetail -> {
-                navigateToHistory(sideEffect.challengeNo)
+                navigateToHistory(sideEffect.challengeNo, sideEffect.progressBarState)
             }
             is HomeSideEffect.NavigationToCreateChallenge -> {
                 Log.d(TAG, "handleSideEffect:${sideEffect.challengeInfo} ")

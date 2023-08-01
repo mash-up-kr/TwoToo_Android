@@ -164,7 +164,8 @@ class HomeViewModel @Inject constructor(
     }
 
     fun navigateToHistory(challengeNo: Int) = intent {
-        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo))
+        val progressBarState = (state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeGoalAchievePartnerAndMeUiModel
+        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo, progressBarState))
     }
 
     fun openToShotBottomSheet() = intent {

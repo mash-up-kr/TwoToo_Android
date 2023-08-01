@@ -12,7 +12,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.CornerRadius
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -55,19 +54,23 @@ fun HistoryDetailScreen(
     onClickBackButton: () -> Unit,
     historyDetailInfoUiModel: HistoryDetailInfoUiModel,
 ) {
-    Scaffold(
-        containerColor = Color.Transparent,
-        topBar = {
-            TwoTooMainToolbar(title = stringResource(id = R.string.historyDetailTitle, historyDetailInfoUiModel.ownerNickNamesUiModel.myNickName))
-        },
-    ) { paddingValues ->
+    Column(
+        modifier = Modifier.fillMaxSize(),
+    ) {
+        Spacer(modifier = Modifier.height(8.dp))
+        TwoTooMainToolbar(
+            title = stringResource(
+                id = R.string.historyDetailTitle,
+                historyDetailInfoUiModel.ownerNickNamesUiModel.myNickName,
+            ),
+        )
+
         CompositionLocalProvider(
             LocalContentColor provides TwoTooTheme.color.mainBrown,
         ) {
             Column(
                 modifier = Modifier
-                    .padding(paddingValues = paddingValues)
-                    .padding(horizontal = 24.dp),
+                    .padding(start = 24.dp, end = 24.dp, top = 12.dp),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),

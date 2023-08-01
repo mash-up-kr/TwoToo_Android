@@ -2,14 +2,13 @@ package com.mashup.twotoo.presenter.history.model
 
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.commit.response.CommitResponseDomainModel
-import java.util.*
 
 data class HistoryItemUiModel(
     val myInfo: HistoryInfoUiModel,
     val partnerInfo: HistoryInfoUiModel,
     val createDate: String,
 ) {
-    val isAuthenticateExpired: Boolean = createDate != DateFormatter.getDateStrByDate(Date())
+    val isAuthenticateExpired: Boolean = createDate != DateFormatter.getCurrentDateWithPlusNine()
     companion object {
         val default: List<HistoryItemUiModel> = listOf(
             HistoryItemUiModel(
@@ -33,6 +32,11 @@ data class HistoryItemUiModel(
         )
 
         fun from(myCommit: CommitResponseDomainModel?, partnerCommit: CommitResponseDomainModel?): HistoryItemUiModel {
+            val commit = listOf(myCommit, partnerCommit).firstOrNull { it != null }
+            val createAt = commit?.run {
+                DateFormatter.dateConvertToPlusNineTime(createdAt)
+            } ?: ""
+
             return HistoryItemUiModel(
                 myInfo = myCommit?.let {
                     HistoryInfoUiModel.from(it)
@@ -40,7 +44,7 @@ data class HistoryItemUiModel(
                 partnerInfo = partnerCommit?.let {
                     HistoryInfoUiModel.from(it)
                 } ?: HistoryInfoUiModel.empty,
-                createDate = myCommit?.let { DateFormatter.dateConvertToPlusNineTime(it.createdAt) } ?: "",
+                createDate = createAt,
             )
         }
 
