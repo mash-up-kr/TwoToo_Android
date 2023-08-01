@@ -24,7 +24,7 @@ import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
     private val setPreferenceUserInfoUseCase: SetPreferenceUserInfoUseCase,
-    private val userAuthUseCase: UserAuthUseCase
+    private val userAuthUseCase: UserAuthUseCase,
 ) : ViewModel(), ContainerHost<OnBoardingModel, OnboardingSideEffect> {
     override val container = container<OnBoardingModel, OnboardingSideEffect>(OnBoardingModel())
 
@@ -57,21 +57,44 @@ class OnBoardingViewModel @Inject constructor(
     }
 
     fun signUpWithKakaoAccount(deviceToken: String, socialId: String) = intent {
+        reduce {
+            state.copy(loadingIndicatorState = true)
+        }
         val userAuthModel = UserAuthRequestDomainModel(deviceToken = deviceToken, socialId = socialId)
         userAuthUseCase(userAuthModel).onSuccess { userInfo ->
             setPreferenceUserInfoUseCase(userInfo)
             when (userInfo.state) {
                 OnboardingState.NEED_NICKNAME.name -> {
+                    reduce {
+                        state.copy(
+                            loadingIndicatorState = false,
+                        )
+                    }
                     postSideEffect(OnboardingSideEffect.NavigateToNickNameSetting)
                 }
                 OnboardingState.NEED_MATCHING.name -> {
+                    reduce {
+                        state.copy(
+                            loadingIndicatorState = false,
+                        )
+                    }
                     postSideEffect(OnboardingSideEffect.NavigateToMatching)
                 }
                 OnboardingState.HOME.name -> {
+                    reduce {
+                        state.copy(
+                            loadingIndicatorState = false,
+                        )
+                    }
                     postSideEffect(OnboardingSideEffect.NavigateToHome)
                 }
             }
         }.onFailure {
+            reduce {
+                state.copy(
+                    loadingIndicatorState = false,
+                )
+            }
             Log.d(TAG, "failure: ${it.message}")
         }
     }

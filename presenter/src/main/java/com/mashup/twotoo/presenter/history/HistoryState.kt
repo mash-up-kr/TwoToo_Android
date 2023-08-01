@@ -6,6 +6,7 @@ import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 
 data class HistoryState(
+    val loadingIndicatorState: Boolean = false,
     val challengeInfoUiModel: ChallengeInfoUiModel = ChallengeInfoUiModel(),
     val historyItemUiModel: List<HistoryItemUiModel> = emptyList(),
     val ownerNickNamesUiModel: OwnerNickNamesUiModel = OwnerNickNamesUiModel(),

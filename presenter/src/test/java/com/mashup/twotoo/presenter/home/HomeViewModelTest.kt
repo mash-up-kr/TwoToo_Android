@@ -141,7 +141,11 @@ class HomeViewModelTest {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
             assertEquals(
-                (awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                BeforeChallengeUiModel.init.state,
+            )
+            assertEquals(
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
                 BeforeChallengeUiModel.request.state,
             )
         }
@@ -171,7 +175,11 @@ class HomeViewModelTest {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
             assertEquals(
-                (awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                BeforeChallengeUiModel.init.state,
+            )
+            assertEquals(
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
                 BeforeChallengeUiModel.response.state,
             )
         }
@@ -202,7 +210,11 @@ class HomeViewModelTest {
             viewModel.getHomeViewChallenge().join()
 
             assertEquals(
-                (awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                BeforeChallengeUiModel.init.state,
+            )
+            assertEquals(
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
                 BeforeChallengeUiModel.wait.state,
             )
         }
@@ -231,9 +243,12 @@ class HomeViewModelTest {
         viewModel.container.stateFlow.test {
             assertInitState()
             viewModel.getHomeViewChallenge().join()
-
             assertEquals(
-                (awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
+                BeforeChallengeUiModel.init.state,
+            )
+            assertEquals(
+                (this.awaitItem().challengeStateUiModel as BeforeChallengeUiModel).state,
                 BeforeChallengeUiModel.termination.state,
             )
         }

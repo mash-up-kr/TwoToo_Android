@@ -1,11 +1,14 @@
 package com.mashup.twotoo.presenter.home
 
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -27,16 +30,17 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
-import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
 import kotlinx.coroutines.launch
@@ -82,7 +86,7 @@ fun HomeRoute(
         modifier = modifier,
     ) {
         HomeScreen(
-            state = state.challengeStateUiModel,
+            state = state,
             modifier = modifier.testTag(stringResource(id = R.string.home)),
             onBeeButtonClick = homeViewModel::openToShotBottomSheet,
             onClickBeforeChallengeTextButton = homeViewModel::onClickBeforeChallengeTextButton,
@@ -126,7 +130,7 @@ fun HomeScreen(
     onClickBeforeChallengeTextButton: (BeforeChallengeState) -> Unit = {},
     onCommit: () -> Unit = {},
     onClickCompleteButton: (Int) -> Unit = {},
-    state: ChallengeStateTypeUiModel = OngoingChallengeUiModel.default,
+    state: HomeStateUiModel = HomeStateUiModel.init,
     onClickCheerButton: () -> Unit = {},
     navigateToGuide: () -> Unit,
     onWiggleAnimationEnd: () -> Unit = {},
@@ -138,52 +142,68 @@ fun HomeScreen(
                 navigateToGuide()
             },
         )
-        ConstraintLayout(
-            modifier = modifier.padding(top = 11.dp).semantics {
-                testTagsAsResourceId = true
-            },
-        ) {
-            val (toolbar, background, content) = createRefs()
-
-            TwoTooImageView(
-                modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f).constrainAs(background) {
-                    bottom.linkTo(parent.bottom)
-                    start.linkTo(parent.start)
-                    end.linkTo(parent.end)
-                },
-                previewPlaceholder = R.drawable.image_home_background,
-                model = R.drawable.image_home_background,
-                contentScale = ContentScale.FillBounds,
-            )
-            when (state) {
-                is BeforeChallengeUiModel -> {
-                    HomeBeforeChallenge(
-                        modifier = Modifier.constrainAs(content) {
-                            top.linkTo(toolbar.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                        },
-                        beforeChallengeUiModel = state,
-                        onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
+        Crossfade(
+            modifier = Modifier.fillMaxSize(),
+            targetState = state.indicatorState,
+            label = "",
+        ) { isLoading ->
+            if (isLoading) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    FlowerLoadingIndicator(
+                        modifier = Modifier.width(128.dp).height(144.dp).align(Alignment.Center),
                     )
                 }
-                is OngoingChallengeUiModel -> {
-                    HomeOngoingChallenge(
-                        navigateToHistory = navigateToHistory,
-                        modifier = Modifier.constrainAs(content) {
-                            top.linkTo(toolbar.bottom)
-                            start.linkTo(parent.start)
-                            end.linkTo(parent.end)
-                            bottom.linkTo(parent.bottom)
-                        },
-                        ongoingChallengeUiModel = state,
-                        onBeeButtonClick = onBeeButtonClick,
-                        onCommit = onCommit,
-                        onCompleteButtonClick = onClickCompleteButton,
-                        onClickCheerButton = onClickCheerButton,
-                        onWiggleAnimationEnd = onWiggleAnimationEnd,
+            } else {
+                ConstraintLayout(
+                    modifier = modifier.padding(top = 11.dp).semantics {
+                        testTagsAsResourceId = true
+                    },
+                ) {
+                    val (toolbar, background, content) = createRefs()
+                    TwoTooImageView(
+                        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f)
+                            .constrainAs(background) {
+                                bottom.linkTo(parent.bottom)
+                                start.linkTo(parent.start)
+                                end.linkTo(parent.end)
+                            },
+                        previewPlaceholder = R.drawable.image_home_background,
+                        model = R.drawable.image_home_background,
+                        contentScale = ContentScale.FillBounds,
                     )
+
+                    when (state.challengeStateUiModel) {
+                        is BeforeChallengeUiModel -> {
+                            HomeBeforeChallenge(
+                                modifier = Modifier.constrainAs(content) {
+                                    top.linkTo(toolbar.bottom)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    bottom.linkTo(parent.bottom)
+                                },
+                                beforeChallengeUiModel = state.challengeStateUiModel,
+                                onClickBeforeChallengeTextButton = onClickBeforeChallengeTextButton,
+                            )
+                        }
+
+                        is OngoingChallengeUiModel -> {
+                            HomeOngoingChallenge(
+                                navigateToHistory = navigateToHistory,
+                                modifier = Modifier.constrainAs(content) {
+                                    top.linkTo(toolbar.bottom)
+                                    start.linkTo(parent.start)
+                                    end.linkTo(parent.end)
+                                    bottom.linkTo(parent.bottom)
+                                },
+                                ongoingChallengeUiModel = state.challengeStateUiModel,
+                                onBeeButtonClick = onBeeButtonClick,
+                                onCommit = onCommit,
+                                onCompleteButtonClick = onClickCompleteButton,
+                                onClickCheerButton = onClickCheerButton,
+                                onWiggleAnimationEnd = onWiggleAnimationEnd,
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -196,7 +216,7 @@ fun PreviewHomeScreenBeforeChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            state = OngoingChallengeUiModel.default,
+            state = HomeStateUiModel.ongoing,
             navigateToGuide = {},
         )
     }
@@ -208,7 +228,7 @@ fun PreviewHomeScreenAfterChallenge() {
     TwoTooTheme {
         HomeScreen(
             modifier = Modifier.fillMaxSize(),
-            state = OngoingChallengeUiModel.default,
+            state = HomeStateUiModel.ongoing,
             navigateToGuide = {},
         )
     }
@@ -218,9 +238,8 @@ fun PreviewHomeScreenAfterChallenge() {
 @Composable
 fun PreviewHomeScreenAfterChallengeText() {
     TwoTooTheme {
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = OngoingChallengeUiModel.default.copy(
+        val state = HomeStateUiModel.ongoing.copy(
+            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
                 homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
                     partner = HomeGoalAchieveUiModel.default.copy(
                         "주주주주",
@@ -230,6 +249,10 @@ fun PreviewHomeScreenAfterChallengeText() {
                     ),
                 ),
             ),
+        )
+        HomeScreen(
+            modifier = Modifier.fillMaxSize(),
+            state = state,
             navigateToGuide = {},
         )
     }
@@ -239,9 +262,8 @@ fun PreviewHomeScreenAfterChallengeText() {
 @Composable
 fun PreviewHomeScreenAfterChallengeText2() {
     TwoTooTheme {
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = OngoingChallengeUiModel.default.copy(
+        val state = HomeStateUiModel.ongoing.copy(
+            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
                 homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
                     partner = HomeGoalAchieveUiModel.default.copy(
                         "주주",
@@ -251,6 +273,10 @@ fun PreviewHomeScreenAfterChallengeText2() {
                     ),
                 ),
             ),
+        )
+        HomeScreen(
+            modifier = Modifier.fillMaxSize(),
+            state = state,
             navigateToGuide = {},
         )
     }

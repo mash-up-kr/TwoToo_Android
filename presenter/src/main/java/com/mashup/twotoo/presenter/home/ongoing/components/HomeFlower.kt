@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.component.loading.WaterLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.AuthType.AuthBoth
@@ -102,7 +103,7 @@ fun HomeFlowerMeAndPartner(
                                 start.linkTo(waterImage.start)
                                 end.linkTo(waterImage.end)
                                 top.linkTo(parent.top)
-                                bottom.linkTo(waterImage.top, margin = 6.dp)
+                                bottom.linkTo(waterImage.top, margin = 16.dp)
                             },
                     )
                 }
@@ -153,13 +154,13 @@ fun HomeFlowerMeAndPartner(
                 }
 
                 if (this.authType != AuthOnlyMe && this.authType != AuthBoth && homeChallengeStateUiModel.challengeState != Complete) {
-                    TwoTooImageView(
+                    WaterLoadingIndicator(
                         modifier = Modifier
                             .testTag(
                                 stringResource(id = R.string.homeOngoingChallengeWaterImage),
                             )
-                            .width(75.dp)
-                            .height(69.dp)
+                            .width(69.dp)
+                            .height(42.dp)
                             .constrainAs(waterImage) {
                                 top.linkTo(textHint.bottom)
                                 bottom.linkTo(me.top, margin = 8.dp)
@@ -168,8 +169,6 @@ fun HomeFlowerMeAndPartner(
                             }.clickable {
                                 onCommit()
                             },
-
-                        model = R.drawable.img_need_water,
                     )
                 }
 

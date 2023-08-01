@@ -52,6 +52,12 @@ class HistoryViewModel @Inject constructor(
     }
 
     fun getChallengeByUser(challengeNo: Int) = intent {
+        reduce {
+            state.copy(
+                loadingIndicatorState = true,
+            )
+        }
+
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess { challengeDetailResponseDomainModel ->
             val userInfo = getUserInfoUseCase().getOrNull()
             if (userInfo == null) {
@@ -103,6 +109,7 @@ class HistoryViewModel @Inject constructor(
 
             reduce {
                 state.copy(
+                    loadingIndicatorState = false,
                     challengeInfoUiModel = newChallengeInfoUiModel,
                     historyItemUiModel = newHistoryItemUiModels,
                     ownerNickNamesUiModel = newOwnerNickNamesUiModel,

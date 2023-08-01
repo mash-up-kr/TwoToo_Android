@@ -2,10 +2,12 @@ package com.mashup.twotoo.presenter.onboarding
 
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -19,6 +21,8 @@ import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.rememberPagerState
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooIconButtonImpl
+import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
+import com.mashup.twotoo.presenter.designsystem.component.scrim.TwoTooScrim
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
@@ -34,8 +38,20 @@ fun OnBoardingRoute(
     val state by onBoardingViewModel.collectAsState()
     val context = LocalContext.current
 
-    OnBoardingScreen {
-        onBoardingViewModel.loginWithKakao(context)
+    Box(modifier = Modifier.fillMaxSize()) {
+        OnBoardingScreen {
+            onBoardingViewModel.loginWithKakao(context)
+        }
+        if (state.loadingIndicatorState) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                TwoTooScrim(
+                    color = TwoTooTheme.color.gray600,
+                )
+                FlowerLoadingIndicator(
+                    modifier = Modifier.width(128.dp).height(144.dp).align(Alignment.Center),
+                )
+            }
+        }
     }
 
     if (state.isSuccessLogin) {
@@ -102,7 +118,7 @@ fun KakaoLoginButton(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 private fun OnBoardingPagerPreview() {
     OnBoardingScreen({})
