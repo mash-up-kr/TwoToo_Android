@@ -35,15 +35,6 @@ object DateFormatter {
         return calendar.time
     }
 
-    fun getCurrentTimeWithPlusNine(): Date {
-        val curDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).format(Date())
-        return dateConvertToPlusNineDate(curDate)
-    }
-
-    fun getCurrentDateWithPlusNine(): String {
-        val curDate = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).format(Date())
-        return dateConvertToPlusNineTime(curDate)
-    }
     fun getDateTimeByStr(date: String): Date {
         return SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(date)
     }

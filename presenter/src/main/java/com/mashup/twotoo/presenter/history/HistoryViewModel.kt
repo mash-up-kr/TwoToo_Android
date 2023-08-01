@@ -9,7 +9,6 @@ import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryItemUiModel
 import com.mashup.twotoo.presenter.history.model.OwnerNickNamesUiModel
 import com.mashup.twotoo.presenter.util.DateFormatter
-import com.mashup.twotoo.presenter.util.DateFormatter.getCurrentTimeWithPlusNine
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
@@ -136,7 +135,7 @@ class HistoryViewModel @Inject constructor(
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
             } else {
-                getDatesInRangeFromStartDateToEndDate(startDate, getCurrentTimeWithPlusNine()) // currentDate
+                getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
             }
 
         val commitPairs =
