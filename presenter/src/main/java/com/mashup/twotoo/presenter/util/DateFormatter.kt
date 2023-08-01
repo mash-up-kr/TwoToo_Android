@@ -10,19 +10,14 @@ import java.util.TimeZone
 
 object DateFormatter {
 
-    fun getDateStrByStr(date: String): String {
-        val dateTime = getDateTimeByStr(date)
-        return getDateStrByDate(dateTime)
-    }
-
-    fun dateConvertToPlusNineTime(date: String): String {
+    fun dateConvertToPlusNineTime(date: String, formatStr: String = "MM-dd"): String {
         val dateTime =
             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)
         val calendar = Calendar.getInstance()
         calendar.time = dateTime
         calendar.add(Calendar.HOUR_OF_DAY, 9)
         val updateDate = calendar.time
-        val test = SimpleDateFormat("MM-dd", Locale.getDefault()).format(updateDate)
+        val test = SimpleDateFormat(formatStr, Locale.getDefault()).format(updateDate)
         return test
     }
 

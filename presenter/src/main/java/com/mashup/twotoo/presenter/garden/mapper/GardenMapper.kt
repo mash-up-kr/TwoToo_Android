@@ -17,5 +17,5 @@ fun ChallengeResponseDomainModel.toUiModel(index: Int): ChallengeCardInfoUiModel
 }
 
 fun ChallengeResponseDomainModel.toPeriod(): String {
-    return "${DateFormatter.getDateStrByStr(startDate)} ~ ${DateFormatter.getDateStrByStr(endDate)}"
+    return "${DateFormatter.dateConvertToPlusNineTime(startDate,"yyyy-MM-dd")} ~ ${DateFormatter.dateConvertToPlusNineTime(endDate,"yyyy-MM-dd")}"
 }
