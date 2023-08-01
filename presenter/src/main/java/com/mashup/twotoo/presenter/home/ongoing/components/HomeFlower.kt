@@ -409,6 +409,7 @@ fun HomeFlowerPartner(
                 .height(height),
             model = image,
             contentScale = ContentScale.Fit,
+            previewPlaceholder = image,
         )
     }
 }
@@ -431,6 +432,7 @@ fun HomeFlowerMe(
                 .height(height),
             model = image,
             contentScale = ContentScale.Fit,
+            previewPlaceholder = image,
         )
     }
 }

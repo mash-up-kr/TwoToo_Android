@@ -75,7 +75,7 @@ fun GoalAchievementRow(
                 },
                 fontSizeRange = FontSizeRange(
                     min = 10.sp,
-                    max = 22.sp,
+                    max = 14.sp,
                 ),
             )
         }
