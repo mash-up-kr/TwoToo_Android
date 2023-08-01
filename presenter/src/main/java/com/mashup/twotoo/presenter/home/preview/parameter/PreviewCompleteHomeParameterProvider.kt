@@ -11,7 +11,8 @@ import com.mashup.twotoo.presenter.model.Stage
 
 class PreviewCompleteHomeParameterProvider : PreviewParameterProvider<HomeStateUiModel> {
     override val values = listOf(
-        completeFifthStageChallenge,
+        completeZeroStageChallenge,
+        completeFirstStageChallenge,
         completeSecondStageChallenge,
         completeThirdStageChallenge,
         completeFourthStageChallenge,
@@ -20,6 +21,9 @@ class PreviewCompleteHomeParameterProvider : PreviewParameterProvider<HomeStateU
 
     companion object {
 
+        val completeZeroStageChallenge = HomeStateUiModel(
+            challengeStateUiModel = getAuthUiModel(Stage.Zero, Stage.Zero),
+        )
         val completeFirstStageChallenge = HomeStateUiModel(
             challengeStateUiModel = getAuthUiModel(Stage.First, Stage.First),
         )
