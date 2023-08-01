@@ -27,6 +27,7 @@ import model.challenge.response.UserCommitResponseDomainModel
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
+import java.util.TimeZone
 
 fun HomeViewResponseDomainModel.toUiModel(): ChallengeStateTypeUiModel {
     return if (viewState.isBeforeChallengeState()) {
@@ -148,9 +149,16 @@ fun HomeViewResponseDomainModel.toHomeGoalCountUiModel(): HomeGoalCountUiModel {
 }
 
 fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
-    val currentDate = Calendar.getInstance(Locale.KOREA).time
-    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.KOREA)
+    val timeZone = TimeZone.getTimeZone("UTC")
+    val calendar = Calendar.getInstance(timeZone)
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    simpleDateFormat.timeZone = timeZone
+
+    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
     val endDate = formatter.parse(endDate)
+
+    val currentDateString = simpleDateFormat.format(calendar.time)
+    val currentDate = formatter.parse(currentDateString)
 
     val diff: Long = endDate.time - currentDate.time
     val seconds = diff / 1000
