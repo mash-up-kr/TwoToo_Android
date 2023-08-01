@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.home.mapper
 
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
+import com.mashup.twotoo.presenter.home.model.ChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeStateTypeUiModel
 import com.mashup.twotoo.presenter.home.model.CheerState
 import com.mashup.twotoo.presenter.home.model.CheerWithFlower
@@ -107,7 +108,9 @@ fun HomeViewResponseDomainModel.toOngoingChallengeUiModel(): OngoingChallengeUiM
 fun HomeViewResponseDomainModel.toHomeChallengeStateUiModel(): HomeChallengeStateUiModel {
     return if (isCompleteState()) {
         HomeChallengeStateUiModel.complete.copy(
-            challengeStateUiModel = toHomeFlowerPartnerAndMeUiModel(),
+            challengeStateUiModel = toHomeFlowerPartnerAndMeUiModel(
+                challengeState = ChallengeState.Complete,
+            ),
         )
     } else if (isCheerState()) {
         HomeChallengeStateUiModel.cheer.copy(
@@ -115,7 +118,9 @@ fun HomeViewResponseDomainModel.toHomeChallengeStateUiModel(): HomeChallengeStat
         )
     } else {
         HomeChallengeStateUiModel.auth.copy(
-            challengeStateUiModel = toHomeFlowerPartnerAndMeUiModel(),
+            challengeStateUiModel = toHomeFlowerPartnerAndMeUiModel(
+                challengeState = ChallengeState.Auth,
+            ),
         )
     }
 }
@@ -224,7 +229,7 @@ fun HomeViewResponseDomainModel.toHomeCheerUiModel(): HomeCheerUiModel {
     val meUserNo = this.myInfo.userNo
     val (me, partner) = getUserCommit()
     val (meNickName, partnerNickName) = getUserNickName()
-    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(userNo = meUserNo)
+    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(userNo = meUserNo, challengeState = ChallengeState.Cheer)
 
     return when {
         me!!.partnerComment.isNotBlank() && partner!!.partnerComment.isNotBlank() -> {
@@ -340,9 +345,10 @@ fun HomeViewResponseDomainModel.getUserNickName(): Pair<String, String> {
 }
 
 fun ChallengeResponseDomainModel.getFlowerType(
+    challengeState: ChallengeState,
     userNo: Int,
 ): Pair<Flower, Flower> {
-    val (meGrowType, partnerGrowType) = getGrowType(userNo)
+    val (meGrowType, partnerGrowType) = getGrowType(challengeState = challengeState, userNo = userNo)
     return if (userNo == user1.userNo) {
         val user1 = Flower(
             flowerName = user1Flower.toFlowerName(),
@@ -373,52 +379,50 @@ fun ChallengeResponseDomainModel.getFlowerType(
 }
 
 fun ChallengeResponseDomainModel.getGrowType(
+    challengeState: ChallengeState,
     userNo: Int,
 ): Pair<Stage, Stage> {
     return if (userNo == user1.userNo) {
-        Pair(user1CommitCnt.toGrowState(), user2CommitCnt.toGrowState())
+        Pair(
+            user1CommitCnt.toGrowState(
+                challengeState = challengeState,
+            ),
+            user2CommitCnt.toGrowState(
+                challengeState = challengeState,
+            ),
+        )
     } else {
-        Pair(user2CommitCnt.toGrowState(), user1CommitCnt.toGrowState())
+        Pair(
+            user2CommitCnt.toGrowState(
+                challengeState = challengeState,
+            ),
+            user1CommitCnt.toGrowState(
+                challengeState = challengeState,
+            ),
+        )
     }
 }
-
-fun Int.toGrowState(): Stage {
+fun Int.toGrowState(
+    challengeState: ChallengeState,
+): Stage {
     return when (this) {
-        in 0..0 -> {
-            Stage.Zero
-        }
-
-        in 1..4 -> {
-            Stage.First
-        }
-
-        in 5..9 -> {
-            Stage.Second
-        }
-
-        in 10..15 -> {
-            Stage.Third
-        }
-
-        in 16..21 -> {
-            Stage.Fourth
-        }
-
-        in 22..22 -> {
-            Stage.Fifth
-        }
-
-        else -> {
-            Stage.Fifth
-        }
+        in 0..0 -> Stage.Zero
+        in 1..4 -> Stage.First
+        in 5..9 -> Stage.Second
+        in 10..15 -> Stage.Third
+        in 16..21 -> if (challengeState == ChallengeState.Complete) Stage.Fourth else Stage.Third
+        in 22..22 -> if (challengeState == ChallengeState.Complete) Stage.Fifth else Stage.Third
+        else -> Stage.Third
     }
 }
 
-fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(): HomeFlowerPartnerAndMeUiModel {
+fun HomeViewResponseDomainModel.toHomeFlowerPartnerAndMeUiModel(
+    challengeState: ChallengeState,
+): HomeFlowerPartnerAndMeUiModel {
     val meUserNo = this.myInfo.userNo
     val (meCommit, partnerCommit) = getUserCommit()
     val (meNickName, partnerNickName) = getUserNickName()
-    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(userNo = meUserNo)
+    val (meFlower, partnerFlower) = this.onGoingChallenge!!.getFlowerType(challengeState = challengeState, userNo = meUserNo)
 
     return when {
         this.onGoingChallenge!!.isFirstChallenge() -> {
@@ -528,25 +532,11 @@ fun HomeViewResponseDomainModel.toHomeGoalAchieveUiModel(
 
 fun Int.toProgress(): Float {
     return when (this) {
-        0 -> {
-            0f
-        }
-
-        in 1..19 -> {
-            (this / 20f)
-        }
-
-        20, 21 -> {
-            0.99f
-        }
-
-        22 -> {
-            1f
-        }
-
-        else -> {
-            1f
-        }
+        0 -> 0f
+        in 1..19 -> (this / 20f)
+        20, 21 -> 0.99f
+        22 -> 1f
+        else -> 1f
     }
 }
 

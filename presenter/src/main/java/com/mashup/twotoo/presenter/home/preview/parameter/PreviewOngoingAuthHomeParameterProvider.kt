@@ -39,10 +39,10 @@ class PreviewOngoingAuthHomeParameterProvider : PreviewParameterProvider<HomeSta
             challengeStateUiModel = getAuthUiModel(Stage.Third, Stage.Third),
         )
         val ongoingAuthChallengeAuthBothStageFourth = HomeStateUiModel(
-            challengeStateUiModel = getAuthUiModel(Stage.Fourth, Stage.Fourth),
+            challengeStateUiModel = getAuthUiModel(Stage.Third, Stage.Third),
         )
         val ongoingAuthChallengeAuthBothStageFifth = HomeStateUiModel(
-            challengeStateUiModel = getAuthUiModel(Stage.Fifth, Stage.Fifth),
+            challengeStateUiModel = getAuthUiModel(Stage.Third, Stage.Third),
         )
     }
 }

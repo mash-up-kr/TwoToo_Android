@@ -31,10 +31,10 @@ class PreviewCheerHomeParameterProvider : PreviewParameterProvider<HomeStateUiMo
             challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
         )
         val ongoingCheerChallengeFourthStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Fourth, Stage.Fourth),
+            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
         )
         val ongoingCheerChallengeFifthStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Fifth, Stage.Fifth),
+            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
         )
     }
 }
