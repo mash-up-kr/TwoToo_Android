@@ -100,11 +100,14 @@ fun GoalAchievementRow(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.Center,
             ) {
-                Text(
+                AutoResizeText(
                     text = "${(homeGoalAchieveUiModel.progress * 100).toInt()}%",
                     color = Color(0xFFA4A4A4),
                     style = TwoTooTheme.typography.bodyNormal12,
-                    textAlign = TextAlign.Center,
+                    fontSizeRange = FontSizeRange(
+                        min = 10.sp,
+                        max = 14.sp,
+                    ),
                 )
             }
             Spacer(modifier = Modifier.width(8.dp))

@@ -81,7 +81,7 @@ object DateFormatter {
         return convertToLongDate(Calendar.getInstance().time.time)
     }
 
-    fun getDaysAfter(selectDate: String, daysAfter: Int = 22): String {
+    fun getDaysAfter(selectDate: String, daysAfter: Int = 21): String {
         val dateFormat = SimpleDateFormat("yyyy/MM/dd", Locale.getDefault())
         val date = dateFormat.parse(selectDate)
         val calendar = Calendar.getInstance()
