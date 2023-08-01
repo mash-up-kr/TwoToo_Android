@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -34,6 +35,7 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -130,35 +132,43 @@ fun HistoryScreen(
                 }
             }
             Spacer(modifier = Modifier.height(9.dp))
-            ChallengeInfo(
-                state.challengeInfoUiModel,
-            )
-            if (isHomeGoalAchievementShow) {
-                TwoTooGoalAchievementProgressbar(
+            if (state.loadingIndicatorState) {
+                Box(modifier = Modifier.fillMaxSize()) {
+                    FlowerLoadingIndicator(
+                        modifier = Modifier.width(128.dp).height(144.dp).align(Alignment.Center),
+                    )
+                }
+            } else {
+                ChallengeInfo(
+                    state.challengeInfoUiModel,
+                )
+                if (isHomeGoalAchievementShow) {
+                    TwoTooGoalAchievementProgressbar(
+                        modifier = Modifier
+                            .padding(top = 12.dp, start = 24.dp)
+                            .width(210.dp)
+                            .height(59.dp)
+                            .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
+                        homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+                    )
+                }
+                OwnerNickNames(state.ownerNickNamesUiModel)
+                Spacer(modifier = Modifier.height(12.dp))
+                Divider(
+                    color = Color.White,
                     modifier = Modifier
-                        .padding(top = 12.dp, start = 24.dp)
-                        .width(210.dp)
-                        .height(59.dp)
-                        .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                    homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+                        .fillMaxWidth()
+                        .width(1.dp)
+                        .padding(horizontal = 24.dp),
                 )
-            }
-            OwnerNickNames(state.ownerNickNamesUiModel)
-            Spacer(modifier = Modifier.height(12.dp))
-            Divider(
-                color = Color.White,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .width(1.dp)
-                    .padding(horizontal = 24.dp),
-            )
-            Box {
-                DottedLine()
-                HistoryItems(
-                    state.historyItemUiModel,
-                    navigateToHistoryDetail,
-                    ::showBottomSheet,
-                )
+                Box {
+                    DottedLine()
+                    HistoryItems(
+                        state.historyItemUiModel,
+                        navigateToHistoryDetail,
+                        ::showBottomSheet,
+                    )
+                }
             }
         }
         if (showSelectListDialog) {
