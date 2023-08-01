@@ -46,13 +46,14 @@ import org.orbitmvi.orbit.compose.collectAsState
 fun HistoryRoute(
     challengeNo: Int,
     historyViewModel: HistoryViewModel,
+    homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel? = null,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     Log.i(
         "HistoryRoute",
-        "lifecylce = ${lifecycleOwner.lifecycle.currentState}, challengeNo = $challengeNo",
+        "lifecylce = ${lifecycleOwner.lifecycle.currentState}, challengeNo = $challengeNo, homeGoalAchievePartnerAndMeUiModel=$homeGoalAchievePartnerAndMeUiModel",
     )
 
     LaunchedEffect(Unit) {
@@ -65,7 +66,7 @@ fun HistoryRoute(
     val state by historyViewModel.collectAsState()
 
     HistoryScreen(
-        isHomeGoalAchievementShow = false,
+        homeGoalAchievePartnerAndMeUiModel = homeGoalAchievePartnerAndMeUiModel,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
         quiteChallenge = { historyViewModel.quiteChallenge(challengeNo) },
@@ -80,7 +81,7 @@ fun HistoryRoute(
 
 @Composable
 fun HistoryScreen(
-    isHomeGoalAchievementShow: Boolean,
+    homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel? = null,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
     quiteChallenge: () -> Unit,
@@ -136,14 +137,14 @@ fun HistoryScreen(
             ChallengeInfo(
                 state.challengeInfoUiModel,
             )
-            if (isHomeGoalAchievementShow) {
+            if (homeGoalAchievePartnerAndMeUiModel != null) {
                 TwoTooGoalAchievementProgressbar(
                     modifier = Modifier
                         .padding(top = 12.dp, start = 24.dp)
                         .width(210.dp)
                         .height(59.dp)
                         .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                    homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
+                    homeGoalAchievePartnerAndMeUiModel = homeGoalAchievePartnerAndMeUiModel,
                 )
             }
             OwnerNickNames(state.ownerNickNamesUiModel)
@@ -205,7 +206,6 @@ fun HistoryScreen(
 private fun PreviewHistoryScreen() {
     TwoTooTheme {
         HistoryScreen(
-            isHomeGoalAchievementShow = false,
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
@@ -220,7 +220,6 @@ private fun PreviewHistoryScreen() {
 private fun PreviewHistoryScreenEmpty() {
     TwoTooTheme {
         HistoryScreen(
-            isHomeGoalAchievementShow = false,
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
@@ -235,7 +234,7 @@ private fun PreviewHistoryScreenEmpty() {
 private fun PreviewHistoryScreenWithProgressBar() {
     TwoTooTheme {
         HistoryScreen(
-            isHomeGoalAchievementShow = true,
+            homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},
