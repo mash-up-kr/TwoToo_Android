@@ -16,6 +16,7 @@ import com.mashup.twotoo.presenter.home.model.CheerWithFlower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.model.Stage
 import org.junit.Rule
@@ -146,9 +147,11 @@ class HomeCheerOnlyPartner {
         partnerStage: Stage,
         meStage: Stage,
     ) {
-        val challengeStateTypeUiModel = getUiModel(
-            partnerStage = partnerStage,
-            meStage = meStage,
+        val challengeStateTypeUiModel = HomeStateUiModel(
+            challengeStateUiModel = getUiModel(
+                partnerStage = partnerStage,
+                meStage = meStage,
+            ),
         )
         composeTestRule.setContent {
             context = LocalContext.current
@@ -158,14 +161,13 @@ class HomeCheerOnlyPartner {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
-
         testComposableWithTag()
         testPartnerAndMeImageTest(
-            challengeStateTypeUiModel = challengeStateTypeUiModel,
+            challengeStateTypeUiModel = challengeStateTypeUiModel.challengeStateUiModel as OngoingChallengeUiModel,
             partnerStage = partnerStage,
             meStage = meStage,
         )

@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
@@ -33,13 +32,11 @@ import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchieveUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
@@ -210,74 +207,3 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true, device = "id:pixel_2")
-@Composable
-fun PreviewHomeScreenBeforeChallenge() {
-    TwoTooTheme {
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = HomeStateUiModel.ongoing,
-            navigateToGuide = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, device = "id:pixel_2")
-@Composable
-fun PreviewHomeScreenAfterChallenge() {
-    TwoTooTheme {
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = HomeStateUiModel.ongoing,
-            navigateToGuide = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, device = "id:pixel_2")
-@Composable
-fun PreviewHomeScreenAfterChallengeText() {
-    TwoTooTheme {
-        val state = HomeStateUiModel.ongoing.copy(
-            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
-                homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
-                    partner = HomeGoalAchieveUiModel.default.copy(
-                        "주주주주",
-                    ),
-                    me = HomeGoalAchieveUiModel.default.copy(
-                        "주주",
-                    ),
-                ),
-            ),
-        )
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = state,
-            navigateToGuide = {},
-        )
-    }
-}
-
-@Preview(showBackground = true, device = "id:pixel_2")
-@Composable
-fun PreviewHomeScreenAfterChallengeText2() {
-    TwoTooTheme {
-        val state = HomeStateUiModel.ongoing.copy(
-            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
-                homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default.copy(
-                    partner = HomeGoalAchieveUiModel.default.copy(
-                        "주주",
-                    ),
-                    me = HomeGoalAchieveUiModel.default.copy(
-                        "주주",
-                    ),
-                ),
-            ),
-        )
-        HomeScreen(
-            modifier = Modifier.fillMaxSize(),
-            state = state,
-            navigateToGuide = {},
-        )
-    }
-}
