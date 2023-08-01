@@ -12,29 +12,35 @@ import com.mashup.twotoo.presenter.model.Stage
 
 class PreviewCheerHomeParameterProvider : PreviewParameterProvider<HomeStateUiModel> {
     override val values = listOf(
+        cheerOnlyPartnerChallengeFirstStage,
+        cheerOnlyPartnerChallengeSecondStage,
+        cheerOnlyPartnerChallengeThirdStage,
         ongoingCheerChallengeFirstStage,
         ongoingCheerChallengeSecondStage,
         ongoingCheerChallengeThirdStage,
-        ongoingCheerChallengeFourthStage,
-        ongoingCheerChallengeFifthStage,
     ).asSequence()
 
     companion object {
 
+        val cheerOnlyPartnerChallengeFirstStage = HomeStateUiModel(
+            challengeStateUiModel = getCheerUiModel(Stage.First, Stage.First, cheerState = CheerState.CheerOnlyPartner),
+        )
+        val cheerOnlyPartnerChallengeSecondStage = HomeStateUiModel(
+            challengeStateUiModel = getCheerUiModel(Stage.Second, Stage.Second, cheerState = CheerState.CheerOnlyPartner),
+        )
+
+        val cheerOnlyPartnerChallengeThirdStage = HomeStateUiModel(
+            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third, cheerState = CheerState.CheerOnlyPartner),
+        )
+
         val ongoingCheerChallengeFirstStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.First, Stage.First),
+            challengeStateUiModel = getCheerUiModel(Stage.First, Stage.First, cheerState = CheerState.CheerBoth),
         )
         val ongoingCheerChallengeSecondStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Second, Stage.Second),
+            challengeStateUiModel = getCheerUiModel(Stage.Second, Stage.Second, cheerState = CheerState.CheerBoth),
         )
         val ongoingCheerChallengeThirdStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
-        )
-        val ongoingCheerChallengeFourthStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
-        )
-        val ongoingCheerChallengeFifthStage = HomeStateUiModel(
-            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third),
+            challengeStateUiModel = getCheerUiModel(Stage.Third, Stage.Third, cheerState = CheerState.CheerBoth),
         )
     }
 }
@@ -42,11 +48,12 @@ class PreviewCheerHomeParameterProvider : PreviewParameterProvider<HomeStateUiMo
 private fun getCheerUiModel(
     partnerStage: Stage,
     meStage: Stage,
+    cheerState: CheerState,
 ): OngoingChallengeUiModel {
     return OngoingChallengeUiModel.cheer.copy(
         homeChallengeStateUiModel = HomeChallengeStateUiModel.cheerBoth.copy(
             challengeStateUiModel = HomeCheerUiModel.cheerBoth.copy(
-                cheerState = CheerState.CheerBoth,
+                cheerState = cheerState,
                 partner = CheerWithFlower.partnerNotEmpty.copy(
                     homeFlowerUiModel = when (partnerStage) {
                         Stage.Zero -> HomeFlowerUiModel.partnerZeroState
@@ -57,16 +64,29 @@ private fun getCheerUiModel(
                         Stage.Fifth -> HomeFlowerUiModel.partnerFifthState
                     },
                 ),
-                me = CheerWithFlower.meNotEmpty.copy(
-                    homeFlowerUiModel = when (meStage) {
-                        Stage.Zero -> HomeFlowerUiModel.meZeroState
-                        Stage.First -> HomeFlowerUiModel.meFirstState
-                        Stage.Second -> HomeFlowerUiModel.meSecondState
-                        Stage.Third -> HomeFlowerUiModel.meThirdState
-                        Stage.Fourth -> HomeFlowerUiModel.meFourthState
-                        Stage.Fifth -> HomeFlowerUiModel.meFifthState
-                    },
-                ),
+                me = if (cheerState == CheerState.CheerOnlyPartner) {
+                    CheerWithFlower.meNotYet.copy(
+                        homeFlowerUiModel = when (meStage) {
+                            Stage.Zero -> HomeFlowerUiModel.meZeroState
+                            Stage.First -> HomeFlowerUiModel.meFirstState
+                            Stage.Second -> HomeFlowerUiModel.meSecondState
+                            Stage.Third -> HomeFlowerUiModel.meThirdState
+                            Stage.Fourth -> HomeFlowerUiModel.meFourthState
+                            Stage.Fifth -> HomeFlowerUiModel.meFifthState
+                        },
+                    )
+                } else {
+                    CheerWithFlower.meNotEmpty.copy(
+                        homeFlowerUiModel = when (meStage) {
+                            Stage.Zero -> HomeFlowerUiModel.meZeroState
+                            Stage.First -> HomeFlowerUiModel.meFirstState
+                            Stage.Second -> HomeFlowerUiModel.meSecondState
+                            Stage.Third -> HomeFlowerUiModel.meThirdState
+                            Stage.Fourth -> HomeFlowerUiModel.meFourthState
+                            Stage.Fifth -> HomeFlowerUiModel.meFifthState
+                        },
+                    )
+                },
             ),
         ),
     )
