@@ -151,10 +151,10 @@ fun HomeViewResponseDomainModel.toHomeGoalCountUiModel(): HomeGoalCountUiModel {
 fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel {
     val timeZone = TimeZone.getTimeZone("UTC")
     val calendar = Calendar.getInstance(timeZone)
-    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)
     simpleDateFormat.timeZone = timeZone
 
-    val formatter = SimpleDateFormat("yyyy-MM-dd", Locale.US)
+    val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)
     val endDate = formatter.parse(endDate)
 
     val currentDateString = simpleDateFormat.format(calendar.time)
