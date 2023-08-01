@@ -10,10 +10,9 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.HomeScreen
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import org.junit.Rule
 import org.junit.Test
-
-
 
 class HomeBeforeChallengeTest {
 
@@ -24,13 +23,13 @@ class HomeBeforeChallengeTest {
 
     @Test
     fun 챌린지_생성전_Empty일때() {
-        val challengeStateTypeUiModel = BeforeChallengeUiModel.empty
+        val challengeStateTypeUiModel = HomeStateUiModel(challengeStateUiModel = BeforeChallengeUiModel.empty)
         composeTestRule.setContent {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -44,7 +43,7 @@ class HomeBeforeChallengeTest {
 
             // Image가 Empty이미지 인지 검증
             Truth.assertThat(
-                challengeStateTypeUiModel.stateImage,
+                (challengeStateTypeUiModel.challengeStateUiModel as BeforeChallengeUiModel).stateImage,
             ).isEqualTo(R.drawable.img_challenge_empty)
 
             // Button 텍스트가 맞는지 검증
@@ -61,13 +60,13 @@ class HomeBeforeChallengeTest {
      */
     @Test
     fun 챌린지_생성_전_State가_Request일때() {
-        val challengeStateTypeUiModel = BeforeChallengeUiModel.request
+        val challengeStateTypeUiModel = HomeStateUiModel(challengeStateUiModel = BeforeChallengeUiModel.request)
         composeTestRule.setContent {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -79,7 +78,7 @@ class HomeBeforeChallengeTest {
                 getString(R.string.homeBeforeChallengeRequest),
             )
             Truth.assertThat(
-                challengeStateTypeUiModel.stateImage,
+                (challengeStateTypeUiModel.challengeStateUiModel as BeforeChallengeUiModel).stateImage,
             ).isEqualTo(R.drawable.img_challenge_request)
 
             composeTestRule.onNodeWithTag(
@@ -95,13 +94,13 @@ class HomeBeforeChallengeTest {
      */
     @Test
     fun 챌린지_생성_전_State가_Response일때() {
-        val challengeStateTypeUiModel = BeforeChallengeUiModel.response
+        val challengeStateTypeUiModel = HomeStateUiModel(challengeStateUiModel = BeforeChallengeUiModel.response)
         composeTestRule.setContent {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -114,7 +113,7 @@ class HomeBeforeChallengeTest {
             )
 
             Truth.assertThat(
-                challengeStateTypeUiModel.stateImage,
+                (challengeStateTypeUiModel.challengeStateUiModel as BeforeChallengeUiModel).stateImage,
             ).isEqualTo(R.drawable.img_challenge_response)
 
             composeTestRule.onNodeWithTag(
@@ -130,13 +129,13 @@ class HomeBeforeChallengeTest {
      */
     @Test
     fun 챌린지_생성_전_State가_Wait일때() {
-        val challengeStateTypeUiModel = BeforeChallengeUiModel.wait
+        val challengeStateTypeUiModel = HomeStateUiModel(challengeStateUiModel = BeforeChallengeUiModel.wait)
         composeTestRule.setContent {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -148,7 +147,7 @@ class HomeBeforeChallengeTest {
             )
 
             Truth.assertThat(
-                challengeStateTypeUiModel.stateImage,
+                (challengeStateTypeUiModel.challengeStateUiModel as BeforeChallengeUiModel).stateImage,
             ).isEqualTo(R.drawable.img_challenge_wait)
 
             composeTestRule.onNodeWithTag(
@@ -170,13 +169,13 @@ class HomeBeforeChallengeTest {
      */
     @Test
     fun 챌린지_생성_전_State가_termination일때() {
-        val challengeStateTypeUiModel = BeforeChallengeUiModel.termination
+        val challengeStateTypeUiModel = HomeStateUiModel(challengeStateUiModel = BeforeChallengeUiModel.termination)
         composeTestRule.setContent {
             context = LocalContext.current
             TwoTooTheme {
                 HomeScreen(
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -188,7 +187,7 @@ class HomeBeforeChallengeTest {
             )
 
             Truth.assertThat(
-                challengeStateTypeUiModel.stateImage,
+                (challengeStateTypeUiModel.challengeStateUiModel as BeforeChallengeUiModel).stateImage,
             ).isEqualTo(R.drawable.img_challenge_termination)
 
             composeTestRule.onNodeWithTag(

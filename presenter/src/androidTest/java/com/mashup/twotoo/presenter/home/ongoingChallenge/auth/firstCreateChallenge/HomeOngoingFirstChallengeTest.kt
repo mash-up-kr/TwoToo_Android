@@ -18,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
+import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.model.FlowerName
@@ -36,10 +37,12 @@ class HomeOngoingFirstChallengeTest {
 
     @Test
     fun 챌린지_생성후_FirstCreateChallenge일때() {
-        val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
-                challengeState = ChallengeState.Auth,
-                challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+        val challengeStateTypeUiModel = HomeStateUiModel(
+            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeState = ChallengeState.Auth,
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallenge,
+                ),
             ),
         )
 
@@ -51,7 +54,7 @@ class HomeOngoingFirstChallengeTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -64,30 +67,32 @@ class HomeOngoingFirstChallengeTest {
             context.getString(R.string.homeOngoingChallengeWaterImage),
         ).assertIsDisplayed()
 
-        (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).also {
-            Truth.assertThat(
-                it.partner.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
-            ).isEqualTo(R.drawable.img_home_zero_stage_partner)
+        (challengeStateTypeUiModel.challengeStateUiModel as OngoingChallengeUiModel).homeChallengeStateUiModel
+            .also {
+                Truth.assertThat(
+                    (it.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).partner.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
+                ).isEqualTo(R.drawable.img_home_zero_stage_partner)
 
-            Truth.assertThat(
-                it.me.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
-            ).isEqualTo(R.drawable.img_home_zero_stage_me)
-        }
-        Thread.sleep(3000)
+                Truth.assertThat(
+                    (it.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).me.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
+                ).isEqualTo(R.drawable.img_home_zero_stage_me)
+            }
     }
 
     @Test
     fun 챌린지_생성후_FirstCreateChallenge일때_상대방이_인증했을_경우() {
-        val challengeStateTypeUiModel = OngoingChallengeUiModel.default.copy(
-            homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
-                challengeState = ChallengeState.Auth,
-                challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallengeButAuthOnlyPartner.copy(
-                    authType = AuthType.FirstCreateChallengeButAuthOnlyPartner,
-                    partner = HomeFlowerUiModel.partner.copy(
-                        flowerType = Flower(
-                            flowerName = FlowerName.Tulip,
-                            userType = UserType.PARTNER,
-                            growType = Stage.First,
+        val challengeStateTypeUiModel = HomeStateUiModel(
+            challengeStateUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
+                    challengeState = ChallengeState.Auth,
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.firstChallengeButAuthOnlyPartner.copy(
+                        authType = AuthType.FirstCreateChallengeButAuthOnlyPartner,
+                        partner = HomeFlowerUiModel.partner.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = UserType.PARTNER,
+                                growType = Stage.First,
+                            ),
                         ),
                     ),
                 ),
@@ -100,7 +105,7 @@ class HomeOngoingFirstChallengeTest {
                 HomeScreen(
                     modifier = Modifier.fillMaxSize(),
                     state = challengeStateTypeUiModel,
-                    navigateToGuide = {}
+                    navigateToGuide = {},
                 )
             }
         }
@@ -116,15 +121,14 @@ class HomeOngoingFirstChallengeTest {
             context.getString(R.string.homeOngoingChallengeWaterImage),
         ).assertIsDisplayed()
 
-        (challengeStateTypeUiModel.homeChallengeStateUiModel.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).also {
+        (challengeStateTypeUiModel.challengeStateUiModel as OngoingChallengeUiModel).homeChallengeStateUiModel.also {
             Truth.assertThat(
-                it.partner.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
+                (it.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).partner.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(R.drawable.img_home_first_stage_partner)
 
             Truth.assertThat(
-                it.me.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
+                (it.challengeStateUiModel as HomeFlowerPartnerAndMeUiModel).me.flowerType.getFlowerImage(context, screenWidth, screenHeight).image,
             ).isEqualTo(R.drawable.img_home_zero_stage_me)
         }
-        Thread.sleep(3000)
     }
 }
