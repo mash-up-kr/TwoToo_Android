@@ -156,23 +156,23 @@ fun HistoryScreen(
                         .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
                     homeGoalAchievePartnerAndMeUiModel = homeGoalAchievePartnerAndMeUiModel,
                 )
-                OwnerNickNames(state.ownerNickNamesUiModel)
-                Spacer(modifier = Modifier.height(12.dp))
-                Divider(
-                    color = Color.White,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .width(1.dp)
-                        .padding(horizontal = 24.dp),
+            }
+            OwnerNickNames(state.ownerNickNamesUiModel)
+            Spacer(modifier = Modifier.height(12.dp))
+            Divider(
+                color = Color.White,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .width(1.dp)
+                    .padding(horizontal = 24.dp),
+            )
+            Box {
+                DottedLine()
+                HistoryItems(
+                    state.historyItemUiModel,
+                    navigateToHistoryDetail,
+                    ::showBottomSheet,
                 )
-                Box {
-                    DottedLine()
-                    HistoryItems(
-                        state.historyItemUiModel,
-                        navigateToHistoryDetail,
-                        ::showBottomSheet,
-                    )
-                }
             }
         }
         if (showSelectListDialog) {

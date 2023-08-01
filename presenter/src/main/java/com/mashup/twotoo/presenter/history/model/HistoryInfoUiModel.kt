@@ -51,7 +51,7 @@ data class HistoryInfoUiModel(
             if (createdDate.isEmpty()) {
                 return createdDate
             }
-            val dateStr = DateFormatter.getDateStrByStr(createdDate)
+            val dateStr = DateFormatter.dateConvertToPlusNineTime(createdDate, "yyyy-MM-dd")
             val (year, month, day) = dateStr.split("-")
             return "${year}년 ${month}월 ${day}일"
         }
