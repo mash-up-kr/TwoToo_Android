@@ -39,10 +39,15 @@ jobs:
       run: |
         mkdir ./app/signing
         echo "${{ secrets.KEYSTORE }}" | base64 -d > ./app/signing/keystore.jks
-        echo "${{ secrets.STOREFILE }}" > ./app/signing/keystore.properties
-        echo "${{ secrets.KEYALIAS }}" > ./app/signing/keystore.properties
-        echo "${{ secrets.KEYPASSWORD }}" > ./app/signing/keystore.properties
-        echo "${{ secrets.STOREPASSWORD }}" > ./app/signing/keystore.properties
+        echo "storeFile = $STOREFILE" > ./app/signing/keystore.properties
+        echo "keyAlias = $KEYALIAS" > ./app/signing/keystore.properties
+        echo "keyPassword = $KEYPASSWORD" > ./app/signing/keystore.properties
+        echo "storePassword = $STOREPASSWORD" > ./app/signing/keystore.properties
+      env :
+        STOREFILE:${{ secrets.STOREFILE }}
+        KEYALIAS:${{ secrets.KEYALIAS }}
+        KEYPASSWORD:${{ secrets.KEYPASSWORD }}
+        STOREPASSWORD:${{ secerts.STOREPASSWORD }}
     - name: Build with Gradle
       run: ./gradlew build
 
