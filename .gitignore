@@ -1,6 +1,10 @@
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,kotlin
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,kotlin
 
+app/signing/keystore.properties
+keystore_properties_base64.txt
+keystore_base64.txt
+output-metadata.json
 compose-reports
 compose-metrics
 .DS_STORE
