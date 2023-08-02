@@ -32,8 +32,6 @@ android {
 
     signingConfigs {
         create("release") {
-            // Keystore Security
-
             val keystoreProperties = Properties()
             keystoreProperties.load(FileInputStream(keystorePropertiesFile))
             storeFile = file("signing/keystore.jks")
