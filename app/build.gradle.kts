@@ -28,7 +28,9 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = file(gradleLocalProperties(rootDir).getProperty("storeFile") ?: "storefile")
+            storeFile = runCatching {
+                file(gradleLocalProperties(rootDir).getProperty("storeFile") ?: "storefile")
+            }.getOrNull()
             storePassword = gradleLocalProperties(rootDir).getProperty("storePassword") ?: "storePassword"
             keyAlias = gradleLocalProperties(rootDir).getProperty("keyAlias") ?: "keyAlias"
             keyPassword = gradleLocalProperties(rootDir).getProperty("keyPassword") ?: "keyPassword"
