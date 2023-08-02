@@ -38,8 +38,8 @@ jobs:
     - name: Generate Keystore file from GitHub Secrets
       run: |
         mkdir ./app/signing
-        echo '${{ secrets.KEYSTORE_BASE64 }}' > ./app/signing/keystore.jks
-        echo '${{ secrets.KEYSTORE_PROPERTIES_BASE64 }}' > ./app/signing/keystore.properties
+        echo '${{ secrets.KEYSTORE_BASE64 }}' | base64 -d > ./app/signing/keystore.jks
+        echo '${{ secrets.KEYSTORE_PROPERTIES_BASE64 }}' | base64 -d > ./app/signing/keystore.properties
     - name: Build with Gradle
       run: ./gradlew build
 
