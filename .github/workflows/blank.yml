@@ -44,16 +44,21 @@ jobs:
         KEYSTORE: ${{ secrets.KEYSTORE }}
 
     - name: Generate Keystore file from GitHub Secrets
-      run: |
-        echo "storeFile = $STOREFILE" >> ./app/signing/keystore.properties
-        echo "keyAlias = $KEYALIAS" >> ./app/signing/keystore.properties
-        echo "keyPassword = $KEYPASSWORD" >> ./app/signing/keystore.properties
-        echo "storePassword = $STOREPASSWORD" >> ./app/signing/keystore.properties
       env:
         STOREFILE: ${{ secrets.STOREFILE }}
         KEYALIAS: ${{ secrets.KEYALIAS }}
         KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
         STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
+      run: |
+        import os
+        for q in (os.getenv("STOREFILE")):
+          println(q)
+        echo "storeFile = $STOREFILE" >> ./app/signing/keystore.properties
+        echo "keyAlias = $KEYALIAS" >> ./app/signing/keystore.properties
+        echo "keyPassword = $KEYPASSWORD" >> ./app/signing/keystore.properties
+        echo "storePassword = $STOREPASSWORD" >> ./app/signing/keystore.properties
+      shell: python
+
     - name: Build with Gradle
       run: ./gradlew assembleDebug
 
