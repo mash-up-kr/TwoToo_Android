@@ -38,12 +38,13 @@ jobs:
     - name: Generate Keystore file from GitHub Secrets
       run: |
         mkdir ./app/signing
-        echo "${{ secrets.KEYSTORE }}" | base64 -d > ./app/signing/keystore.jks
+        echo "$KEYSTORE" | base64 -d -i > ./app/signing/keystore.jks
         echo "storeFile = $STOREFILE" >> ./app/signing/keystore.properties
         echo "keyAlias = $KEYALIAS" >> ./app/signing/keystore.properties
         echo "keyPassword = $KEYPASSWORD" >> ./app/signing/keystore.properties
         echo "storePassword = $STOREPASSWORD" >> ./app/signing/keystore.properties
       env:
+        KEYSTORE: ${{ secrets.KEYSTORE }}
         STOREFILE: ${{ secrets.STOREFILE }}
         KEYALIAS: ${{ secrets.KEYALIAS }}
         KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
