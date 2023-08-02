@@ -55,5 +55,5 @@ jobs:
         KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
         STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
     - name: Build with Gradle
-      run: ./gradlew assembleDebug
+      run: ./gradlew build
 
