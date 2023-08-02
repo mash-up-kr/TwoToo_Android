@@ -44,10 +44,10 @@ jobs:
         echo "keyPassword = $KEYPASSWORD" >> ./app/signing/keystore.properties
         echo "storePassword = $STOREPASSWORD" >> ./app/signing/keystore.properties
       env :
-        STOREFILE: ${{ secrets.STOREFILE }}
-        KEYALIAS: ${{ secrets.KEYALIAS }}
-        KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
-        STOREPASSWORD: ${{ secrets.STOREPASSWORD }}
+        STOREFILE: ${{secrets.STOREFILE}}
+        KEYALIAS: ${{secrets.KEYALIAS}}
+        KEYPASSWORD: ${{secrets.KEYPASSWORD}}
+        STOREPASSWORD: ${{secrets.STOREPASSWORD}}
     - name: Build with Gradle
       run: ./gradlew build
 
