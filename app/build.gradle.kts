@@ -1,4 +1,6 @@
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.io.FileInputStream
+import java.util.Properties
 
 @Suppress("DSL_SCOPE_VIOLATION")
 plugins {
@@ -7,6 +9,11 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.google.services)
 }
+
+// Keystore Security
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.mashup.twotoo"
@@ -28,12 +35,10 @@ android {
 
     signingConfigs {
         create("release") {
-            storeFile = runCatching {
-                file(gradleLocalProperties(rootDir).getProperty("storeFile") ?: "storefile")
-            }.getOrNull()
-            storePassword = gradleLocalProperties(rootDir).getProperty("storePassword") ?: "storePassword"
-            keyAlias = gradleLocalProperties(rootDir).getProperty("keyAlias") ?: "keyAlias"
-            keyPassword = gradleLocalProperties(rootDir).getProperty("keyPassword") ?: "keyPassword"
+            keyAlias = keystoreProperties.getProperty("keyAlias")
+            keyPassword = keystoreProperties.getProperty("keyPassword")
+            storeFile = file(keystoreProperties.getProperty("storeFile"))
+            storePassword = keystoreProperties.getProperty("storePassword")
         }
     }
 
