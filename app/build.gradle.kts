@@ -40,6 +40,12 @@ android {
             keyAlias = keystoreProperties.getProperty("keyAlias")
             keyPassword = keystoreProperties.getProperty("keyPassword")
             storePassword = keystoreProperties.getProperty("storePassword")
+
+            println("storeFile $storeFile")
+            println("keyAlias $keyAlias")
+            println("keyPassWord $keyPassword")
+            println("storePassword $storePassword")
+            println("path ${keystoreProperties.getProperty("storeFile")}")
         }
     }
 
