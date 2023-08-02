@@ -26,6 +26,15 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            storeFile = file(gradleLocalProperties(rootDir).getProperty("storeFile") ?: "")
+            storePassword = gradleLocalProperties(rootDir).getProperty("storePassword") ?: ""
+            keyAlias = gradleLocalProperties(rootDir).getProperty("keyAlias") ?: ""
+            keyPassword = gradleLocalProperties(rootDir).getProperty("keyPassword") ?: ""
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,6 +42,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
