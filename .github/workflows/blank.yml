@@ -35,16 +35,21 @@ jobs:
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
 
+    - name: Create Directory
+      run: mkdir ./app/signing
+
+    - name: Create KeyStore
+      run: echo "$KEYSTORE" | base64 -d -i > ./app/signing/keystore.jks
+      env:
+        KEYSTORE: ${{ secrets.KEYSTORE }}
+
     - name: Generate Keystore file from GitHub Secrets
       run: |
-        mkdir ./app/signing
-        echo "$KEYSTORE" | base64 -d -i > ./app/signing/keystore.jks
         echo "storeFile = $STOREFILE" >> ./app/signing/keystore.properties
         echo "keyAlias = $KEYALIAS" >> ./app/signing/keystore.properties
         echo "keyPassword = $KEYPASSWORD" >> ./app/signing/keystore.properties
         echo "storePassword = $STOREPASSWORD" >> ./app/signing/keystore.properties
       env:
-        KEYSTORE: ${{ secrets.KEYSTORE }}
         STOREFILE: ${{ secrets.STOREFILE }}
         KEYALIAS: ${{ secrets.KEYALIAS }}
         KEYPASSWORD: ${{ secrets.KEYPASSWORD }}
