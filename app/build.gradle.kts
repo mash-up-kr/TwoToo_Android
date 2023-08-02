@@ -10,10 +10,6 @@ plugins {
     alias(libs.plugins.google.services)
 }
 
-// Keystore Security
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 
 android {
     namespace = "com.mashup.twotoo"
@@ -35,6 +31,10 @@ android {
 
     signingConfigs {
         create("release") {
+            // Keystore Security
+            val keystorePropertiesFile = rootProject.file("keystore.properties")
+            val keystoreProperties = Properties()
+            keystoreProperties.load(FileInputStream(keystorePropertiesFile))
             keyAlias = keystoreProperties.getProperty("keyAlias")
             keyPassword = keystoreProperties.getProperty("keyPassword")
             storeFile = file(keystoreProperties.getProperty("storeFile"))

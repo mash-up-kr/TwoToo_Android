@@ -2,6 +2,8 @@
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,kotlin
 
 keystore.properties
+keystore_properties_base64.txt
+keystore_base64.txt
 output-metadata.json
 compose-reports
 compose-metrics
