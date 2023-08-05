@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -58,12 +59,13 @@ class TwoTooAppState(
 
     @Composable
     fun isBottomBarVisible(): Boolean {
-        return when (currentDestination?.route) {
-            NavigationRoute.HomeGraph.HomeScreen.route,
-            NavigationRoute.GardenGraph.GardenScreen.route,
-            NavigationRoute.UserGraph.UserScreen.route,
+        Log.i("hyejin", "currentDestination: ${currentDestination?.route}  ${currentDestination?.parent?.route}" )
+
+        return when (currentDestination?.parent?.route) {
+            NavigationRoute.HomeGraph.route,
+            NavigationRoute.GardenGraph.route,
+            NavigationRoute.UserGraph.route,
             -> true
-            NavigationRoute.HistoryGraph.HistoryScreen.route -> false
             else -> {
                 false
             }

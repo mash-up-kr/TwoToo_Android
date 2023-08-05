@@ -12,9 +12,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLifecycleOwner
@@ -35,6 +33,7 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun GardenRoute(
+    isComplete: Boolean = false,
     gardenViewModel: GardenViewModel,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit = {},
@@ -49,20 +48,20 @@ fun GardenRoute(
     val state by gardenViewModel.collectAsState()
 
     GardenScreen(
+        isComplete = isComplete,
         modifier = modifier.fillMaxSize().testTag(stringResource(id = R.string.garden)),
         navigateToGarden = navigateToGarden,
         navigateToGuide = navigateToGuide,
         state = state,
-        stopAnimation = gardenViewModel::stopAnimation,
     )
 }
 
 @Composable
 fun GardenScreen(
+    isComplete: Boolean = false,
     state: GardenState,
     modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit,
-    stopAnimation: () -> Unit,
     navigateToGuide: () -> Unit,
 ) {
     // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
@@ -99,11 +98,10 @@ fun GardenScreen(
                     verticalArrangement = Arrangement.spacedBy(13.dp),
                 ) {
                     items(items = state.challengeCardInfos, key = { it.challengeNo }) { challengeInfo ->
-                        val isStartAnimation =
-                            state.startAnimation.first && state.startAnimation.second == challengeInfo.challengeNo
-                        LaunchedEffect(true) {
+                        var isStartAnimation by remember { mutableStateOf(isComplete && state.challengeCardInfos.first() == challengeInfo) }
+                        LaunchedEffect(isStartAnimation) {
                             delay(2000)
-                            stopAnimation()
+                            isStartAnimation = false
                         }
                         ChallengeCard(
                             isStartAnimation = isStartAnimation,
@@ -128,9 +126,9 @@ fun GardenScreen(
 private fun PreviewGardenScreen() {
     TwoTooTheme {
         GardenScreen(
+            isComplete = false,
             GardenState.default,
             navigateToGarden = {},
-            stopAnimation = {},
             navigateToGuide = {},
         )
     }

@@ -48,7 +48,7 @@ fun NavGraphBuilder.homeGraph(
                     navController.navigateToCreateChallenge(homeState, challengeInfoJson)
                 },
                 navigateToGarden = {
-                    navController.navigateToGarden()
+                    navController.navigateToGarden(it)
                 },
             )
         }

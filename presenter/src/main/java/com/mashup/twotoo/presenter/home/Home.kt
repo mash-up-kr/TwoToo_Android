@@ -51,7 +51,7 @@ fun HomeRoute(
     navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit = { _, _ -> },
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     navigateToGuide: () -> Unit = {},
-    navigateToGarden: () -> Unit = {},
+    navigateToGarden: (Boolean) -> Unit = {},
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
