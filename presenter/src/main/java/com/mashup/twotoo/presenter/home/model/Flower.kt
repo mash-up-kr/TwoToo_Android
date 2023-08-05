@@ -79,8 +79,8 @@ data class Flower(
             First -> Pair((76 * screenWidth / figmaScreenWidth).dp, (69 * screenHeight / figmaScreenHeight).dp)
             Second -> Pair((77 * screenWidth / figmaScreenWidth).dp, (117 * screenHeight / figmaScreenHeight).dp)
             Third -> Pair((102 * screenWidth / figmaScreenWidth).dp, (183 * screenHeight / figmaScreenHeight).dp)
-            Fourth -> Pair((127 * screenWidth / figmaScreenWidth).dp, (211 * screenHeight / figmaScreenHeight).dp)
-            Fifth -> Pair((127 * screenWidth / figmaScreenWidth).dp, (211 * screenHeight / figmaScreenHeight).dp)
+            Fourth -> Pair((113 * screenWidth / figmaScreenWidth).dp, (188 * screenHeight / figmaScreenHeight).dp)
+            Fifth -> Pair((113 * screenWidth / figmaScreenWidth).dp, (188 * screenHeight / figmaScreenHeight).dp)
         }
     }
 

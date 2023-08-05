@@ -61,7 +61,7 @@ fun HomeOngoingChallenge(
         val homebackgroundMarginGuide = createGuidelineFromBottom(0.225f)
         HomeGoalField(
             modifier = Modifier.constrainAs(homeGoalField) {
-                top.linkTo(parent.top, margin = 11.dp)
+                top.linkTo(parent.top)
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
