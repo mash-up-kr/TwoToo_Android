@@ -21,7 +21,7 @@ enum class TopLevelDestination(
         icon = DrawableResourceIcon(TwoTooIcon.HomeIcon),
         iconTextId = R.string.home,
         buttonTitleTextId = R.string.home_nav_button,
-        route = NavigationRoute.HomeGraph.HomeScreen.route,
+        route = NavigationRoute.HomeGraph.route, // Todo 이거 수정함
     ),
     User(
         icon = DrawableResourceIcon(TwoTooIcon.UserIcon),

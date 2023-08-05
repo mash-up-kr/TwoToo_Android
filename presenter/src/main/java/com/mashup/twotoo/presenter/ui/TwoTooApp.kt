@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.twotoo
 
+import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
@@ -118,6 +119,7 @@ fun TwoTooBottomBar(
 }
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any { navDestination ->
+        Log.i("hyejin", "destination = $destination") // Todo 이거 의심됨
         navDestination.route?.let { TopLevelDestination.findBy(it) == destination } ?: false
     } ?: false
 
