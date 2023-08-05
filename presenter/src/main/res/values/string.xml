@@ -209,6 +209,8 @@
     <string name="toast_message_deeplink_error">잘못된 링크입니다</string>
     <string name="toast_message_shot_fail">찌르기 전송에 실패했습니다</string>
     <string name="toast_message_shot_invalid">오늘의 콕 찌르기 다 소진되었어요 ㅠㅜ</string>
+    <string name="toast_message_permission_granted">권한이 허용됐습니다</string>
+    <string name="toast_message_permission_denied">권한이 거부됐습니다</string>
 
     <!--guide-->
     <string name="guideTitle">"투투 설명서 "</string>
