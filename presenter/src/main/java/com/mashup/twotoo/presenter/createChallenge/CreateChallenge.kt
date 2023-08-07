@@ -1,98 +1,126 @@
 package com.mashup.twotoo.presenter.createChallenge
 
 import android.content.Context
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.SnackbarHostState
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.util.DateFormatter
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun CreateChallengeRoute(
-    homeState: String = BeforeChallengeState.EMPTY.name,
-    challengeInfo: HomeChallengeInfoModel,
     createChallengeViewModel: CreateChallengeViewModel,
     onBackToHome: () -> Unit,
     onFinishChallengeInfo: () -> Unit,
 ) {
     val state by createChallengeViewModel.collectAsState()
-
-    LaunchedEffect(Unit) {
-        if (!state.isBack) {
-            createChallengeViewModel.initChallengeStep(homeState, challengeInfo)
+    val snackbarHostState = remember { SnackbarHostState() }
+    createChallengeViewModel.collectSideEffect { sideEffect ->
+        when (sideEffect) {
+            is CreateChallengeSideEffect.NavigateToSuccessCreate -> {
+            }
+            is CreateChallengeSideEffect.NavigateToHome -> {
+                onBackToHome()
+            }
+            is CreateChallengeSideEffect.ToastMessage -> {
+                snackbarHostState.showSnackbar(message = sideEffect.message)
+            }
+            is CreateChallengeSideEffect.DismissDialog -> {
+                createChallengeViewModel.setDialogVisibility(false)
+            }
         }
     }
 
-    CreateChallenge(
-        homeState = homeState,
-        state = state,
-        currentStep = state.currentStep,
-        updateOneStep = { challengeInfoModel ->
-            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, state.currentStep)
-            createChallengeViewModel.updateCurrentStep(1)
-        },
-        updateTwoStep = { challengeInfoModel ->
-            createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel, state.currentStep)
-            createChallengeViewModel.updateCurrentStep(1)
-        },
-        onClickTheeStep = {
-            onFinishChallengeInfo()
-        },
-        onClickBackButton = {
-            if (homeState == BeforeChallengeState.EMPTY.name || homeState == BeforeChallengeState.TERMINATION.name) {
-                if (state.currentStep > 1) {
-                    createChallengeViewModel.updateCurrentStep(-1)
+    Box(modifier = Modifier.fillMaxSize()) {
+        CreateChallenge(
+            state = state,
+            updateOneStep = { challengeInfoModel ->
+                createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel)
+                createChallengeViewModel.updateCurrentStep(1)
+            },
+            updateTwoStep = { challengeInfoModel ->
+                createChallengeViewModel.setCreateChallengeInfo(challengeInfoModel)
+                createChallengeViewModel.updateCurrentStep(1)
+            },
+            onClickTheeStep = {
+                onFinishChallengeInfo()
+            },
+            onClickBackButton = {
+                if (state.homeState == BeforeChallengeState.EMPTY.name || state.homeState == BeforeChallengeState.TERMINATION.name) {
+                    if (state.currentStep > 1) {
+                        createChallengeViewModel.updateCurrentStep(-1)
+                    } else {
+                        onBackToHome()
+                    }
                 } else {
                     onBackToHome()
                 }
-            } else {
-                onBackToHome()
-            }
-        },
-    )
+            },
+            onClickDialogPositiveButton = createChallengeViewModel::deleteChallenge,
+            setDialogVisibility = createChallengeViewModel::setDialogVisibility,
+        )
+        SnackBarHost(
+            modifier = Modifier.align(Alignment.BottomCenter),
+            snackState = snackbarHostState,
+        )
+    }
 }
 
 @Composable
 fun CreateChallenge(
-    homeState: String = BeforeChallengeState.EMPTY.name,
     state: ChallengeInfoModel,
-    currentStep: Int,
     updateOneStep: (ChallengeInfoModel) -> Unit,
     updateTwoStep: (ChallengeInfoModel) -> Unit,
     onClickTheeStep: () -> Unit,
     onClickBackButton: () -> Unit,
-) {
+    onClickDialogPositiveButton: (Int) -> Unit,
+    setDialogVisibility: (Boolean) -> Unit,
+) = with(state) {
     val context = LocalContext.current
-    val isNextButtonVisible = homeState == BeforeChallengeState.RESPONSE.name ||
-        homeState == BeforeChallengeState.EMPTY.name ||
-        homeState == BeforeChallengeState.TERMINATION.name
+    val isNextButtonVisible =
+        homeState == BeforeChallengeState.RESPONSE.name ||
+            homeState == BeforeChallengeState.EMPTY.name ||
+            homeState == BeforeChallengeState.TERMINATION.name
 
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
         Spacer(modifier = Modifier.height(5.dp))
         CreateChallengeToolbar(
+            challengeNo = challengeNo,
             homeState = homeState,
+            deleteDialogVisibility = dialogVisibility,
             onClickBackButton = onClickBackButton,
+            onClickDialogPositiveButton = onClickDialogPositiveButton,
+            setDialogVisibility = setDialogVisibility,
         )
         Column(
             modifier = Modifier
@@ -105,7 +133,7 @@ fun CreateChallenge(
                     textAlign = TextAlign.Left,
                     style = TwoTooTheme.typography.headLineNormal28,
                     color = TwoTooTheme.color.mainBrown,
-                    modifier = Modifier.padding(bottom = 8.dp)
+                    modifier = Modifier.padding(bottom = 8.dp),
                 )
             }
             if (homeState == BeforeChallengeState.TERMINATION.name || homeState == BeforeChallengeState.EMPTY.name ||
@@ -144,7 +172,7 @@ fun CreateChallenge(
                     challengeDesc = state.challengeInfo,
                     challengeDate = state.period,
                     isNextButtonVisible = isNextButtonVisible,
-                    onClickNext = { onClickTheeStep() },
+                    onClickNext = onClickTheeStep,
                 )
             }
         }
@@ -152,12 +180,31 @@ fun CreateChallenge(
 }
 
 @Composable
-fun CreateChallengeToolbar(homeState: String, onClickBackButton: () -> Unit) {
+fun CreateChallengeToolbar(
+    deleteDialogVisibility: Boolean,
+    challengeNo: Int,
+    homeState: String,
+    onClickBackButton: () -> Unit,
+    onClickDialogPositiveButton: (Int) -> Unit,
+    setDialogVisibility: (Boolean) -> Unit,
+) {
     val toolbarTitle = when (homeState) {
         BeforeChallengeState.WAIT.name, BeforeChallengeState.REQUEST.name -> stringResource(id = R.string.challenge_info)
         BeforeChallengeState.RESPONSE.name, BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> ""
         else -> { "" }
     }
+
+    val moreIconButton: @Composable (Int) -> Unit =
+        {
+            IconButton(onClick = {
+                setDialogVisibility(true)
+            }) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_more),
+                    contentDescription = null,
+                )
+            }
+        }
 
     TwoTooBackToolbar(
         title = toolbarTitle,
@@ -165,7 +212,25 @@ fun CreateChallengeToolbar(homeState: String, onClickBackButton: () -> Unit) {
         onClickBackIcon = {
             onClickBackButton()
         },
+        actionIconButton = {
+            if (homeState == BeforeChallengeState.WAIT.name) {
+                moreIconButton(challengeNo)
+            }
+        },
     )
+
+    if (deleteDialogVisibility) {
+        TwoTooDialog(
+            content = DialogContent.createHistoryLeaveChallengeDialogContent(
+                negativeAction = {
+                    setDialogVisibility(false)
+                },
+                positiveAction = {
+                    onClickDialogPositiveButton(challengeNo)
+                },
+            ),
+        )
+    }
 }
 
 fun getCurrentStepString(name: String, currentStep: Int, context: Context): Int {
