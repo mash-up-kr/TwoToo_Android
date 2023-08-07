@@ -41,7 +41,7 @@ fun CreateChallengeCard(
     challengeDate: String,
     challengeDesc: String,
     isNextButtonVisible: Boolean = true,
-    onClickNext: () -> Unit
+    onClickNext: () -> Unit,
 ) {
     var width by remember { mutableIntStateOf(0) }
     Column(
@@ -123,7 +123,7 @@ fun ChallengeCardInfoTop(
 
 @Composable
 fun ChallengeCardInfoBottom(
-    modifier: Modifier
+    modifier: Modifier,
 ) {
     Text(
         modifier = modifier.then(
