@@ -7,6 +7,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
+import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.createChallenge.navigation.navigateToCreateChallenge
@@ -48,7 +49,14 @@ fun NavGraphBuilder.homeGraph(
                     navController.navigateToCreateChallenge(homeState, challengeInfoJson)
                 },
                 navigateToGarden = {
-                    navController.navigateToGarden(it)
+                    val topLevelOptions = navOptions {
+                        popUpTo(navController.graph.id) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                    navController.navigateToGarden(it, navOptions = topLevelOptions)
                 },
             )
         }
