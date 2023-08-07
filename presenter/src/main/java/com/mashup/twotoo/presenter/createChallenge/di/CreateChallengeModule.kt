@@ -5,6 +5,7 @@ import dagger.Module
 import dagger.Provides
 import usecase.challenge.ApproveChallengeUseCase
 import usecase.challenge.CreateChallengeUseCase
+import usecase.challenge.QuiteChallengeUseCase
 import javax.inject.Scope
 
 @Module
@@ -14,11 +15,13 @@ class CreateChallengeModule {
     @CreateChallengeScope
     fun provideViewModel(
         approveChallengeUseCase: ApproveChallengeUseCase,
-        createChallengeUseCase: CreateChallengeUseCase
+        createChallengeUseCase: CreateChallengeUseCase,
+        quiteChallengeUseCase: QuiteChallengeUseCase,
     ): CreateChallengeViewModel {
         return CreateChallengeViewModel(
             approveChallengeUseCase,
             createChallengeUseCase,
+            quiteChallengeUseCase,
         )
     }
 }
