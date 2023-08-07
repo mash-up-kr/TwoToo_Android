@@ -46,7 +46,7 @@ fun SelectFlowerCardRoute(
         onStartButtonClick = { flowerName ->
             when (homeState) {
                 BeforeChallengeState.EMPTY.name, BeforeChallengeState.TERMINATION.name -> {
-                    createChallengeViewModel.setCreateChallengeInfo(ChallengeInfoModel(selectFlowerName = flowerName), 4)
+                    createChallengeViewModel.setCreateChallengeInfo(ChallengeInfoModel(selectFlowerName = flowerName))
                     createChallengeViewModel.createChallenge()
                 }
                 BeforeChallengeState.RESPONSE.name -> {
@@ -75,7 +75,7 @@ fun SelectFlowerCardRoute(
 @Composable
 fun SelectFlowerCard(
     onStartButtonClick: (String) -> Unit = {},
-    onClickBackButton: () -> Unit = {}
+    onClickBackButton: () -> Unit = {},
 ) {
     var isVisibleStartButton by remember { mutableStateOf(false) }
     var flowerName by remember { mutableStateOf("") }
