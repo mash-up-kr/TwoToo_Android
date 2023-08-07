@@ -33,11 +33,11 @@ import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun GardenRoute(
-    isComplete: Boolean = false,
     gardenViewModel: GardenViewModel,
-    modifier: Modifier = Modifier,
-    navigateToGarden: (Int) -> Unit = {},
     navigateToGuide: () -> Unit,
+    modifier: Modifier = Modifier,
+    isComplete: Boolean = false,
+    navigateToGarden: (Int) -> Unit = {},
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(Unit) {
@@ -48,21 +48,21 @@ fun GardenRoute(
     val state by gardenViewModel.collectAsState()
 
     GardenScreen(
-        isComplete = isComplete,
-        modifier = modifier.fillMaxSize().testTag(stringResource(id = R.string.garden)),
+        state = state,
         navigateToGarden = navigateToGarden,
         navigateToGuide = navigateToGuide,
-        state = state,
+        modifier = modifier.fillMaxSize().testTag(stringResource(id = R.string.garden)),
+        isComplete = isComplete,
     )
 }
 
 @Composable
 fun GardenScreen(
-    isComplete: Boolean = false,
     state: GardenState,
-    modifier: Modifier = Modifier,
     navigateToGarden: (Int) -> Unit,
     navigateToGuide: () -> Unit,
+    modifier: Modifier = Modifier,
+    isComplete: Boolean = false,
 ) {
     // 애니메이션 상태 변수 (3초 후에 애니메이션 종료)
 
@@ -127,7 +127,7 @@ private fun PreviewGardenScreen() {
     TwoTooTheme {
         GardenScreen(
             isComplete = false,
-            GardenState.default,
+            state = GardenState.default,
             navigateToGarden = {},
             navigateToGuide = {},
         )

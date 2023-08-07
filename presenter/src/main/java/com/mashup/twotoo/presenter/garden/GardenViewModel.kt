@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.garden
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.garden.mapper.toUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -30,7 +31,7 @@ class GardenViewModel(
             }
             reduce {
                 state.copy(
-                    challengeCardInfos = challengeCardInfos,
+                    challengeCardInfos = challengeCardInfos.toImmutableList(),
                     loadingIndicatorState = false,
                     hasNotRealChallenge = challengeCardInfos.isEmpty(),
                 )

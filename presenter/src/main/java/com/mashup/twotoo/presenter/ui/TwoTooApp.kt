@@ -31,6 +31,7 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TwoTooNavHost
 import com.mashup.twotoo.presenter.ui.TwoTooAppState
 import com.mashup.twotoo.presenter.ui.rememberTwoTooAppState
+import kotlinx.collections.immutable.ImmutableList
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -60,10 +61,6 @@ fun TwoTooApp(
                 .fillMaxSize()
                 .padding(paddingValues),
         ) {
-            val destination = appState.currentTopLevelDestination
-            if (destination != null) {
-                // topbar 공통된 tapbar 있는거 같아서 넣으면 좋을 듯
-            }
             TwoTooNavHost(
                 appState = appState,
             )
@@ -73,7 +70,7 @@ fun TwoTooApp(
 
 @Composable
 fun TwoTooBottomBar(
-    destinations: List<TopLevelDestination>,
+    destinations: ImmutableList<TopLevelDestination>,
     onNavigateToDestination: (TopLevelDestination) -> Unit,
     currentDestination: NavDestination?,
     containerColor: Color,

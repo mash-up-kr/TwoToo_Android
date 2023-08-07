@@ -17,6 +17,8 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun rememberTwoTooAppState(
@@ -37,10 +39,8 @@ class TwoTooAppState(
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
-    val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = currentDestination?.route?.let { TopLevelDestination.findBy(it) }
 
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+    val topLevelDestinations: ImmutableList<TopLevelDestination> = TopLevelDestination.values().asList().toImmutableList()
 
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
