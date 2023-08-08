@@ -11,6 +11,7 @@ interface UserDataStoreRepository {
     suspend fun removeVisibilityCompleteDialog()
     suspend fun setUserInfo(userAuthResponseDomainModel: UserAuthResponseDomainModel)
     suspend fun getUserInfo(): UserAuthResponseDomainModel?
+    suspend fun removeUserInfo()
     suspend fun getIsSendInvitation(): Boolean
     suspend fun setIsSendInvitation(isSend: Boolean)
 }
