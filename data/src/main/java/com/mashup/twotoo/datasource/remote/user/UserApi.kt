@@ -6,6 +6,7 @@ import com.mashup.twotoo.datasource.remote.user.response.PartnerInfoResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserAuthResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserInfoResponse
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
@@ -26,4 +27,10 @@ interface UserApi {
 
     @GET("/user/me")
     suspend fun getUserInfo(): UserInfoResponse
+
+    @PATCH("/user/delPartner")
+    suspend fun deletePartner(): Boolean
+
+    @DELETE("/user/signOut")
+    suspend fun signOut(): Boolean
 }

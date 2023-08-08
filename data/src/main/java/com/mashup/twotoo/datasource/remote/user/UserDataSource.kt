@@ -29,4 +29,12 @@ class UserDataSource @Inject constructor(
     suspend fun getUserInfo(): UserInfoResponse {
         return userApi.getUserInfo()
     }
+
+    suspend fun deletePartner(): Boolean {
+        return userApi.deletePartner()
+    }
+
+    suspend fun signOut(): Boolean {
+        return userApi.signOut()
+    }
 }
