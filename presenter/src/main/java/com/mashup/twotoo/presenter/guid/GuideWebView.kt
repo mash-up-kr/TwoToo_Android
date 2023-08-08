@@ -6,6 +6,7 @@ import android.webkit.WebViewClient
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -35,7 +36,7 @@ fun GuideRoute(
             color = TwoTooTheme.color.mainWhite,
         )
         GuideWebView(
-            modifier = modifier.fillMaxSize(),
+            modifier = modifier.fillMaxSize().navigationBarsPadding(),
             url = url,
         )
     }
