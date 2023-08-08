@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.garden
 import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -31,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound6
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound10
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 import com.mashup.twotoo.presenter.garden.model.FlowerHead
@@ -65,11 +64,10 @@ fun ChallengeCard(
     Box(
         modifier = Modifier
             .graphicsLayer(translationY = offsetY.value)
-            .border(2.dp, borderColor, RoundedCornerShape(8.dp))
             .height(216.dp)
             .width(156.dp)
-            .clip(TwoTooRound6)
-            .background(TwoTooTheme.color.mainWhite)
+            .background(TwoTooTheme.color.mainWhite, TwoTooRound10)
+            .clip(TwoTooRound10)
             .clickable {
                 navigateToGarden(challengeCardInfoUiModel.challengeNo)
             },

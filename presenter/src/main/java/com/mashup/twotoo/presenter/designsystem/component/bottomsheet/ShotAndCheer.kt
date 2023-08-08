@@ -23,6 +23,7 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.DevicePreview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import tech.thdev.compose.extensions.keyboard.state.foundation.collectIsKeyboardAsState
@@ -59,7 +60,7 @@ fun SendMsgBottomSheetContent(
 
     LaunchedEffect(keyboardState) {
         if (!keyboardState && !isCreated) {
-            animateHeight.animateTo(screenHeight * 0.35f)
+            animateHeight.animateTo(screenHeight * 0.40f)
         } else {
             animateHeight.animateTo(screenHeight * 0.76f)
             isCreated = false
@@ -119,5 +120,13 @@ private fun PreviewShotList() {
         SendMsgBottomSheetContent(
             type = Shot(),
         )
+    }
+}
+
+@DevicePreview
+@Composable
+private fun PreviewCheer() {
+    TwoTooTheme {
+        SendMsgBottomSheetContent(type = Cheer())
     }
 }
