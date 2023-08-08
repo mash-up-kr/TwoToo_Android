@@ -116,7 +116,6 @@ fun TwoTooBottomBar(
 }
 private fun NavDestination?.isTopLevelDestinationInHierarchy(destination: TopLevelDestination) =
     this?.hierarchy?.any { navDestination ->
-        Log.i("hyejin", "destination = $destination") // Todo 이거 의심됨
         navDestination.route?.let { TopLevelDestination.findBy(it) == destination } ?: false
     } ?: false
 
