@@ -51,7 +51,7 @@ fun HomeRoute(
     navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit = { _, _ -> },
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     navigateToGuide: () -> Unit = {},
-    navigateToGarden: () -> Unit = {},
+    navigateToGarden: (Boolean) -> Unit = {},
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
@@ -154,9 +154,11 @@ fun HomeScreen(
                 }
             } else {
                 ConstraintLayout(
-                    modifier = modifier.padding(top = 11.dp).semantics {
-                        testTagsAsResourceId = true
-                    },
+                    modifier = modifier
+//                        .padding(top = 11.dp)
+                        .semantics {
+                            testTagsAsResourceId = true
+                        },
                 ) {
                     val (toolbar, background, content) = createRefs()
                     TwoTooImageView(

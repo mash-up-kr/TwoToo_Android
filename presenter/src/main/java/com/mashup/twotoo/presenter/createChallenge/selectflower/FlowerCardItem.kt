@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
@@ -105,11 +106,13 @@ fun FlowerCardItem(
                 text = stringResource(id = flowerCardModel.resourceName),
                 style = TwoTooTheme.typography.headLineNormal24,
                 color = TwoTooTheme.color.mainBrown,
+                textAlign = TextAlign.Center,
             )
             Text(
                 text = stringResource(flowerCardModel.desc),
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwoTooTheme.color.mainBrown,
+                textAlign = TextAlign.Center,
             )
         }
     }

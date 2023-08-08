@@ -1,7 +1,7 @@
 package com.mashup.twotoo.presenter.history.model
 
+import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.response.ChallengeResponseDomainModel
-import java.text.SimpleDateFormat
 import java.util.*
 
 data class ChallengeInfoUiModel(
@@ -29,12 +29,10 @@ data class ChallengeInfoUiModel(
             )
         }
 
-        // Todo D-day end시간 기준 확인하기
         fun toDday(endDate: String, isFinished: Boolean): Int = if (isFinished) {
             0
         } else {
-            val Dday = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(endDate).time - Date().time
-            (Dday / (1000 * 60 * 60 * 24)).toInt()
+            DateFormatter.calDdayFromEndDate(endDate).toInt()
         }
     }
 }

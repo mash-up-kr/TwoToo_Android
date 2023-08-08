@@ -10,6 +10,28 @@ import java.util.TimeZone
 
 object DateFormatter {
 
+    fun calDdayFromEndDate(endDate: String): Long {
+        val timeZone = TimeZone.getTimeZone("UTC")
+        val calendar = Calendar.getInstance(timeZone)
+        val simpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)
+        simpleDateFormat.timeZone = timeZone
+
+        val formatter = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US)
+        val endDate = formatter.parse(endDate)
+        Log.d(TAG, "calDdayFromEndDate: $endDate")
+        val currentDateString = simpleDateFormat.format(calendar.time)
+        val currentDate = formatter.parse(currentDateString)
+        Log.d(TAG, "calDdayFromEndDate: days$currentDate")
+        val diff: Long = endDate.time - currentDate.time
+        val seconds = diff / 1000
+        val minutes = seconds / 60
+        val hours = minutes / 60
+        val days = hours / 24
+
+        Log.d(TAG, "calDdayFromEndDate: days$days")
+        return days
+    }
+
     fun dateConvertToPlusNineTime(date: String, formatStr: String = "MM-dd"): String {
         val dateTime =
             SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.getDefault()).parse(date)

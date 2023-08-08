@@ -53,14 +53,9 @@ fun HistoryRoute(
     navigateToHistoryDetail: (Int) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-    Log.i(
-        "HistoryRoute",
-        "lifecylce = ${lifecycleOwner.lifecycle.currentState}, challengeNo = $challengeNo, homeGoalAchievePartnerAndMeUiModel=$homeGoalAchievePartnerAndMeUiModel",
-    )
 
     LaunchedEffect(Unit) {
         lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            Log.i("HistoryRoute", "repeatOnLifecycle state= start")
             historyViewModel.getChallengeByUser(challengeNo)
         }
     }
@@ -74,7 +69,6 @@ fun HistoryRoute(
         quiteChallenge = { historyViewModel.quiteChallenge(challengeNo) },
         onClickBottomSheetDataButton = { bottomSheetData ->
             val bt = (bottomSheetData as BottomSheetData.AuthenticateData)
-            Log.d("HistoryScreen", "text= ${bt.text} img= ${bt.image}")
             historyViewModel.onClickBottomSheetDataButton(bottomSheetData)
         },
         state = state,

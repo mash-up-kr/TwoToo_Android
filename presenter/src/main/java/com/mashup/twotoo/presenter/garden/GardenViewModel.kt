@@ -3,7 +3,7 @@ package com.mashup.twotoo.presenter.garden
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.garden.mapper.toUiModel
-import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
@@ -30,10 +30,8 @@ class GardenViewModel(
                 reversed()
             }
             reduce {
-                val startAnimation: Pair<Boolean, Int> = getStartAnimation(state.challengeCardInfos, challengeCardInfos)
                 state.copy(
-                    startAnimation = startAnimation,
-                    challengeCardInfos = challengeCardInfos,
+                    challengeCardInfos = challengeCardInfos.toImmutableList(),
                     loadingIndicatorState = false,
                     hasNotRealChallenge = challengeCardInfos.isEmpty(),
                 )
@@ -51,26 +49,6 @@ class GardenViewModel(
                 ),
             )
         }
-    }
-
-    fun stopAnimation() = intent {
-        reduce {
-            state.copy(
-                startAnimation = Pair(false, 0),
-            )
-        }
-    }
-
-    private fun getStartAnimation(
-        curChallengeCardInfos: List<ChallengeCardInfoUiModel>,
-        challengeCardInfos: List<ChallengeCardInfoUiModel>,
-    ): Pair<Boolean, Int> {
-        if (curChallengeCardInfos.isNotEmpty() && challengeCardInfos.isNotEmpty()) {
-            if (curChallengeCardInfos.first().challengeNo != challengeCardInfos.first().challengeNo) {
-                return (true to challengeCardInfos.first().challengeNo)
-            }
-        }
-        return (false to 0)
     }
 
     companion object {

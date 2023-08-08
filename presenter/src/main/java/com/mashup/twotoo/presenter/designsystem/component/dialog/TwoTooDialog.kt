@@ -91,7 +91,7 @@ fun TwoTooDialog(
 private fun TwoTooDialogContent(
     content: DialogContent,
 ) {
-    content.buttons.forEach { btn ->
+    content.buttons.forEachIndexed { index, btn ->
         TextButton(
             onClick = { btn.action() },
             contentPadding = PaddingValues(12.dp),
@@ -99,10 +99,18 @@ private fun TwoTooDialogContent(
             Text(
                 text = stringResource(id = btn.text),
                 style = TwoTooTheme.typography.headLineNormal20,
-                color = btn.color,
+                color = if (isSizeTwoAndIndexZero(index, content.buttons.size)) {
+                    TwoTooTheme.color.gray500
+                } else {
+                    btn.color
+                },
             )
         }
     }
+}
+
+private fun isSizeTwoAndIndexZero(index: Int, size: Int): Boolean {
+    return size >= 2 && index == 0
 }
 
 @Preview(showBackground = true)

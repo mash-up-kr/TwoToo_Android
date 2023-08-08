@@ -14,7 +14,6 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
@@ -25,6 +24,7 @@ import com.canhub.cropper.CropImageOptions
 import com.holix.android.bottomsheetdialog.compose.BottomSheetBehaviorProperties
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialog
 import com.holix.android.bottomsheetdialog.compose.BottomSheetDialogProperties
+import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.Authenticate
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType.SendType.Cheer
@@ -111,10 +111,10 @@ fun TwoTooAuthBottomSheet(
         ActivityResultContracts.RequestPermission(),
     ) { success ->
         if (success) {
-            Toast.makeText(context, "Permission Granted", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.toast_message_permission_granted), Toast.LENGTH_SHORT).show()
             setImageDialogVisible = true
         } else {
-            Toast.makeText(context, "Permission Denied", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, context.getString(R.string.toast_message_permission_denied), Toast.LENGTH_SHORT).show()
         }
     }
 

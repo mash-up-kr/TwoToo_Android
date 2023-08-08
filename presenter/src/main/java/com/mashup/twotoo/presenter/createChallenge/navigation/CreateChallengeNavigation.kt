@@ -1,6 +1,8 @@
 package com.mashup.twotoo.presenter.createChallenge.navigation
 
 import android.annotation.SuppressLint
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
@@ -57,6 +59,11 @@ fun NavGraphBuilder.createChallengeGraph(
             val createChallengeViewModel = daggerViewModel {
                 challengeComponent.getViewModel()
             }
+
+            LaunchedEffect(homeState) {
+                createChallengeViewModel.setHomeState(homeState = homeState)
+                createChallengeViewModel.initChallengeStep(challengeInfo)
+            }
             val navOptions = navOptions {
                 popUpTo(navController.graph.startDestinationId) {
                     inclusive = true
@@ -64,8 +71,6 @@ fun NavGraphBuilder.createChallengeGraph(
             }
 
             CreateChallengeRoute(
-                homeState = homeState,
-                challengeInfo = challengeInfo,
                 createChallengeViewModel = createChallengeViewModel,
                 onBackToHome = { navController.popBackStack() },
                 onFinishChallengeInfo = {

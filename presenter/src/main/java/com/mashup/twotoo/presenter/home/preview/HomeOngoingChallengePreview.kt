@@ -14,6 +14,7 @@ import com.mashup.twotoo.presenter.home.preview.parameter.PreviewOngoingAuthHome
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.twotoo.TwoTooBottomBar
 import com.mashup.twotoo.presenter.util.DevicePreview
+import kotlinx.collections.immutable.toImmutableList
 
 @DevicePreview
 @Composable
@@ -25,7 +26,7 @@ fun PreviewHomeScreenAfterChallenge(
             modifier = Modifier.fillMaxSize(),
             bottomBar = {
                 TwoTooBottomBar(
-                    destinations = TopLevelDestination.values().asList(),
+                    destinations = TopLevelDestination.values().asList().toImmutableList(),
                     onNavigateToDestination = {},
                     currentDestination = null,
                     containerColor = TwoTooTheme.color.mainPink,

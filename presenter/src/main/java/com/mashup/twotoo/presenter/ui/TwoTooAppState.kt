@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.ui
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
@@ -16,6 +17,8 @@ import com.mashup.twotoo.presenter.navigation.TopLevelDestination
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Garden
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.Home
 import com.mashup.twotoo.presenter.navigation.TopLevelDestination.User
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 @Composable
 fun rememberTwoTooAppState(
@@ -36,10 +39,8 @@ class TwoTooAppState(
 ) {
     val currentDestination: NavDestination?
         @Composable get() = navController.currentBackStackEntryAsState().value?.destination
-    val currentTopLevelDestination: TopLevelDestination?
-        @Composable get() = currentDestination?.route?.let { TopLevelDestination.findBy(it) }
 
-    val topLevelDestinations: List<TopLevelDestination> = TopLevelDestination.values().asList()
+    val topLevelDestinations: ImmutableList<TopLevelDestination> = TopLevelDestination.values().asList().toImmutableList()
 
     fun navigationToTopLevelDestination(topLevelDestination: TopLevelDestination) {
         val topLevelOptions = navOptions {
@@ -58,12 +59,13 @@ class TwoTooAppState(
 
     @Composable
     fun isBottomBarVisible(): Boolean {
-        return when (currentDestination?.route) {
-            NavigationRoute.HomeGraph.HomeScreen.route,
-            NavigationRoute.GardenGraph.GardenScreen.route,
-            NavigationRoute.UserGraph.UserScreen.route,
+        Log.i("hyejin", "currentDestination: ${currentDestination?.route}  ${currentDestination?.parent?.route}")
+        // currentDestination 이 garden/screen/{isComplete}  이렇게 넘오게 되어서 parent 보도록 수정함, 그러면 home, garden, user 이렇게 확인함
+        return when (currentDestination?.parent?.route) {
+            NavigationRoute.HomeGraph.route,
+            NavigationRoute.GardenGraph.route,
+            NavigationRoute.UserGraph.route,
             -> true
-            NavigationRoute.HistoryGraph.HistoryScreen.route -> false
             else -> {
                 false
             }

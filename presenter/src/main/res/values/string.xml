@@ -221,11 +221,14 @@
     <string name="toast_message_deeplink_error">잘못된 링크입니다</string>
     <string name="toast_message_shot_fail">찌르기 전송에 실패했습니다</string>
     <string name="toast_message_shot_invalid">오늘의 콕 찌르기 다 소진되었어요 ㅠㅜ</string>
+    <string name="toast_message_permission_granted">권한이 허용됐습니다</string>
+    <string name="toast_message_permission_denied">권한이 거부됐습니다</string>
 
     <!--guide-->
     <string name="guideTitle">"투투 설명서 "</string>
     <string name="photoHint">사진 촬영하기 / 앨범에서 가져오기</string>
 
     <string name="invite_msg_title">[투투]에 초대합니다.\n👉 링크를 누르고 로그인하여 챌린지를 진행해보세요! %s</string>
+    <string name="notification_tag_id">Twotoo</string>
 
 </resources>
