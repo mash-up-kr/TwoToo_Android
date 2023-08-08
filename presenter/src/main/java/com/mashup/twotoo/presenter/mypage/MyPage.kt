@@ -15,6 +15,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,18 +30,22 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
 import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
+import com.mashup.twotoo.presenter.mypage.model.MyPageItem
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageRoute(
     userViewModel: UserViewModel,
-    navigateToGuide: (String) -> Unit,
+    navigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -48,21 +55,91 @@ fun MyPageRoute(
         }
     }
 
+    var isMyPageDialogVisible by remember { mutableStateOf(false) }
+    var myPageDialogContent by remember { mutableStateOf(DialogContent.default) }
+
     val state by userViewModel.collectAsState()
+    userViewModel.collectSideEffect { sideEffect ->
+        handleSideEffect(
+            sideEffect,
+            navigate = navigateToRoute,
+            action = { type ->
+                when (type) {
+                    MyPageDialogType.SignOutConfirm -> {
+                        myPageDialogContent = DialogContent.createSignOutConfirmDialogContent(
+                            negativeAction = { isMyPageDialogVisible = false },
+                            positiveAction = {
+                                isMyPageDialogVisible = false
+                                userViewModel.signOut()
+                            },
+                        )
+                        isMyPageDialogVisible = true
+                    }
+                    MyPageDialogType.SignOutSuccess -> {
+                        myPageDialogContent = DialogContent.createSignOutSuccessDialogContent(
+                            positiveAction = {
+                                userViewModel.navigateToRoute(MyPageItem.SignOut.route)
+                            },
+                        )
+                        isMyPageDialogVisible = true
+                    }
+                    MyPageDialogType.DeletePartnerConfirm -> {
+                        myPageDialogContent = DialogContent.createDeletePartnerConfirmDialogContent(
+                            negativeAction = {
+                                isMyPageDialogVisible = false
+                            },
+                            positiveAction = {
+                                isMyPageDialogVisible = false
+                                userViewModel.deletePartner()
+                            },
+                        )
+                        isMyPageDialogVisible = true
+                    }
+                }
+            },
+        )
+    }
 
     MyPageScreen(
         modifier = modifier.testTag(
             stringResource(id = R.string.mypage),
         ),
         state = state,
-        navigateToGuide = navigateToGuide,
+        isMyPageDialogVisible = isMyPageDialogVisible,
+        myPageDialogContent = myPageDialogContent,
+        navigateToGuide = { route ->
+            when (route) {
+                MyPageItem.DeletePartner.route -> { userViewModel.openDeletePartnerConfirmDialog() }
+                MyPageItem.SignOut.route -> { userViewModel.openSignOutConfirmDialog() }
+                else -> { userViewModel.navigateToRoute(route) }
+            }
+        },
     )
+}
+
+private fun handleSideEffect(sideEffect: UserSideEffect, navigate: (String) -> Unit, action: (MyPageDialogType) -> Unit) {
+    when (sideEffect) {
+        is UserSideEffect.NavigateToRoute -> {
+            navigate(sideEffect.route)
+        }
+        UserSideEffect.OpenSignOutConfirmDialog -> {
+            action(MyPageDialogType.SignOutConfirm)
+        }
+        UserSideEffect.OpenSignOutSuccessDialog -> {
+            action(MyPageDialogType.SignOutSuccess)
+        }
+        UserSideEffect.OpenDeletePartnerConfirmDialog -> {
+            action(MyPageDialogType.DeletePartnerConfirm)
+        }
+    }
 }
 
 @Composable
 fun MyPageScreen(
     modifier: Modifier = Modifier,
     state: UserState,
+    isMyPageDialogVisible: Boolean = false,
+    myPageDialogContent: DialogContent = DialogContent.default,
     navigateToGuide: (String) -> Unit,
 ) {
     Column(
@@ -116,6 +193,10 @@ fun MyPageScreen(
             modifier = Modifier.fillMaxWidth(),
             navigateToGuide = navigateToGuide,
         )
+    }
+
+    if (isMyPageDialogVisible) {
+        TwoTooDialog(content = myPageDialogContent)
     }
 }
 
