@@ -154,9 +154,11 @@ fun HomeScreen(
                 }
             } else {
                 ConstraintLayout(
-                    modifier = modifier.padding(top = 11.dp).semantics {
-                        testTagsAsResourceId = true
-                    },
+                    modifier = modifier
+//                        .padding(top = 11.dp)
+                        .semantics {
+                            testTagsAsResourceId = true
+                        },
                 ) {
                     val (toolbar, background, content) = createRefs()
                     TwoTooImageView(

@@ -54,7 +54,7 @@ data class CheerWithFlower(
 
         val meNotEmpty = CheerWithFlower(
             homeFlowerUiModel = HomeFlowerUiModel.me,
-            cheerText = "나의 응원",
+            cheerText = "나의응원임\n나의응원임",
         )
 
         val partnerNotYet = CheerWithFlower(
@@ -64,7 +64,7 @@ data class CheerWithFlower(
 
         val partnerNotEmpty = CheerWithFlower(
             homeFlowerUiModel = HomeFlowerUiModel.partner,
-            cheerText = "파트너의응원입니다.\n파트너의응원입니다",
+            cheerText = "파트너의응원입니다\n파트너의응원입니다",
 
         )
     }

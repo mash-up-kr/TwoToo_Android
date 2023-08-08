@@ -331,36 +331,6 @@ fun HomeFlowerMeAndPartner(
 }
 
 @Composable
-fun HomeCheerPartner(
-    cheerState: CheerState,
-    modifier: Modifier = Modifier,
-    cheerText: String = "",
-) {
-    when (cheerState) {
-        CheerState.CheerOnlyPartner, CheerState.CheerBoth -> {
-            HomeCheerSpeechBubble(
-                modifier = modifier.testTag(
-                    stringResource(R.string.homeCheerChallengePartnerBubble),
-                ),
-                userType = PARTNER,
-                cheerText = cheerText,
-            )
-        }
-        CheerState.DoNotCheerBoth, CheerState.CheerOnlyMe -> {
-            TwoTooImageView(
-                modifier = Modifier
-                    .testTag(
-                        stringResource(R.string.homeCheerChallengePartnerBeforeCheerBubble),
-                    )
-                    .size(44.dp),
-                model = R.drawable.img_cheer_partner_empty,
-                previewPlaceholder = R.drawable.img_cheer_partner_empty,
-            )
-        }
-    }
-}
-
-@Composable
 fun HomeCheerMe(
     cheerState: CheerState,
     modifier: Modifier = Modifier,
