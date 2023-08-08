@@ -135,7 +135,22 @@ class HistoryViewModel @Inject constructor(
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
             } else {
-                getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
+                // 현재 시간 전날 23:59:59로 변경해야한다.
+                val currentDate = Calendar.getInstance()
+                currentDate.add(Calendar.DAY_OF_MONTH, -1)
+                val year = currentDate.get(Calendar.YEAR)
+                val month = currentDate.get(Calendar.MONTH)
+                val day = currentDate.get(Calendar.DAY_OF_MONTH)
+                currentDate.set(
+                    year,
+                    month,
+                    day,
+                    23,
+                    59,
+                    59,
+                )
+
+                getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
             }
 
         val commitPairs =
