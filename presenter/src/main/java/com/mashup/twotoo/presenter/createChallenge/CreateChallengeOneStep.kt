@@ -14,6 +14,7 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.rememberDatePickerState
@@ -43,6 +44,8 @@ import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextFi
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.DateFormatter
 import kotlinx.coroutines.launch
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun CreateChallengeOneStep(
@@ -155,7 +158,18 @@ fun SettingChallengeDate(
 ) {
     var selectedStartDate by remember { mutableStateOf(initStartDate) }
     var endDate by remember { mutableStateOf(initEndDate) }
-    val datePickerState = rememberDatePickerState(initialSelectedDateMillis = DateFormatter.unixTimeToUtcTime(System.currentTimeMillis()))
+    val datePickerState = rememberDatePickerState(
+        initialSelectedDateMillis = DateFormatter.unixTimeToUtcTime(System.currentTimeMillis()),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val dateStr = DateFormatter.convertToLongDate(utcTimeMillis)
+                val inputFormat = SimpleDateFormat("yyyy/MM/dd", Locale.KOREA)
+                val selectedDate = inputFormat.parse(dateStr) ?: return false
+                val currentDate = inputFormat.parse(DateFormatter.getCurrentDate())
+                return selectedDate >= currentDate
+            }
+        },
+    )
     var isShowDatePickerVisible by rememberSaveable { mutableStateOf(false) }
 
     if (isShowDatePickerVisible) {
@@ -163,13 +177,15 @@ fun SettingChallengeDate(
             shape = RoundedCornerShape(12.dp),
             onDismissRequest = { },
             confirmButton = {
-                TextButton(onClick = {
-                    val date = datePickerState.selectedDateMillis
-                    selectedStartDate = DateFormatter.convertToLongDate(date)
-                    endDate = DateFormatter.getDaysAfter(selectedStartDate)
-                    isShowDatePickerVisible = !isShowDatePickerVisible
-                    period(selectedStartDate, endDate)
-                }) {
+                TextButton(
+                    onClick = {
+                        val date = datePickerState.selectedDateMillis
+                        selectedStartDate = DateFormatter.convertToLongDate(date)
+                        endDate = DateFormatter.getDaysAfter(selectedStartDate)
+                        isShowDatePickerVisible = !isShowDatePickerVisible
+                        period(selectedStartDate, endDate)
+                    },
+                ) {
                     Text(stringResource(id = R.string.button_confirm))
                 }
             },
