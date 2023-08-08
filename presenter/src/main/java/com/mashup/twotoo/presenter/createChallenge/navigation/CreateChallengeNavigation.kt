@@ -123,14 +123,26 @@ fun NavGraphBuilder.createChallengeGraph(
                             },
                         )
                     } else {
-                        navController.navigateToHome()
+                        navController.navigateToHome(
+                            navOptions = navOptions {
+                                popUpTo(navController.graph.id) {
+                                    inclusive = true
+                                }
+                            },
+                        )
                     }
                 },
             )
         }
         composable(route = NavigationRoute.CreateChallengeGraph.SuccessChallengeRequest.route) {
             SuccessChallengeRequest {
-                navController.navigateToHome()
+                navController.navigateToHome(
+                    navOptions = navOptions {
+                        popUpTo(navController.graph.id) {
+                            inclusive = true
+                        }
+                    },
+                )
             }
         }
     }
