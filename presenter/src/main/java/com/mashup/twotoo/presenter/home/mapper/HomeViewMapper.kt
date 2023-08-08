@@ -20,7 +20,6 @@ import com.mashup.twotoo.presenter.home.model.StateTitleUiModel
 import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.model.Stage
 import com.mashup.twotoo.presenter.model.toFlowerName
-import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.response.ChallengeResponseDomainModel
 import model.challenge.response.HomeViewResponseDomainModel
 import model.challenge.response.UserCommitResponseDomainModel
@@ -186,18 +185,7 @@ fun HomeViewResponseDomainModel.isCheerState(): Boolean {
 }
 
 fun HomeViewResponseDomainModel.isCompleteState(): Boolean {
-    return if (viewState == "COMPLETE") {
-        true
-    } else {
-        val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
-        val endDateString = this.onGoingChallenge!!.endDate
-        val calendar = Calendar.getInstance().time
-        val endDate = format.parse(endDateString)
-        val currentDateString = DateFormatter.getDateStrByDate(calendar)
-        val currentDate = DateFormatter.getDateTimeByStr(currentDateString)
-
-        return endDate == currentDate
-    }
+    return viewState == "COMPLETE"
 }
 
 fun HomeViewResponseDomainModel.getUserCommit(): Pair<UserCommitResponseDomainModel?, UserCommitResponseDomainModel?> {

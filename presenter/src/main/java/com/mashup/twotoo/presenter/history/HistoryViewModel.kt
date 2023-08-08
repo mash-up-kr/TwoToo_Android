@@ -135,7 +135,20 @@ class HistoryViewModel @Inject constructor(
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
             } else {
-                getDatesInRangeFromStartDateToEndDate(startDate, Date()) // currentDate
+                val currentDate = Calendar.getInstance()
+                val year = currentDate.get(Calendar.YEAR)
+                val month = currentDate.get(Calendar.MONTH)
+                val day = currentDate.get(Calendar.DAY_OF_MONTH)
+                currentDate.set(
+                    year,
+                    month,
+                    day,
+                    0,
+                    0,
+                    0,
+                )
+
+                getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
             }
 
         val commitPairs =
@@ -157,7 +170,7 @@ class HistoryViewModel @Inject constructor(
 
         val datesList = mutableListOf<String>()
 
-        while (calendar.time <= endDate) {
+        while (calendar.time < endDate) {
             datesList.add(DateFormatter.getDateStrMonthDay(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
