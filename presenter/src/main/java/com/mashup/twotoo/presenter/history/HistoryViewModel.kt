@@ -135,9 +135,7 @@ class HistoryViewModel @Inject constructor(
             if (isFinished) {
                 getDatesInRangeFromStartDateToEndDate(startDate, endDate)
             } else {
-                // 현재 시간 전날 23:59:59로 변경해야한다.
                 val currentDate = Calendar.getInstance()
-                currentDate.add(Calendar.DAY_OF_MONTH, -1)
                 val year = currentDate.get(Calendar.YEAR)
                 val month = currentDate.get(Calendar.MONTH)
                 val day = currentDate.get(Calendar.DAY_OF_MONTH)
@@ -145,9 +143,9 @@ class HistoryViewModel @Inject constructor(
                     year,
                     month,
                     day,
-                    23,
-                    59,
-                    59,
+                    0,
+                    0,
+                    0,
                 )
 
                 getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
@@ -172,7 +170,7 @@ class HistoryViewModel @Inject constructor(
 
         val datesList = mutableListOf<String>()
 
-        while (calendar.time <= endDate) {
+        while (calendar.time < endDate) {
             datesList.add(DateFormatter.getDateStrMonthDay(calendar.time))
             calendar.add(Calendar.DAY_OF_MONTH, 1)
         }
