@@ -68,6 +68,12 @@ class UserPreferenceDataSource @Inject constructor(
         return userInfo?.let { info -> jsonAdapter.fromJson(info) }
     }
 
+    suspend fun removeUserInfo() {
+        dataStore.edit {
+            it.remove(stringPreferencesKey(USER_INFO))
+        }
+    }
+
     private suspend fun <T> setDataStore(key: Preferences.Key<T>, value: T) {
         dataStore.edit { preferences ->
             preferences[key] = value

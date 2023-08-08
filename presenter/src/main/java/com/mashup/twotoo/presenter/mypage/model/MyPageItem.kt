@@ -11,6 +11,8 @@ enum class MyPageItem(@StringRes val value: Int, val route: String) {
     UsingGuide(value = R.string.using_guide, route = GuideUrlItem.UsingGuide.name),
     Inquiry(value = R.string.inquiry, route = GuideUrlItem.Inquiry.name),
     Makers(value = R.string.makers, route = GuideUrlItem.Makers.name),
+    DeletePartner(value = R.string.delete_matching, route = "deletePartner"),
+    SignOut(value = R.string.sign_out, route = "signOut")
 }
 
 enum class GuideUrlItem(val url: String, val title: String) {

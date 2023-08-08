@@ -18,6 +18,10 @@ class UserDataStoreRepositoryImpl @Inject constructor(
         return userPreferenceDataSource.getUserInfo()?.toDomainModel()
     }
 
+    override suspend fun removeUserInfo() {
+        return userPreferenceDataSource.removeUserInfo()
+    }
+
     override suspend fun getIsSendInvitation(): Boolean {
         return userPreferenceDataSource.getIsSendInvitation()
     }

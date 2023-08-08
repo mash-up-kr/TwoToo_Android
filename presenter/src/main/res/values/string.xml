@@ -176,6 +176,18 @@
     <string name="using_guide">이용 가이드</string>
     <string name="inquiry">투투에 문의하기</string>
     <string name="makers">만든이들</string>
+    <string name="delete_matching">짝꿍 이별</string>
+    <string name="sign_out">회원 탈퇴</string>
+    <string name="sign_out_dialog_title">회원 탈퇴하기</string>
+    <string name="sign_out_dialog_content">정말로 회원을 탈퇴 하실건가요?</string>
+    <string name="sign_out_dialog_positive">탈퇴하기</string>
+    <string name="sign_out_success_dialog">회원 탈퇴 완료</string>
+    <string name="sign_out_success_dialog_content">아쉽지만 다음에 또 만나요!</string>
+    <string name="delete_partner_dialog_title">짝꿍과 이별</string>
+    <string name="delete_partner_dialog_content">짝꿍과 이별 시 모든 챌린지는 삭제됩니다.</string>
+    <string name="delete_partner_dialog_positive">이별하기</string>
+
+
 
     <!--flower language -->
     <string name="rose_language">행복한 사랑을 이루고 싶어요</string>

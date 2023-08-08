@@ -38,4 +38,16 @@ class UserRepositoryImpl @Inject constructor(
             userDataSource.getUserInfo().toDomainModel()
         }
     }
+
+    override suspend fun deletePartner(): Result<Boolean> {
+        return runCatching {
+            userDataSource.deletePartner()
+        }
+    }
+
+    override suspend fun signOut(): Result<Boolean> {
+        return runCatching {
+            userDataSource.signOut()
+        }
+    }
 }
