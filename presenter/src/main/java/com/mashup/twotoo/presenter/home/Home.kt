@@ -155,7 +155,6 @@ fun HomeScreen(
             } else {
                 ConstraintLayout(
                     modifier = modifier
-//                        .padding(top = 11.dp)
                         .semantics {
                             testTagsAsResourceId = true
                         },

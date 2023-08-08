@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.history
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
+import com.mashup.twotoo.presenter.history.HistoryState.Companion.mapHomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
@@ -91,6 +92,7 @@ class HistoryViewModel @Inject constructor(
                     isFinished = challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished,
                     myCommits = myCommits,
                     partnerCommits = partnerCommits,
+
                 )
 
             val newOwnerNickNamesUiModel =
@@ -112,6 +114,7 @@ class HistoryViewModel @Inject constructor(
                     challengeInfoUiModel = newChallengeInfoUiModel,
                     historyItemUiModel = newHistoryItemUiModels,
                     ownerNickNamesUiModel = newOwnerNickNamesUiModel,
+                    homeGoalAchievePartnerAndMeUiModel = challengeDetailResponseDomainModel.mapHomeGoalAchievePartnerAndMeUiModel(userNo),
                 )
             }
         }.onFailure {

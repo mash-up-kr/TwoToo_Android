@@ -147,14 +147,14 @@ fun HistoryScreen(
                     state.challengeInfoUiModel,
                 )
             }
-            if (homeGoalAchievePartnerAndMeUiModel != null) {
+            if (homeGoalAchievePartnerAndMeUiModel == null && state.homeGoalAchievePartnerAndMeUiModel != null) {
                 TwoTooGoalAchievementProgressbar(
                     modifier = Modifier
                         .padding(top = 12.dp, start = 24.dp)
                         .width(210.dp)
                         .height(59.dp)
                         .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                    homeGoalAchievePartnerAndMeUiModel = homeGoalAchievePartnerAndMeUiModel,
+                    homeGoalAchievePartnerAndMeUiModel = state.homeGoalAchievePartnerAndMeUiModel,
                 )
             }
             OwnerNickNames(state.ownerNickNamesUiModel)
