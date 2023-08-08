@@ -7,7 +7,7 @@ import retrofit2.http.POST
 
 interface NotificationApi {
 
-    @POST("/notification/sting")
+    @POST("/notification/androidSting")
     suspend fun sting(
         @Body notificationRequest: NotificationRequest,
     ): Notification

@@ -72,13 +72,13 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
     }
 
-    private fun covertNullToDefaultMessage(
-        title: String?,
-        body: String?,
-    ): Pair<String, String> {
-        val messageTitle = title ?: ""
-        val messageBody = body ?: ""
-        return Pair(messageTitle, messageBody)
+    private fun getSummaryNotification(): NotificationCompat.Builder {
+        return NotificationCompat.Builder(this, CHANNEL_ID)
+            .setSmallIcon(R.mipmap.ic_app_icon)
+            .setAutoCancel(true)
+            .setOnlyAlertOnce(true)
+            .setGroup(GROUP_KEY)
+            .setGroupSummary(true)
     }
 
     private fun sendNotification(title: String, messageBody: String) {
@@ -94,12 +94,13 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setSmallIcon(R.drawable.img_app_icon)
+            .setSmallIcon(R.mipmap.ic_app_icon)
             .setContentTitle(title)
             .setContentText(messageBody)
             .setAutoCancel(true)
             .setSound(defaultSoundUri)
             .setContentIntent(pendingIntent)
+            .setGroup(GROUP_KEY)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
 
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -130,6 +131,7 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
             return
         }
         notificationManager.notify(0, notificationBuilder.build())
+        notificationManager.notify(SUMMARY_NOTIFICATION, getSummaryNotification().build())
     }
 
     internal class NotificationWorker(appContext: Context, workerParams: WorkerParameters) : Worker(appContext, workerParams) {
@@ -142,5 +144,7 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
     companion object {
         private const val TAG = "TwotooFirebaseMessagingService"
         private const val CHANNEL_ID = "Twotoo"
+        private const val SUMMARY_NOTIFICATION = 815
+        private const val GROUP_KEY = "TwotooGroup"
     }
 }
