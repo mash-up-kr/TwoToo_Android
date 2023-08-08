@@ -23,6 +23,11 @@
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/material_dynamic_tertiary0" />
 
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/notification_tag_id" />
+
+
         <service android:name=".TwotooFirebaseMessagingService"
             android:exported="false">
             <intent-filter>

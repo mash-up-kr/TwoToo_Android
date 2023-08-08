@@ -217,5 +217,6 @@
     <string name="photoHint">사진 촬영하기 / 앨범에서 가져오기</string>
 
     <string name="invite_msg_title">[투투]에 초대합니다.\n👉 링크를 누르고 로그인하여 챌린지를 진행해보세요! %s</string>
+    <string name="notification_tag_id">Twotoo</string>
 
 </resources>
