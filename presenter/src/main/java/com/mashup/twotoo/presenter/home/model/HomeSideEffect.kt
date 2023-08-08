@@ -11,7 +11,7 @@ sealed class HomeSideEffect {
     object OpenToCheerBottomSheet : HomeSideEffect()
     object OpenToHelp : HomeSideEffect()
     data class NavigationToCreateChallenge(val homeState: BeforeChallengeState, val challengeInfo: HomeChallengeInfoModel) : HomeSideEffect()
-    object NavigateToGarden : HomeSideEffect()
+    data class NavigateToGarden(val isCompleted: Boolean) : HomeSideEffect()
     object DismissBottomSheet : HomeSideEffect()
     data class OpenHomeDialog(val type: HomeDialogType) : HomeSideEffect()
     object RemoveVisibilityCheerDialog : HomeSideEffect()

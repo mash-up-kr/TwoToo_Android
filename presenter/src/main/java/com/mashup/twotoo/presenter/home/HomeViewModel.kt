@@ -337,7 +337,7 @@ class HomeViewModel @Inject constructor(
             ),
         ).onSuccess {
             postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
-            postSideEffect(HomeSideEffect.NavigateToGarden)
+            postSideEffect(HomeSideEffect.NavigateToGarden(true))
         }.onFailure {
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
         }

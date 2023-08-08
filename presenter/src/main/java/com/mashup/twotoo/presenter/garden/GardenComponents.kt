@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.garden
 
-import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -132,9 +131,6 @@ private fun BoxScope.Flowers(challengeCardInfoUiModel: ChallengeCardInfoUiModel)
         val partnerFlower = FlowerHead(challengeCardInfoUiModel.partnerFlower).getFlowerImage(context, screenWidth, screenHeight)
         val isUser1Success = challengeCardInfoUiModel.user1CommitCnt > 15
         val isUser2Success = challengeCardInfoUiModel.user2CommitCnt > 15
-
-        Log.d("TWOTOO", "Flowers:  ${challengeCardInfoUiModel.user1CommitCnt}")
-        Log.d("TWOTOO", "Flowers2222:  ${challengeCardInfoUiModel.user2CommitCnt}")
 
         TwoTooImageView(
             modifier = Modifier.size(meFlower.width, meFlower.height),
