@@ -85,6 +85,58 @@ class DialogContent private constructor(
                 ),
             ),
         )
+
+        fun createSignOutConfirmDialogContent(
+            negativeAction: () -> Unit,
+            positiveAction: () -> Unit,
+        ) = DialogContent(
+            title = R.string.sign_out_dialog_title,
+            desc = R.string.sign_out_dialog_content,
+            dialogImage = DialogImage.leaveChallenge,
+            buttons = listOf(
+                DialogButtonContent(
+                    text = R.string.cancel,
+                    action = negativeAction,
+                ),
+                DialogButtonContent(
+                    text = R.string.sign_out_dialog_positive,
+                    action = positiveAction,
+                ),
+            ),
+        )
+
+        fun createSignOutSuccessDialogContent(
+            positiveAction: () -> Unit,
+        ) = DialogContent(
+            title = R.string.sign_out_success_dialog,
+            desc = R.string.sign_out_success_dialog_content,
+            dialogImage = DialogImage.leaveChallenge,
+            buttons = listOf(
+                DialogButtonContent(
+                    text = R.string.button_confirm,
+                    action = positiveAction,
+                ),
+            ),
+        )
+
+        fun createDeletePartnerConfirmDialogContent(
+            negativeAction: () -> Unit,
+            positiveAction: () -> Unit,
+        ) = DialogContent(
+            title = R.string.delete_partner_dialog_title,
+            desc = R.string.delete_partner_dialog_content,
+            dialogImage = DialogImage.leaveChallenge,
+            buttons = listOf(
+                DialogButtonContent(
+                    text = R.string.cancel,
+                    action = negativeAction,
+                ),
+                DialogButtonContent(
+                    text = R.string.delete_partner_dialog_positive,
+                    action = positiveAction,
+                ),
+            ),
+        )
     }
 }
 
