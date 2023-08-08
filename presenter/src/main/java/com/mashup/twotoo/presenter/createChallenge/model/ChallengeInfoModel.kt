@@ -1,17 +1,21 @@
 package com.mashup.twotoo.presenter.createChallenge.model
 
+import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.CreateChallengeRequestDomainModel
 
 data class ChallengeInfoModel(
-    var currentStep: Int = 1,
-    var isBack: Boolean = false,
-    var challengeName: String = "",
-    var startDate: String = DateFormatter.getCurrentDate(),
+    val challengeNo: Int = 0,
+    val homeState: String = BeforeChallengeState.EMPTY.name,
+    val currentStep: Int = 1,
+    val isBack: Boolean = false,
+    val challengeName: String = "",
+    val startDate: String = DateFormatter.getCurrentDate(),
     val endDate: String = DateFormatter.getDaysAfter(DateFormatter.getCurrentDate()),
     val period: String = "",
-    var challengeInfo: String = "",
+    val challengeInfo: String = "",
     val selectFlowerName: String = "",
+    val dialogVisibility: Boolean = false,
 )
 
 fun ChallengeInfoModel.toDomainModel(): CreateChallengeRequestDomainModel {

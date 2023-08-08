@@ -4,4 +4,5 @@ sealed class CreateChallengeSideEffect {
     object NavigateToSuccessCreate : CreateChallengeSideEffect()
     object NavigateToHome : CreateChallengeSideEffect()
     data class ToastMessage(val message: String) : CreateChallengeSideEffect()
+    object DismissDialog : CreateChallengeSideEffect()
 }
