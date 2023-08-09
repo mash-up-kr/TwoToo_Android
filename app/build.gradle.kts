@@ -20,8 +20,8 @@ android {
         applicationId = "com.mashup.twotoo"
         minSdk = 24
         targetSdk = 33
-        versionCode = 3
-        versionName = "1.0.2"
+        versionCode = 4
+        versionName = "1.0.3"
 
         buildConfigField("String", "NATIVE_APP_KEY", "\"${gradleLocalProperties(rootDir).getProperty("native_app_key") ?: ""}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
