@@ -3,6 +3,8 @@ package com.mashup.twotoo.presenter.history.datail
 import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
@@ -54,6 +56,8 @@ fun HistoryDetailScreen(
     onClickBackButton: () -> Unit,
     historyDetailInfoUiModel: HistoryDetailInfoUiModel,
 ) {
+    val scrollableState = rememberScrollState()
+
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
@@ -70,7 +74,9 @@ fun HistoryDetailScreen(
         ) {
             Column(
                 modifier = Modifier
-                    .padding(start = 24.dp, end = 24.dp, top = 12.dp),
+                    .padding(horizontal = 24.dp, vertical = 12.dp)
+                    .verticalScroll(scrollableState)
+                    .navigationBarsPadding(),
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
