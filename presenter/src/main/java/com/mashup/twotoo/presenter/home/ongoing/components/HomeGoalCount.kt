@@ -46,7 +46,7 @@ fun HomeGoalCount(
                 horizontalArrangement = Arrangement.End,
             ) {
                 Row(
-                    modifier = Modifier.widthIn(21.dp, 40.dp).height(22.dp),
+                    modifier = Modifier.widthIn(21.dp, 50.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
@@ -69,7 +69,7 @@ fun HomeGoalCount(
                 )
                 Spacer(modifier = Modifier.width(6.dp))
                 Row(
-                    modifier = Modifier.widthIn(21.dp, 40.dp).height(22.dp),
+                    modifier = Modifier.widthIn(21.dp, 50.dp).height(22.dp),
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Center,
                 ) {
