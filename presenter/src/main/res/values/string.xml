@@ -190,11 +190,11 @@
 
 
     <!--flower language -->
-    <string name="rose_language">행복한 사랑을 이루고 싶어요</string>
-    <string name="tulip_language">수줍은 사랑을 주고 싶어요</string>
+    <string name="rose_language">행복한 사랑을\n이루고 싶어요</string>
+    <string name="tulip_language">수줍은 사랑을\n주고 싶어요</string>
     <string name="fig_language">사랑의 결실을 맺어봐요</string>
     <string name="cotton_language">온기를 담아 사랑해요</string>
-    <string name="delphinium_language">당신을 행복하게 해줄게요</string>
+    <string name="delphinium_language">당신을 행복하게\n해줄게요</string>
     <string name="camellia_language">그 누구보다 사랑해요</string>
     <string name="chrysanthemum_language">제 마음은 늘 진심이에요</string>
     <string name="sunflower_language">당신을 바라보고 싶어요</string>
