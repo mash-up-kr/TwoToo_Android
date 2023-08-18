@@ -65,8 +65,11 @@ fun HomeOngoingChallenge(
                 start.linkTo(parent.start, margin = 24.dp)
                 end.linkTo(parent.end, margin = 24.dp)
                 width = Dimension.fillToConstraints
-            }.clickable { navigateToHistory(ongoingChallengeUiModel.challengeNo) },
+            },
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
+            onClickHomeGoalField = {
+                navigateToHistory(ongoingChallengeUiModel.challengeNo)
+            },
         )
         TwoTooGoalAchievementProgressbar(
             modifier = Modifier.width(203.dp).height(62.dp).constrainAs(goalAchievement) {
