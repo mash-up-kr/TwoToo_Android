@@ -21,7 +21,9 @@ TwoToo를 통해 연인과 함께할 22일 챌린지를 생성하고 기록해�
 
 
 ## Architecture
-<br/><br/>
+<br/>
+<img src="https://user-images.githubusercontent.com/62296097/262903165-9bfbf08f-1550-4ff3-a9d4-f0773f231c64.png"/>
+<br/>
 
 
 
