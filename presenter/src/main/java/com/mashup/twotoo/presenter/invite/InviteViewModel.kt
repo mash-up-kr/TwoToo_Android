@@ -11,6 +11,8 @@ import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.util.createInviteDeepLink
 import kotlinx.coroutines.launch
 import model.user.UserNickNameDomainModel
+import util.onError
+import util.onSuccess
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -43,7 +45,7 @@ class InviteViewModel @Inject constructor(
             } else {
                 postSideEffect(InviteSideEffect.SendSharedInvitation)
             }
-        }.onFailure {
+        }.onError { code, message ->
         }
     }
 

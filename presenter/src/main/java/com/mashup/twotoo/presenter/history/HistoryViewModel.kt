@@ -13,6 +13,7 @@ import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
+import util.onSuccess
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -22,7 +23,8 @@ import usecase.challenge.GetChallengeByNoUseCase
 import usecase.challenge.QuiteChallengeUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetUserInfoUseCase
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 import javax.inject.Inject
 
 class HistoryViewModel @Inject constructor(
@@ -59,63 +61,64 @@ class HistoryViewModel @Inject constructor(
         }
 
         getChallengeByNoUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess { challengeDetailResponseDomainModel ->
-            val userInfo = getUserInfoUseCase().getOrNull()
-            if (userInfo == null) {
-                Log.e("HistoryViewModel", "getChallengeByUser: not saved userInfo")
-                return@onSuccess
-            }
-            val userNo = userInfo.userNo
-
-            // Todo domain attribute name pater, me 말고 user1, user2로 바꾸기 또는 데이터 만들어서 아래 userName이랑 같이 관리하기
-            val (myCommits, partnerCommits) =
-                with(challengeDetailResponseDomainModel) {
-                    if (userNo == this.challengeResponseDomainModel.user1.userNo) {
-                        Pair(
-                            this.myCommitResponseDomainModel,
-                            this.partnerCommitResponseDomainModel,
-                        )
-                    } else {
-                        Pair(
-                            this.partnerCommitResponseDomainModel,
-                            this.myCommitResponseDomainModel,
-                        )
-                    }
+            getUserInfoUseCase().onSuccess { userInfo ->
+                if (userInfo == null) {
+                    Log.e("HistoryViewModel", "getChallengeByUser: not saved userInfo")
+                    return@onSuccess
                 }
+                val userNo = userInfo.userNo
 
-            val newChallengeInfoUiModel =
-                ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
-
-            val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
-                getNewHistoryItemUiModels(
-                    _startDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate,
-                    _endDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate,
-                    isFinished = challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished,
-                    myCommits = myCommits,
-                    partnerCommits = partnerCommits,
-
-                )
-
-            val newOwnerNickNamesUiModel =
-                with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
-                    val (myInfo, partnerInfo) = if (userNo == this.user1.userNo) {
-                        Pair(
-                            this.user1,
-                            this.user2,
-                        )
-                    } else {
-                        Pair(this.user2, this.user1)
+                // Todo domain attribute name pater, me 말고 user1, user2로 바꾸기 또는 데이터 만들어서 아래 userName이랑 같이 관리하기
+                val (myCommits, partnerCommits) =
+                    with(challengeDetailResponseDomainModel) {
+                        if (userNo == this.challengeResponseDomainModel.user1.userNo) {
+                            Pair(
+                                this.myCommitResponseDomainModel,
+                                this.partnerCommitResponseDomainModel,
+                            )
+                        } else {
+                            Pair(
+                                this.partnerCommitResponseDomainModel,
+                                this.myCommitResponseDomainModel,
+                            )
+                        }
                     }
-                    OwnerNickNamesUiModel.from(myInfo, partnerInfo)
-                }
 
-            reduce {
-                state.copy(
-                    loadingIndicatorState = false,
-                    challengeInfoUiModel = newChallengeInfoUiModel,
-                    historyItemUiModel = newHistoryItemUiModels,
-                    ownerNickNamesUiModel = newOwnerNickNamesUiModel,
-                    homeGoalAchievePartnerAndMeUiModel = challengeDetailResponseDomainModel.mapHomeGoalAchievePartnerAndMeUiModel(userNo),
-                )
+                val newChallengeInfoUiModel =
+                    ChallengeInfoUiModel.from(challengeDetailResponseDomainModel.challengeResponseDomainModel)
+
+                val newHistoryItemUiModels: MutableList<HistoryItemUiModel> =
+                    getNewHistoryItemUiModels(
+                        _startDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.startDate,
+                        _endDate = challengeDetailResponseDomainModel.challengeResponseDomainModel.endDate,
+                        isFinished = challengeDetailResponseDomainModel.challengeResponseDomainModel.isFinished,
+                        myCommits = myCommits,
+                        partnerCommits = partnerCommits,
+
+                    )
+
+                val newOwnerNickNamesUiModel =
+                    with(challengeDetailResponseDomainModel.challengeResponseDomainModel) {
+                        val (myInfo, partnerInfo) = if (userNo == this.user1.userNo) {
+                            Pair(
+                                this.user1,
+                                this.user2,
+                            )
+                        } else {
+                            Pair(this.user2, this.user1)
+                        }
+                        OwnerNickNamesUiModel.from(myInfo, partnerInfo)
+                    }
+
+                reduce {
+                    state.copy(
+                        loadingIndicatorState = false,
+                        challengeInfoUiModel = newChallengeInfoUiModel,
+                        historyItemUiModel = newHistoryItemUiModels,
+                        ownerNickNamesUiModel = newOwnerNickNamesUiModel,
+                        homeGoalAchievePartnerAndMeUiModel = challengeDetailResponseDomainModel.mapHomeGoalAchievePartnerAndMeUiModel(userNo),
+                    )
+                }
             }
         }.onFailure {
             Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
