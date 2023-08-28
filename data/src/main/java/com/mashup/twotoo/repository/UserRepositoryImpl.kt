@@ -1,5 +1,6 @@
 package com.mashup.twotoo.repository
 
+import util.NetworkResult
 import com.mashup.twotoo.datasource.remote.user.UserDataSource
 import com.mashup.twotoo.datasource.remote.user.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
@@ -33,9 +34,10 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getUserInfo(): Result<UserInfoDomainModel> {
-        return runCatching {
-            userDataSource.getUserInfo().toDomainModel()
+    override suspend fun getUserInfo(): NetworkResult<UserInfoDomainModel> {
+        val result = userDataSource.getUserInfo()
+        return result.map { userInfoResponse ->
+            userInfoResponse.toDomainModel()
         }
     }
 
