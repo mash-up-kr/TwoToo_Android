@@ -1,6 +1,7 @@
 package com.mashup.twotoo.di
 
 import com.mashup.twotoo.data.BuildConfig
+import com.mashup.twotoo.util.NetworkResultCallAdapterFactory
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -69,7 +70,7 @@ class NetworkModule {
         return Retrofit.Builder().baseUrl(URL)
             .client(client).addConverterFactory(
                 moshiConverterFactory,
-            ).build()
+            ).addCallAdapterFactory(NetworkResultCallAdapterFactory.create()).build()
     }
 
     @Provides
