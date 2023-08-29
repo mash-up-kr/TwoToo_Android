@@ -6,6 +6,8 @@
 TwoToo를 통해 연인과 함께할 22일 챌린지를 생성하고 기록해보세요!
 <br/><br/>
 
+![스크린샷 2023-08-29 오후 12 07 53](https://github.com/mash-up-kr/TwoToo_Android/assets/53086454/eec6f2e0-704a-405b-94d8-a9183110e12a)
+
 ## Language, libraries and tools used
 
 | What | How |
