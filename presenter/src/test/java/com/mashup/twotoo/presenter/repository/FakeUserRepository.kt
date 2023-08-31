@@ -23,10 +23,10 @@ class FakeUserRepository : UserRepository {
     override suspend fun getUserInfo(): Result<UserInfoDomainModel> {
         return Result.success(
             UserInfoDomainModel(
-                userNo = 30,
-                nickname = "랑이",
-                partnerNo = 31,
-                partnerNickname = "랑구",
+                userNo = 1,
+                nickname = "유저1",
+                partnerNo = 2,
+                partnerNickname = "유저2",
                 totalChallengeCount = 1,
             ),
         )
