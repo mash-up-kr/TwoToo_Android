@@ -1,5 +1,8 @@
-package com.mashup.twotoo.presenter.home.repository
+package com.mashup.twotoo.presenter.repository
 
+import com.mashup.twotoo.presenter.history.model.fakeChallengeResponseDomainModel
+import com.mashup.twotoo.presenter.history.model.fakeMyCommitResponseDomainModel
+import com.mashup.twotoo.presenter.history.model.fakePartnerCommitResponseDomainModel
 import model.challenge.request.ApproveChallengeRequestDomainModel
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.request.CreateChallengeRequestDomainModel
@@ -17,7 +20,13 @@ class FakeChallengeRepository : ChallengeRepository {
     }
 
     override suspend fun getChallengeByNo(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<ChallengeDetailResponseDomainModel> {
-        TODO("Not yet implemented")
+        return Result.success(
+            ChallengeDetailResponseDomainModel(
+                challengeResponseDomainModel = fakeChallengeResponseDomainModel,
+                myCommitResponseDomainModel = fakeMyCommitResponseDomainModel,
+                partnerCommitResponseDomainModel = fakePartnerCommitResponseDomainModel,
+            ),
+        )
     }
 
     override suspend fun quitChallenge(challengeNoRequestDomainModel: ChallengeNoRequestDomainModel): Result<Int> {
