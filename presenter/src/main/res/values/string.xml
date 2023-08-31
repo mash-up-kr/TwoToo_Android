@@ -41,7 +41,7 @@
     <string name="bottomSheetCheerAndShotButtonText">보내기</string>
     <string name="bottomSheetCheer">오늘의 칭찬 한마디</string>
     <string name="bottomSheetAuthTextFieldHint">소감을 작성해주세요.</string>
-    <string name="bottomSheetShotTextFieldHint">찌르기 문구를 입력해주세요.\n최대 30자까지 입력 가능</string>
+    <string name="bottomSheetShotTextFieldHint">찌르기 문구를 입력해주세요.\n최대 20자까지 입력 가능</string>
     <string name="bottomSheetCheerTextFieldHint">(최대 20자) 칭찬 문구를 입력해주세요.\n예) 오늘도 잘해냈어, 앞으로도 화이팅</string>
     <string name="bottomSheetCheerWarningHint">* 한번 등록한 문구는 수정이 불가해요</string>
 

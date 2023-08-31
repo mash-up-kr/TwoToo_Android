@@ -7,6 +7,7 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalFocusManager
@@ -78,7 +79,13 @@ fun SendMsgBottomSheetContent(
         TwoTooTextField(
             modifier = Modifier.fillMaxWidth().height(85.dp),
             text = textFieldState,
-            updateText = { textFieldState = it },
+            updateText = {
+                textFieldState = it.take(20)
+                if (it.length > 20) {
+                    focusManager.moveFocus(FocusDirection.Down)
+                }
+            },
+            maxLine = 1,
             textHint = textHint,
             focusRequester = focusRequester,
         )
