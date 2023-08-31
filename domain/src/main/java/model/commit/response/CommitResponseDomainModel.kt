@@ -7,5 +7,6 @@ data class CommitResponseDomainModel(
     val text: String,
     val photoUrl: String,
     val createdAt: String = "",
+    val createdKey: String = "",
     val partnerComment: String,
 )
