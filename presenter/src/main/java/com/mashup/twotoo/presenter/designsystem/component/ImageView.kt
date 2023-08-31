@@ -6,7 +6,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.fillMaxSize
@@ -26,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.util.noRippleClickable
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
 import com.skydoves.landscapist.glide.GlideImageState
@@ -111,10 +111,11 @@ fun TwoTooImageViewImpl(
                         bottom.linkTo(parent.bottom)
                         end.linkTo(parent.end)
                     }
-                    .clickable {
+                    .noRippleClickable {
                         onClickPlusButton()
                     },
             )
+
             Text(
                 modifier = Modifier.constrainAs(photoHint) {
                     top.linkTo(plusLine.bottom, margin = 14.dp)
@@ -184,7 +185,7 @@ private fun HasNoneImageView() {
                 )
                 .border(width = 1.dp, color = Color.LightGray, shape = TwoTooTheme.shape.extraSmall),
             previewPlaceholder = R.drawable.empty_image_color_placeholder,
-            imageUri = { imageUri },
+            imageUri = { imageUri ?: R.drawable.empty_image_color_placeholder },
             onClickPlusButton = {
                 launcher.launch("image/*")
             },
