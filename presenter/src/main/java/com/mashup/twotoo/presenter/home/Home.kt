@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
@@ -40,6 +41,7 @@ import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
+import com.mashup.twotoo.presenter.util.debounce
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -102,7 +104,7 @@ fun HomeRoute(
                 TwoTooBottomSheet(
                     type = bottomSheetType,
                     onDismiss = ::onDismiss,
-                    onClickButton = homeViewModel::onClickSendBottomSheetDataButton,
+                    onClickButton = debounce(300L, homeViewModel.viewModelScope, homeViewModel::onClickSendBottomSheetDataButton),
                 )
             }
 
