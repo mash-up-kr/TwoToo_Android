@@ -154,14 +154,47 @@ class HistoryViewModel @Inject constructor(
                 getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
             }
 
-        val commitPairs =
-            combineLists(
-                myCommits,
-                partnerCommits,
+        val myCommitsWithKoreaTime = myCommits.map {
+            val plusNineFromUTC = DateFormatter.dateConvertToPlusNineDate(it.createdAt)
+            val plusNineStringFromUTC = DateFormatter.getDateStrByDate(plusNineFromUTC)
+            val createdDateTime = DateFormatter.getDateTimeByStr(plusNineStringFromUTC)
+            val koreaTime = DateFormatter.getDateStrMonthDay(createdDateTime)
+            it.copy(
+                createdKey = koreaTime,
             )
+        }
 
-        val historyItemsWithCommit = commitPairs.map {
-            HistoryItemUiModel.from(it.first, it.second)
+        val partnerCommitsWithKoreaTime = partnerCommits.map {
+            val plusNineFromUTC = DateFormatter.dateConvertToPlusNineDate(it.createdAt)
+            val plusNineStringFromUTC = DateFormatter.getDateStrByDate(plusNineFromUTC)
+            val createdDateTime = DateFormatter.getDateTimeByStr(plusNineStringFromUTC)
+            val koreaTime = DateFormatter.getDateStrMonthDay(createdDateTime)
+            it.copy(
+                createdKey = koreaTime,
+            )
+        }
+
+        val challengeDatesMap: MutableMap<String, Pair<CommitResponseDomainModel?, CommitResponseDomainModel?>?> = challengingDates.map {
+            // first myCommit, second partnerCommit
+            it to Pair<CommitResponseDomainModel?, CommitResponseDomainModel?>(null, null)
+        }.toMap().toMutableMap()
+
+        myCommitsWithKoreaTime.forEach {
+            challengeDatesMap[it.createdKey] = challengeDatesMap[it.createdKey]?.copy(
+                first = it,
+            )
+        }
+        partnerCommitsWithKoreaTime.forEach {
+            challengeDatesMap[it.createdKey] = challengeDatesMap[it.createdKey]?.copy(
+                second = it,
+            )
+        }
+
+        val historyItemsWithCommit = challengeDatesMap.map {
+            HistoryItemUiModel.from(
+                myCommit = it.value?.first,
+                partnerCommit = it.value?.second,
+            )
         }
 
         return getNewHistoryItemsCombinedBetween(challengingDates, historyItemsWithCommit)
@@ -202,19 +235,6 @@ class HistoryViewModel @Inject constructor(
             }
         }
         return newHistoryItemUiModels
-    }
-
-    private fun <T, R> combineLists(list1: List<T>, list2: List<R>): List<Pair<T?, R?>> {
-        val maxSize = maxOf(list1.size, list2.size)
-        val combinedList = mutableListOf<Pair<T?, R?>>()
-
-        for (i in 0 until maxSize) {
-            val element1 = list1.getOrNull(i)
-            val element2 = list2.getOrNull(i)
-            combinedList.add(element1 to element2)
-        }
-
-        return combinedList
     }
 
     fun updateChallengeDetail(commitNo: Int) = intent {
