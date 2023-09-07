@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.repository
+package com.mashup.twotoo.presenter.repository
 
 import model.commit.request.CheerRequestDomainModel
 import model.commit.request.CommitNoRequestDomainModel

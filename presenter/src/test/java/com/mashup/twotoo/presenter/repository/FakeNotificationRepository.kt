@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.repository
+package com.mashup.twotoo.presenter.repository
 
 import model.notification.request.NotificationRequestDomainModel
 import model.notification.response.NotificationResponseDomainModel

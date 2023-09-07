@@ -1,4 +1,4 @@
-package com.mashup.twotoo.presenter.home.repository
+package com.mashup.twotoo.presenter.repository
 
 import model.user.UserAuthResponseDomainModel
 import repository.UserDataStoreRepository
@@ -42,6 +42,10 @@ class FakeUserDataStoreRepository : UserDataStoreRepository {
     }
 
     override suspend fun setIsSendInvitation(isSend: Boolean) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun removeUserInfo() {
         TODO("Not yet implemented")
     }
 }
