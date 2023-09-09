@@ -40,7 +40,7 @@ fun Challenge.toDomainModel(): ChallengeResponseDomainModel {
         user2 = this.user2.toDomainModel(),
         user2CommitCnt = this.user2CommitCnt,
         user2Flower = this.user2Flower,
-        description = this.description ?: ""
+        description = this.description ?: "",
     )
 }
 
@@ -56,11 +56,11 @@ fun ApproveChallengeRequestDomainModel.toDataModel(): ApproveChallengeRequest {
     )
 }
 
-fun User.toDomainModel(): UserResponseDomainModel {
+fun User?.toDomainModel(): UserResponseDomainModel {
     return UserResponseDomainModel(
-        nickname = this.nickname,
-        partnerNo = this.partnerNo,
-        userNo = this.userNo,
+        nickname = this?.nickname ?: "",
+        partnerNo = this?.partnerNo,
+        userNo = this?.userNo ?: 1,
     )
 }
 

@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -98,7 +97,11 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
         ) {
             Text(
                 text = stringResource(
-                    id = R.string.challengeAttempts,
+                    id = if (challengeCardInfoUiModel.viewState == "InProgress") {
+                        R.string.inProgressChallengeAttempts
+                    } else {
+                        R.string.challengeAttempts
+                    },
                     challengeCardInfoUiModel.attempts,
                 ),
                 color = TwoTooTheme.color.mainPink,

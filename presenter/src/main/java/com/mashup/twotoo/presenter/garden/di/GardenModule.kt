@@ -3,7 +3,7 @@ package com.mashup.twotoo.presenter.garden.di
 import com.mashup.twotoo.presenter.garden.GardenViewModel
 import dagger.Module
 import dagger.Provides
-import usecase.challenge.GetAllChallengeUseCase
+import usecase.challenge.GetChallengeHistoriesUseCase
 import javax.inject.Scope
 
 @Module
@@ -11,9 +11,9 @@ class GardenModule {
     @Provides
     @GardenScope
     fun provideViewModel(
-        getAllChallengeUseCase: GetAllChallengeUseCase,
+        getChallengeHistoriesUseCase: GetChallengeHistoriesUseCase,
     ): GardenViewModel {
-        return GardenViewModel(getAllChallengeUseCase = getAllChallengeUseCase)
+        return GardenViewModel(getChallengeHistoriesUseCase = getChallengeHistoriesUseCase)
     }
 }
 

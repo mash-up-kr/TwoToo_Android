@@ -11,10 +11,10 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
-import usecase.challenge.GetAllChallengeUseCase
+import usecase.challenge.GetChallengeHistoriesUseCase
 
 class GardenViewModel(
-    private val getAllChallengeUseCase: GetAllChallengeUseCase,
+    private val getChallengeHistoriesUseCase: GetChallengeHistoriesUseCase,
 ) : ContainerHost<GardenState, GardenSideEffect>, ViewModel() {
     override val container: Container<GardenState, GardenSideEffect> = container(GardenState())
 
@@ -23,9 +23,9 @@ class GardenViewModel(
             state.copy(loadingIndicatorState = true)
         }
         delay(300)
-        getAllChallengeUseCase().onSuccess { challenges ->
-            val challengeCardInfos = challenges.filter { it.isFinished }.mapIndexed { index, challengeResponseDomainModel ->
-                challengeResponseDomainModel.toUiModel(index)
+        getChallengeHistoriesUseCase().onSuccess { challenges ->
+            val challengeCardInfos = challenges.mapIndexed { index, challengeResponseDomainModel ->
+                challengeResponseDomainModel.toUiModel(index = index)
             }.run {
                 reversed()
             }

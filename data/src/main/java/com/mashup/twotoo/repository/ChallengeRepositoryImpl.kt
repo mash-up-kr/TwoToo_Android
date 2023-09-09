@@ -3,6 +3,7 @@ package com.mashup.twotoo.repository
 import com.mashup.twotoo.datasource.remote.challenge.ChallengeDataSource
 import com.mashup.twotoo.datasource.remote.challenge.request.toDataModel
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
+import com.mashup.twotoo.datasource.remote.challenge.response.Challenge.Companion.toHistoryChallengeDomainModel
 import com.mashup.twotoo.datasource.remote.challenge.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
 import com.mashup.twotoo.mapper.toDomainModel
@@ -11,6 +12,7 @@ import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.request.CreateChallengeRequestDomainModel
 import model.challenge.response.ChallengeDetailResponseDomainModel
 import model.challenge.response.ChallengeResponseDomainModel
+import model.challenge.response.HistoryChallengeDomainModel
 import repository.ChallengeRepository
 import javax.inject.Inject
 
@@ -64,6 +66,14 @@ class ChallengeRepositoryImpl @Inject constructor(
             challengeDataSource.finishChallengeWithNo(
                 challengeNoRequest = challengeNoRequestDomainModel.toDataModel(),
             ).toDomainModel()
+        }
+    }
+
+    override suspend fun getChallengeHistories(): Result<List<HistoryChallengeDomainModel>> {
+        return runCatching {
+            challengeDataSource.getChallengeHistories().map {
+                it.toHistoryChallengeDomainModel()
+            }
         }
     }
 }

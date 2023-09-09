@@ -27,7 +27,7 @@ class NetworkModule {
     @Singleton
     fun provideOkHttpClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase
+        getPreferenceUserInfoUseCase: GetPreferenceUserInfoUseCase,
     ): OkHttpClient {
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.apply {
