@@ -49,4 +49,8 @@ class ChallengeDataSource @Inject constructor(
             challengeNo = challengeNoRequest.challengeNo,
         )
     }
+
+    suspend fun getChallengeHistories(): List<Challenge> {
+        return challengeApi.getChallengeHistories()
+    }
 }

@@ -5,6 +5,7 @@ import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.request.CreateChallengeRequestDomainModel
 import model.challenge.response.ChallengeDetailResponseDomainModel
 import model.challenge.response.ChallengeResponseDomainModel
+import model.challenge.response.HistoryChallengeDomainModel
 
 /**
  * @Created by 김현국 2023/07/04
@@ -33,4 +34,6 @@ interface ChallengeRepository {
     suspend fun finishChallengeWithNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
     ): Result<ChallengeResponseDomainModel>
+
+    suspend fun getChallengeHistories(): Result<List<HistoryChallengeDomainModel>>
 }

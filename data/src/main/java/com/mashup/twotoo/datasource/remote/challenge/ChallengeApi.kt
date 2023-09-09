@@ -36,4 +36,7 @@ interface ChallengeApi {
     suspend fun finishChallengeWithNo(
         @Path("challengeNo") challengeNo: Int,
     ): Challenge
+
+    @GET("/challenge/histories")
+    suspend fun getChallengeHistories(): List<Challenge>
 }
