@@ -9,34 +9,35 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
+import util.NetworkResult
 
 interface ChallengeApi {
 
     @POST("/challenge")
     suspend fun createChallenge(
         @Body createChallengeRequest: CreateChallengeRequest,
-    ): Challenge
+    ): NetworkResult<Challenge>
 
     @GET("/challenge")
-    suspend fun getAllChallenge(): List<Challenge>
+    suspend fun getAllChallenge(): NetworkResult<List<Challenge>>
 
     @GET("/challenge/{challengeNo}")
-    suspend fun getChallengeByNo(@Path("challengeNo") challengeNo: Int): ChallengeDetail
+    suspend fun getChallengeByNo(@Path("challengeNo") challengeNo: Int): NetworkResult<ChallengeDetail>
 
     @DELETE("/challenge/{challengeNo}")
-    suspend fun deleteChallengeByNo(@Path("challengeNo") challengeNo: Int): Int
+    suspend fun deleteChallengeByNo(@Path("challengeNo") challengeNo: Int): NetworkResult<Int>
 
     @POST("/challenge/{challengeNo}/approve")
     suspend fun approveChallengeWithNo(
         @Path("challengeNo") challengeNo: Int,
         @Body approveChallengeRequest: ApproveChallengeRequest,
-    ): Challenge
+    ): NetworkResult<Challenge>
 
     @POST("/challenge/{challengeNo}/finish")
     suspend fun finishChallengeWithNo(
         @Path("challengeNo") challengeNo: Int,
-    ): Challenge
+    ): NetworkResult<Challenge>
 
     @GET("/challenge/histories")
-    suspend fun getChallengeHistories(): List<Challenge>
+    suspend fun getChallengeHistories(): NetworkResult<List<Challenge>>
 }

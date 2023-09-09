@@ -1,8 +1,8 @@
 package usecase.user
 
-import util.NetworkResult
 import model.user.UserInfoDomainModel
 import repository.UserRepository
+import util.NetworkResult
 import javax.inject.Inject
 
 class GetUserInfoUseCase @Inject constructor(

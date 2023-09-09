@@ -5,6 +5,7 @@ import com.mashup.twotoo.datasource.remote.challenge.request.ChallengeNoRequest
 import com.mashup.twotoo.datasource.remote.challenge.request.CreateChallengeRequest
 import com.mashup.twotoo.datasource.remote.challenge.response.Challenge
 import com.mashup.twotoo.datasource.remote.challenge.response.ChallengeDetail
+import util.NetworkResult
 import javax.inject.Inject
 
 class ChallengeDataSource @Inject constructor(
@@ -12,30 +13,30 @@ class ChallengeDataSource @Inject constructor(
 ) {
     suspend fun createChallenge(
         createChallengeRequest: CreateChallengeRequest,
-    ): Challenge {
+    ): NetworkResult<Challenge> {
         return challengeApi.createChallenge(createChallengeRequest = createChallengeRequest)
     }
 
-    suspend fun getAllChallenge(): List<Challenge> {
+    suspend fun getAllChallenge(): NetworkResult<List<Challenge>> {
         return challengeApi.getAllChallenge()
     }
 
     suspend fun getChallengeByNo(
         challengeNoRequest: ChallengeNoRequest,
-    ): ChallengeDetail {
+    ): NetworkResult<ChallengeDetail> {
         return challengeApi.getChallengeByNo(challengeNo = challengeNoRequest.challengeNo)
     }
 
     suspend fun deleteChallengeByNo(
         challengeNoRequest: ChallengeNoRequest,
-    ): Int {
+    ): NetworkResult<Int> {
         return challengeApi.deleteChallengeByNo(challengeNo = challengeNoRequest.challengeNo)
     }
 
     suspend fun approveChallengeWithNo(
         challengeNoRequest: ChallengeNoRequest,
         approveChallengeRequest: ApproveChallengeRequest,
-    ): Challenge {
+    ): NetworkResult<Challenge> {
         return challengeApi.approveChallengeWithNo(
             challengeNo = challengeNoRequest.challengeNo,
             approveChallengeRequest = approveChallengeRequest,
@@ -44,13 +45,13 @@ class ChallengeDataSource @Inject constructor(
 
     suspend fun finishChallengeWithNo(
         challengeNoRequest: ChallengeNoRequest,
-    ): Challenge {
+    ): NetworkResult<Challenge> {
         return challengeApi.finishChallengeWithNo(
             challengeNo = challengeNoRequest.challengeNo,
         )
     }
 
-    suspend fun getChallengeHistories(): List<Challenge> {
+    suspend fun getChallengeHistories(): NetworkResult<List<Challenge>> {
         return challengeApi.getChallengeHistories()
     }
 }

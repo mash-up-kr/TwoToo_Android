@@ -40,6 +40,8 @@ import usecase.user.RemoveVisibilityCompleteDialogUseCase
 import usecase.user.SetVisibilityCheerDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 /**
@@ -120,7 +122,7 @@ class HomeViewModel @Inject constructor(
                     }
                 }
             }
-        }.onFailure {
+        }.onError { code, message ->
             reduce {
                 state.copy(
                     indicatorState = false,
@@ -221,7 +223,7 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.CallViewHomeApi,
                     )
                 }
-                    .onFailure {
+                    .onError { code, message ->
                         postSideEffect(
                             HomeSideEffect.DismissBottomSheet,
                         )
@@ -264,7 +266,7 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.CallViewHomeApi,
                     )
                 }
-                    .onFailure {
+                    .onError { code, message ->
                         postSideEffect(
                             HomeSideEffect.Toast(
                                 ToastText.ShotFail,
@@ -310,7 +312,7 @@ class HomeViewModel @Inject constructor(
                     postSideEffect(
                         HomeSideEffect.CallViewHomeApi,
                     )
-                }.onFailure {
+                }.onError { code, message ->
                     postSideEffect(
                         HomeSideEffect.RemoveVisibilityCheerDialog,
                     )
@@ -338,7 +340,7 @@ class HomeViewModel @Inject constructor(
         ).onSuccess {
             postSideEffect(HomeSideEffect.RemoveVisibilityCompleteDialog)
             postSideEffect(HomeSideEffect.NavigateToGarden(true))
-        }.onFailure {
+        }.onError { code, message ->
             postSideEffect(HomeSideEffect.Toast(ToastText.FinishFail))
         }
     }

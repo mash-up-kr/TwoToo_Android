@@ -6,6 +6,7 @@ import model.challenge.request.CreateChallengeRequestDomainModel
 import model.challenge.response.ChallengeDetailResponseDomainModel
 import model.challenge.response.ChallengeResponseDomainModel
 import model.challenge.response.HistoryChallengeDomainModel
+import util.NetworkResult
 
 /**
  * @Created by 김현국 2023/07/04
@@ -14,26 +15,26 @@ import model.challenge.response.HistoryChallengeDomainModel
 interface ChallengeRepository {
     suspend fun createChallenge(
         createChallengeRequestDomainModel: CreateChallengeRequestDomainModel,
-    ): Result<ChallengeResponseDomainModel>
+    ): NetworkResult<ChallengeResponseDomainModel>
 
-    suspend fun getAllChallenge(): Result<List<ChallengeResponseDomainModel>>
+    suspend fun getAllChallenge(): NetworkResult<List<ChallengeResponseDomainModel>>
 
     suspend fun getChallengeByNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
-    ): Result<ChallengeDetailResponseDomainModel>
+    ): NetworkResult<ChallengeDetailResponseDomainModel>
 
     suspend fun quitChallenge(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
-    ): Result<Int>
+    ): NetworkResult<Int>
 
     suspend fun approveChallenge(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
         approveChallengeRequestDomainModel: ApproveChallengeRequestDomainModel,
-    ): Result<ChallengeResponseDomainModel>
+    ): NetworkResult<ChallengeResponseDomainModel>
 
     suspend fun finishChallengeWithNo(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
-    ): Result<ChallengeResponseDomainModel>
+    ): NetworkResult<ChallengeResponseDomainModel>
 
-    suspend fun getChallengeHistories(): Result<List<HistoryChallengeDomainModel>>
+    suspend fun getChallengeHistories(): NetworkResult<List<HistoryChallengeDomainModel>>
 }

@@ -1,6 +1,5 @@
 package com.mashup.twotoo.datasource.remote.user
 
-import util.NetworkResult
 import com.mashup.twotoo.datasource.remote.user.request.UserAuthRequest
 import com.mashup.twotoo.datasource.remote.user.request.UserNickNameRequest
 import com.mashup.twotoo.datasource.remote.user.response.PartnerInfoResponse
@@ -11,27 +10,28 @@ import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.PATCH
 import retrofit2.http.POST
+import util.NetworkResult
 
 interface UserApi {
     @POST("/user/authorize")
     suspend fun userAuthorize(
         @Body userAuthorize: UserAuthRequest
-    ): UserAuthResponse
+    ): NetworkResult<UserAuthResponse>
 
     @PATCH("/user/nickname")
     suspend fun setUserNickName(
         @Body userNickName: UserNickNameRequest
-    ): UserInfoResponse
+    ): NetworkResult<UserInfoResponse>
 
     @GET("/user/partner")
-    suspend fun getUserPartnerInfo(): PartnerInfoResponse
+    suspend fun getUserPartnerInfo(): NetworkResult<PartnerInfoResponse>
 
     @GET("/user/me")
     suspend fun getUserInfo(): NetworkResult<UserInfoResponse>
 
     @PATCH("/user/delPartner")
-    suspend fun deletePartner(): Boolean
+    suspend fun deletePartner(): NetworkResult<Boolean>
 
     @DELETE("/user/signOut")
-    suspend fun signOut(): Boolean
+    suspend fun signOut(): NetworkResult<Boolean>
 }

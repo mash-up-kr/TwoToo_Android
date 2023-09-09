@@ -10,6 +10,8 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.user.SetNickNameUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class NickNameViewModel @Inject constructor(
@@ -39,9 +41,9 @@ class NickNameViewModel @Inject constructor(
             } else {
                 postSideEffect(NickNameSideEffect.NavigateToSendInvitation(userNickName))
             }
-        }.onFailure { error ->
-            error.message?.let { msg ->
-                Log.d(TAG, "viewModel: ${error.message}")
+        }.onError { code, message ->
+            message?.let { msg ->
+                Log.d(TAG, "viewModel: $message")
                 toastMessage(msg)
             }
         }

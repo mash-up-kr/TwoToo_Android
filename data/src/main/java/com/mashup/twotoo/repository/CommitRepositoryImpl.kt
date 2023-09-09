@@ -9,6 +9,7 @@ import model.commit.request.CommitNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
 import repository.CommitRepository
+import util.NetworkResult
 import javax.inject.Inject
 
 class CommitRepositoryImpl @Inject constructor(
@@ -17,31 +18,33 @@ class CommitRepositoryImpl @Inject constructor(
 ) : CommitRepository {
     override suspend fun commit(
         commitRequestDomainModel: CommitRequestDomainModel,
-    ): Result<CommitResponseDomainModel> {
-        return runCatching {
-            commitDataSource.commit(
-                commitRequest = commitRequestDomainModel.toDataModel(context = context),
-            ).toDomainModel()
+    ): NetworkResult<CommitResponseDomainModel> {
+        return commitDataSource.commit(
+            commitRequest = commitRequestDomainModel.toDataModel(context = context),
+        ).map { commit ->
+            commit.toDomainModel()
         }
     }
 
     override suspend fun cheer(
         commitNoRequestDomainModel: CommitNoRequestDomainModel,
         cheerRequestDomainModel: CheerRequestDomainModel,
-    ): Result<CommitResponseDomainModel> {
-        return runCatching {
-            commitDataSource.cheerByNo(
-                commitNoRequest = commitNoRequestDomainModel.toDataModel(),
-                cheerRequest = cheerRequestDomainModel.toDataModel(),
-            ).toDomainModel()
+    ): NetworkResult<CommitResponseDomainModel> {
+        return commitDataSource.cheerByNo(
+            commitNoRequest = commitNoRequestDomainModel.toDataModel(),
+            cheerRequest = cheerRequestDomainModel.toDataModel(),
+        ).map { commit ->
+            commit.toDomainModel()
         }
     }
 
     override suspend fun getCommit(
         commitNoRequestDomainModel: CommitNoRequestDomainModel,
-    ): CommitResponseDomainModel {
+    ): NetworkResult<CommitResponseDomainModel> {
         return commitDataSource.getCommitByNo(
             commitNoRequest = commitNoRequestDomainModel.toDataModel(),
-        ).toDomainModel()
+        ).map { commit ->
+            commit.toDomainModel()
+        }
     }
 }

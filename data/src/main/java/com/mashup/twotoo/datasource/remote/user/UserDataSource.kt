@@ -1,11 +1,11 @@
 package com.mashup.twotoo.datasource.remote.user
 
-import util.NetworkResult
 import com.mashup.twotoo.datasource.remote.user.request.UserAuthRequest
 import com.mashup.twotoo.datasource.remote.user.request.UserNickNameRequest
 import com.mashup.twotoo.datasource.remote.user.response.PartnerInfoResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserAuthResponse
 import com.mashup.twotoo.datasource.remote.user.response.UserInfoResponse
+import util.NetworkResult
 import javax.inject.Inject
 
 class UserDataSource @Inject constructor(
@@ -13,17 +13,17 @@ class UserDataSource @Inject constructor(
 ) {
     suspend fun userAuthorize(
         userAuthRequest: UserAuthRequest,
-    ): UserAuthResponse {
+    ): NetworkResult<UserAuthResponse> {
         return userApi.userAuthorize(userAuthRequest)
     }
 
     suspend fun setUserNickName(
         userNickNameRequest: UserNickNameRequest,
-    ): UserInfoResponse {
+    ): NetworkResult<UserInfoResponse> {
         return userApi.setUserNickName(userNickNameRequest)
     }
 
-    suspend fun getPartnerInfo(): PartnerInfoResponse {
+    suspend fun getPartnerInfo(): NetworkResult<PartnerInfoResponse> {
         return userApi.getUserPartnerInfo()
     }
 
@@ -31,11 +31,11 @@ class UserDataSource @Inject constructor(
         return userApi.getUserInfo()
     }
 
-    suspend fun deletePartner(): Boolean {
+    suspend fun deletePartner(): NetworkResult<Boolean> {
         return userApi.deletePartner()
     }
 
-    suspend fun signOut(): Boolean {
+    suspend fun signOut(): NetworkResult<Boolean> {
         return userApi.signOut()
     }
 }

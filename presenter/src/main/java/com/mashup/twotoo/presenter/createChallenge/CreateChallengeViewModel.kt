@@ -20,6 +20,8 @@ import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.ApproveChallengeUseCase
 import usecase.challenge.CreateChallengeUseCase
 import usecase.challenge.QuiteChallengeUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class CreateChallengeViewModel@Inject constructor(
@@ -102,7 +104,7 @@ class CreateChallengeViewModel@Inject constructor(
     fun createChallenge() = intent {
         createChallengeUseCase(state.toDomainModel()).onSuccess {
             postSideEffect(CreateChallengeSideEffect.NavigateToSuccessCreate)
-        }.onFailure {
+        }.onError { code, message ->
             postSideEffect(CreateChallengeSideEffect.ToastMessage("챌린지 생성에 실패했어요ㅠ"))
         }
     }
@@ -113,7 +115,7 @@ class CreateChallengeViewModel@Inject constructor(
             ApproveChallengeRequestDomainModel(selectFlower),
         ).onSuccess {
             postSideEffect(CreateChallengeSideEffect.NavigateToHome)
-        }.onFailure {
+        }.onError { code, message ->
         }
     }
 
@@ -124,7 +126,7 @@ class CreateChallengeViewModel@Inject constructor(
             postSideEffect(CreateChallengeSideEffect.DismissDialog)
             delay(100)
             postSideEffect(CreateChallengeSideEffect.NavigateToHome)
-        }.onFailure {
+        }.onError { code, message ->
             postSideEffect(CreateChallengeSideEffect.DismissDialog)
             delay(100)
             postSideEffect(CreateChallengeSideEffect.ToastMessage("챌린지 삭제에 실패했어요ㅠ"))
