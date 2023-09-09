@@ -3,7 +3,6 @@ package com.mashup.twotoo.presenter.mypage
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.mypage.model.MyPageItem
-import util.onSuccess
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -14,6 +13,8 @@ import usecase.user.DeletePartnerUseCase
 import usecase.user.GetUserInfoUseCase
 import usecase.user.RemoveUserInfoUseCase
 import usecase.user.SignOutUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class UserViewModel @Inject constructor(
@@ -45,7 +46,7 @@ class UserViewModel @Inject constructor(
             if (isSuccess) {
                 navigateToRoute(MyPageItem.DeletePartner.route)
             }
-        }.onFailure {
+        }.onError { code, message ->
         }
     }
 
@@ -55,7 +56,7 @@ class UserViewModel @Inject constructor(
                 removeUserInfoUseCase()
                 postSideEffect(UserSideEffect.OpenSignOutSuccessDialog)
             }
-        }.onFailure {
+        }.onError { code, message ->
         }
     }
 

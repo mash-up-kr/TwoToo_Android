@@ -20,6 +20,8 @@ import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.user.SetPreferenceUserInfoUseCase
 import usecase.user.UserAuthUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class OnBoardingViewModel @Inject constructor(
@@ -89,13 +91,13 @@ class OnBoardingViewModel @Inject constructor(
                     postSideEffect(OnboardingSideEffect.NavigateToHome)
                 }
             }
-        }.onFailure {
+        }.onError { code, message ->
             reduce {
                 state.copy(
                     loadingIndicatorState = false,
                 )
             }
-            Log.d(TAG, "failure: ${it.message}")
+            Log.d(TAG, "failure: $message")
         }
     }
 }

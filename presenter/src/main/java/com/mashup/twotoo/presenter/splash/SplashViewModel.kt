@@ -14,6 +14,8 @@ import usecase.user.GetIsSendInvitationUseCase
 import usecase.user.GetPreferenceUserInfoUseCase
 import usecase.user.SetPreferenceUserInfoUseCase
 import usecase.user.UserAuthUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class SplashViewModel @Inject constructor(
@@ -63,7 +65,7 @@ class SplashViewModel @Inject constructor(
                     postSideEffect(SplashSideEffect.NavigateToHome)
                 }
             }
-        }.onFailure {
+        }.onError { code, message ->
             postSideEffect(SplashSideEffect.NavigateToOnboarding)
         }
     }

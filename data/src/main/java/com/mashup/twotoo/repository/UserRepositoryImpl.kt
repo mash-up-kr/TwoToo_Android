@@ -1,6 +1,5 @@
 package com.mashup.twotoo.repository
 
-import util.NetworkResult
 import com.mashup.twotoo.datasource.remote.user.UserDataSource
 import com.mashup.twotoo.datasource.remote.user.response.toDomainModel
 import com.mashup.twotoo.mapper.toDataModel
@@ -11,26 +10,27 @@ import model.user.UserAuthResponseDomainModel
 import model.user.UserInfoDomainModel
 import model.user.UserNickNameDomainModel
 import repository.UserRepository
+import util.NetworkResult
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
     private val userDataSource: UserDataSource
 ) : UserRepository {
-    override suspend fun userAuthorize(userAuthRequestDomainModel: UserAuthRequestDomainModel): Result<UserAuthResponseDomainModel> {
-        return runCatching {
-            userDataSource.userAuthorize(userAuthRequestDomainModel.toDataModel()).toDomainModel()
+    override suspend fun userAuthorize(userAuthRequestDomainModel: UserAuthRequestDomainModel): NetworkResult<UserAuthResponseDomainModel> {
+        return userDataSource.userAuthorize(userAuthRequestDomainModel.toDataModel()).map { userAuthResponse ->
+            userAuthResponse.toDomainModel()
         }
     }
 
-    override suspend fun setUserNickName(userNickNameDomainModel: UserNickNameDomainModel): Result<UserInfoDomainModel> {
-        return runCatching {
-            userDataSource.setUserNickName(userNickNameDomainModel.toDataModel()).toDomainModel()
+    override suspend fun setUserNickName(userNickNameDomainModel: UserNickNameDomainModel): NetworkResult<UserInfoDomainModel> {
+        return userDataSource.setUserNickName(userNickNameDomainModel.toDataModel()).map { userInfoResponse ->
+            userInfoResponse.toDomainModel()
         }
     }
 
-    override suspend fun getPartnerInfo(): Result<PartnerInfoDomainModel> {
-        return runCatching {
-            userDataSource.getPartnerInfo().toDomainModel()
+    override suspend fun getPartnerInfo(): NetworkResult<PartnerInfoDomainModel> {
+        return userDataSource.getPartnerInfo().map { partnerInfoResponse ->
+            partnerInfoResponse.toDomainModel()
         }
     }
 
@@ -41,15 +41,11 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun deletePartner(): Result<Boolean> {
-        return runCatching {
-            userDataSource.deletePartner()
-        }
+    override suspend fun deletePartner(): NetworkResult<Boolean> {
+        return userDataSource.deletePartner()
     }
 
-    override suspend fun signOut(): Result<Boolean> {
-        return runCatching {
-            userDataSource.signOut()
-        }
+    override suspend fun signOut(): NetworkResult<Boolean> {
+        return userDataSource.signOut()
     }
 }

@@ -11,8 +11,6 @@ import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.util.createInviteDeepLink
 import kotlinx.coroutines.launch
 import model.user.UserNickNameDomainModel
-import util.onError
-import util.onSuccess
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
@@ -22,6 +20,8 @@ import usecase.user.GetPartnerInfoUseCase
 import usecase.user.GetUserInfoUseCase
 import usecase.user.SetIsSendInvitationUseCase
 import usecase.user.SetNickNameUseCase
+import util.onError
+import util.onSuccess
 import javax.inject.Inject
 
 class InviteViewModel @Inject constructor(
@@ -52,7 +52,7 @@ class InviteViewModel @Inject constructor(
     fun matchingPartner() = intent {
         setNickNameUseCase(UserNickNameDomainModel(state.userNickName, state.partnerNo)).onSuccess {
             navigateToHome()
-        }.onFailure {
+        }.onError { code, message ->
         }
     }
 
@@ -66,7 +66,7 @@ class InviteViewModel @Inject constructor(
             } else {
                 toastMessage("상대방 아직 수락을 하지 않았어요!")
             }
-        }.onFailure {
+        }.onError { code, message ->
             toastMessage("상대방 아직 수락을 하지 않았어요!")
         }
     }
