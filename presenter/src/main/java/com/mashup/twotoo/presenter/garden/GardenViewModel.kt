@@ -12,6 +12,8 @@ import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
 import usecase.challenge.GetChallengeHistoriesUseCase
+import util.onError
+import util.onSuccess
 
 class GardenViewModel(
     private val getChallengeHistoriesUseCase: GetChallengeHistoriesUseCase,
@@ -36,8 +38,8 @@ class GardenViewModel(
                     hasNotRealChallenge = challengeCardInfos.isEmpty(),
                 )
             }
-        }.onFailure {
-            Log.e(TAG, "${it.message} 실패!!")
+        }.onError { code, message ->
+            Log.e(TAG, "$message 실패!!")
             reduce {
                 state.copy(
                     loadingIndicatorState = false,

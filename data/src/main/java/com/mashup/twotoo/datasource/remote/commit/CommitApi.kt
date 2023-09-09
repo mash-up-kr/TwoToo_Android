@@ -9,6 +9,7 @@ import retrofit2.http.Multipart
 import retrofit2.http.POST
 import retrofit2.http.Part
 import retrofit2.http.Path
+import util.NetworkResult
 
 interface CommitApi {
     @Multipart
@@ -17,14 +18,14 @@ interface CommitApi {
         @Part text: MultipartBody.Part,
         @Part challengeNo: MultipartBody.Part,
         @Part img: MultipartBody.Part,
-    ): Commit
+    ): NetworkResult<Commit>
 
     @GET("/commit{commitNo}")
-    suspend fun getCommitByNo(@Path("commitNo") commitNo: Int): Commit
+    suspend fun getCommitByNo(@Path("commitNo") commitNo: Int): NetworkResult<Commit>
 
     @POST("/commit/{commitNo}/comment")
     suspend fun cheerByNo(
         @Path("commitNo") commitNo: Int,
         @Body cheerRequest: CheerRequest,
-    ): Commit
+    ): NetworkResult<Commit>
 }

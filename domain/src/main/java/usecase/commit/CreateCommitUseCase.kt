@@ -3,6 +3,7 @@ package usecase.commit
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
 import repository.CommitRepository
+import util.NetworkResult
 import javax.inject.Inject
 
 class CreateCommitUseCase @Inject constructor(
@@ -10,7 +11,7 @@ class CreateCommitUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         commitRequestDomainModel: CommitRequestDomainModel,
-    ): Result<CommitResponseDomainModel> {
+    ): NetworkResult<CommitResponseDomainModel> {
         return commitRepository.commit(
             commitRequestDomainModel = commitRequestDomainModel,
         )

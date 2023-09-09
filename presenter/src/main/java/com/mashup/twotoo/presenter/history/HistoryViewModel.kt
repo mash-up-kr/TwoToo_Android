@@ -13,7 +13,6 @@ import com.mashup.twotoo.presenter.util.DateFormatter
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.commit.request.CommitRequestDomainModel
 import model.commit.response.CommitResponseDomainModel
-import util.onSuccess
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
@@ -23,6 +22,8 @@ import usecase.challenge.GetChallengeByNoUseCase
 import usecase.challenge.QuiteChallengeUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.user.GetUserInfoUseCase
+import util.onError
+import util.onSuccess
 import java.util.Calendar
 import java.util.Date
 import javax.inject.Inject
@@ -48,8 +49,8 @@ class HistoryViewModel @Inject constructor(
         ).onSuccess {
             Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Success")
             getChallengeByUser(this.state.challengeInfoUiModel.challengeNo)
-        }.onFailure {
-            Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Failed, message=${it.message}")
+        }.onError { code, message ->
+            Log.i("HistoryViewModel", "onClickBottomSheetDataButton: Failed, message=$message")
         }
     }
 
@@ -120,8 +121,8 @@ class HistoryViewModel @Inject constructor(
                     )
                 }
             }
-        }.onFailure {
-            Log.e("HistoryViewModel", "getChallengeByUser: ${it.message} 서버 에러!!")
+        }.onError { code, message ->
+            Log.e("HistoryViewModel", "getChallengeByUser: $message 서버 에러!!")
         }
     }
 
@@ -281,7 +282,7 @@ class HistoryViewModel @Inject constructor(
     fun quiteChallenge(challengeNo: Int) = intent {
         quiteChallengeUseCase(ChallengeNoRequestDomainModel(challengeNo)).onSuccess {
             Log.i("HistoryViewModel", "quiteChallenge: 챌린지 삭제완료")
-        }.onFailure {
+        }.onError { code, message ->
             Log.i("HistoryViewModel", "quiteChallenge: 챌린지 삭제 실패")
         }
     }

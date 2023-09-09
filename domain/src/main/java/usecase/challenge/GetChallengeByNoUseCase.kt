@@ -3,6 +3,7 @@ package usecase.challenge
 import model.challenge.request.ChallengeNoRequestDomainModel
 import model.challenge.response.ChallengeDetailResponseDomainModel
 import repository.ChallengeRepository
+import util.NetworkResult
 import javax.inject.Inject
 
 class GetChallengeByNoUseCase @Inject constructor(
@@ -10,7 +11,7 @@ class GetChallengeByNoUseCase @Inject constructor(
 ) {
     suspend operator fun invoke(
         challengeNoRequestDomainModel: ChallengeNoRequestDomainModel,
-    ): Result<ChallengeDetailResponseDomainModel> {
+    ): NetworkResult<ChallengeDetailResponseDomainModel> {
         return challengeRepository.getChallengeByNo(
             challengeNoRequestDomainModel = challengeNoRequestDomainModel,
         )
