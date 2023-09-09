@@ -107,7 +107,6 @@ fun GardenScreen(
                             isStartAnimation = isStartAnimation,
                             challengeCardInfoUiModel = challengeInfo,
                             navigateToGarden = navigateToGarden,
-
                         )
                     }
                 }
