@@ -1,5 +1,6 @@
 package com.mashup.twotoo.datasource.remote.user
 
+import util.NetworkResult
 import com.mashup.twotoo.datasource.remote.user.request.UserAuthRequest
 import com.mashup.twotoo.datasource.remote.user.request.UserNickNameRequest
 import com.mashup.twotoo.datasource.remote.user.response.PartnerInfoResponse
@@ -26,7 +27,7 @@ interface UserApi {
     suspend fun getUserPartnerInfo(): PartnerInfoResponse
 
     @GET("/user/me")
-    suspend fun getUserInfo(): UserInfoResponse
+    suspend fun getUserInfo(): NetworkResult<UserInfoResponse>
 
     @PATCH("/user/delPartner")
     suspend fun deletePartner(): Boolean

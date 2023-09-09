@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.mypage
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.mypage.model.MyPageItem
+import util.onSuccess
 import org.orbitmvi.orbit.Container
 import org.orbitmvi.orbit.ContainerHost
 import org.orbitmvi.orbit.syntax.simple.intent
