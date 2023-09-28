@@ -30,6 +30,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound10
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.garden.model.ChallengeCardInfoUiModel
 import com.mashup.twotoo.presenter.garden.model.FlowerHead
 
@@ -97,14 +98,18 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
         ) {
             Text(
                 text = stringResource(
-                    id = if (challengeCardInfoUiModel.viewState == "InProgress") {
+                    id = if (challengeCardInfoUiModel.viewState.isInProgress()) {
                         R.string.inProgressChallengeAttempts
                     } else {
                         R.string.challengeAttempts
                     },
                     challengeCardInfoUiModel.attempts,
                 ),
-                color = TwoTooTheme.color.mainPink,
+                color = if (challengeCardInfoUiModel.viewState.isInProgress()) {
+                    TwoTooTheme.color.mainPink
+                } else {
+                    TwotooPink
+                },
             )
             Text(
                 modifier = Modifier.padding(top = 16.dp),
@@ -118,6 +123,10 @@ private fun ChallengeInfo(challengeCardInfoUiModel: ChallengeCardInfoUiModel) {
             )
         }
     }
+}
+
+private fun String.isInProgress(): Boolean {
+    return this == "InProgress"
 }
 
 @Composable
