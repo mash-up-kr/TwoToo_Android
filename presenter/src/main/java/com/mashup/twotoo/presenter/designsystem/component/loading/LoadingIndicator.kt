@@ -47,7 +47,8 @@ fun WaterLoadingIndicator(
     ) {
         val (waterWrapper, waterImage) = createRefs()
         val screenHeight = LocalConfiguration.current.screenHeightDp
-        val areaMargin = 14.dp * screenHeight / 812
+        val areaMargin = 12.dp * screenHeight / 812
+        val bottomSpace = 14.dp * screenHeight / 812
         TwoTooImageView(
             modifier = Modifier.constrainAs(waterWrapper) {
                 linkTo(
@@ -64,7 +65,7 @@ fun WaterLoadingIndicator(
         TwoTooImageView(
             modifier = Modifier.padding(
                 top = areaMargin,
-                bottom = areaMargin * 2,
+                bottom = areaMargin + bottomSpace,
                 start = areaMargin,
                 end = areaMargin,
             )
