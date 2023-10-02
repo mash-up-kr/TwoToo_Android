@@ -67,6 +67,11 @@ fun HomeFlowerMeAndPartner(
             partnerCheer, meCheer, heartImage, partnerFlowerLanguage, meFlowerLanguage,
         ) = createRefs()
 
+        val screenWidth = LocalConfiguration.current.screenWidthDp
+        val screenHeight = LocalConfiguration.current.screenHeightDp
+        val bubbleWidth = 75.dp * screenWidth / 375
+        val bubbleHeight = 69.dp * screenHeight / 812
+
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (homeChallengeStateUiModel.challengeState == Complete) {
@@ -161,8 +166,8 @@ fun HomeFlowerMeAndPartner(
                             .testTag(
                                 stringResource(id = R.string.homeOngoingChallengeWaterImage),
                             )
-                            .width(69.dp)
-                            .height(42.dp)
+                            .width(bubbleWidth)
+                            .height(bubbleHeight)
                             .constrainAs(waterImage) {
                                 top.linkTo(textHint.bottom)
                                 bottom.linkTo(me.top, margin = 8.dp)

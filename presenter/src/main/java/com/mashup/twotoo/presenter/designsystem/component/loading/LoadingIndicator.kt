@@ -6,12 +6,18 @@ import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable
 import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.constraintlayout.compose.ConstraintLayout
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
@@ -36,14 +42,45 @@ fun WaterLoadingIndicator(
         label = "",
     )
 
-    TwoTooImageView(
-        modifier = modifier.graphicsLayer {
-            rotationZ = rotation
-        },
-        model = R.drawable.img_watering,
-        previewPlaceholder = R.drawable.img_watering,
-        contentScale = ContentScale.Fit,
-    )
+    ConstraintLayout(
+        modifier = modifier,
+    ) {
+        val (waterWrapper, waterImage) = createRefs()
+        val screenHeight = LocalConfiguration.current.screenHeightDp
+        val areaMargin = 14.dp * screenHeight / 812
+        TwoTooImageView(
+            modifier = Modifier.constrainAs(waterWrapper) {
+                linkTo(
+                    top = parent.top,
+                    start = parent.start,
+                    end = parent.end,
+                    bottom = parent.bottom,
+                )
+            },
+            model = R.drawable.ic_bubble_wrapper,
+            previewPlaceholder = R.drawable.ic_bubble_wrapper,
+            contentScale = ContentScale.Fit,
+        )
+        TwoTooImageView(
+            modifier = Modifier.padding(
+                top = areaMargin,
+                bottom = areaMargin * 2,
+                start = areaMargin,
+                end = areaMargin,
+            )
+                .constrainAs(waterImage) {
+                    start.linkTo(parent.start)
+                    end.linkTo(parent.end)
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                }.graphicsLayer {
+                    rotationZ = rotation
+                },
+            model = R.drawable.img_watering,
+            previewPlaceholder = R.drawable.img_watering,
+            contentScale = ContentScale.Fit,
+        )
+    }
 }
 
 @Composable
@@ -63,7 +100,9 @@ fun FlowerLoadingIndicator(
 @Composable
 fun PreviewWaterIndicator() {
     TwoTooTheme {
-        WaterLoadingIndicator()
+        WaterLoadingIndicator(
+            modifier = Modifier.width(75.dp).height(69.dp),
+        )
     }
 }
 
