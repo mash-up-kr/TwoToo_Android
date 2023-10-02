@@ -36,6 +36,7 @@ fun HistoryDetailRoute(
     commitNo: Int,
     historyViewModel: HistoryViewModel,
     onClickBackButton: () -> Unit,
+    onClickImage: (String) -> Unit,
 ) {
     Log.i("HistoryDetailRoute", "commitNo = $commitNo")
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -46,15 +47,17 @@ fun HistoryDetailRoute(
     }
     val state by historyViewModel.collectAsState()
     HistoryDetailScreen(
-        onClickBackButton = onClickBackButton,
         historyDetailInfoUiModel = state.historyDetailInfoUiModel,
+        onClickBackButton = onClickBackButton,
+        onClickImage = onClickImage,
     )
 }
 
 @Composable
 fun HistoryDetailScreen(
-    onClickBackButton: () -> Unit,
     historyDetailInfoUiModel: HistoryDetailInfoUiModel,
+    onClickBackButton: () -> Unit = {},
+    onClickImage: (String) -> Unit = {},
 ) {
     val scrollableState = rememberScrollState()
 
@@ -98,7 +101,10 @@ fun HistoryDetailScreen(
                         .fillMaxWidth()
                         .padding(vertical = 24.dp)
                         .aspectRatio(1f)
-                        .clip(TwoTooTheme.shape.extraSmall),
+                        .clip(TwoTooTheme.shape.extraSmall).clickable {
+                            onClickImage(historyDetailInfoUiModel.infoUiModel.photoUrl)
+                        },
+
                 )
                 Text(
                     text = historyDetailInfoUiModel.challengeName,
