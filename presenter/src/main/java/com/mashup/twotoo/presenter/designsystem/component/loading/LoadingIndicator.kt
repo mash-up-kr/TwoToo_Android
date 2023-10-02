@@ -58,8 +58,8 @@ fun WaterLoadingIndicator(
                     bottom = parent.bottom,
                 )
             },
-            model = R.drawable.ic_bubble_wrapper,
-            previewPlaceholder = R.drawable.ic_bubble_wrapper,
+            model = R.drawable.ic_water_bubble_wrapper,
+            previewPlaceholder = R.drawable.ic_water_bubble_wrapper,
             contentScale = ContentScale.Fit,
         )
         TwoTooImageView(
