@@ -57,6 +57,7 @@ fun HomeFlowerMeAndPartner(
     modifier: Modifier = Modifier,
     onCommit: () -> Unit = {},
     onClickCheerButton: () -> Unit = {},
+    onClickFlowerTextBubble: (HomeFlowerUiModel) -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier,
@@ -83,6 +84,7 @@ fun HomeFlowerMeAndPartner(
                                 end.linkTo(partner.end)
                             },
                             homeFlowerUiModel = this.partner,
+                            onClickFlowerTextBubble = onClickFlowerTextBubble,
                         )
                     }
 
@@ -94,6 +96,7 @@ fun HomeFlowerMeAndPartner(
                                 end.linkTo(me.end)
                             },
                             homeFlowerUiModel = this.me,
+                            onClickFlowerTextBubble = onClickFlowerTextBubble,
                         )
                     }
                 }
