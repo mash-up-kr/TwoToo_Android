@@ -88,6 +88,7 @@ dependencies {
     implementation(libs.bottomsheetdialog)
     implementation(libs.compose.keyboard.state)
     implementation(libs.lottie)
+    implementation(libs.capture)
 }
 
 fun getApiKey(propertyKey: String): String {
