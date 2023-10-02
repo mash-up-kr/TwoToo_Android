@@ -76,29 +76,25 @@ fun HomeFlowerMeAndPartner(
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (homeChallengeStateUiModel.challengeState == Complete) {
-                    if ((this.partner.flowerType as Flower).growType >= Stage.Fourth) {
-                        HomeFlowerLanguage(
-                            modifier = Modifier.constrainAs(partnerFlowerLanguage) {
-                                bottom.linkTo(partner.top)
-                                start.linkTo(partner.start)
-                                end.linkTo(partner.end)
-                            },
-                            homeFlowerUiModel = this.partner,
-                            onClickFlowerTextBubble = onClickFlowerTextBubble,
-                        )
-                    }
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(partnerFlowerLanguage) {
+                            bottom.linkTo(partner.top)
+                            start.linkTo(partner.start)
+                            end.linkTo(partner.end)
+                        },
+                        homeFlowerUiModel = this.partner,
+                        onClickFlowerTextBubble = onClickFlowerTextBubble,
+                    )
 
-                    if ((this.me.flowerType as Flower).growType >= Stage.Fourth) {
-                        HomeFlowerLanguage(
-                            modifier = Modifier.constrainAs(meFlowerLanguage) {
-                                bottom.linkTo(me.top)
-                                start.linkTo(me.start)
-                                end.linkTo(me.end)
-                            },
-                            homeFlowerUiModel = this.me,
-                            onClickFlowerTextBubble = onClickFlowerTextBubble,
-                        )
-                    }
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(meFlowerLanguage) {
+                            bottom.linkTo(me.top)
+                            start.linkTo(me.start)
+                            end.linkTo(me.end)
+                        },
+                        homeFlowerUiModel = this.me,
+                        onClickFlowerTextBubble = onClickFlowerTextBubble,
+                    )
                 }
 
                 if ((this.authType == FirstCreateChallenge && homeChallengeStateUiModel.challengeState != Complete) ||
