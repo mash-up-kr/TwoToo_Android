@@ -214,7 +214,7 @@ fun CreateChallengeToolbar(
             onClickBackButton()
         },
         actionIconButton = {
-            if (homeState == BeforeChallengeState.WAIT.name) {
+            if (BeforeChallengeState.isChallengeDeletionEnabled(homeState)) {
                 moreIconButton(challengeNo)
             }
         },
