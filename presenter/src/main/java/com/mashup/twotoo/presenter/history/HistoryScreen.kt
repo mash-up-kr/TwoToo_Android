@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.history
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -121,7 +120,7 @@ fun HistoryScreen(
                 },
             ) {
                 IconButton(onClick = {
-                    if (!state.challengeInfoUiModel.isFinished) { showSelectListDialog = true }
+                    showSelectListDialog = true
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
