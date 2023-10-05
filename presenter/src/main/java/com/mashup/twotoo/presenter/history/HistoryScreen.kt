@@ -85,6 +85,11 @@ fun HistoryScreen(
 ) {
     var isBottomSheetVisible by remember { mutableStateOf(false) }
     var bottomSheetType by remember { mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate()) }
+    val challengeDropSelectionDialogTitleId = if (state.challengeInfoUiModel.isFinished) {
+        R.string.challenge_delete
+    } else {
+        R.string.challenge_done
+    }
 
     fun onDismiss() {
         isBottomSheetVisible = false
@@ -172,7 +177,7 @@ fun HistoryScreen(
             ChallengeDropSelectionDialog(
                 dropDialogTextUiModels = listOf(
                     DropDialogTextUiModel(
-                        titleId = R.string.challenge_done,
+                        titleId = challengeDropSelectionDialogTitleId,
                         buttonAction = {
                             showSelectListDialog = false
                             showChallengeDropDialog = true
@@ -198,6 +203,7 @@ fun HistoryScreen(
                         showChallengeDropDialog = false
                         onClickBackButton()
                     },
+                    state.challengeInfoUiModel.isFinished,
                 ),
             )
         }
