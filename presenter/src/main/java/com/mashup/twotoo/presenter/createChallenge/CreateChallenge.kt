@@ -27,8 +27,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
-import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
-import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
@@ -90,7 +88,6 @@ fun CreateChallengeRoute(
                 }
             },
             onClickDialogPositiveButton = createChallengeViewModel::deleteChallenge,
-            setSelectDialogVisibility = createChallengeViewModel::setSelectDialogVisibility,
             setDialogVisibility = createChallengeViewModel::setDialogVisibility,
         )
         SnackBarHost(
@@ -108,7 +105,6 @@ fun CreateChallenge(
     onClickTheeStep: () -> Unit,
     onClickBackButton: () -> Unit,
     onClickDialogPositiveButton: (Int) -> Unit,
-    setSelectDialogVisibility: (Boolean) -> Unit,
     setDialogVisibility: (Boolean) -> Unit,
 ) = with(state) {
     val context = LocalContext.current
@@ -125,10 +121,8 @@ fun CreateChallenge(
             challengeNo = challengeNo,
             homeState = homeState,
             deleteDialogVisibility = dialogVisibility,
-            selectDialogVisibility = selectDialogVisibility,
             onClickBackButton = onClickBackButton,
             onClickDialogPositiveButton = onClickDialogPositiveButton,
-            setSelectDialogVisibility = setSelectDialogVisibility,
             setDialogVisibility = setDialogVisibility,
         )
         Column(
@@ -190,13 +184,11 @@ fun CreateChallenge(
 
 @Composable
 fun CreateChallengeToolbar(
-    selectDialogVisibility: Boolean,
     deleteDialogVisibility: Boolean,
     challengeNo: Int,
     homeState: String,
     onClickBackButton: () -> Unit,
     onClickDialogPositiveButton: (Int) -> Unit,
-    setSelectDialogVisibility: (Boolean) -> Unit,
     setDialogVisibility: (Boolean) -> Unit,
 ) {
     val toolbarTitle = when (homeState) {
@@ -208,7 +200,7 @@ fun CreateChallengeToolbar(
     val moreIconButton: @Composable (Int) -> Unit =
         {
             IconButton(onClick = {
-                setSelectDialogVisibility(true)
+                setDialogVisibility(true)
             }) {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_more),
@@ -230,35 +222,21 @@ fun CreateChallengeToolbar(
         },
     )
 
-    if (selectDialogVisibility) {
+    if (deleteDialogVisibility) {
         TwoTooSelectionDialog(
             selectionDialogButtonContents = listOf(
                 SelectionDialogButtonContent(
                     titleId = R.string.challenge_done,
                     buttonAction = {
-                        setSelectDialogVisibility(false)
-                        setDialogVisibility(true)
+                        onClickDialogPositiveButton(challengeNo)
                     },
                     color = TwotooPink,
                 ),
                 SelectionDialogButtonContent(
                     titleId = R.string.cancel,
-                    buttonAction = { setSelectDialogVisibility(false) },
+                    buttonAction = { setDialogVisibility(false) },
                     color = Color.Black,
                 ),
-            ),
-        )
-    }
-
-    if (deleteDialogVisibility) {
-        TwoTooDialog(
-            content = DialogContent.createHistoryLeaveChallengeDialogContent(
-                negativeAction = {
-                    setDialogVisibility(false)
-                },
-                positiveAction = {
-                    onClickDialogPositiveButton(challengeNo)
-                },
             ),
         )
     }

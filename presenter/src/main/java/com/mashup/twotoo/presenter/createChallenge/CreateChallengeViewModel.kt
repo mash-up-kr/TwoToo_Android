@@ -141,13 +141,6 @@ class CreateChallengeViewModel@Inject constructor(
         }
     }
 
-    fun setSelectDialogVisibility(visibility: Boolean) = intent {
-        reduce {
-            state.copy(
-                selectDialogVisibility = visibility,
-            )
-        }
-    }
     fun setDialogVisibility(visibility: Boolean) = intent {
         reduce {
             state.copy(

@@ -15,7 +15,6 @@ data class ChallengeInfoModel(
     val period: String = "",
     val challengeInfo: String = "",
     val selectFlowerName: String = "",
-    val selectDialogVisibility: Boolean = false,
     val dialogVisibility: Boolean = false,
 )
 
