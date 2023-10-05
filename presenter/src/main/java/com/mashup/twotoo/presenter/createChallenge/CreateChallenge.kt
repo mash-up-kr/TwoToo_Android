@@ -29,12 +29,12 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.history.ChallengeDropSelectionDialog
-import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
+import com.mashup.twotoo.presenter.history.TwoTooSelectionDialog
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.util.DateFormatter
 import org.orbitmvi.orbit.compose.collectAsState
@@ -231,9 +231,9 @@ fun CreateChallengeToolbar(
     )
 
     if (selectDialogVisibility) {
-        ChallengeDropSelectionDialog(
-            dropDialogTextUiModels = listOf(
-                DropDialogTextUiModel(
+        TwoTooSelectionDialog(
+            selectionDialogButtonContents = listOf(
+                SelectionDialogButtonContent(
                     titleId = R.string.challenge_done,
                     buttonAction = {
                         setSelectDialogVisibility(false)
@@ -241,7 +241,7 @@ fun CreateChallengeToolbar(
                     },
                     color = TwotooPink,
                 ),
-                DropDialogTextUiModel(
+                SelectionDialogButtonContent(
                     titleId = R.string.cancel,
                     buttonAction = { setSelectDialogVisibility(false) },
                     color = Color.Black,
