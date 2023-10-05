@@ -34,4 +34,9 @@ interface UserApi {
 
     @DELETE("/user/signOut")
     suspend fun signOut(): NetworkResult<Boolean>
+
+    @PATCH("/user/changeNickname")
+    suspend fun changeNickName(
+        @Body userNickName: UserNickNameRequest
+    ): NetworkResult<UserInfoResponse>
 }
