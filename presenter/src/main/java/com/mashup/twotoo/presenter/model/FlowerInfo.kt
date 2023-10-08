@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.model
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.unit.Dp
+import com.mashup.twotoo.presenter.R
 
 /**
  * @Created by 김현국 2023/06/09
@@ -47,3 +48,16 @@ data class FlowerImage(
     val width: Dp,
     val height: Dp,
 )
+
+fun getFlowerLanguage(flowerName: FlowerName): Int {
+    return when(flowerName) {
+        FlowerName.Tulip -> R.string.tulip_language
+        FlowerName.Rose -> R.string.rose_language
+        FlowerName.Cotton -> R.string.cotton_language
+        FlowerName.Fig -> R.string.fig_language
+        FlowerName.Chrysanthemum -> R.string.chrysanthemum_language
+        FlowerName.Sunflower -> R.string.sunflower_language
+        FlowerName.Camellia -> R.string.camellia_language
+        FlowerName.Delphinium -> R.string.delphinium_language
+    }
+}
