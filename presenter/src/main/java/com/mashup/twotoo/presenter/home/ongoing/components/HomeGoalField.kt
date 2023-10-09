@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,6 +23,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.HomeGoalFieldUiModel
@@ -47,7 +50,7 @@ fun HomeGoalField(
                 onClickHomeGoalField()
             },
         ) {
-            val (goalText, dDayText) = createRefs()
+            val (goalText, dDayText, arrow) = createRefs()
             AutoResizeText(
                 modifier = Modifier.constrainAs(goalText) {
                     top.linkTo(parent.top, margin = 16.dp)
@@ -76,6 +79,15 @@ fun HomeGoalField(
                 color = TwoTooTheme.color.gray500.copy(alpha = LocalContentAlpha.current),
                 style = TwoTooTheme.typography.bodyNormal16,
 
+            )
+            TwoTooImageView(
+                modifier = Modifier.size(28.dp).constrainAs(arrow) {
+                    top.linkTo(parent.top)
+                    bottom.linkTo(parent.bottom)
+                    end.linkTo(parent.end, 8.dp)
+                },
+                model = R.drawable.ic_arrow,
+                previewPlaceholder = R.drawable.ic_arrow,
             )
         }
     }
