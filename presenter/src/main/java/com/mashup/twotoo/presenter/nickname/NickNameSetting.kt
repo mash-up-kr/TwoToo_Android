@@ -53,7 +53,8 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 @Composable
 fun NickNameSettingRoute(
     nickNameViewModel: NickNameViewModel,
-    onLoginSuccess: (String) -> Unit,
+    startRoute: String,
+    onSettingSuccess: (String) -> Unit,
 ) {
     val state by nickNameViewModel.collectAsState()
     val coroutineScope = rememberCoroutineScope()
@@ -79,17 +80,29 @@ fun NickNameSettingRoute(
         )
     }
 
-    NickNameSetting(state, snackState, onNextButtonClick = { nickName ->
-        nickNameViewModel.setUserNickName(nickName)
-    })
+    NickNameSetting(
+        state,
+        snackState,
+        startRoute,
+        onNextButtonClick = { nickName ->
+            if (startRoute.isNotEmpty() && startRoute == "mypage") {
+                nickNameViewModel.changeNickname(nickName)
+            } else {
+                nickNameViewModel.setUserNickName(nickName)
+            }
+        },
+    )
 
     nickNameViewModel.collectSideEffect { sideEffect ->
         when (sideEffect) {
             is NickNameSideEffect.NavigateToHome -> {
-                onLoginSuccess(NavigationRoute.HomeGraph.HomeScreen.route)
+                onSettingSuccess(NavigationRoute.HomeGraph.HomeScreen.route)
             }
             is NickNameSideEffect.NavigateToSendInvitation -> {
-                onLoginSuccess(NavigationRoute.InvitationGraph.SendInvitationScreen.route)
+                onSettingSuccess(NavigationRoute.InvitationGraph.SendInvitationScreen.route)
+            }
+            is NickNameSideEffect.NavigateToMyPage -> {
+                onSettingSuccess(NavigationRoute.UserGraph.UserScreen.route)
             }
             is NickNameSideEffect.ToastMessage -> {
                 coroutineScope.launch {
@@ -104,8 +117,16 @@ fun NickNameSettingRoute(
 fun NickNameSetting(
     state: NickNameState,
     snackState: SnackbarHostState,
+    startRoute: String,
     onNextButtonClick: (String) -> Unit,
 ) {
+    val desc =
+        if (startRoute.isNotEmpty() && startRoute == "mypage") {
+            R.string.nickname_change
+        } else {
+            R.string.nickname_setting
+        }
+
     Box {
         Column(
             modifier = Modifier
@@ -115,7 +136,7 @@ fun NickNameSetting(
         ) {
             Spacer(modifier = Modifier.height(5.dp))
             TwoTooMainToolbar()
-            if (state.partnerNickName.isNotEmpty()) {
+            if (state.partnerNickName.isNotEmpty() && startRoute.isEmpty()) {
                 TwoTooImageView(
                     modifier = Modifier.size(97.dp, 85.dp),
                     previewPlaceholder = R.drawable.img_nickname_mate,
@@ -132,7 +153,7 @@ fun NickNameSetting(
             }
             Text(
                 modifier = Modifier.padding(top = 78.dp),
-                text = stringResource(id = R.string.nickname_setting),
+                text = stringResource(id = desc),
                 textAlign = TextAlign.Center,
                 style = TwoTooTheme.typography.headLineNormal28,
                 color = TwoTooTheme.color.mainBrown,
@@ -142,7 +163,7 @@ fun NickNameSetting(
             Spacer(modifier = Modifier.weight(1f))
             TwoTooTextButton(
                 text = stringResource(id = R.string.button_confirm),
-                enabled = true,
+                enabled = nickName.isNotEmpty(),
             ) {
                 onNextButtonClick(nickName)
             }
@@ -228,5 +249,5 @@ private fun InviteGuidePreview() {
 @Preview
 @Composable
 private fun NickNameSettingPreview() {
-    NickNameSetting(NickNameState(), SnackbarHostState(), {})
+    NickNameSetting(NickNameState(), SnackbarHostState(), "", {})
 }

@@ -3,9 +3,8 @@ package com.mashup.twotoo.presenter.nickname.di
 import com.mashup.twotoo.presenter.nickname.NickNameViewModel
 import dagger.Module
 import dagger.Provides
-import usecase.user.GetPreferenceUserInfoUseCase
+import usecase.user.ChangeNicknameUseCase
 import usecase.user.SetNickNameUseCase
-import usecase.user.SetPreferenceUserInfoUseCase
 import javax.inject.Scope
 
 @Module
@@ -14,10 +13,12 @@ class NickNameSettingModule {
     @Provides
     @NickNameSettingScope
     fun provideViewModel(
-        setNickNameUseCase: SetNickNameUseCase
+        setNickNameUseCase: SetNickNameUseCase,
+        changeNicknameUseCase: ChangeNicknameUseCase
     ): NickNameViewModel {
         return NickNameViewModel(
-            setNickNameUseCase = setNickNameUseCase
+            setNickNameUseCase = setNickNameUseCase,
+            changeNicknameUseCase = changeNicknameUseCase,
         )
     }
 }
