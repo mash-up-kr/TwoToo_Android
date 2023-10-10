@@ -140,7 +140,7 @@ private fun BoxScope.Flowers(challengeCardInfoUiModel: ChallengeCardInfoUiModel)
         val screenWidth = LocalConfiguration.current.screenWidthDp
         val screenHeight = LocalConfiguration.current.screenHeightDp
 
-        if (challengeCardInfoUiModel.viewState == "InProgress") {
+        if (challengeCardInfoUiModel.viewState.isInProgress()) {
             val inProgressImageHeight = 64 * screenHeight / 812
             TwoTooImageView(
                 modifier = Modifier.padding(horizontal = 29.dp).fillMaxWidth().height(inProgressImageHeight.dp),
