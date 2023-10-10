@@ -36,7 +36,15 @@ data class HomeStateUiModel(
 sealed interface ChallengeStateTypeUiModel
 
 enum class BeforeChallengeState {
-    Init, EMPTY, REQUEST, RESPONSE, WAIT, TERMINATION
+    Init, EMPTY, REQUEST, RESPONSE, WAIT, TERMINATION;
+
+    companion object {
+        fun isChallengeDeletionEnabled(stateName: String): Boolean =
+            when (valueOf(stateName)) {
+                EMPTY, REQUEST, RESPONSE -> true
+                else -> false
+            }
+    }
 }
 
 data class BeforeChallengeUiModel(

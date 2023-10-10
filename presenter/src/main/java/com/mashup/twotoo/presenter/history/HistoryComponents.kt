@@ -90,7 +90,7 @@ fun ChallengeInfo(challengeInfoUiModel: ChallengeInfoUiModel) {
                     stringResource(id = R.string.finish)
                 } else {
                     stringResource(
-                        id = R.string.DDay,
+                        id = R.string.d_day,
                         challengeInfoUiModel.day,
                     )
                 },

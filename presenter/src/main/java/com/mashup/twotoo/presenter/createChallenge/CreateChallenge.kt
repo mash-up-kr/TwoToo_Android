@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -26,11 +27,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
-import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
-import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
+import com.mashup.twotoo.presenter.history.TwoTooSelectionDialog
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.util.DateFormatter
 import org.orbitmvi.orbit.compose.collectAsState
@@ -214,21 +216,27 @@ fun CreateChallengeToolbar(
             onClickBackButton()
         },
         actionIconButton = {
-            if (homeState == BeforeChallengeState.WAIT.name) {
+            if (BeforeChallengeState.isChallengeDeletionEnabled(homeState)) {
                 moreIconButton(challengeNo)
             }
         },
     )
 
     if (deleteDialogVisibility) {
-        TwoTooDialog(
-            content = DialogContent.createHistoryLeaveChallengeDialogContent(
-                negativeAction = {
-                    setDialogVisibility(false)
-                },
-                positiveAction = {
-                    onClickDialogPositiveButton(challengeNo)
-                },
+        TwoTooSelectionDialog(
+            selectionDialogButtonContents = listOf(
+                SelectionDialogButtonContent(
+                    titleId = R.string.challenge_done,
+                    buttonAction = {
+                        onClickDialogPositiveButton(challengeNo)
+                    },
+                    color = TwotooPink,
+                ),
+                SelectionDialogButtonContent(
+                    titleId = R.string.cancel,
+                    buttonAction = { setDialogVisibility(false) },
+                    color = Color.Black,
+                ),
             ),
         )
     }

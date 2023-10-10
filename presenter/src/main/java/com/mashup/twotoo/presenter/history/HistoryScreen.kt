@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.history
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,11 +34,11 @@ import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomShee
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
-import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import org.orbitmvi.orbit.compose.collectAsState
@@ -86,6 +85,11 @@ fun HistoryScreen(
 ) {
     var isBottomSheetVisible by remember { mutableStateOf(false) }
     var bottomSheetType by remember { mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate()) }
+    val challengeDropSelectionDialogTitleId = if (state.challengeInfoUiModel.isFinished) {
+        R.string.challenge_delete
+    } else {
+        R.string.challenge_done
+    }
 
     fun onDismiss() {
         isBottomSheetVisible = false
@@ -121,7 +125,7 @@ fun HistoryScreen(
                 },
             ) {
                 IconButton(onClick = {
-                    if (!state.challengeInfoUiModel.isFinished) { showSelectListDialog = true }
+                    showSelectListDialog = true
                 }) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_more),
@@ -170,17 +174,17 @@ fun HistoryScreen(
             }
         }
         if (showSelectListDialog) {
-            ChallengeDropSelectionDialog(
-                dropDialogTextUiModels = listOf(
-                    DropDialogTextUiModel(
-                        titleId = R.string.challenge_done,
+            TwoTooSelectionDialog(
+                selectionDialogButtonContents = listOf(
+                    SelectionDialogButtonContent(
+                        titleId = challengeDropSelectionDialogTitleId,
                         buttonAction = {
                             showSelectListDialog = false
                             showChallengeDropDialog = true
                         },
                         color = TwotooPink,
                     ),
-                    DropDialogTextUiModel(
+                    SelectionDialogButtonContent(
                         titleId = R.string.cancel,
                         buttonAction = { showSelectListDialog = false },
                         color = Color.Black,
@@ -199,6 +203,7 @@ fun HistoryScreen(
                         showChallengeDropDialog = false
                         onClickBackButton()
                     },
+                    state.challengeInfoUiModel.isFinished,
                 ),
             )
         }
