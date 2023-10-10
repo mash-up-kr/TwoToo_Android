@@ -81,6 +81,8 @@
     <string name="homeCheerChallengeMeBeforeCheerBubble">내 응원 전 풍선</string>
     <string name="homeCheerChallengeFirstText">칭찬 문구 작성하기</string>
 
+    <string name="homeCompleteFlowerBubbleSuccessText">꽃말 보기</string>
+    <string name="homeCompleteFlowerBubbleFaileText">다음 챌린지는\n꽃을 피워보아요!</string>
 
     
     

@@ -57,6 +57,7 @@ fun HomeFlowerMeAndPartner(
     modifier: Modifier = Modifier,
     onCommit: () -> Unit = {},
     onClickCheerButton: () -> Unit = {},
+    onClickFlowerTextBubble: (HomeFlowerUiModel) -> Unit = {},
 ) {
     ConstraintLayout(
         modifier = modifier,
@@ -67,30 +68,33 @@ fun HomeFlowerMeAndPartner(
             partnerCheer, meCheer, heartImage, partnerFlowerLanguage, meFlowerLanguage,
         ) = createRefs()
 
+        val screenWidth = LocalConfiguration.current.screenWidthDp
+        val screenHeight = LocalConfiguration.current.screenHeightDp
+        val bubbleWidth = 75.dp * screenWidth / 375
+        val bubbleHeight = 69.dp * screenHeight / 812
+
         when (homeChallengeStateUiModel.challengeStateUiModel) {
             is HomeFlowerPartnerAndMeUiModel -> with(homeChallengeStateUiModel.challengeStateUiModel) {
                 if (homeChallengeStateUiModel.challengeState == Complete) {
-                    if ((this.partner.flowerType as Flower).growType >= Stage.Fourth) {
-                        HomeFlowerLanguage(
-                            modifier = Modifier.constrainAs(partnerFlowerLanguage) {
-                                bottom.linkTo(partner.top)
-                                start.linkTo(partner.start)
-                                end.linkTo(partner.end)
-                            },
-                            homeFlowerUiModel = this.partner,
-                        )
-                    }
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(partnerFlowerLanguage) {
+                            bottom.linkTo(partner.top)
+                            start.linkTo(partner.start)
+                            end.linkTo(partner.end)
+                        },
+                        homeFlowerUiModel = this.partner,
+                        onClickFlowerTextBubble = onClickFlowerTextBubble,
+                    )
 
-                    if ((this.me.flowerType as Flower).growType >= Stage.Fourth) {
-                        HomeFlowerLanguage(
-                            modifier = Modifier.constrainAs(meFlowerLanguage) {
-                                bottom.linkTo(me.top)
-                                start.linkTo(me.start)
-                                end.linkTo(me.end)
-                            },
-                            homeFlowerUiModel = this.me,
-                        )
-                    }
+                    HomeFlowerLanguage(
+                        modifier = Modifier.constrainAs(meFlowerLanguage) {
+                            bottom.linkTo(me.top)
+                            start.linkTo(me.start)
+                            end.linkTo(me.end)
+                        },
+                        homeFlowerUiModel = this.me,
+                        onClickFlowerTextBubble = onClickFlowerTextBubble,
+                    )
                 }
 
                 if ((this.authType == FirstCreateChallenge && homeChallengeStateUiModel.challengeState != Complete) ||
@@ -161,8 +165,8 @@ fun HomeFlowerMeAndPartner(
                             .testTag(
                                 stringResource(id = R.string.homeOngoingChallengeWaterImage),
                             )
-                            .width(69.dp)
-                            .height(42.dp)
+                            .width(bubbleWidth)
+                            .height(bubbleHeight)
                             .constrainAs(waterImage) {
                                 top.linkTo(textHint.bottom)
                                 bottom.linkTo(me.top, margin = 8.dp)
