@@ -144,6 +144,9 @@
     <string name="historyDetailTitle">%s의 기록</string>
     <string name="historyDetailCreatedTime">입력 시간 : %s</string>
     <string name="complimentFromPartner">%s의 칭찬 한마디</string>
+    <string name="saveImage">저장하기</string>
+    <string name="saveImageSuccessToastText">사진 저장에 성공했습니다</string>
+    <string name="saveImageErrorToastText">사진 저장에 실패했습니다</string>
 
     <!-- button -->
     <string name="button_confirm">확인</string>
