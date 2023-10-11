@@ -23,6 +23,7 @@ fun TwoTooBackToolbar(
     titleModifier: Modifier = Modifier,
     @DrawableRes backIconId: Int = R.drawable.ic_back,
     color: Color = Color.Transparent,
+    contentColor: Color? = null,
     actionIconButton: @Composable () -> Unit = {},
 ) {
     TopAppBar(
@@ -34,7 +35,7 @@ fun TwoTooBackToolbar(
                 Text(
                     text = title,
                     modifier = titleModifier,
-                    color = TwoTooTheme.color.mainBrown,
+                    color = contentColor ?: TwoTooTheme.color.mainBrown,
                     style = TwoTooTheme.typography.headLineNormal24,
                     textAlign = TextAlign.Center,
                 )
@@ -48,6 +49,7 @@ fun TwoTooBackToolbar(
                     Icon(
                         painter = painterResource(id = backIconId),
                         contentDescription = null,
+                        tint = contentColor ?: LocalContentColor.current,
                     )
                 }
             }

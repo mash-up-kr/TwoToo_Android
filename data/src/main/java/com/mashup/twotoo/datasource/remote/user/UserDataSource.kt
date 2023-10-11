@@ -38,4 +38,10 @@ class UserDataSource @Inject constructor(
     suspend fun signOut(): NetworkResult<Boolean> {
         return userApi.signOut()
     }
+
+    suspend fun changeNickname(
+        userNickNameRequest: UserNickNameRequest,
+    ): NetworkResult<UserInfoResponse> {
+        return userApi.changeNickName(userNickNameRequest)
+    }
 }

@@ -35,7 +35,7 @@ fun SnackBarHost(modifier: Modifier, snackState: SnackbarHostState) {
 }
 
 @Composable
-fun TwoTooSnackBarView(
+private fun TwoTooSnackBarView(
     message: String,
 ) {
     Card(

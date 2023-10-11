@@ -37,6 +37,7 @@ import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
+import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
@@ -97,6 +98,9 @@ fun HomeRoute(
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
             navigateToGuide = navigateToGuide,
             onWiggleAnimationEnd = homeViewModel::onWiggleAnimationEnd,
+            onClickFlowerTextBubble = {
+                // Todo 전달되는 HomeFlowerUiModel로 dialog 표시
+            },
         )
 
         with(homeSideEffectHandler) {
@@ -135,6 +139,7 @@ fun HomeScreen(
     onClickCheerButton: () -> Unit = {},
     navigateToGuide: () -> Unit,
     onWiggleAnimationEnd: () -> Unit = {},
+    onClickFlowerTextBubble: (HomeFlowerUiModel) -> Unit = {},
 ) {
     Column(modifier = modifier) {
         TwoTooMainToolbar(
@@ -203,6 +208,7 @@ fun HomeScreen(
                                 onCompleteButtonClick = onClickCompleteButton,
                                 onClickCheerButton = onClickCheerButton,
                                 onWiggleAnimationEnd = onWiggleAnimationEnd,
+                                onClickFlowerTextBubble = onClickFlowerTextBubble,
                             )
                         }
                     }

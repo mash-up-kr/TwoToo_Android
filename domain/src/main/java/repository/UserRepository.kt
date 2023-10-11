@@ -14,4 +14,5 @@ interface UserRepository {
     suspend fun getUserInfo(): NetworkResult<UserInfoDomainModel>
     suspend fun deletePartner(): NetworkResult<Boolean>
     suspend fun signOut(): NetworkResult<Boolean>
+    suspend fun changeNickname(userNickNameDomainModel: UserNickNameDomainModel): NetworkResult<UserInfoDomainModel>
 }

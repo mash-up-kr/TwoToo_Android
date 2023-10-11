@@ -15,13 +15,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.designsystem.component.common.TextContainer
+import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooRound7
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
-import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
 
 @Composable
-fun ChallengeDropSelectionDialog(
-    dropDialogTextUiModels: List<DropDialogTextUiModel> = DropDialogTextUiModel.default,
+fun TwoTooSelectionDialog(
+    selectionDialogButtonContents: List<SelectionDialogButtonContent> = SelectionDialogButtonContent.default,
     onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
 ) {
@@ -47,7 +47,7 @@ fun ChallengeDropSelectionDialog(
             Column(
                 modifier = Modifier.fillMaxWidth(),
             ) {
-                dropDialogTextUiModels.forEach {
+                selectionDialogButtonContents.forEach {
                     TextContainer(
                         modifier = textContainerModifier.clickable { it.buttonAction() },
                         text = {
@@ -59,7 +59,7 @@ fun ChallengeDropSelectionDialog(
                             )
                         },
                     )
-                    if (dropDialogTextUiModels.last() != it) {
+                    if (selectionDialogButtonContents.last() != it) {
                         Spacer(modifier = Modifier.height(8.dp))
                     }
                 }
@@ -70,9 +70,9 @@ fun ChallengeDropSelectionDialog(
 
 @Preview
 @Composable
-fun TwoTooButtonDialogPreview() {
-    ChallengeDropSelectionDialog(
+fun TwoTooSelectionDialogPreview() {
+    TwoTooSelectionDialog(
         onDismissRequest = { },
-        dropDialogTextUiModels = DropDialogTextUiModel.default,
+        selectionDialogButtonContents = SelectionDialogButtonContent.default,
     )
 }

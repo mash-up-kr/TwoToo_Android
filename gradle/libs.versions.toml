@@ -38,6 +38,8 @@ coroutine_test = "1.7.2"
 bottomsheetdialog = "1.2.1"
 extensions-compose-keyboard-state = "1.4.3"
 lottie = "6.1.0"
+capture = "1.0.3"
+
 
 [libraries]
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core_ktx" }
@@ -122,6 +124,9 @@ compose-keyboard-state = { module = "tech.thdev:extensions-compose-keyboard-stat
 
 #lottie
 lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+
+#capturable
+capture = { module ="dev.shreyaspatil:capturable", version.ref = "capture" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "android_gradle_plugin" }

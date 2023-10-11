@@ -3,7 +3,9 @@ package com.mashup.twotoo.presenter.nickname.navigation
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
+import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import androidx.navigation.navOptions
 import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
@@ -14,21 +16,28 @@ import com.mashup.twotoo.presenter.nickname.NickNameSettingRoute
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponentProvider
 import com.mashup.twotoo.presenter.util.componentProvider
 
-fun NavController.navigateToOnNickNameSetting(navOptions: NavOptions? = null) {
-    this.navigate(route = NavigationRoute.NickNameSettingGraph.route, navOptions = navOptions)
+fun NavController.navigateToOnNickNameSetting(startRoute: String = "", navOptions: NavOptions? = null) {
+    this.navigate(route = "${NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route}/$startRoute", navOptions = navOptions)
 }
 fun NavGraphBuilder.nickNameSettingGraph(
     navController: NavController
 ) {
-    navigation(startDestination = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route, route = NavigationRoute.NickNameSettingGraph.route) {
+    navigation(
+        startDestination = "${NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route}/{startRoute}",
+        route = NavigationRoute.NickNameSettingGraph.route,
+    ) {
         composable(
-            route = NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route,
-        ) {
+            route = "${NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route}/{startRoute}",
+            arguments = listOf(
+                navArgument("startRoute") { type = NavType.StringType },
+            ),
+        ) { navBackStackEntry ->
             val nickNameSettingComponent = componentProvider<NickNameSettingComponentProvider>().provideNickNameSettingComponent()
             val nickNameViewModel = daggerViewModel {
                 nickNameSettingComponent.getViewModel()
             }
-            NickNameSettingRoute(nickNameViewModel) { route ->
+            val startRoute = navBackStackEntry.arguments?.getString("startRoute") ?: ""
+            NickNameSettingRoute(nickNameViewModel, startRoute) { route ->
                 when (route) {
                     NavigationRoute.HomeGraph.HomeScreen.route -> {
                         navController.navigateToHome(
@@ -47,6 +56,9 @@ fun NavGraphBuilder.nickNameSettingGraph(
                                 }
                             },
                         )
+                    }
+                    NavigationRoute.UserGraph.UserScreen.route -> {
+                        navController.popBackStack()
                     }
                 }
             }

@@ -70,9 +70,10 @@ class DialogContent private constructor(
         fun createHistoryLeaveChallengeDialogContent(
             negativeAction: () -> Unit,
             positiveAction: () -> Unit,
+            isFinishedChallenge: Boolean = false,
         ) = DialogContent(
-            title = R.string.challenge_done,
-            desc = R.string.challengeDoneDescription,
+            title = if (isFinishedChallenge)R.string.challenge_delete else R.string.challenge_done,
+            desc = if (isFinishedChallenge) R.string.challenge_delete_description else R.string.challenge_done_description,
             dialogImage = DialogImage.leaveChallenge,
             buttons = listOf(
                 DialogButtonContent(
@@ -80,7 +81,7 @@ class DialogContent private constructor(
                     action = negativeAction,
                 ),
                 DialogButtonContent(
-                    text = R.string.done,
+                    text = if (isFinishedChallenge) R.string.delete else R.string.done,
                     action = positiveAction,
                 ),
             ),

@@ -1,5 +1,6 @@
 package com.mashup.twotoo.presenter.mypage.navigation
 
+import android.util.Log
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
@@ -49,6 +50,9 @@ fun NavGraphBuilder.userGraph(navController: NavController) {
                                     }
                                 },
                             )
+                        }
+                        NavigationRoute.NickNameSettingGraph.route -> {
+                            navController.navigateToOnNickNameSetting("mypage")
                         }
                         else -> { navController.navigateToGuide(route) } }
                 },

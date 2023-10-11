@@ -82,7 +82,7 @@ fun GardenScreen(
                     contentAlignment = Alignment.Center,
                 ) {
                     Text(
-                        text = stringResource(id = R.string.challengeEmptyDescription),
+                        text = stringResource(id = R.string.challenge_empty_description),
                         style = TwoTooTheme.typography.bodyNormal16,
                         color = TwoTooTheme.color.gray500,
                         textAlign = TextAlign.Center,

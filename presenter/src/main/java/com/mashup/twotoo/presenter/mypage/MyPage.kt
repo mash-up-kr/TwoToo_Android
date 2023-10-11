@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.mypage
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
@@ -39,6 +41,7 @@ import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
 import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 import com.mashup.twotoo.presenter.mypage.model.MyPageItem
+import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
@@ -107,6 +110,7 @@ fun MyPageRoute(
         state = state,
         isMyPageDialogVisible = isMyPageDialogVisible,
         myPageDialogContent = myPageDialogContent,
+        navigateToChangeNickName = { route -> userViewModel.navigateToRoute(route) },
         navigateToGuide = { route ->
             when (route) {
                 MyPageItem.DeletePartner.route -> { userViewModel.openDeletePartnerConfirmDialog() }
@@ -141,6 +145,7 @@ fun MyPageScreen(
     isMyPageDialogVisible: Boolean = false,
     myPageDialogContent: DialogContent = DialogContent.default,
     navigateToGuide: (String) -> Unit,
+    navigateToChangeNickName: (String) -> Unit
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
@@ -166,12 +171,13 @@ fun MyPageScreen(
         Spacer(modifier = Modifier.height(14.dp))
         Row(
             modifier = Modifier
-                .width(66.dp)
+                .clickable { navigateToChangeNickName(NavigationRoute.NickNameSettingGraph.route) }
                 .height(34.dp)
                 .background(
                     color = Color.White,
                     shape = TwoTooTheme.shape.small,
-                ),
+                )
+                .padding(horizontal = 10.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center,
         ) {
@@ -179,6 +185,12 @@ fun MyPageScreen(
                 text = state.homeGoalCountUiModel.myName ?: "",
                 style = TwoTooTheme.typography.headLineNormal18,
                 color = TwoTooTheme.color.mainBrown,
+            )
+            Spacer(modifier = modifier.width(10.dp))
+            TwoTooImageView(
+                modifier = Modifier.size(16.dp),
+                model = R.drawable.ic_edit,
+                previewPlaceholder = R.drawable.ic_edit,
             )
         }
         Spacer(modifier = Modifier.height(28.dp))
@@ -204,6 +216,6 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), navigateToGuide = {})
+        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), navigateToChangeNickName = {}, navigateToGuide = {})
     }
 }

@@ -48,4 +48,10 @@ class UserRepositoryImpl @Inject constructor(
     override suspend fun signOut(): NetworkResult<Boolean> {
         return userDataSource.signOut()
     }
+
+    override suspend fun changeNickname(userNickNameDomainModel: UserNickNameDomainModel): NetworkResult<UserInfoDomainModel> {
+        return userDataSource.changeNickname(userNickNameDomainModel.toDataModel()).map { userInfoResponse ->
+            userInfoResponse.toDomainModel()
+        }
+    }
 }

@@ -71,6 +71,7 @@ sealed class NavigationRoute(val route: String) {
     object HistoryGraph : NavigationRoute("history") {
         object HistoryScreen : NavigationRoute("history/screen")
         object HistoryDetailScreen : NavigationRoute("detail/screen")
+        object DetailImageScreen : NavigationRoute("detail/image/screen")
     }
 
     object GuideGraph : NavigationRoute("guide") {
