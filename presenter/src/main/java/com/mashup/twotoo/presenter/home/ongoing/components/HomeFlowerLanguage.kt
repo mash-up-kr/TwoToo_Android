@@ -23,13 +23,14 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
+import com.mashup.twotoo.presenter.model.FlowerName
 import com.mashup.twotoo.presenter.model.Stage
 
 @Composable
 fun HomeFlowerLanguage(
     homeFlowerUiModel: HomeFlowerUiModel,
     modifier: Modifier = Modifier,
-    onClickFlowerTextBubble: (HomeFlowerUiModel) -> Unit = {},
+    onClickFlowerTextBubble: (FlowerName) -> Unit = {},
 ) {
     val growType = (homeFlowerUiModel.flowerType as Flower).growType
     val screenHeight = LocalConfiguration.current.screenHeightDp
@@ -41,7 +42,7 @@ fun HomeFlowerLanguage(
 
     ConstraintLayout(
         modifier = modifier.clickable {
-            onClickFlowerTextBubble(homeFlowerUiModel)
+            onClickFlowerTextBubble(homeFlowerUiModel.flowerType.flowerName)
         },
     ) {
         val (bubbleWrapper, textRow) = createRefs()
