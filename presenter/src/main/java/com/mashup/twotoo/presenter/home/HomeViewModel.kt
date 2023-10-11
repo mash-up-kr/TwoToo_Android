@@ -16,6 +16,7 @@ import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
 import com.mashup.twotoo.presenter.home.model.toUiModel
+import com.mashup.twotoo.presenter.model.FlowerName
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
@@ -185,6 +186,10 @@ class HomeViewModel @Inject constructor(
         postSideEffect(HomeSideEffect.DismissBottomSheet)
         delay(100)
         postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)
+    }
+
+    fun openToFlowerLangDialog(challengeCount: Int, flowerName: FlowerName) = intent {
+        postSideEffect(HomeSideEffect.OpenToFlowerLanguageDialog(challengeCount, flowerName))
     }
 
     fun onClickBeforeChallengeTextButton(beforeChallengeState: BeforeChallengeState) = intent {
