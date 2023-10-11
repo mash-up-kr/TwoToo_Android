@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -30,13 +31,17 @@ import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.home.model.FlowerLanguageUiModel
 
 @Composable
 fun FlowerLanguageDialog(
+    flowerLanguageUiModel: FlowerLanguageUiModel,
+    onClickDismiss: () -> Unit,
     onDismissRequest: () -> Unit = {},
     properties: DialogProperties = DialogProperties(),
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val context = LocalContext.current
     Dialog(
         onDismissRequest = onDismissRequest,
         properties = properties,
@@ -58,24 +63,24 @@ fun FlowerLanguageDialog(
                 previewPlaceholder = R.drawable.img_flower_card_bottom,
 
             )
-            Column() {
+            Column {
                 Icon(
                     painter = painterResource(id = R.drawable.ic_cancel),
                     modifier = Modifier
                         .align(Alignment.End)
                         .padding(top = 14.dp, end = 14.dp)
-                        .clickable { },
+                        .clickable { onClickDismiss() },
                     contentDescription = null,
                 )
                 FlowerLanguageContent(
                     modifier = Modifier.fillMaxWidth().align(Alignment.CenterHorizontally).padding(bottom = 32.dp),
-                    R.string.fig,
-                    R.string.fig_language,
+                    flower = flowerLanguageUiModel.getFlowerName(context),
+                    language = flowerLanguageUiModel.getFlowerLanguage(context),
                 )
                 TwoTooImageView(
                     modifier = Modifier.size(99.dp, 164.dp)
                         .align(Alignment.CenterHorizontally),
-                    model = R.drawable.img_home_fourth_stage_fig_partner,
+                    model = flowerLanguageUiModel.getFlowerImage(context),
                     previewPlaceholder = R.drawable.img_home_fourth_stage_fig_partner,
                 )
                 Spacer(modifier = Modifier.height(22.dp))
@@ -83,7 +88,7 @@ fun FlowerLanguageDialog(
                     modifier = Modifier
                         .align(Alignment.CenterHorizontally)
                         .padding(bottom = 30.dp),
-                    1,
+                    flowerLanguageUiModel.challengeNo,
                 )
             }
         }
@@ -91,19 +96,19 @@ fun FlowerLanguageDialog(
 }
 
 @Composable
-fun FlowerLanguageContent(modifier: Modifier, flower: Int, language: Int) {
+fun FlowerLanguageContent(modifier: Modifier, flower: String, language: String) {
     Column(
         modifier = modifier,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = stringResource(id = flower),
+            text = flower,
             textAlign = TextAlign.Center,
             style = TwoTooTheme.typography.headLineNormal24,
             color = TwoTooTheme.color.mainBrown,
         )
         Text(
-            text = stringResource(id = language),
+            text = language,
             textAlign = TextAlign.Center,
             style = TwoTooTheme.typography.bodyNormal16,
             color = TwoTooTheme.color.mainBrown,
@@ -133,5 +138,5 @@ fun ChallengeCountCard(
 @Preview
 @Composable
 fun PreviewFlowerDialog() {
-    FlowerLanguageDialog()
+    FlowerLanguageDialog(FlowerLanguageUiModel(), {})
 }
