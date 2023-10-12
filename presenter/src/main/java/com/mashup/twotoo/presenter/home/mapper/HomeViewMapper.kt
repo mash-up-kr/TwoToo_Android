@@ -163,7 +163,13 @@ fun ChallengeResponseDomainModel.toHomeGoalFieldUiModel(): HomeGoalFieldUiModel 
     val seconds = diff / 1000
     val minutes = seconds / 60
     val hours = minutes / 60
-    val days = hours / 24
+    val days = (hours / 24).run {
+        if (this < 0) {
+            0
+        } else {
+            this
+        }
+    }
 
     return HomeGoalFieldUiModel(
         goal = name,
