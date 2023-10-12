@@ -24,7 +24,7 @@ fun saveBitmapToStorage(
     val imageOutStream: OutputStream?
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
         val values = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, title)
+            put(MediaStore.Images.Media.DISPLAY_NAME, parseTitle(title))
             put(MediaStore.Images.Media.MIME_TYPE, mimeType)
             put(MediaStore.Images.Media.RELATIVE_PATH, directory)
         }
@@ -41,10 +41,16 @@ fun saveBitmapToStorage(
         }
     } else {
         val imagePath = Environment.getExternalStoragePublicDirectory(directory).absolutePath
-        val image = File(imagePath, title)
+        val image = File(imagePath, parseTitle(title))
         imageOutStream = FileOutputStream(image)
     }
     imageOutStream.use { bitmap.compress(Bitmap.CompressFormat.JPEG, 100, it) }.run {
         onSuccessToSave()
     }
+}
+
+private fun parseTitle(title: String): String {
+    val regex = Regex("^((http[s]?|ftp):/)?/?([^:/\\s]+)((/\\w+)*/)([\\w\\-.]+[^#?\\s]+)(.*)?(#[\\w\\-]+)?\$")
+    val matchResult = regex.find(title)
+    return matchResult?.groups?.get(6)?.value ?: System.currentTimeMillis().toString()
 }
