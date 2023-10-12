@@ -216,6 +216,9 @@ class HistoryViewModel @Inject constructor(
         }
 
         datesList.reverse() // start from current date
+        while (datesList.size > 22) {
+            datesList.removeFirst()
+        }
         return datesList
     }
 
