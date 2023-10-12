@@ -54,7 +54,7 @@ fun HomeOngoingChallenge(
     navigateToHistory: (Int) -> Unit = {},
     onClickCheerButton: () -> Unit = {},
     onWiggleAnimationEnd: () -> Unit = {},
-    onClickFlowerTextBubble: (HomeFlowerUiModel) -> Unit = {},
+    onClickFlowerTextBubble: (FlowerName) -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (

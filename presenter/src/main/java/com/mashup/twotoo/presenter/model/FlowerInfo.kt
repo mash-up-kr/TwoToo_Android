@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.model
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.compose.ui.unit.Dp
+import com.mashup.twotoo.presenter.R
 
 /**
  * @Created by 김현국 2023/06/09
@@ -47,3 +48,4 @@ data class FlowerImage(
     val width: Dp,
     val height: Dp,
 )
+
