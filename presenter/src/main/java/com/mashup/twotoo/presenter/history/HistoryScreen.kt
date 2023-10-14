@@ -1,28 +1,18 @@
 package com.mashup.twotoo.presenter.history
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetType
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
@@ -40,30 +31,43 @@ import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackTool
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.model.DropDialogTextUiModel
-import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
 fun HistoryRoute(
+    from: String,
     challengeNo: Int,
     historyViewModel: HistoryViewModel,
-    homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel? = null,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
-
+    val activity = LocalContext.current as Activity
+    val commitNo = activity.intent.getIntExtra("commitNo", 0)
+    Log.i("hyejin", "HistoryRoute = $commitNo, viewModel= $historyViewModel, from = $from")
+    val state by historyViewModel.collectAsState()
     LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            historyViewModel.getChallengeByUser(challengeNo)
+        launch {
+            lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+                historyViewModel.getChallengeByUser(challengeNo).join()
+                launch {
+                    Log.i(
+                        TAG,
+                        "HistoryScreen: navigateToDetail: navigateChallengeDetail = ${state.navigateToChallengeDetail}",
+                    )
+                    if (from == "notification" && state.navigateToChallengeDetail) {
+                        if (commitNo != 0) {
+                            navigateToHistoryDetail(commitNo)
+                        }
+                        historyViewModel.setNavigateToChallengeDetail(false)
+                    }
+                }
+            }
         }
     }
 
-    val state by historyViewModel.collectAsState()
-
     HistoryScreen(
-        homeGoalAchievePartnerAndMeUiModel = homeGoalAchievePartnerAndMeUiModel,
         onClickBackButton = onClickBackButton,
         navigateToHistoryDetail = navigateToHistoryDetail,
         quiteChallenge = { historyViewModel.quiteChallenge(challengeNo) },
@@ -77,7 +81,6 @@ fun HistoryRoute(
 
 @Composable
 fun HistoryScreen(
-    homeGoalAchievePartnerAndMeUiModel: HomeGoalAchievePartnerAndMeUiModel? = null,
     onClickBackButton: () -> Unit,
     navigateToHistoryDetail: (Int) -> Unit,
     quiteChallenge: () -> Unit,
@@ -139,16 +142,6 @@ fun HistoryScreen(
             } else {
                 ChallengeInfo(
                     state.challengeInfoUiModel,
-                )
-            }
-            if (homeGoalAchievePartnerAndMeUiModel == null && state.homeGoalAchievePartnerAndMeUiModel != null) {
-                TwoTooGoalAchievementProgressbar(
-                    modifier = Modifier
-                        .padding(top = 12.dp, start = 24.dp)
-                        .width(210.dp)
-                        .height(59.dp)
-                        .background(color = Color.White, shape = RoundedCornerShape(15.dp)),
-                    homeGoalAchievePartnerAndMeUiModel = state.homeGoalAchievePartnerAndMeUiModel,
                 )
             }
             OwnerNickNames(state.ownerNickNamesUiModel)
@@ -238,7 +231,6 @@ private fun PreviewHistoryScreenEmpty() {
 private fun PreviewHistoryScreenWithProgressBar() {
     TwoTooTheme {
         HistoryScreen(
-            homeGoalAchievePartnerAndMeUiModel = HomeGoalAchievePartnerAndMeUiModel.default,
             onClickBackButton = {},
             state = HistoryState.default,
             navigateToHistoryDetail = {},

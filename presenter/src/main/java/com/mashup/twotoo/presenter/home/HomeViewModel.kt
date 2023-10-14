@@ -5,17 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
-import com.mashup.twotoo.presenter.home.model.AuthType
-import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
-import com.mashup.twotoo.presenter.home.model.ChallengeState
-import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
-import com.mashup.twotoo.presenter.home.model.HomeDialogType
-import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
-import com.mashup.twotoo.presenter.home.model.HomeSideEffect
-import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
-import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
-import com.mashup.twotoo.presenter.home.model.ToastText
-import com.mashup.twotoo.presenter.home.model.toUiModel
+import com.mashup.twotoo.presenter.home.model.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import model.challenge.request.ChallengeNoRequestDomainModel
@@ -33,12 +23,7 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetVisibilityCheerDialogUseCase
-import usecase.user.GetVisibilityCompleteDialogUseCase
-import usecase.user.RemoveVisibilityCheerDialogUseCase
-import usecase.user.RemoveVisibilityCompleteDialogUseCase
-import usecase.user.SetVisibilityCheerDialogUseCase
-import usecase.user.SetVisibilityCompleteDialogUseCase
+import usecase.user.*
 import usecase.view.GetViewHomeUseCase
 import util.onError
 import util.onSuccess
@@ -66,6 +51,14 @@ class HomeViewModel @Inject constructor(
     override val container: Container<HomeStateUiModel, HomeSideEffect> = container(
         initialState = HomeStateUiModel.init,
     )
+
+    fun setNavigateToChallengeDetail(value: Boolean) = intent {
+        reduce {
+            state.copy(
+                navigateToChallengeDetail = false,
+            )
+        }
+    }
 
     fun getHomeViewChallenge() = intent {
         reduce {
@@ -164,9 +157,8 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun navigateToHistory(challengeNo: Int) = intent {
-        val progressBarState = (state.challengeStateUiModel as? OngoingChallengeUiModel)?.homeGoalAchievePartnerAndMeUiModel
-        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo, progressBarState))
+    fun navigateToHistory(challengeNo: Int, from: String = "twotoo") = intent {
+        postSideEffect(HomeSideEffect.NavigateToChallengeDetail(challengeNo, from))
     }
 
     fun openToShotBottomSheet() = intent {

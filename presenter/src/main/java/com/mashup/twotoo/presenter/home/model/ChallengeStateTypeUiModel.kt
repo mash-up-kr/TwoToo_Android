@@ -18,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.ChallengeState.Complete
 
 data class HomeStateUiModel(
     val indicatorState: Boolean = false,
+    val navigateToChallengeDetail: Boolean = true,
     val homeChallengeInfoModel: HomeChallengeInfoModel = HomeChallengeInfoModel(),
     val challengeStateUiModel: ChallengeStateTypeUiModel,
 ) {

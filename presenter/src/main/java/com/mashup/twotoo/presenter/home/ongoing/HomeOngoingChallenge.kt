@@ -46,7 +46,7 @@ fun HomeOngoingChallenge(
     onCommit: () -> Unit = {},
     onCompleteButtonClick: (Int) -> Unit = {},
     onBeeButtonClick: () -> Unit = {},
-    navigateToHistory: (Int) -> Unit = {},
+    navigateToHistory: (Int, String) -> Unit = { _, _ -> },
     onClickCheerButton: () -> Unit = {},
     onWiggleAnimationEnd: () -> Unit = {},
 ) {
@@ -68,7 +68,7 @@ fun HomeOngoingChallenge(
             },
             homeGoalFieldUiModel = ongoingChallengeUiModel.homeGoalFieldUiModel,
             onClickHomeGoalField = {
-                navigateToHistory(ongoingChallengeUiModel.challengeNo)
+                navigateToHistory(ongoingChallengeUiModel.challengeNo, "twotoo")
             },
         )
         TwoTooGoalAchievementProgressbar(
@@ -150,7 +150,7 @@ fun HomeOngoingChallenge(
 private fun PreviewHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
         )
     }
@@ -161,7 +161,7 @@ private fun PreviewHomeOngoingChallenge() {
 private fun PreviewFirstChallengeHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
@@ -177,7 +177,7 @@ private fun PreviewFirstChallengeHomeOngoingChallenge() {
 private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
@@ -193,7 +193,7 @@ private fun PreviewAuthOnlyPartnerHomeOngoingChallenge() {
 private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
@@ -209,7 +209,7 @@ private fun PreviewAuthOnlyMeHomeOngoingChallenge() {
 private fun PreviewAuthBothHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
@@ -225,7 +225,7 @@ private fun PreviewAuthBothHomeOngoingChallenge() {
 private fun PreviewDoNotAuthBothHomeOngoingChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.auth.copy(
@@ -241,7 +241,7 @@ private fun PreviewDoNotAuthBothHomeOngoingChallenge() {
 private fun PreviewDoNotCheerBothChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
@@ -257,7 +257,7 @@ private fun PreviewDoNotCheerBothChallenge() {
 private fun PreviewCheerOnlyMeChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
@@ -273,7 +273,7 @@ private fun PreviewCheerOnlyMeChallenge() {
 private fun PreviewCheerOnlyPartnerChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
@@ -289,7 +289,7 @@ private fun PreviewCheerOnlyPartnerChallenge() {
 private fun PreviewCheerBothChallenge() {
     TwoTooTheme {
         HomeOngoingChallenge(
-            navigateToHistory = {},
+            navigateToHistory = { _, _ -> },
             onBeeButtonClick = {},
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
