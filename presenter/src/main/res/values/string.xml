@@ -94,6 +94,7 @@
     <string name="nickname_change">변경할 닉네임을\n입력해주세요</string>
     <string name="nickname_setting_hint">4글자 이내 닉네임을 입력해주세요</string>
     <string name="nickname">닉네임</string>
+    <string name="nickname_change_button">변경</string>
 
     <!-- invite -->
     <string name="other">%s님</string>

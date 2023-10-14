@@ -39,6 +39,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -91,6 +92,7 @@ fun NickNameSettingRoute(
                 nickNameViewModel.setUserNickName(nickName)
             }
         },
+        onClickBackButton = { onSettingSuccess(NavigationRoute.UserGraph.UserScreen.route)}
     )
 
     nickNameViewModel.collectSideEffect { sideEffect ->
@@ -119,9 +121,17 @@ fun NickNameSetting(
     snackState: SnackbarHostState,
     startRoute: String,
     onNextButtonClick: (String) -> Unit,
+    onClickBackButton: () -> Unit
 ) {
+    val isChangeMode = startRoute.isNotEmpty() && startRoute == "mypage"
+    val buttonText =
+        if (isChangeMode) {
+            R.string.nickname_change_button
+        } else {
+            R.string.button_confirm
+        }
     val desc =
-        if (startRoute.isNotEmpty() && startRoute == "mypage") {
+        if (isChangeMode) {
             R.string.nickname_change
         } else {
             R.string.nickname_setting
@@ -135,7 +145,11 @@ fun NickNameSetting(
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(5.dp))
-            TwoTooMainToolbar()
+            if (isChangeMode) {
+                TwoTooBackToolbar(onClickBackIcon = {onClickBackButton()})
+            } else {
+                TwoTooMainToolbar()
+            }
             if (state.partnerNickName.isNotEmpty() && startRoute.isEmpty()) {
                 TwoTooImageView(
                     modifier = Modifier.size(97.dp, 85.dp),
@@ -162,7 +176,7 @@ fun NickNameSetting(
             InputUserNickName(nickName, onTextValueChanged = { nickName = it })
             Spacer(modifier = Modifier.weight(1f))
             TwoTooTextButton(
-                text = stringResource(id = R.string.button_confirm),
+                text = stringResource(id = buttonText),
                 enabled = nickName.isNotEmpty(),
             ) {
                 onNextButtonClick(nickName)
@@ -249,5 +263,5 @@ private fun InviteGuidePreview() {
 @Preview
 @Composable
 private fun NickNameSettingPreview() {
-    NickNameSetting(NickNameState(), SnackbarHostState(), "", {})
+    NickNameSetting(NickNameState(), SnackbarHostState(), "", {}, {})
 }
