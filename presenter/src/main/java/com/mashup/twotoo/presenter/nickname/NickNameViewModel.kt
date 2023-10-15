@@ -58,7 +58,6 @@ class NickNameViewModel @Inject constructor(
                 partnerNo = null,
             ),
         ).onSuccess {
-            toastMessage("닉네임이 변경되었습니다")
             postSideEffect(NickNameSideEffect.NavigateToMyPage)
         }.onError { code, message ->
             message?.let { msg ->

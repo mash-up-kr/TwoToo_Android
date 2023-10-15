@@ -92,7 +92,7 @@ fun NickNameSettingRoute(
                 nickNameViewModel.setUserNickName(nickName)
             }
         },
-        onClickBackButton = { onSettingSuccess(NavigationRoute.UserGraph.UserScreen.route)}
+        onClickBackButton = { onSettingSuccess(NavigationRoute.UserGraph.UserScreen.route) },
     )
 
     nickNameViewModel.collectSideEffect { sideEffect ->
@@ -146,7 +146,7 @@ fun NickNameSetting(
         ) {
             Spacer(modifier = Modifier.height(5.dp))
             if (isChangeMode) {
-                TwoTooBackToolbar(onClickBackIcon = {onClickBackButton()})
+                TwoTooBackToolbar(onClickBackIcon = { onClickBackButton() })
             } else {
                 TwoTooMainToolbar()
             }
