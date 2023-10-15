@@ -150,7 +150,7 @@ fun NickNameSetting(
             } else {
                 TwoTooMainToolbar()
             }
-            if (state.partnerNickName.isNotEmpty() && startRoute.isEmpty()) {
+            if (state.partnerNickName.isNotEmpty()) {
                 TwoTooImageView(
                     modifier = Modifier.size(97.dp, 85.dp),
                     previewPlaceholder = R.drawable.img_nickname_mate,
