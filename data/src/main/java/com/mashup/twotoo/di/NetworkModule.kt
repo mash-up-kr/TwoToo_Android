@@ -80,7 +80,7 @@ class NetworkModule {
     }
 
     companion object {
-        const val URL = "http://43.202.68.239:3000/api-docs/"
+        const val URL = "https://imv0qb1bei.execute-api.ap-northeast-2.amazonaws.com"
         const val AUTHORIZATION = "Authorization"
     }
 }
