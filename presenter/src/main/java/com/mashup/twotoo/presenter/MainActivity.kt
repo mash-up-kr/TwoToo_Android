@@ -38,7 +38,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val challengeNo = intent.getIntExtra("challengeNo", 0)
         val commitNo = intent.getIntExtra("commitNo", 0)
-        Log.i(TAG, "onCreate: commitNo = $commitNo")
+        Log.i(TAG, "onCreate: challengeNo= $challengeNo, commitNo= $commitNo")
         setContent {
             TwoTooTheme {
                 val systemUiController = rememberSystemUiController()

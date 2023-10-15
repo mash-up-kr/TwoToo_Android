@@ -65,7 +65,7 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
 
     private fun sendNotification(title: String, messageBody: String, challengeNo: Int, commitNo: Int) {
         // Since android Oreo notification channel is needed.
-        Log.i(TAG, "sendNotification= challengeNo= ${challengeNo}, commitNo=$commitNo")
+        Log.i(TAG, "sendNotification: challengeNo= $challengeNo, commitNo=$commitNo")
         val intent = Intent(this, MainActivity::class.java).apply {
             putExtra("challengeNo", challengeNo)
             putExtra("commitNo", commitNo)

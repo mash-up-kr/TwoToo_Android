@@ -39,7 +39,6 @@ import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
-import com.mashup.twotoo.presenter.home.model.HomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
@@ -74,22 +73,25 @@ fun HomeRoute(
     val state by homeViewModel.collectAsState()
     val activity = LocalContext.current as Activity
     val challengeNo = activity.intent.extras?.getInt("challengeNo", 0) ?: 0
-    Log.i("hyejin", "homeViewModel $homeViewModel")
+
     LaunchedEffect(Unit) {
         launch {
             lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
                 homeViewModel.getHomeViewChallenge()
             }
         }
-    }
-    LaunchedEffect(Unit) {
-        Log.i(TAG, "HomeRoute: navigateToDetail: navigateChallengeDetail = ${state.navigateToChallengeDetail}")
-        if (state.navigateToChallengeDetail) {
-            if (challengeNo != 0) {
-                homeViewModel.navigateToHistory(challengeNo, "notification")
+        launch {
+            Log.i(
+                TAG,
+                "HomeRoute: navigateToDetail: navigateChallengeDetail = ${state.navigateToChallengeDetail}",
+            )
+            if (state.navigateToChallengeDetail) {
+                if (challengeNo != 0) {
+                    homeViewModel.navigateToHistory(challengeNo, "notification")
+                }
             }
+            homeViewModel.setNavigateToChallengeDetail(false)
         }
-        homeViewModel.setNavigateToChallengeDetail(false)
     }
 
     homeViewModel.collectSideEffect { sideEffect ->
