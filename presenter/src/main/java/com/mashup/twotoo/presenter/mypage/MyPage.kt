@@ -63,7 +63,7 @@ fun MyPageRoute(
         }
     }
     var isChangeSuccess by remember { mutableStateOf(isChangeNicknameSuccess) }
-    if(isChangeSuccess) {
+    if (isChangeSuccess) {
         userViewModel.isSuccessChangeNickName(isChangeNicknameSuccess)
         isChangeSuccess = false
     }

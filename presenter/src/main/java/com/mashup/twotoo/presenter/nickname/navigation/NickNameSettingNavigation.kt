@@ -17,7 +17,7 @@ import com.mashup.twotoo.presenter.nickname.NickNameSettingRoute
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponentProvider
 import com.mashup.twotoo.presenter.util.componentProvider
 
-fun NavController.navigateToOnNickNameSetting(startRoute: String = "", navOptions: NavOptions? = null) {
+fun NavController.navigateToOnNickNameSetting(startRoute: String = "splash", navOptions: NavOptions? = null) {
     this.navigate(route = "${NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route}/$startRoute", navOptions = navOptions)
 }
 fun NavGraphBuilder.nickNameSettingGraph(
