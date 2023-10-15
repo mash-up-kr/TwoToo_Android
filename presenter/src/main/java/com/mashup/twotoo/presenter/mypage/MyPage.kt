@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.SnackbarHostState
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,6 +20,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,6 +36,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
+import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
@@ -42,11 +45,13 @@ import com.mashup.twotoo.presenter.mypage.components.MyPageItemList
 import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 import com.mashup.twotoo.presenter.mypage.model.MyPageItem
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
+import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageRoute(
+    isChangeNicknameSuccess: Boolean = false,
     userViewModel: UserViewModel,
     navigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
@@ -57,6 +62,14 @@ fun MyPageRoute(
             userViewModel.getUserInfo()
         }
     }
+    var isChangeSuccess by remember { mutableStateOf(isChangeNicknameSuccess) }
+    if(isChangeSuccess) {
+        userViewModel.isSuccessChangeNickName(isChangeNicknameSuccess)
+        isChangeSuccess = false
+    }
+
+    val coroutineScope = rememberCoroutineScope()
+    val snackState = remember { SnackbarHostState() }
 
     var isMyPageDialogVisible by remember { mutableStateOf(false) }
     var myPageDialogContent by remember { mutableStateOf(DialogContent.default) }
@@ -66,6 +79,11 @@ fun MyPageRoute(
         handleSideEffect(
             sideEffect,
             navigate = navigateToRoute,
+            toast = {
+                coroutineScope.launch {
+                    snackState.showSnackbar("닉네임이 변경되었습니다.")
+                }
+            },
             action = { type ->
                 when (type) {
                     MyPageDialogType.SignOutConfirm -> {
@@ -108,6 +126,7 @@ fun MyPageRoute(
             stringResource(id = R.string.mypage),
         ),
         state = state,
+        snackState = snackState,
         isMyPageDialogVisible = isMyPageDialogVisible,
         myPageDialogContent = myPageDialogContent,
         navigateToChangeNickName = { route -> userViewModel.navigateToRoute(route) },
@@ -121,7 +140,12 @@ fun MyPageRoute(
     )
 }
 
-private fun handleSideEffect(sideEffect: UserSideEffect, navigate: (String) -> Unit, action: (MyPageDialogType) -> Unit) {
+private fun handleSideEffect(
+    sideEffect: UserSideEffect,
+    toast: () -> Unit,
+    navigate: (String) -> Unit,
+    action: (MyPageDialogType) -> Unit
+) {
     when (sideEffect) {
         is UserSideEffect.NavigateToRoute -> {
             navigate(sideEffect.route)
@@ -135,6 +159,9 @@ private fun handleSideEffect(sideEffect: UserSideEffect, navigate: (String) -> U
         UserSideEffect.OpenDeletePartnerConfirmDialog -> {
             action(MyPageDialogType.DeletePartnerConfirm)
         }
+        UserSideEffect.SuccessNickNameChange -> {
+            toast()
+        }
     }
 }
 
@@ -142,6 +169,7 @@ private fun handleSideEffect(sideEffect: UserSideEffect, navigate: (String) -> U
 fun MyPageScreen(
     modifier: Modifier = Modifier,
     state: UserState,
+    snackState: SnackbarHostState,
     isMyPageDialogVisible: Boolean = false,
     myPageDialogContent: DialogContent = DialogContent.default,
     navigateToGuide: (String) -> Unit,
@@ -205,6 +233,11 @@ fun MyPageScreen(
             modifier = Modifier.fillMaxWidth(),
             navigateToGuide = navigateToGuide,
         )
+        Spacer(modifier = Modifier.weight(1f))
+        SnackBarHost(
+            Modifier.padding(bottom = 54.dp),
+            snackState,
+        )
     }
 
     if (isMyPageDialogVisible) {
@@ -216,6 +249,11 @@ fun MyPageScreen(
 @Composable
 fun PreviewMyPageScreen() {
     TwoTooTheme {
-        MyPageScreen(state = UserState(HomeGoalCountUiModel.default), navigateToChangeNickName = {}, navigateToGuide = {})
+        MyPageScreen(
+            state = UserState(HomeGoalCountUiModel.default),
+            snackState = SnackbarHostState(),
+            navigateToChangeNickName = {},
+            navigateToGuide = {},
+        )
     }
 }

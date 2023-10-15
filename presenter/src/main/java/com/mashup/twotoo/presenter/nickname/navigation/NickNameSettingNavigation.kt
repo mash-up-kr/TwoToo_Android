@@ -11,6 +11,7 @@ import androidx.navigation.navigation
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.invite.navigation.navigateToInvitation
+import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.nickname.NickNameSettingRoute
 import com.mashup.twotoo.presenter.nickname.di.NickNameSettingComponentProvider
@@ -58,7 +59,14 @@ fun NavGraphBuilder.nickNameSettingGraph(
                         )
                     }
                     NavigationRoute.UserGraph.UserScreen.route -> {
-                        navController.popBackStack()
+                        navController.navigateToUser(
+                            action = "success",
+                            navOptions = navOptions {
+                                popUpTo(navController.graph.id) {
+                                    inclusive = true
+                                }
+                            },
+                        )
                     }
                 }
             }

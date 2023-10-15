@@ -71,4 +71,10 @@ class UserViewModel @Inject constructor(
     fun navigateToRoute(route: String) = intent {
         postSideEffect(UserSideEffect.NavigateToRoute(route))
     }
+
+    fun isSuccessChangeNickName(isSuccess: Boolean) = intent {
+        if (isSuccess) {
+            postSideEffect(UserSideEffect.SuccessNickNameChange)
+        }
+    }
 }
