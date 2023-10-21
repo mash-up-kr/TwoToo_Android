@@ -68,6 +68,9 @@ fun NavGraphBuilder.nickNameSettingGraph(
                             },
                         )
                     }
+                    else -> {
+                        navController.popBackStack()
+                    }
                 }
             }
         }

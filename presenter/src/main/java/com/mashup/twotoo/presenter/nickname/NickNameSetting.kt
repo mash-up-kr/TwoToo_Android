@@ -92,7 +92,7 @@ fun NickNameSettingRoute(
                 nickNameViewModel.setUserNickName(nickName)
             }
         },
-        onClickBackButton = { onSettingSuccess(NavigationRoute.UserGraph.UserScreen.route) },
+        onClickBackButton = { onSettingSuccess("mypage") },
     )
 
     nickNameViewModel.collectSideEffect { sideEffect ->
