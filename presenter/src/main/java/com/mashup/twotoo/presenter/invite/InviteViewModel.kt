@@ -46,6 +46,7 @@ class InviteViewModel @Inject constructor(
                 postSideEffect(InviteSideEffect.SendSharedInvitation)
             }
         }.onError { code, message ->
+            Log.d(TAG, "getUserInfo: $message")
         }
     }
 
@@ -61,7 +62,7 @@ class InviteViewModel @Inject constructor(
      */
     fun getPartnerInfo() = intent {
         getPartnerInfoUseCase().onSuccess { partnerInfo ->
-            if (partnerInfo.partnerNo != 0) {
+            if (partnerInfo.partnerNo != null && partnerInfo.partnerNo != 0) {
                 navigateToHome()
             } else {
                 toastMessage("상대방 아직 수락을 하지 않았어요!")

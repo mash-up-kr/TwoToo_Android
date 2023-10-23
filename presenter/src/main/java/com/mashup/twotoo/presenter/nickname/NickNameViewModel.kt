@@ -62,7 +62,7 @@ class NickNameViewModel @Inject constructor(
         }.onError { code, message ->
             message?.let { msg ->
                 Log.d(TAG, "viewModel: $message")
-                toastMessage(msg)
+                toastMessage("닉네임 변경에 실패했습니다. 다시 시도해주세요")
             }
         }
     }

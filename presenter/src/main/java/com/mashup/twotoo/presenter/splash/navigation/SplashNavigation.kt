@@ -42,7 +42,7 @@ fun NavGraphBuilder.splashGraph(
                     navController.navigateToHome(navOptions = navOptions)
                 }
                 NavigationRoute.NickNameSettingGraph.NickNameSettingScreen.route -> {
-                    navController.navigateToOnNickNameSetting(navOptions = navOptions)
+                    navController.navigateToOnNickNameSetting("splash", navOptions = navOptions)
                 }
                 NavigationRoute.InvitationGraph.SendInvitationScreen.route -> {
                     navController.navigateToInvitation(navOptions = navOptions)
