@@ -8,7 +8,7 @@ import util.NetworkResult
 
 interface NotificationApi {
 
-    @POST("/notification/androidSting")
+    @POST("/notification/sting")
     suspend fun sting(
         @Body notificationRequest: NotificationRequest,
     ): NetworkResult<Notification>
