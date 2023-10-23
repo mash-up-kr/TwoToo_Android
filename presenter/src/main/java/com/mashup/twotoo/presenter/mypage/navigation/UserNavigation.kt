@@ -16,19 +16,22 @@ import com.mashup.twotoo.presenter.nickname.navigation.navigateToOnNickNameSetti
 import com.mashup.twotoo.presenter.onboarding.navigation.navigateToOnBoarding
 import com.mashup.twotoo.presenter.util.componentProvider
 
-fun NavController.navigateToUser(navOptions: NavOptions? = null) {
-    this.navigate(route = NavigationRoute.UserGraph.route, navOptions = navOptions)
+fun NavController.navigateToUser(action: String = "mypage", navOptions: NavOptions? = null) {
+    this.navigate(route = "${NavigationRoute.UserGraph.route}/$action", navOptions = navOptions)
 }
 
 fun NavGraphBuilder.userGraph(navController: NavController) {
-    navigation(startDestination = NavigationRoute.UserGraph.UserScreen.route, route = NavigationRoute.UserGraph.route) {
-        composable(route = NavigationRoute.UserGraph.UserScreen.route) {
+    navigation(startDestination = "${NavigationRoute.UserGraph.route}/{action}", route = NavigationRoute.UserGraph.route) {
+        composable(route = "${NavigationRoute.UserGraph.route}/{action}") { navBackStackEntry ->
             val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
             val userViewModel = daggerViewModel {
                 userComponent.getViewModel()
             }
+            val action = navBackStackEntry.arguments?.getString("action") ?: ""
+            val isChangeNicknameSuccess = action == "success"
 
             MyPageRoute(
+                isChangeNicknameSuccess,
                 userViewModel = userViewModel,
                 navigateToRoute = { route ->
                     when (route) {
@@ -49,6 +52,9 @@ fun NavGraphBuilder.userGraph(navController: NavController) {
                                     }
                                 },
                             )
+                        }
+                        NavigationRoute.NickNameSettingGraph.route -> {
+                            navController.navigateToOnNickNameSetting("mypage")
                         }
                         else -> { navController.navigateToGuide(route) } }
                 },

@@ -9,13 +9,15 @@ import org.orbitmvi.orbit.syntax.simple.intent
 import org.orbitmvi.orbit.syntax.simple.postSideEffect
 import org.orbitmvi.orbit.syntax.simple.reduce
 import org.orbitmvi.orbit.viewmodel.container
+import usecase.user.ChangeNicknameUseCase
 import usecase.user.SetNickNameUseCase
 import util.onError
 import util.onSuccess
 import javax.inject.Inject
 
 class NickNameViewModel @Inject constructor(
-    private val setNickNameUseCase: SetNickNameUseCase
+    private val setNickNameUseCase: SetNickNameUseCase,
+    private val changeNicknameUseCase: ChangeNicknameUseCase
 ) : ViewModel(), ContainerHost<NickNameState, NickNameSideEffect> {
     override val container = container<NickNameState, NickNameSideEffect>(NickNameState())
 
@@ -45,6 +47,22 @@ class NickNameViewModel @Inject constructor(
             message?.let { msg ->
                 Log.d(TAG, "viewModel: $message")
                 toastMessage(msg)
+            }
+        }
+    }
+
+    fun changeNickname(userNickName: String) = intent {
+        changeNicknameUseCase(
+            UserNickNameDomainModel(
+                nickname = userNickName,
+                partnerNo = null,
+            ),
+        ).onSuccess {
+            postSideEffect(NickNameSideEffect.NavigateToMyPage)
+        }.onError { code, message ->
+            message?.let { msg ->
+                Log.d(TAG, "viewModel: $message")
+                toastMessage("닉네임 변경에 실패했습니다. 다시 시도해주세요")
             }
         }
     }

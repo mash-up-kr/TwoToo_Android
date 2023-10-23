@@ -31,6 +31,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.dialog.FlowerLanguageDialog
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
@@ -42,6 +43,7 @@ import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.ongoing.HomeOngoingChallenge
+import com.mashup.twotoo.presenter.model.FlowerName
 import com.mashup.twotoo.presenter.util.debounce
 import kotlinx.coroutines.launch
 import org.orbitmvi.orbit.compose.collectAsState
@@ -68,6 +70,7 @@ fun HomeRoute(
         setInvisibleCheerDialog = homeViewModel::setInvisibleCheerDialogSideEffect,
         setInvisibleCompleteDialog = homeViewModel::setInvisibleCompleteDialogSideEffect,
         navigateToGarden = navigateToGarden,
+        openToFlowerLanguageDialog = homeViewModel::openToFlowerLangDialog,
     )
     val lifecycleOwner = LocalLifecycleOwner.current
     val state by homeViewModel.collectAsState()
@@ -112,6 +115,7 @@ fun HomeRoute(
             onClickCheerButton = homeViewModel::openToCheerBottomSheet,
             navigateToGuide = navigateToGuide,
             onWiggleAnimationEnd = homeViewModel::onWiggleAnimationEnd,
+            onClickFlowerTextBubble = homeViewModel::openToFlowerLangDialog,
         )
 
         with(homeSideEffectHandler) {
@@ -133,6 +137,13 @@ fun HomeRoute(
                     content = homeDialogType,
                 )
             }
+
+            if (isFlowerLangDialogVisible) {
+                FlowerLanguageDialog(
+                    flowerLanguageUiModel = flowerLanguageModel,
+                    onClickDismiss = { onDismissFlowerLangDialog() },
+                )
+            }
         }
     }
 }
@@ -150,6 +161,7 @@ fun HomeScreen(
     onClickCheerButton: () -> Unit = {},
     navigateToGuide: () -> Unit,
     onWiggleAnimationEnd: () -> Unit = {},
+    onClickFlowerTextBubble: (Int, FlowerName) -> Unit = { num, name -> },
 ) {
     Column(modifier = modifier) {
         TwoTooMainToolbar(
@@ -166,7 +178,10 @@ fun HomeScreen(
             if (isLoading) {
                 Box(modifier = Modifier.fillMaxSize()) {
                     FlowerLoadingIndicator(
-                        modifier = Modifier.width(128.dp).height(144.dp).align(Alignment.Center),
+                        modifier = Modifier
+                            .width(128.dp)
+                            .height(144.dp)
+                            .align(Alignment.Center),
                     )
                 }
             } else {
@@ -178,7 +193,9 @@ fun HomeScreen(
                 ) {
                     val (toolbar, background, content) = createRefs()
                     TwoTooImageView(
-                        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.33f)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .fillMaxHeight(0.33f)
                             .constrainAs(background) {
                                 bottom.linkTo(parent.bottom)
                                 start.linkTo(parent.start)
@@ -218,6 +235,12 @@ fun HomeScreen(
                                 onCompleteButtonClick = onClickCompleteButton,
                                 onClickCheerButton = onClickCheerButton,
                                 onWiggleAnimationEnd = onWiggleAnimationEnd,
+                                onClickFlowerTextBubble = { flowerName ->
+                                    onClickFlowerTextBubble(
+                                        state.challengeStateUiModel.homeGoalCountUiModel.count ?: 0,
+                                        flowerName,
+                                    )
+                                },
                             )
                         }
                     }

@@ -1,6 +1,8 @@
 package com.mashup.twotoo.presenter.history.navigation
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.remember
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.*
@@ -8,9 +10,11 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
+import com.mashup.twotoo.presenter.history.detailImage.DetailImageRoute
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
+import com.mashup.twotoo.presenter.util.toIncodeUrl
 
 fun NavController.navigateToHistory(challengeNo: Int, from: String = "twotoo") {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/$challengeNo/$from")
@@ -18,6 +22,10 @@ fun NavController.navigateToHistory(challengeNo: Int, from: String = "twotoo") {
 
 fun NavController.navigateToHistoryDetail(commitNo: Int) {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryDetailScreen.route}/$commitNo")
+}
+
+private fun NavController.navigateToDetailImageScreen(url: String) {
+    this.navigate(route = "${NavigationRoute.HistoryGraph.DetailImageScreen.route}/${url.toIncodeUrl()}")
 }
 
 @SuppressLint("UnrememberedGetBackStackEntry")
@@ -74,7 +82,25 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             HistoryDetailRoute(
                 commitNo = commitNo,
                 historyViewModel = historyViewModel,
-                onClickBackButton = { navController.popBackStack() },
+                onClickBackButton = navController::popBackStack,
+                onClickImage = navController::navigateToDetailImageScreen,
+            )
+        }
+
+        composable(
+            route = "${NavigationRoute.HistoryGraph.DetailImageScreen.route}/{url}",
+            arguments = listOf(
+                navArgument("url") { type = NavType.StringType },
+            ),
+        ) { navBackStackEntry: NavBackStackEntry ->
+
+            val url = navBackStackEntry.arguments?.getString("url") ?: ""
+            SideEffect {
+                Log.d("Exception", "historyGraph: $url")
+            }
+            DetailImageRoute(
+                url = url,
+                onClickBackButton = navController::popBackStack,
             )
         }
     }

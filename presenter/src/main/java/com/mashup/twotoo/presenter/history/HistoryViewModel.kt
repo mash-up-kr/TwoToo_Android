@@ -2,6 +2,7 @@ package com.mashup.twotoo.presenter.history
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
@@ -160,7 +161,11 @@ class HistoryViewModel @Inject constructor(
                     0,
                 )
 
-                getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
+                if (endDate < currentDate.time) {
+                    getDatesInRangeFromStartDateToEndDate(startDate, endDate)
+                } else {
+                    getDatesInRangeFromStartDateToEndDate(startDate, currentDate.time) // currentDate
+                }
             }
 
         val myCommitsWithKoreaTime = myCommits.map {
@@ -221,6 +226,10 @@ class HistoryViewModel @Inject constructor(
         }
 
         datesList.reverse() // start from current date
+        Log.d(TAG, "getDatesInRangeFromStartDateToEndDate: $datesList")
+        while (datesList.size > 22) {
+            datesList.removeFirst()
+        }
         return datesList
     }
 

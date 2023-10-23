@@ -1,5 +1,7 @@
 package com.mashup.twotoo.presenter.home.model
 
+import com.mashup.twotoo.presenter.model.FlowerName
+
 /**
  * @Created by 김현국 2023/07/05
  */
@@ -19,7 +21,7 @@ sealed class HomeSideEffect {
     object SetInVisibleCheerDialog : HomeSideEffect()
     object SetInVisibleCompleteDialog : HomeSideEffect()
     object CallViewHomeApi : HomeSideEffect()
-
+    data class OpenToFlowerLanguageDialog(val challengeNo: Int, val flowerName: FlowerName) : HomeSideEffect()
 }
 
 enum class HomeDialogType {

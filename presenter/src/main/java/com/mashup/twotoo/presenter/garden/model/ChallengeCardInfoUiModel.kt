@@ -17,9 +17,9 @@ data class ChallengeCardInfoUiModel(
         // Todo 14지우고 garden Card challengeNo와 매핑해야함.
         val default: List<ChallengeCardInfoUiModel> = listOf(
             ChallengeCardInfoUiModel(viewState = "InProgress", 14, 1, "하루 30분 운동하기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
-            ChallengeCardInfoUiModel(viewState = "InProgress", 14, 2, "아침 밥 먹기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
-            ChallengeCardInfoUiModel(viewState = "InProgress", 14, 3, "하루 2시간 공부하기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
-            ChallengeCardInfoUiModel(viewState = "InProgress", 14, 4, "하루 책 20page 읽기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
+            ChallengeCardInfoUiModel(viewState = "Complete", 15, 2, "아침 밥 먹기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
+            ChallengeCardInfoUiModel(viewState = "Complete", 16, 3, "하루 2시간 공부하기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
+            ChallengeCardInfoUiModel(viewState = "Complete", 17, 4, "하루 책 20page 읽기", "2023/05/01 ~ 05/22", FlowerName.Fig, FlowerName.Camellia),
         )
     }
 }

@@ -5,6 +5,7 @@ sealed class UserSideEffect {
     object OpenSignOutConfirmDialog : UserSideEffect()
     object OpenSignOutSuccessDialog : UserSideEffect()
     object OpenDeletePartnerConfirmDialog : UserSideEffect()
+    object SuccessNickNameChange : UserSideEffect()
 }
 
 enum class MyPageDialogType {

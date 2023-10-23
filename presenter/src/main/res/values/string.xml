@@ -81,6 +81,8 @@
     <string name="homeCheerChallengeMeBeforeCheerBubble">내 응원 전 풍선</string>
     <string name="homeCheerChallengeFirstText">칭찬 문구 작성하기</string>
 
+    <string name="homeCompleteFlowerBubbleSuccessText">꽃말 보기</string>
+    <string name="homeCompleteFlowerBubbleFaileText">다음 챌린지는\n꽃을 피워보아요!</string>
 
     
     
@@ -89,8 +91,10 @@
     <string name="onboarding_pager_2">상대방에게 귀여운\n찌르기로 푸시해보세요.</string>
     <string name="onboarding_pager_3">서로 인증하고 응원하며\n목표를 달성해보세요.</string>
     <string name="nickname_setting">투투에서 사용할\n닉네임을 입력해주세요</string>
+    <string name="nickname_change">변경할 닉네임을\n입력해주세요</string>
     <string name="nickname_setting_hint">4글자 이내 닉네임을 입력해주세요</string>
     <string name="nickname">닉네임</string>
+    <string name="nickname_change_button">변경</string>
 
     <!-- invite -->
     <string name="other">%s님</string>
@@ -140,10 +144,14 @@
 
     <!-- history detail-->
     <string name="challengeAttempts">%d번째 챌린지</string>
+    <string name="challenge_number">%d번째 챌린지 꽃</string>
     <string name="inProgressChallengeAttempts">%d번째 챌린지 중</string>
     <string name="historyDetailTitle">%s의 기록</string>
     <string name="historyDetailCreatedTime">입력 시간 : %s</string>
     <string name="complimentFromPartner">%s의 칭찬 한마디</string>
+    <string name="saveImage">저장하기</string>
+    <string name="saveImageSuccessToastText">사진 저장에 성공했습니다</string>
+    <string name="saveImageErrorToastText">사진 저장에 실패했습니다</string>
 
     <!-- button -->
     <string name="button_confirm">확인</string>
@@ -155,16 +163,19 @@
     <!-- history -->
     <string name="finish">완료</string>
     <string name="challenge_done">챌린지 그만두기</string>
+    <string name="challenge_delete">챌린지 삭제하기</string>
     <string name="done">그만두기</string>
+    <string name="delete">삭제하기</string>
     <string name="cancel">취소</string>
-    <string name="challengeDoneDescription">기존의 챌린지는 삭제됩니다\n*그만두기 시 양쪽 모두에게\n 삭제 및 종료됩니다!*</string>
+    <string name="challenge_done_description">기존의 챌린지는 삭제됩니다\n*그만두기 시 양쪽 모두에게\n 삭제 및 종료됩니다!*</string>
+    <string name="challenge_delete_description">선택한 챌린지는 삭제됩니다</string>
 
     <string name="challenge_start">챌린지 시작</string>
     <string name="authenticate">인증하기</string>
     <string name="authenticate_waiting">기다리는 중</string>
     <string name="authenticate_expired">인증 실패ㅜㅜ</string>
-    <string name="DDay">D-%d</string>
-    <string name="challengeEmptyDescription">챌린지를 완료해\n히스토리를 만들어보세요 :)</string>
+    <string name="d_day">D-%d</string>
+    <string name="challenge_empty_description">챌린지를 완료해\n히스토리를 만들어보세요 :)</string>
     <!-- Garend -->
     <string name="garden_title">우리의 히스토리</string>
 

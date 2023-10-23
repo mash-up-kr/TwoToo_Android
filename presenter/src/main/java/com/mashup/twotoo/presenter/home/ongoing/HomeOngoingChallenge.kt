@@ -24,15 +24,20 @@ import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButto
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.TwoTooGoalAchievementProgressbar
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.Flower
 import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
+import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
+import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeBeeButton
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeFlowerMeAndPartner
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalField
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeShotCountText
+import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.model.Stage
 import com.mashup.twotoo.presenter.util.wiggle
 
 /**
@@ -49,6 +54,7 @@ fun HomeOngoingChallenge(
     navigateToHistory: (Int, String) -> Unit = { _, _ -> },
     onClickCheerButton: () -> Unit = {},
     onWiggleAnimationEnd: () -> Unit = {},
+    onClickFlowerTextBubble: (FlowerName) -> Unit = {},
 ) {
     ConstraintLayout(modifier = modifier.fillMaxSize()) {
         val (
@@ -96,6 +102,7 @@ fun HomeOngoingChallenge(
             onCommit = onCommit,
             homeChallengeStateUiModel = ongoingChallengeUiModel.homeChallengeStateUiModel,
             onClickCheerButton = onClickCheerButton,
+            onClickFlowerTextBubble = onClickFlowerTextBubble,
         )
 
         if (ongoingChallengeUiModel.homeChallengeStateUiModel.challengeState == ChallengeState.Complete) {
@@ -294,6 +301,35 @@ private fun PreviewCheerBothChallenge() {
             ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
                 homeChallengeStateUiModel = HomeChallengeStateUiModel.cheer.copy(
                     challengeStateUiModel = HomeCheerUiModel.cheerBoth,
+                ),
+            ),
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun PreviewCompleteBothChallenge() {
+    TwoTooTheme {
+        HomeOngoingChallenge(
+            ongoingChallengeUiModel = OngoingChallengeUiModel.default.copy(
+                homeChallengeStateUiModel = HomeChallengeStateUiModel.complete.copy(
+                    challengeStateUiModel = HomeFlowerPartnerAndMeUiModel.authBoth.copy(
+                        partner = HomeFlowerUiModel.partner.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = UserType.PARTNER,
+                                growType = Stage.Fifth,
+                            ),
+                        ),
+                        me = HomeFlowerUiModel.me.copy(
+                            flowerType = Flower(
+                                flowerName = FlowerName.Tulip,
+                                userType = UserType.ME,
+                                growType = Stage.Fifth,
+                            ),
+                        ),
+                    ),
                 ),
             ),
         )
