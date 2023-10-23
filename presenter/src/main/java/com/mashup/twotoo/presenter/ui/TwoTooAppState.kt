@@ -9,6 +9,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.home.navigation.navigateToHome
 import com.mashup.twotoo.presenter.mypage.navigation.navigateToUser
@@ -59,7 +60,10 @@ class TwoTooAppState(
 
     @Composable
     fun isBottomBarVisible(): Boolean {
-        Log.i("hyejin", "currentDestination: ${currentDestination?.route}  ${currentDestination?.parent?.route}")
+        Log.i(
+            TAG,
+            "isBottomBarVisible: currentDestination: ${currentDestination?.route}  ${currentDestination?.parent?.route}",
+        )
         // currentDestination 이 garden/screen/{isComplete}  이렇게 넘오게 되어서 parent 보도록 수정함, 그러면 home, garden, user 이렇게 확인함
         return when (currentDestination?.parent?.route) {
             NavigationRoute.HomeGraph.route,

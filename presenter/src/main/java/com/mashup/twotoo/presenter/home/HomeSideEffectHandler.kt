@@ -3,13 +3,7 @@ package com.mashup.twotoo.presenter.home
 import android.content.Context
 import android.util.Log
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.constant.TAG
@@ -25,7 +19,7 @@ fun rememberHomeSideEffectHandler(
     context: Context = LocalContext.current,
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
-    navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit,
+    navigateToHistory: (Int, String) -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
@@ -68,7 +62,7 @@ class HomeSideEffectHandler(
     val context: Context,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
-    private val navigateToHistory: (Int, HomeGoalAchievePartnerAndMeUiModel?) -> Unit,
+    private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val openCheerBottomSheet: () -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
@@ -158,7 +152,7 @@ class HomeSideEffectHandler(
             }
 
             is HomeSideEffect.NavigateToChallengeDetail -> {
-                navigateToHistory(sideEffect.challengeNo, sideEffect.progressBarState)
+                navigateToHistory(sideEffect.challengeNo, sideEffect.from)
             }
 
             is HomeSideEffect.NavigationToCreateChallenge -> {

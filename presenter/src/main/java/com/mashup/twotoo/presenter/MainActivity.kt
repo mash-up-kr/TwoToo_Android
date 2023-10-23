@@ -2,9 +2,11 @@ package com.mashup.twotoo.presenter
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -21,10 +23,22 @@ import com.mashup.twotoo.presenter.twotoo.TwoTooApp
 
 class MainActivity : ComponentActivity() {
 
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        val challengeNo = intent?.extras?.getInt("challengeNo", 0)
+        val commitNo = intent?.extras?.getInt("commitNo", 0)
+        Log.i(TAG, "onNewIntent: challnegeNo = $challengeNo, commitNo = $commitNo")
+        finish()
+        startActivity(intent)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
 
         super.onCreate(savedInstanceState)
+        val challengeNo = intent.getIntExtra("challengeNo", 0)
+        val commitNo = intent.getIntExtra("commitNo", 0)
+        Log.i(TAG, "onCreate: challengeNo= $challengeNo, commitNo= $commitNo")
         setContent {
             TwoTooTheme {
                 val systemUiController = rememberSystemUiController()
@@ -42,6 +56,10 @@ class MainActivity : ComponentActivity() {
                 TwoTooApp()
             }
         }
+    }
+
+    companion object {
+        const val TAG = "MainActivity"
     }
 }
 

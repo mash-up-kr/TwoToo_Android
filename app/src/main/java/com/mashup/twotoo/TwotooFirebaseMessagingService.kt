@@ -51,7 +51,10 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
 
             val title = remoteMessage.data.getOrDefault("title", "")
             val message = remoteMessage.data.getOrDefault("body", "")
-            sendNotification(title, message)
+            val challengeNo = remoteMessage.data.getOrDefault("challengeNo", "0")
+            val commitNo = remoteMessage.data.getOrDefault("commitNo", "0")
+
+            sendNotification(title, message, challengeNo.toInt(), commitNo.toInt())
         }
     }
 
@@ -60,17 +63,21 @@ class TwotooFirebaseMessagingService : FirebaseMessagingService() {
         Log.d(TAG, "sendRegistrationTokenToServer($token)")
     }
 
-    private fun sendNotification(title: String, messageBody: String) {
+    private fun sendNotification(title: String, messageBody: String, challengeNo: Int, commitNo: Int) {
         // Since android Oreo notification channel is needed.
+        Log.i(TAG, "sendNotification: challengeNo= $challengeNo, commitNo=$commitNo")
+        val intent = Intent(this, MainActivity::class.java).apply {
+            putExtra("challengeNo", challengeNo)
+            putExtra("commitNo", commitNo)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        }
 
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val requestCode = 0
         val pendingIntent = PendingIntent.getActivity(
             this,
             requestCode,
             intent,
-            PendingIntent.FLAG_IMMUTABLE,
+            PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         )
 
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)

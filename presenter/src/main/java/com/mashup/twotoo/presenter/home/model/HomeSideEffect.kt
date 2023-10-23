@@ -9,7 +9,7 @@ sealed class HomeSideEffect {
     data class Toast(val text: ToastText) : HomeSideEffect()
     object OpenToShotBottomSheet : HomeSideEffect()
     object OpenToAuthBottomSheet : HomeSideEffect()
-    data class NavigateToChallengeDetail(val challengeNo: Int, val progressBarState: HomeGoalAchievePartnerAndMeUiModel?) : HomeSideEffect()
+    data class NavigateToChallengeDetail(val challengeNo: Int, val from: String) : HomeSideEffect()
     object OpenToCheerBottomSheet : HomeSideEffect()
     object OpenToHelp : HomeSideEffect()
     data class NavigationToCreateChallenge(val homeState: BeforeChallengeState, val challengeInfo: HomeChallengeInfoModel) : HomeSideEffect()

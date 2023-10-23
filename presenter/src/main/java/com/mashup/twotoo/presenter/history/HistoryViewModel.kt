@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
-import com.mashup.twotoo.presenter.history.HistoryState.Companion.mapHomeGoalAchievePartnerAndMeUiModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.model.ChallengeInfoUiModel
 import com.mashup.twotoo.presenter.history.model.HistoryInfoUiModel
@@ -39,6 +38,13 @@ class HistoryViewModel @Inject constructor(
         HistoryState(),
     )
 
+    fun setNavigateToChallengeDetail(value: Boolean) = intent {
+        reduce {
+            state.copy(
+                navigateToChallengeDetail = false,
+            )
+        }
+    }
     fun onClickBottomSheetDataButton(bottomSheetData: BottomSheetData) = intent {
         val bottomSheetAuthenticateData = (bottomSheetData as BottomSheetData.AuthenticateData)
         createCommitUseCase(
@@ -118,7 +124,6 @@ class HistoryViewModel @Inject constructor(
                         challengeInfoUiModel = newChallengeInfoUiModel,
                         historyItemUiModel = newHistoryItemUiModels,
                         ownerNickNamesUiModel = newOwnerNickNamesUiModel,
-                        homeGoalAchievePartnerAndMeUiModel = challengeDetailResponseDomainModel.mapHomeGoalAchievePartnerAndMeUiModel(userNo),
                     )
                 }
             }
