@@ -159,6 +159,7 @@
     <string name="refresh">새로고침</string>
     <string name="send_invite">초대장 보내기</string>
     <string name="resend_invite">초대장 다시 보내기</string>
+    <string name="out_onboarding">나가기</string>
 
     <!-- history -->
     <string name="finish">완료</string>
