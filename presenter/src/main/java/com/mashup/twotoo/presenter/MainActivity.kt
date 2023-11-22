@@ -18,8 +18,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
+import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.twotoo.TwoTooApp
+import com.mashup.twotoo.presenter.util.getPackageInfoCompat
 
 class MainActivity : ComponentActivity() {
 
@@ -34,8 +40,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
         super.onCreate(savedInstanceState)
+        remoteConfigInit()
         val challengeNo = intent.getIntExtra("challengeNo", 0)
         val commitNo = intent.getIntExtra("commitNo", 0)
         Log.i(TAG, "onCreate: challengeNo= $challengeNo, commitNo= $commitNo")
@@ -52,14 +58,45 @@ class MainActivity : ComponentActivity() {
                     systemUiController.setStatusBarColor(color = Color.Transparent, darkIcons = true)
                     checkPermission(context, launcher)
                 }
-
+                if (needToUpdateVersion(context)) {
+                    TwoTooDialog(
+                        content = DialogContent.createHistoryLeaveChallengeDialogContent(
+                            negativeAction = {
+                            },
+                            positiveAction = {
+                            },
+                        ),
+                    )
+                }
                 TwoTooApp()
             }
         }
     }
+    private fun remoteConfigInit() {
+        val remoteConfig = Firebase.remoteConfig
+        val configSettings = remoteConfigSettings {
+            minimumFetchIntervalInSeconds = 3600
+        }
+        remoteConfig.setConfigSettingsAsync(configSettings)
+
+        remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
+            if (task.isSuccessful) { // fetch and activate 성공 } else { // fetch and activate 실패 } }
+                val latestVersion = remoteConfig.getString(REMOTE_KEY_APP_VERSION)
+                Log.i(TAG, "remoteConfigInit latestVersion= $latestVersion")
+            }
+        }
+    }
+
+    private fun needToUpdateVersion(context: Context): Boolean {
+        val latestVersion = Firebase.remoteConfig.getString(REMOTE_KEY_APP_VERSION)
+        val currentAppVersion = context.packageManager.getPackageInfoCompat(context.packageName).versionName
+        Log.i(TAG, "needToUpdateVersion: currentAppVersion= $currentAppVersion")
+        return latestVersion.isNotEmpty() && latestVersion != currentAppVersion
+    }
 
     companion object {
         const val TAG = "MainActivity"
+        const val REMOTE_KEY_APP_VERSION = "latest_version"
     }
 }
 
