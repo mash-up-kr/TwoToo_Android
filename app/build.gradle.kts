@@ -85,4 +85,5 @@ dependencies {
     implementation(libs.work.runtime.ktx)
     implementation(libs.bundles.firebase)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.remote.config)
 }
