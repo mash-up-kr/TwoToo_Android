@@ -138,6 +138,20 @@ class DialogContent private constructor(
                 ),
             ),
         )
+
+        fun createVersionUpdateConfirmDialogContent(
+            positiveAction: () -> Unit,
+        ) = DialogContent(
+            title = R.string.version_update_dialog_title,
+            desc = R.string.version_update_dialog_content,
+            dialogImage = DialogImage.updateVersion,
+            buttons = listOf(
+                DialogButtonContent(
+                    text = R.string.version_update_dialog_positive,
+                    action = positiveAction,
+                ),
+            ),
+        )
     }
 }
 
@@ -170,6 +184,12 @@ data class DialogImage(
             image = R.drawable.crying_cloud,
             width = 113.dp,
             height = 96.dp,
+        )
+
+        val updateVersion = DialogImage(
+            image = R.drawable.img_update_version,
+            width = 164.dp,
+            height = 128.dp,
         )
     }
 }

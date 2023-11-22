@@ -4,9 +4,11 @@ import android.Manifest
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -18,7 +20,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
+import com.google.android.gms.common.ConnectionResult
+import com.google.android.gms.common.GoogleApiAvailability
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ConfigUpdate
+import com.google.firebase.remoteconfig.ConfigUpdateListener
+import com.google.firebase.remoteconfig.FirebaseRemoteConfigException
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
@@ -60,10 +67,9 @@ class MainActivity : ComponentActivity() {
                 }
                 if (needToUpdateVersion(context)) {
                     TwoTooDialog(
-                        content = DialogContent.createHistoryLeaveChallengeDialogContent(
-                            negativeAction = {
-                            },
+                        content = DialogContent.createVersionUpdateConfirmDialogContent(
                             positiveAction = {
+                                launchGooglePlayStore()
                             },
                         ),
                     )
@@ -80,11 +86,40 @@ class MainActivity : ComponentActivity() {
         remoteConfig.setConfigSettingsAsync(configSettings)
 
         remoteConfig.fetchAndActivate().addOnCompleteListener { task ->
-            if (task.isSuccessful) { // fetch and activate 성공 } else { // fetch and activate 실패 } }
-                val latestVersion = remoteConfig.getString(REMOTE_KEY_APP_VERSION)
-                Log.i(TAG, "remoteConfigInit latestVersion= $latestVersion")
+            val latestVersion = remoteConfig.getString(REMOTE_KEY_APP_VERSION)
+            if (task.isSuccessful) {
+                Log.i(TAG, "remoteConfigInit - Success= $latestVersion")
+            } else {
+                Log.i(TAG, "remoteConfigInit - Fail= $latestVersion")
             }
         }
+
+        remoteConfig.addOnConfigUpdateListener(object : ConfigUpdateListener {
+            override fun onUpdate(configUpdate: ConfigUpdate) {
+                Log.d(TAG, "Updated keys: " + configUpdate.updatedKeys)
+                if (configUpdate.updatedKeys.contains(REMOTE_KEY_APP_VERSION)) {
+                    remoteConfig.activate()
+                        .addOnCompleteListener { task ->
+                            val latestVersion = remoteConfig.getString(REMOTE_KEY_APP_VERSION)
+                            if (task.isSuccessful) {
+                                Log.i(
+                                    TAG,
+                                    "remoteConfigInit update - Success= $latestVersion",
+                                )
+                            } else {
+                                Log.i(
+                                    TAG,
+                                    "remoteConfigInit update - Fail= $latestVersion",
+                                )
+                            }
+                        }
+                }
+            }
+
+            override fun onError(error: FirebaseRemoteConfigException) {
+                Log.w(TAG, "Config update error with code: " + error.code, error)
+            }
+        })
     }
 
     private fun needToUpdateVersion(context: Context): Boolean {
@@ -94,6 +129,23 @@ class MainActivity : ComponentActivity() {
         return latestVersion.isNotEmpty() && latestVersion != currentAppVersion
     }
 
+    private fun launchGooglePlayStore() {
+        if (checkGooglePlayServices()) {
+            val uri = "market://details?id=$packageName"
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
+            startActivity(intent)
+        }
+    }
+
+    private fun checkGooglePlayServices(): Boolean {
+        val googleApiAvailability = GoogleApiAvailability.getInstance()
+        val status = googleApiAvailability.isGooglePlayServicesAvailable(this)
+        if (status != ConnectionResult.SUCCESS) {
+            Toast.makeText(this, this.getString(R.string.version_update_dialog_fail_toast), Toast.LENGTH_SHORT).show()
+            return false
+        }
+        return true
+    }
     companion object {
         const val TAG = "MainActivity"
         const val REMOTE_KEY_APP_VERSION = "latest_version"
