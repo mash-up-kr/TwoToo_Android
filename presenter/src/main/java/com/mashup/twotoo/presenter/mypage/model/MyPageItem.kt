@@ -23,7 +23,7 @@ enum class GuideUrlItem(val url: String, val title: String) {
         title = "투투에 문의하기",
     ),
     Makers(
-        url = "https://two2too2.github.io/creater.html",
+        url = "https://twotoo-landing.vercel.app/makers",
         title = "만든이들",
     ), ;
 
