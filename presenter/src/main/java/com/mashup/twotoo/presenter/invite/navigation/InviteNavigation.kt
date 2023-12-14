@@ -12,6 +12,7 @@ import com.mashup.twotoo.presenter.invite.SendInvitationRoute
 import com.mashup.twotoo.presenter.invite.WaitingAcceptPairRoute
 import com.mashup.twotoo.presenter.invite.di.InviteComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
+import com.mashup.twotoo.presenter.onboarding.navigation.navigateToOnBoarding
 import com.mashup.twotoo.presenter.util.componentProvider
 
 fun NavController.navigateToInvitation(navOptions: NavOptions? = null) {
@@ -50,15 +51,27 @@ fun NavGraphBuilder.invitationGraph(
             val inviteViewModel = daggerViewModel {
                 inviteComponent.getViewModel()
             }
-            WaitingAcceptPairRoute(inviteViewModel) {
-                navController.navigateToHome(
-                    navOptions = navOptions {
-                        popUpTo(navController.graph.id) {
-                            inclusive = true
-                        }
-                    },
-                )
-            }
+            WaitingAcceptPairRoute(
+                inviteViewModel,
+                onSuccessMatchingPartner = {
+                    navController.navigateToHome(
+                        navOptions = navOptions {
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        },
+                    )
+                },
+                onClickOutButton = {
+                    navController.navigateToOnBoarding(
+                        navOptions = navOptions {
+                            popUpTo(navController.graph.id) {
+                                inclusive = true
+                            }
+                        },
+                    )
+                },
+            )
         }
     }
 }

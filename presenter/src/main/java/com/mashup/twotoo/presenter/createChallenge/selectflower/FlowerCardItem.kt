@@ -23,12 +23,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.FlowerCardUiModel
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.MainPink
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.model.FlowerName
+import com.mashup.twotoo.presenter.util.AutoResizeText
+import com.mashup.twotoo.presenter.util.FontSizeRange
 
 @Composable
 fun SelectFlowerLazyColumn(
@@ -108,11 +111,15 @@ fun FlowerCardItem(
                 color = TwoTooTheme.color.mainBrown,
                 textAlign = TextAlign.Center,
             )
-            Text(
+            AutoResizeText(
                 text = stringResource(flowerCardModel.desc),
                 style = TwoTooTheme.typography.bodyNormal14,
                 color = TwoTooTheme.color.mainBrown,
                 textAlign = TextAlign.Center,
+                fontSizeRange = FontSizeRange(
+                    max = 14.sp,
+                    min = 12.sp,
+                ),
             )
         }
     }
