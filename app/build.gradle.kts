@@ -22,7 +22,6 @@ android {
         targetSdk = 33
         versionCode = 7
         versionName = "1.0.6"
-
         buildConfigField("String", "NATIVE_APP_KEY", "\"${gradleLocalProperties(rootDir).getProperty("native_app_key") ?: ""}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -85,4 +84,5 @@ dependencies {
     implementation(libs.work.runtime.ktx)
     implementation(libs.bundles.firebase)
     implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.remote.config)
 }

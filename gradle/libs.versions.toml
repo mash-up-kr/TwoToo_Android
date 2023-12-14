@@ -105,6 +105,7 @@ kotlin-coroutine-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-tes
 firebase-messaging = { module = "com.google.firebase:firebase-messaging", version.ref = "firebase" }
 firebase-messaging-ktx = { module = "com.google.firebase:firebase-messaging-ktx", version.ref = "firebase" }
 firebase-dynamic-link = { module = "com.google.firebase:firebase-dynamic-links-ktx" }
+firebase-remote-config = { module =  "com.google.firebase:firebase-config-ktx"}
 firebase-analytics-ktx = { module = "com.google.firebase:firebase-analytics-ktx" }
 firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom"}
 
