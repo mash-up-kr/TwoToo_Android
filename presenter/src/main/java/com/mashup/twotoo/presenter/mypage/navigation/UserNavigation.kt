@@ -17,12 +17,12 @@ import com.mashup.twotoo.presenter.onboarding.navigation.navigateToOnBoarding
 import com.mashup.twotoo.presenter.util.componentProvider
 
 fun NavController.navigateToUser(action: String = "mypage", navOptions: NavOptions? = null) {
-    this.navigate(route = "${NavigationRoute.UserGraph.route}/$action", navOptions = navOptions)
+    this.navigate(route = "${NavigationRoute.UserGraph.UserScreen.route}/$action", navOptions = navOptions)
 }
 
 fun NavGraphBuilder.userGraph(navController: NavController) {
     navigation(startDestination = "${NavigationRoute.UserGraph.route}/{action}", route = NavigationRoute.UserGraph.route) {
-        composable(route = "${NavigationRoute.UserGraph.route}/{action}") { navBackStackEntry ->
+        composable(route = "${NavigationRoute.UserGraph.UserScreen.route}/{action}") { navBackStackEntry ->
             val userComponent = componentProvider<UserComponentProvider>().provideUserComponent()
             val userViewModel = daggerViewModel {
                 userComponent.getViewModel()

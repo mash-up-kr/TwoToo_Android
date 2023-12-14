@@ -250,5 +250,13 @@ fun getCurrentStepString(name: String, currentStep: Int, context: Context): Int 
 @Preview
 @Composable
 private fun PreviewCreateChallengeOneStep() {
-    // CreateChallenge(CreateChallengeState(), {})
+    CreateChallenge(
+        state = ChallengeInfoModel(),
+        updateOneStep = {},
+        updateTwoStep = {},
+        onClickBackButton = {},
+        onClickTheeStep = {},
+        onClickDialogPositiveButton = {},
+        setDialogVisibility = {},
+    )
 }

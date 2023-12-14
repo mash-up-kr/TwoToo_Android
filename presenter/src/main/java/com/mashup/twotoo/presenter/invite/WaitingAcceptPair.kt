@@ -233,5 +233,9 @@ fun WaitAcceptToolbar(
 @Preview
 @Composable
 private fun WaitingAcceptPreview() {
-    WaitingAcceptPair()
+     WaitingAcceptPair(
+         snackState = SnackbarHostState(),
+         onClickRefreshState = {},
+         onClickResendInvitation = {}
+     )
 }
