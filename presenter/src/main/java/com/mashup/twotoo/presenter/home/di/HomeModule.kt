@@ -7,11 +7,9 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
-import usecase.user.SetVisibilityCheerDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 import javax.inject.Scope
@@ -29,9 +27,7 @@ class HomeModule {
     fun provideViewModel(
         getHomeViewChallengeStateUseCase: GetViewHomeUseCase,
         createCommitUseCase: CreateCommitUseCase,
-        getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase,
         getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
-        setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
         setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
         finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
         removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
@@ -42,9 +38,7 @@ class HomeModule {
         return HomeViewModel(
             getHomeViewUseCase = getHomeViewChallengeStateUseCase,
             createCommitUseCase = createCommitUseCase,
-            getVisibilityCheerDialogUseCase = getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase = getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase = setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase = setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase = finishChallengeWithNoUseCase,
             removeVisibilityCheerDialogUseCase = removeVisibilityCheerDialogUseCase,

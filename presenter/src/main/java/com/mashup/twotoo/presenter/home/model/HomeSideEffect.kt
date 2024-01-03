@@ -20,7 +20,6 @@ sealed class HomeSideEffect {
     data class OpenHomeDialog(val type: HomeDialogType) : HomeSideEffect()
     object RemoveVisibilityCheerDialog : HomeSideEffect()
     object RemoveVisibilityCompleteDialog : HomeSideEffect()
-    object SetInVisibleCheerDialog : HomeSideEffect()
     object SetInVisibleCompleteDialog : HomeSideEffect()
     object CallViewHomeApi : HomeSideEffect()
     data class OpenToFlowerLanguageDialog(val challengeNo: Int, val flowerName: FlowerName) : HomeSideEffect()

@@ -34,11 +34,9 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
 import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
-import usecase.user.SetVisibilityCheerDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 import util.onError
@@ -53,9 +51,7 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
     private val createCommitUseCase: CreateCommitUseCase,
-    private val getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase,
     private val getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
-    private val setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
     private val setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
     private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
@@ -96,13 +92,7 @@ class HomeViewModel @Inject constructor(
                 with(state.challengeStateUiModel as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
-                            val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).me.cheerText
-                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isBlank()) {
-                                // 응원텍스트가 있다면 표시하지 않습니다.
-                                postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
-                            }
                         }
-
                         ChallengeState.Complete -> {
                             if (!getVisibilityCompleteDialogUseCase()) {
                                 if (isBothBloom(this)) {
@@ -141,10 +131,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onClickCheerDialogNegativeButton() = intent {
-        setVisibilityCheerDialogUseCase(true)
-    }
-
     fun onClickCompleteDialogConfirmButton() = intent {
         setVisibilityCompleteDialogUseCase(true)
     }
@@ -158,12 +144,6 @@ class HomeViewModel @Inject constructor(
     fun removeVisibilityCheerDialogSideEffect() {
         viewModelScope.launch {
             removeVisibilityCheerDialogUseCase()
-        }
-    }
-
-    fun setInvisibleCheerDialogSideEffect() {
-        viewModelScope.launch {
-            setVisibilityCheerDialogUseCase(true)
         }
     }
 
@@ -309,9 +289,6 @@ class HomeViewModel @Inject constructor(
                     commitNoRequestDomainModel = CommitNoRequestDomainModel(commitNo = commitNo),
                     cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
                 ).onSuccess {
-                    postSideEffect(
-                        HomeSideEffect.SetInVisibleCheerDialog,
-                    )
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )

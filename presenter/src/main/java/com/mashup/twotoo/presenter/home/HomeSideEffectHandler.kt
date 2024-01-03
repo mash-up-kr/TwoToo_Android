@@ -22,13 +22,10 @@ fun rememberHomeSideEffectHandler(
     navigateToHistory: (Int, String) -> Unit,
     navigateToStandAloneHistoryDetail: (Int) -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
-    openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
-    onClickCheerDialogNegativeButton: () -> Unit,
     removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
     callViewHomeApi: () -> Unit,
-    setInvisibleCheerDialog: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
     navigateToGarden: (Boolean) -> Unit,
     openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
@@ -45,13 +42,10 @@ fun rememberHomeSideEffectHandler(
             navigateToHistory = navigateToHistory,
             navigateToStandAloneHistoryDetail = navigateToStandAloneHistoryDetail,
             navigateToCreateChallenge = navigateToCreateChallenge,
-            openCheerBottomSheet = openCheerBottomSheet,
             onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
-            onClickCheerDialogNegativeButton = onClickCheerDialogNegativeButton,
             removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
             callViewHomeApi = callViewHomeApi,
-            setInvisibleCheerDialog = setInvisibleCheerDialog,
             setInvisibleCompleteDialog = setInvisibleCompleteDialog,
             navigateToGarden = navigateToGarden,
             openToFlowerLanguageDialog = openToFlowerLanguageDialog,
@@ -67,13 +61,10 @@ class HomeSideEffectHandler(
     private val navigateToStandAloneHistoryDetail: (Int) -> Unit,
     private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
-    private val openCheerBottomSheet: () -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
-    private val onClickCheerDialogNegativeButton: () -> Unit,
     private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
     private val callViewHomeApi: () -> Unit,
-    private val setInvisibleCheerDialog: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
     private val navigateToGarden: (Boolean) -> Unit,
     private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
@@ -183,10 +174,6 @@ class HomeSideEffectHandler(
                 callViewHomeApi()
             }
 
-            is HomeSideEffect.SetInVisibleCheerDialog -> {
-                setInvisibleCheerDialog()
-            }
-
             is HomeSideEffect.SetInVisibleCompleteDialog -> {
                 setInvisibleCompleteDialog()
             }
@@ -212,19 +199,7 @@ class HomeSideEffectHandler(
     private fun handleDialog(type: HomeDialogType) {
         when (type) {
             HomeDialogType.Cheer -> {
-                homeDialogType = DialogContent.createHomeBothAuthDialogContent(
-                    negativeAction = {
-                        onClickCheerDialogNegativeButton()
-                        onDismissHomeDialog()
-                    },
-                    positiveAction = {
-                        onDismissHomeDialog()
-                        openCheerBottomSheet()
-                    },
-                )
-                isHomeDialogVisible = true
             }
-
             HomeDialogType.Bloom -> {
                 homeDialogType = DialogContent.createHomeBloomBothDialogContent(
                     onConfirm = {

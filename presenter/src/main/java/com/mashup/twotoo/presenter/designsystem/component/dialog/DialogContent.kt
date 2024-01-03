@@ -20,6 +20,7 @@ class DialogContent private constructor(
             buttons = emptyList(),
         )
 
+        // Not used anywhere
         fun createHomeBothAuthDialogContent(
             negativeAction: () -> Unit,
             positiveAction: () -> Unit,
