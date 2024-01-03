@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
+import com.mashup.twotoo.presenter.history.datail.StandAloneHistoryDetailRoute
 import com.mashup.twotoo.presenter.history.detailImage.DetailImageRoute
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
@@ -22,6 +23,10 @@ fun NavController.navigateToHistory(challengeNo: Int, from: String = "twotoo") {
 
 fun NavController.navigateToHistoryDetail(commitNo: Int) {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryDetailScreen.route}/$commitNo")
+}
+
+fun NavController.navigateToStandAloneHistoryDetail(commitNo: Int) {
+    this.navigate(route = "${NavigationRoute.HistoryGraph.StandAloneHistoryDetailScreen.route}/$commitNo")
 }
 
 private fun NavController.navigateToDetailImageScreen(url: String) {
@@ -68,6 +73,7 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             ),
         ) {
                 navBackStackEntry ->
+
             val parentRoute = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}/{from}"
             val parentEntry = remember {
                 navController.getBackStackEntry(parentRoute)
@@ -80,6 +86,23 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
                 historyComponent.getViewModel()
             }
             HistoryDetailRoute(
+                commitNo = commitNo,
+                historyViewModel = historyViewModel,
+                onClickBackButton = navController::popBackStack,
+                onClickImage = navController::navigateToDetailImageScreen,
+            )
+        }
+
+        composable(
+            route = "${NavigationRoute.HistoryGraph.StandAloneHistoryDetailScreen.route}/{commitNo}",
+        ) { navBackStackEntry ->
+            val commitNo = navBackStackEntry.arguments?.getInt("commitNo") ?: 0
+
+            val historyComponent = componentProvider<HistoryComponentProvider>().provideHistoryComponent()
+            val historyViewModel = daggerViewModel {
+                historyComponent.getViewModel()
+            }
+            StandAloneHistoryDetailRoute(
                 commitNo = commitNo,
                 historyViewModel = historyViewModel,
                 onClickBackButton = navController::popBackStack,

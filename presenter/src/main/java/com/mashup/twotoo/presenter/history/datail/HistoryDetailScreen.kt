@@ -54,6 +54,30 @@ fun HistoryDetailRoute(
 }
 
 @Composable
+fun StandAloneHistoryDetailRoute(
+    commitNo: Int,
+    historyViewModel: HistoryViewModel,
+    onClickBackButton: () -> Unit,
+    onClickImage: (String) -> Unit,
+) {
+    Log.i("StandAloneHistoryDetailRoute", "commitNo = $commitNo")
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    val state by historyViewModel.collectAsState()
+
+    LaunchedEffect(Unit) {
+        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
+            historyViewModel.loadCommitBy(commitNo)
+        }
+    }
+    HistoryDetailScreen(
+        historyDetailInfoUiModel = state.historyDetailInfoUiModel,
+        onClickBackButton = {},
+        onClickImage = {},
+    )
+}
+
+@Composable
 fun HistoryDetailScreen(
     historyDetailInfoUiModel: HistoryDetailInfoUiModel,
     onClickBackButton: () -> Unit = {},

@@ -70,6 +70,8 @@ sealed class NavigationRoute(val route: String) {
     }
     object HistoryGraph : NavigationRoute("history") {
         object HistoryScreen : NavigationRoute("history/screen")
+
+        object StandAloneHistoryDetailScreen : NavigationRoute("standalone_detail/screen")
         object HistoryDetailScreen : NavigationRoute("detail/screen")
         object DetailImageScreen : NavigationRoute("detail/image/screen")
     }

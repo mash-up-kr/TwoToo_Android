@@ -20,6 +20,7 @@ fun rememberHomeSideEffectHandler(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: (Int, String) -> Unit,
+    navigateToStandAloneHistoryDetail: (Int) -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
@@ -30,7 +31,7 @@ fun rememberHomeSideEffectHandler(
     setInvisibleCheerDialog: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
     navigateToGarden: (Boolean) -> Unit,
-    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -42,6 +43,7 @@ fun rememberHomeSideEffectHandler(
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
             navigateToHistory = navigateToHistory,
+            navigateToStandAloneHistoryDetail = navigateToStandAloneHistoryDetail,
             navigateToCreateChallenge = navigateToCreateChallenge,
             openCheerBottomSheet = openCheerBottomSheet,
             onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
@@ -62,6 +64,7 @@ class HomeSideEffectHandler(
     val context: Context,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
+    private val navigateToStandAloneHistoryDetail: (Int) -> Unit,
     private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val openCheerBottomSheet: () -> Unit,
@@ -73,7 +76,7 @@ class HomeSideEffectHandler(
     private val setInvisibleCheerDialog: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
     private val navigateToGarden: (Boolean) -> Unit,
-    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -127,6 +130,10 @@ class HomeSideEffectHandler(
                         },
                     )
                 }
+            }
+
+            is HomeSideEffect.NavigateToStandAloneHistoryDetail -> {
+                navigateToStandAloneHistoryDetail(sideEffect.commitNo)
             }
 
             is HomeSideEffect.OpenToShotBottomSheet -> {

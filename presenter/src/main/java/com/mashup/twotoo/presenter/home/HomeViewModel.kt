@@ -190,9 +190,10 @@ class HomeViewModel @Inject constructor(
     }
 
     fun openToCheerBottomSheet() = intent {
-        postSideEffect(HomeSideEffect.DismissBottomSheet)
+        postSideEffect(HomeSideEffect.NavigateToStandAloneHistoryDetail(1726))
+       /* postSideEffect(HomeSideEffect.DismissBottomSheet)
         delay(100)
-        postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)
+        postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)*/
     }
 
     fun openToFlowerLangDialog(challengeCount: Int, flowerName: FlowerName) = intent {

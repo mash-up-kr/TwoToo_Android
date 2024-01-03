@@ -255,6 +255,14 @@ class HistoryViewModel @Inject constructor(
         return newHistoryItemUiModels
     }
 
+    fun loadCommitBy(commitNo: Int) = intent {
+        reduce {
+            state.copy(
+                historyDetailInfoUiModel = HistoryDetailInfoUiModel(),
+            )
+        }
+    }
+
     fun updateChallengeDetail(commitNo: Int) = intent {
         val partnerCommits = state.historyItemUiModel.map {
             it.partnerInfo
