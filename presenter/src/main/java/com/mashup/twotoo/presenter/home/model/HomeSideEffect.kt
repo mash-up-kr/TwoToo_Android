@@ -11,7 +11,7 @@ sealed class HomeSideEffect {
     object OpenToAuthBottomSheet : HomeSideEffect()
     data class NavigateToChallengeDetail(val challengeNo: Int, val from: String) : HomeSideEffect()
 
-    data class NavigateToStandAloneHistoryDetail(val commitNo: Int) : HomeSideEffect()
+    object NavigateToHistoryDetailWithHomeViewModel : HomeSideEffect()
     object OpenToCheerBottomSheet : HomeSideEffect()
     object OpenToHelp : HomeSideEffect()
     data class NavigationToCreateChallenge(val homeState: BeforeChallengeState, val challengeInfo: HomeChallengeInfoModel) : HomeSideEffect()

@@ -71,5 +71,7 @@ fun UserCommit.toDomainModel(): UserCommitResponseDomainModel {
         photoUrl = this.photoUrl,
         text = this.text,
         userNo = this.userNo,
+        createdAt = this.createdAt,
+        updatedAt = this.updatedAt,
     )
 }

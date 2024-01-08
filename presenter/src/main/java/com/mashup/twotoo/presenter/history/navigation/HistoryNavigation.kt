@@ -10,9 +10,10 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
-import com.mashup.twotoo.presenter.history.datail.StandAloneHistoryDetailRoute
+import com.mashup.twotoo.presenter.history.datail.HistoryDetailRouteWithHomeViewModel
 import com.mashup.twotoo.presenter.history.detailImage.DetailImageRoute
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
+import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
 import com.mashup.twotoo.presenter.util.toIncodeUrl
@@ -25,8 +26,8 @@ fun NavController.navigateToHistoryDetail(commitNo: Int) {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryDetailScreen.route}/$commitNo")
 }
 
-fun NavController.navigateToStandAloneHistoryDetail(commitNo: Int) {
-    this.navigate(route = "${NavigationRoute.HistoryGraph.StandAloneHistoryDetailScreen.route}/$commitNo")
+fun NavController.navigateToHistoryDetailWithHomeViewModel() {
+    this.navigate(route = NavigationRoute.HistoryGraph.HistoryDetailScreenWithHomeViewModel.route)
 }
 
 private fun NavController.navigateToDetailImageScreen(url: String) {
@@ -94,17 +95,20 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
         }
 
         composable(
-            route = "${NavigationRoute.HistoryGraph.StandAloneHistoryDetailScreen.route}/{commitNo}",
-        ) { navBackStackEntry ->
-            val commitNo = navBackStackEntry.arguments?.getInt("commitNo") ?: 0
+            route = NavigationRoute.HistoryGraph.HistoryDetailScreenWithHomeViewModel.route,
+        ) {
+            val parentRoute = NavigationRoute.HomeGraph.HomeScreen.route
+            val parentEntry = remember {
+                navController.getBackStackEntry(parentRoute)
+            }
+            val viewModelStoreOwner: ViewModelStoreOwner = parentEntry
 
-            val historyComponent = componentProvider<HistoryComponentProvider>().provideHistoryComponent()
-            val historyViewModel = daggerViewModel {
+            val historyComponent = componentProvider<HomeComponentProvider>().provideHomeComponent()
+            val homeViewModel = daggerViewModel(viewModelStoreOwner = viewModelStoreOwner) {
                 historyComponent.getViewModel()
             }
-            StandAloneHistoryDetailRoute(
-                commitNo = commitNo,
-                historyViewModel = historyViewModel,
+            HistoryDetailRouteWithHomeViewModel(
+                homeViewModel = homeViewModel,
                 onClickBackButton = navController::popBackStack,
                 onClickImage = navController::navigateToDetailImageScreen,
             )

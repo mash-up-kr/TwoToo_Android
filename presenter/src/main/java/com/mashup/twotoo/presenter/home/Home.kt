@@ -57,12 +57,12 @@ fun HomeRoute(
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     navigateToGuide: () -> Unit = {},
     navigateToGarden: (Boolean) -> Unit = {},
-    navigateToStandAloneHistoryDetail: (Int) -> Unit = {},
+    navigateToHistoryDetailWithHomeViewModel: () -> Unit = {},
 ) {
     val homeSideEffectHandler = rememberHomeSideEffectHandler(
         navigateToCreateChallenge = navigateToCreateChallenge,
         navigateToHistory = navigateToHistory,
-        navigateToStandAloneHistoryDetail = navigateToStandAloneHistoryDetail,
+        navigateToHistoryDetailWithHomeViewModel = navigateToHistoryDetailWithHomeViewModel,
         onClickCompleteDialogConfirmButton = homeViewModel::onClickCompleteDialogConfirmButton,
         removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
         removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,

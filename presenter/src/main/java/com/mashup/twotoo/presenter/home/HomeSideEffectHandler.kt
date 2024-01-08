@@ -20,7 +20,7 @@ fun rememberHomeSideEffectHandler(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: (Int, String) -> Unit,
-    navigateToStandAloneHistoryDetail: (Int) -> Unit,
+    navigateToHistoryDetailWithHomeViewModel: () -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
     removeVisibilityCheerDialog: () -> Unit,
@@ -40,7 +40,7 @@ fun rememberHomeSideEffectHandler(
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
             navigateToHistory = navigateToHistory,
-            navigateToStandAloneHistoryDetail = navigateToStandAloneHistoryDetail,
+            navigateToHistoryDetailWithHomeViewModel = navigateToHistoryDetailWithHomeViewModel,
             navigateToCreateChallenge = navigateToCreateChallenge,
             onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
             removeVisibilityCheerDialog = removeVisibilityCheerDialog,
@@ -58,7 +58,7 @@ class HomeSideEffectHandler(
     val context: Context,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
-    private val navigateToStandAloneHistoryDetail: (Int) -> Unit,
+    private val navigateToHistoryDetailWithHomeViewModel: () -> Unit,
     private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
@@ -123,8 +123,8 @@ class HomeSideEffectHandler(
                 }
             }
 
-            is HomeSideEffect.NavigateToStandAloneHistoryDetail -> {
-                navigateToStandAloneHistoryDetail(sideEffect.commitNo)
+            is HomeSideEffect.NavigateToHistoryDetailWithHomeViewModel -> {
+                navigateToHistoryDetailWithHomeViewModel()
             }
 
             is HomeSideEffect.OpenToShotBottomSheet -> {

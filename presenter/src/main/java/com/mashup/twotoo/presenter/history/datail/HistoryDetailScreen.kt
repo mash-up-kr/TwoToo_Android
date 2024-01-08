@@ -29,6 +29,7 @@ import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.HistoryViewModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.home.HomeViewModel
 import org.orbitmvi.orbit.compose.collectAsState
 
 @Composable
@@ -54,26 +55,17 @@ fun HistoryDetailRoute(
 }
 
 @Composable
-fun StandAloneHistoryDetailRoute(
-    commitNo: Int,
-    historyViewModel: HistoryViewModel,
+fun HistoryDetailRouteWithHomeViewModel(
+    homeViewModel: HomeViewModel,
     onClickBackButton: () -> Unit,
     onClickImage: (String) -> Unit,
 ) {
-    Log.i("StandAloneHistoryDetailRoute", "commitNo = $commitNo")
-    val lifecycleOwner = LocalLifecycleOwner.current
+    val state by homeViewModel.collectAsState()
 
-    val state by historyViewModel.collectAsState()
-
-    LaunchedEffect(Unit) {
-        lifecycleOwner.repeatOnLifecycle(state = Lifecycle.State.STARTED) {
-            historyViewModel.loadCommitBy(commitNo)
-        }
-    }
     HistoryDetailScreen(
-        historyDetailInfoUiModel = state.historyDetailInfoUiModel,
-        onClickBackButton = {},
-        onClickImage = {},
+        historyDetailInfoUiModel = state.partnerHistoryDetailInfoUiModel,
+        onClickBackButton = onClickBackButton,
+        onClickImage = onClickImage,
     )
 }
 

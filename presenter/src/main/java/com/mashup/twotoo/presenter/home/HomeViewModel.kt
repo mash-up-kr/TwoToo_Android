@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
+import com.mashup.twotoo.presenter.history.datail.model.toHistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
@@ -85,6 +86,7 @@ class HomeViewModel @Inject constructor(
                     indicatorState = false,
                     homeChallengeInfoModel = homeViewResponseDomainModel.onGoingChallenge.toUiModel(),
                     challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
+                    partnerHistoryDetailInfoUiModel = homeViewResponseDomainModel.toHistoryDetailInfoUiModel(),
                 )
             }
 
@@ -170,7 +172,7 @@ class HomeViewModel @Inject constructor(
     }
 
     fun openToCheerBottomSheet() = intent {
-        postSideEffect(HomeSideEffect.NavigateToStandAloneHistoryDetail(1726))
+        postSideEffect(HomeSideEffect.NavigateToHistoryDetailWithHomeViewModel)
        /* postSideEffect(HomeSideEffect.DismissBottomSheet)
         delay(100)
         postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)*/
