@@ -42,7 +42,6 @@ import com.mashup.twotoo.presenter.home.model.HomeChallengeStateUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
 import com.mashup.twotoo.presenter.home.model.HomeFlowerUiModel
-import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.UserType.ME
 import com.mashup.twotoo.presenter.home.model.UserType.PARTNER
 import com.mashup.twotoo.presenter.model.FlowerName

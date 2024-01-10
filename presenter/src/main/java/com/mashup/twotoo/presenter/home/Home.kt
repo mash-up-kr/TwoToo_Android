@@ -111,7 +111,7 @@ fun HomeRoute(
             onCommit = homeViewModel::openToAuthBottomSheet,
             navigateToHistory = homeViewModel::navigateToHistory,
             onClickCompleteButton = homeViewModel::onClickCompleteButton,
-            onClickCheerButton = homeViewModel::openToCheerBottomSheet,
+            onClickCheerButton = homeViewModel::navigateToHistoryDetailWithHomeViewModel,
             navigateToGuide = navigateToGuide,
             onWiggleAnimationEnd = homeViewModel::onWiggleAnimationEnd,
             onClickFlowerTextBubble = homeViewModel::openToFlowerLangDialog,

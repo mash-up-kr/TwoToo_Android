@@ -3,7 +3,9 @@ package com.mashup.twotoo.presenter.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
+import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.history.datail.model.toHistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.history.model.toHistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
@@ -16,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import com.mashup.twotoo.presenter.home.model.ToastTextForHistoryDetail
 import com.mashup.twotoo.presenter.home.model.toUiModel
 import com.mashup.twotoo.presenter.model.FlowerName
 import kotlinx.coroutines.delay
@@ -171,11 +174,14 @@ class HomeViewModel @Inject constructor(
         postSideEffect(HomeSideEffect.OpenToAuthBottomSheet)
     }
 
-    fun openToCheerBottomSheet() = intent {
+    fun navigateToHistoryDetailWithHomeViewModel() = intent {
         postSideEffect(HomeSideEffect.NavigateToHistoryDetailWithHomeViewModel)
-       /* postSideEffect(HomeSideEffect.DismissBottomSheet)
+    }
+
+    fun openToCheerBottomSheet() = intent {
+        postSideEffect(HomeSideEffect.DismissBottomSheet)
         delay(100)
-        postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)*/
+        postSideEffect(HomeSideEffect.OpenToCheerBottomSheet)
     }
 
     fun openToFlowerLangDialog(challengeCount: Int, flowerName: FlowerName) = intent {
@@ -276,8 +282,8 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerFail,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerFail,
                         ),
                     )
                     return@intent
@@ -290,31 +296,37 @@ class HomeViewModel @Inject constructor(
                 createCheerUseCase(
                     commitNoRequestDomainModel = CommitNoRequestDomainModel(commitNo = commitNo),
                     cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
-                ).onSuccess {
+                ).onSuccess { commitResponseDomainModel ->
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     delay(100)
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerSuccess,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerSuccess,
                         ),
                     )
                     delay(100)
-                    postSideEffect(
-                        HomeSideEffect.CallViewHomeApi,
-                    )
+                    reduce {
+                        state.copy(
+                            partnerHistoryDetailInfoUiModel =
+                            HistoryDetailInfoUiModel(
+                                ownerNickNamesUiModel = state.partnerHistoryDetailInfoUiModel.ownerNickNamesUiModel,
+                                challengeName = state.partnerHistoryDetailInfoUiModel.challengeName,
+                                infoUiModel = commitResponseDomainModel.toHistoryDetailInfoUiModel(),
+                            ),
+                        )
+                    }
                 }.onError { code, message ->
                     postSideEffect(
                         HomeSideEffect.RemoveVisibilityCheerDialog,
                     )
-
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerFail,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerFail,
                         ),
                     )
                 }

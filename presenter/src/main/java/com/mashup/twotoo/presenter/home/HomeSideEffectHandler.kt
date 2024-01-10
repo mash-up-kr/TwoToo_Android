@@ -95,20 +95,12 @@ class HomeSideEffectHandler(
                                 context.getString(R.string.toast_message_shot_success)
                             }
 
-                            ToastText.CheerSuccess -> {
-                                context.getString(R.string.toast_message_cheer_success)
-                            }
-
                             ToastText.LoadHomeFail -> {
                                 context.getString(R.string.toast_message_load_home_fail)
                             }
 
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
-                            }
-
-                            ToastText.CheerFail -> {
-                                context.getString(R.string.toast_message_cheer_fail)
                             }
 
                             ToastText.ShotFail -> {
@@ -189,6 +181,8 @@ class HomeSideEffectHandler(
                 )
                 isFlowerLangDialogVisible = true
             }
+
+            is HomeSideEffect.ToastForHistoryDetail -> { } // Todo historyDetailViewModel에 종속되도록 분리해야햠..
         }
     }
 

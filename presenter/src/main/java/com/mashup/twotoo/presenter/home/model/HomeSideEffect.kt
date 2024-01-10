@@ -7,6 +7,8 @@ import com.mashup.twotoo.presenter.model.FlowerName
  */
 sealed class HomeSideEffect {
     data class Toast(val text: ToastText) : HomeSideEffect()
+
+    data class ToastForHistoryDetail(val text: ToastTextForHistoryDetail) : HomeSideEffect()
     object OpenToShotBottomSheet : HomeSideEffect()
     object OpenToAuthBottomSheet : HomeSideEffect()
     data class NavigateToChallengeDetail(val challengeNo: Int, val from: String) : HomeSideEffect()
@@ -29,6 +31,9 @@ enum class HomeDialogType {
     Cheer, Bloom, DoNotBloom
 }
 enum class ToastText {
+    CommitSuccess, CommitFail, ShotSuccess, LoadHomeFail, FinishFail, ShotFail, ShotInvalid
+}
 
-    CommitSuccess, CommitFail, ShotSuccess, CheerSuccess, CheerFail, LoadHomeFail, FinishFail, ShotFail, ShotInvalid
+enum class ToastTextForHistoryDetail {
+    CheerSuccess, CheerFail
 }
