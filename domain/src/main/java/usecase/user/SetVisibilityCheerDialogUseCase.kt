@@ -3,7 +3,7 @@ package usecase.user
 import repository.UserDataStoreRepository
 import javax.inject.Inject
 
-// Not Used Anywhere
+// Never used anywhere
 class SetVisibilityCheerDialogUseCase @Inject constructor(
     private val userDataStoreRepository: UserDataStoreRepository,
 ) {

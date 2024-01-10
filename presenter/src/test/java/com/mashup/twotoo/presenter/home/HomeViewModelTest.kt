@@ -29,11 +29,8 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
-import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
-import usecase.user.SetVisibilityCheerDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 
@@ -41,13 +38,10 @@ class HomeViewModelTest {
 
     private lateinit var getViewHomeUseCase: GetViewHomeUseCase
     private lateinit var createCommitUseCase: CreateCommitUseCase
-    private lateinit var getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase
     private lateinit var getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase
-    private lateinit var setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase
     private lateinit var setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase
     private lateinit var finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase
     private lateinit var removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase
-    private lateinit var removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase
     private lateinit var createCheerUseCase: CreateCheerUseCase
     private lateinit var stingUseCase: StingUseCase
 
@@ -63,18 +57,12 @@ class HomeViewModelTest {
         fakeCommitRepository = FakeCommitRepository()
         fakeChallengeRepository = FakeChallengeRepository()
         fakeNotificationRepository = FakeNotificationRepository()
-        getVisibilityCheerDialogUseCase =
-            GetVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         getVisibilityCompleteDialogUseCase =
             GetVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
-        setVisibilityCheerDialogUseCase =
-            SetVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         setVisibilityCompleteDialogUseCase =
             SetVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
         createCommitUseCase = CreateCommitUseCase(fakeCommitRepository)
         finishChallengeWithNoUseCase = FinishChallengeWithNoUseCase(fakeChallengeRepository)
-        removeVisibilityCheerDialogUseCase =
-            RemoveVisibilityCheerDialogUseCase(fakeUserDataStoreRepository)
         removeVisibilityCompleteDialogUseCase =
             RemoveVisibilityCompleteDialogUseCase(fakeUserDataStoreRepository)
         createCheerUseCase = CreateCheerUseCase(fakeCommitRepository)
@@ -91,12 +79,9 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
-            getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
             stingUseCase,
@@ -126,12 +111,9 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
-            getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
             stingUseCase,
@@ -160,12 +142,9 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
-            getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
             stingUseCase,
@@ -194,12 +173,9 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
-            getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
             stingUseCase,
@@ -229,12 +205,9 @@ class HomeViewModelTest {
         val viewModel = HomeViewModel(
             getViewHomeUseCase,
             createCommitUseCase,
-            getVisibilityCheerDialogUseCase,
             getVisibilityCompleteDialogUseCase,
-            setVisibilityCheerDialogUseCase,
             setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase,
             createCheerUseCase,
             stingUseCase,

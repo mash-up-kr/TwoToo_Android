@@ -23,7 +23,6 @@ fun rememberHomeSideEffectHandler(
     navigateToHistoryDetailWithHomeViewModel: () -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
-    removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
     callViewHomeApi: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
@@ -43,7 +42,6 @@ fun rememberHomeSideEffectHandler(
             navigateToHistoryDetailWithHomeViewModel = navigateToHistoryDetailWithHomeViewModel,
             navigateToCreateChallenge = navigateToCreateChallenge,
             onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
-            removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
             callViewHomeApi = callViewHomeApi,
             setInvisibleCompleteDialog = setInvisibleCompleteDialog,
@@ -62,7 +60,6 @@ class HomeSideEffectHandler(
     private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
-    private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
     private val callViewHomeApi: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
@@ -156,10 +153,6 @@ class HomeSideEffectHandler(
 
             is HomeSideEffect.RemoveVisibilityCompleteDialog -> {
                 removeVisibilityCompleteDialog()
-            }
-
-            is HomeSideEffect.RemoveVisibilityCheerDialog -> {
-                removeVisibilityCheerDialog()
             }
 
             is HomeSideEffect.CallViewHomeApi -> {

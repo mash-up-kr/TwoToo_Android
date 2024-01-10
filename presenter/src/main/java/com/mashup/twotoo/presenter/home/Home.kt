@@ -64,7 +64,6 @@ fun HomeRoute(
         navigateToHistory = navigateToHistory,
         navigateToHistoryDetailWithHomeViewModel = navigateToHistoryDetailWithHomeViewModel,
         onClickCompleteDialogConfirmButton = homeViewModel::onClickCompleteDialogConfirmButton,
-        removeVisibilityCheerDialog = homeViewModel::removeVisibilityCheerDialogSideEffect,
         removeVisibilityCompleteDialog = homeViewModel::removeVisibilityCompleteDialogSideEffect,
         callViewHomeApi = homeViewModel::getHomeViewChallenge,
         setInvisibleCompleteDialog = homeViewModel::setInvisibleCompleteDialogSideEffect,

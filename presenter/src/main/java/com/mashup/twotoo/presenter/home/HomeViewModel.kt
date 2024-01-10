@@ -39,7 +39,6 @@ import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
-import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
@@ -58,7 +57,6 @@ class HomeViewModel @Inject constructor(
     private val getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
     private val setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
-    private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
     private val createCheerUseCase: CreateCheerUseCase,
     private val stingUseCase: StingUseCase,
@@ -119,8 +117,6 @@ class HomeViewModel @Inject constructor(
                                         type = HomeDialogType.Cheer,
                                     ),
                                 )
-                            } else {
-                                postSideEffect(HomeSideEffect.RemoveVisibilityCheerDialog)
                             }
                         }
                     }
@@ -143,12 +139,6 @@ class HomeViewModel @Inject constructor(
     fun removeVisibilityCompleteDialogSideEffect() {
         viewModelScope.launch {
             removeVisibilityCompleteDialogUseCase()
-        }
-    }
-
-    fun removeVisibilityCheerDialogSideEffect() {
-        viewModelScope.launch {
-            removeVisibilityCheerDialogUseCase()
         }
     }
 
@@ -318,9 +308,6 @@ class HomeViewModel @Inject constructor(
                         )
                     }
                 }.onError { code, message ->
-                    postSideEffect(
-                        HomeSideEffect.RemoveVisibilityCheerDialog,
-                    )
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )

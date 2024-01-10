@@ -8,7 +8,6 @@ import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
-import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
@@ -30,7 +29,6 @@ class HomeModule {
         getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
         setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
         finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
-        removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
         removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
         createCheerUseCase: CreateCheerUseCase,
         stingUseCase: StingUseCase,
@@ -41,7 +39,6 @@ class HomeModule {
             getVisibilityCompleteDialogUseCase = getVisibilityCompleteDialogUseCase,
             setVisibilityCompleteDialogUseCase = setVisibilityCompleteDialogUseCase,
             finishChallengeWithNoUseCase = finishChallengeWithNoUseCase,
-            removeVisibilityCheerDialogUseCase = removeVisibilityCheerDialogUseCase,
             removeVisibilityCompleteDialogUseCase = removeVisibilityCompleteDialogUseCase,
             createCheerUseCase = createCheerUseCase,
             stingUseCase = stingUseCase,
