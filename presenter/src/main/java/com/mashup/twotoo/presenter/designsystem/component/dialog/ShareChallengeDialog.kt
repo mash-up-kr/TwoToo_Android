@@ -90,14 +90,14 @@ fun ShareChallengeDialog(
                     )
                     Spacer(modifier = Modifier.height(11.dp))
                     TwoTooTextButton(
-                        text = stringResource(id = R.string.share_complete_card),
+                        text = stringResource(id = R.string.share),
                         onClick = { onClickShareButton() },
                         modifier = Modifier.fillMaxWidth().height(56.dp),
                     )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
                 Text(
-                    text = stringResource(id = R.string.close_complete_card),
+                    text = stringResource(id = R.string.close),
                     textAlign = TextAlign.Center,
                     style = TwoTooTheme.typography.headLineNormal20,
                     color = TwoTooTheme.color.mainWhite,
