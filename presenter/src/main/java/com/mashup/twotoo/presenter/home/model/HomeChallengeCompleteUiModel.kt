@@ -15,7 +15,7 @@ data class HomeChallengeCompleteUiModel(
 ) {
     fun getFlowerImage(context: Context, userNum: Int): Int {
         val flower = if (userNum == 1) user1Flower else user2Flower
-        val name = "img_home_${Stage.Fourth.name.lowercase()}_stage_${flower.lowercase()}_me"
+        val name = "img_home_${Stage.Fifth.name.lowercase()}_stage_${flower.lowercase()}_me"
         val image = context.resources.getIdentifier(name, "drawable", context.packageName)
         return image
     }
