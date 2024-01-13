@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.home.model
 
 import android.content.Context
+import com.mashup.twotoo.presenter.home.mapper.getFlowerType
 import com.mashup.twotoo.presenter.model.Stage
 import model.challenge.response.ChallengeResponseDomainModel
 import model.challenge.response.HomeViewResponseDomainModel
@@ -10,28 +11,29 @@ data class HomeChallengeCompleteUiModel(
     val name: String = "",
     val description: String = "",
     val startDate: String = "",
-    val user1Flower: String = "",
-    val user2Flower: String = "",
+    val myFlower: String = "",
+    val partnerFlower: String = "",
 ) {
-    fun getFlowerImage(context: Context, userNum: Int): Int {
-        val flower = if (userNum == 1) user1Flower else user2Flower
-        val name = "img_home_${Stage.Fifth.name.lowercase()}_stage_${flower.lowercase()}_me"
-        val image = context.resources.getIdentifier(name, "drawable", context.packageName)
-        return image
+    fun getFlowerImage(context: Context, userType: UserType): Int {
+        val (flower, userType) = if (userType == UserType.ME) (myFlower to "me") else (partnerFlower to "partner")
+        val name = "img_home_${Stage.Fifth.name.lowercase()}_stage_${flower.lowercase()}_$userType"
+        return context.resources.getIdentifier(name, "drawable", context.packageName)
     }
 }
 
 fun HomeViewResponseDomainModel?.toCardUiModel(): HomeChallengeCompleteUiModel {
     this?.let {
         val challengeInfo = this.onGoingChallenge ?: ChallengeResponseDomainModel.default
+        val myInfo = this.myInfo.userNo
         return HomeChallengeCompleteUiModel(
             count = this.challengeTotal,
             name = challengeInfo.name,
             description = challengeInfo.description,
             startDate = challengeInfo.startDate,
-            user1Flower = challengeInfo.user1Flower,
-            user2Flower = challengeInfo.user2Flower,
+            myFlower = challengeInfo.getFlowerType(myInfo).first.name.value,
+            partnerFlower = challengeInfo.getFlowerType(myInfo).second.name.value,
         )
     }
     return HomeChallengeCompleteUiModel()
 }
+

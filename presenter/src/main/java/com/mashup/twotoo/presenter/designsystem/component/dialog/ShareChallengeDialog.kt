@@ -19,6 +19,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -38,6 +39,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeChallengeCompleteUiModel
+import com.mashup.twotoo.presenter.home.model.UserType
 import com.mashup.twotoo.presenter.util.DateFormatter
 import com.mashup.twotoo.presenter.util.shareImage
 import dev.shreyaspatil.capturable.Capturable
@@ -62,9 +64,6 @@ fun ShareChallengeDialog(
         Box(
             modifier = Modifier.fillMaxWidth(),
         ) {
-            CompleteChallengeLottie(
-                modifier = Modifier.fillMaxWidth().height(350.dp).align(Alignment.TopCenter),
-            )
             Column(
                 Modifier.padding(top = 30.dp)
                     .background(Color.Transparent)
@@ -99,9 +98,14 @@ fun ShareChallengeDialog(
                     }
                     Spacer(modifier = Modifier.height(11.dp))
                     TwoTooTextButton(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(56.dp),
                         text = stringResource(id = R.string.share),
-                        onClick = { captureController.capture(Bitmap.Config.ARGB_8888) },
-                        modifier = Modifier.fillMaxWidth().height(56.dp),
+                        shape = TwoTooTheme.shape.extraSmall,
+                        onClick = {
+                            captureController.capture(Bitmap.Config.ARGB_8888)
+                        },
                     )
                 }
                 Spacer(modifier = Modifier.height(24.dp))
@@ -114,6 +118,9 @@ fun ShareChallengeDialog(
                         .clickable { onDismissRequest() },
                 )
             }
+            CompleteChallengeLottie(
+                modifier = Modifier.fillMaxWidth().height(350.dp).align(Alignment.TopCenter),
+            )
         }
     }
 }
@@ -146,16 +153,17 @@ fun ShareChallengeContent(context: Context, cardChallengeInfo: HomeChallengeComp
             Text(
                 text = stringResource(id = R.string.complete_challenge_attempts, cardChallengeInfo.count),
                 textAlign = TextAlign.Start,
-                style = TwoTooTheme.typography.bodyNormal14,
+                style = TwoTooTheme.typography.headLineNormal18,
                 color = TwoTooTheme.color.twoTooPink,
                 modifier = Modifier.background(color = Color.White, shape = TwoTooTheme.shape.extraSmall).padding(10.dp),
             )
         }
-        Box() {
+        Box {
             TwoTooImageView(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth().background(color = Color.Transparent,shape = TwoTooTheme.shape.medium)
+                    .fillMaxWidth()
+                    .clip(shape = TwoTooTheme.shape.medium)
                     .height(100.dp),
                 previewPlaceholder = R.drawable.image_home_background,
                 model = R.drawable.image_home_background,
@@ -164,22 +172,22 @@ fun ShareChallengeContent(context: Context, cardChallengeInfo: HomeChallengeComp
             Text(
                 text = stringResource(id = R.string.app_name),
                 textAlign = TextAlign.Start,
-                style = TwoTooTheme.typography.bodyNormal14,
+                style = TwoTooTheme.typography.headLineNormal20,
                 color = TwoTooTheme.color.mainWhite,
-                modifier = Modifier.align(Alignment.BottomStart).padding(bottom = 21.dp, start = 29.dp),
+                modifier = Modifier.align(Alignment.BottomStart).padding(bottom = 21.dp, start = 29.dp, top = 20.dp),
             )
 
             Row(modifier = Modifier.padding(bottom = 50.dp, top = 20.dp).align(Alignment.BottomCenter)) {
                 TwoTooImageView(
                     modifier = Modifier.size(99.dp, 164.dp),
-                    model = cardChallengeInfo.getFlowerImage(context, 1),
-                    previewPlaceholder = cardChallengeInfo.getFlowerImage(context, 1),
+                    model = cardChallengeInfo.getFlowerImage(context, UserType.PARTNER),
+                    previewPlaceholder = cardChallengeInfo.getFlowerImage(context, UserType.PARTNER),
                 )
                 Spacer(modifier = Modifier.width(24.dp))
                 TwoTooImageView(
                     modifier = Modifier.size(99.dp, 164.dp),
-                    model = cardChallengeInfo.getFlowerImage(context, 2),
-                    previewPlaceholder = cardChallengeInfo.getFlowerImage(context, 2),
+                    model = cardChallengeInfo.getFlowerImage(context, UserType.ME),
+                    previewPlaceholder = cardChallengeInfo.getFlowerImage(context, UserType.ME),
                 )
             }
         }
