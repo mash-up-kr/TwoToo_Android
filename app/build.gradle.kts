@@ -20,8 +20,8 @@ android {
         applicationId = "com.mashup.twotoo"
         minSdk = 24
         targetSdk = 33
-        versionCode = 8
-        versionName = "1.0.7"
+        versionCode = 9
+        versionName = "1.0.8"
         buildConfigField("String", "NATIVE_APP_KEY", "\"${gradleLocalProperties(rootDir).getProperty("native_app_key") ?: ""}\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
