@@ -108,7 +108,9 @@ class HomeViewModel @Inject constructor(
                                 if (isBothBloom(this)) {
                                     postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Bloom))
                                 } else {
-                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
+                                    if (isBothFalse(this)) {
+                                        postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
+                                    }
                                 }
                             }
                         }
@@ -374,5 +376,11 @@ class HomeViewModel @Inject constructor(
         val meProgress = state.homeGoalAchievePartnerAndMeUiModel.me.progress
         val partnerProgress = state.homeGoalAchievePartnerAndMeUiModel.partner.progress
         return meProgress >= 0.8f && partnerProgress >= 0.8f
+    }
+
+    private fun isBothFalse(state: OngoingChallengeUiModel): Boolean {
+        val meProgress = state.homeGoalAchievePartnerAndMeUiModel.me.progress
+        val partnerProgress = state.homeGoalAchievePartnerAndMeUiModel.partner.progress
+        return meProgress < 0.8f && partnerProgress < 0.8f
     }
 }
