@@ -3,6 +3,9 @@ package com.mashup.twotoo.presenter.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.BottomSheetData
+import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.history.datail.model.toHistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.history.model.toHistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.home.di.HomeScope
 import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
@@ -15,6 +18,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import com.mashup.twotoo.presenter.home.model.ToastTextForHistoryDetail
 import com.mashup.twotoo.presenter.home.model.toUiModel
 import com.mashup.twotoo.presenter.model.FlowerName
 import kotlinx.coroutines.delay
@@ -34,11 +38,8 @@ import usecase.challenge.FinishChallengeWithNoUseCase
 import usecase.commit.CreateCheerUseCase
 import usecase.commit.CreateCommitUseCase
 import usecase.notification.StingUseCase
-import usecase.user.GetVisibilityCheerDialogUseCase
 import usecase.user.GetVisibilityCompleteDialogUseCase
-import usecase.user.RemoveVisibilityCheerDialogUseCase
 import usecase.user.RemoveVisibilityCompleteDialogUseCase
-import usecase.user.SetVisibilityCheerDialogUseCase
 import usecase.user.SetVisibilityCompleteDialogUseCase
 import usecase.view.GetViewHomeUseCase
 import util.onError
@@ -53,12 +54,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val getHomeViewUseCase: GetViewHomeUseCase,
     private val createCommitUseCase: CreateCommitUseCase,
-    private val getVisibilityCheerDialogUseCase: GetVisibilityCheerDialogUseCase,
     private val getVisibilityCompleteDialogUseCase: GetVisibilityCompleteDialogUseCase,
-    private val setVisibilityCheerDialogUseCase: SetVisibilityCheerDialogUseCase,
     private val setVisibilityCompleteDialogUseCase: SetVisibilityCompleteDialogUseCase,
     private val finishChallengeWithNoUseCase: FinishChallengeWithNoUseCase,
-    private val removeVisibilityCheerDialogUseCase: RemoveVisibilityCheerDialogUseCase,
     private val removeVisibilityCompleteDialogUseCase: RemoveVisibilityCompleteDialogUseCase,
     private val createCheerUseCase: CreateCheerUseCase,
     private val stingUseCase: StingUseCase,
@@ -89,6 +87,7 @@ class HomeViewModel @Inject constructor(
                     indicatorState = false,
                     homeChallengeInfoModel = homeViewResponseDomainModel.onGoingChallenge.toUiModel(),
                     challengeStateUiModel = homeViewResponseDomainModel.toUiModel(),
+                    partnerHistoryDetailInfoUiModel = homeViewResponseDomainModel.toHistoryDetailInfoUiModel(),
                 )
             }
 
@@ -96,13 +95,7 @@ class HomeViewModel @Inject constructor(
                 with(state.challengeStateUiModel as OngoingChallengeUiModel) {
                     when (homeChallengeStateUiModel.challengeState) {
                         ChallengeState.Cheer -> {
-                            val myCheerText = (homeChallengeStateUiModel.challengeStateUiModel as HomeCheerUiModel).me.cheerText
-                            if (!getVisibilityCheerDialogUseCase() && myCheerText.isBlank()) {
-                                // 응원텍스트가 있다면 표시하지 않습니다.
-                                postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Cheer))
-                            }
                         }
-
                         ChallengeState.Complete -> {
                             if (!getVisibilityCompleteDialogUseCase()) {
                                 if (isBothBloom(this)) {
@@ -126,8 +119,6 @@ class HomeViewModel @Inject constructor(
                                         type = HomeDialogType.Cheer,
                                     ),
                                 )
-                            } else {
-                                postSideEffect(HomeSideEffect.RemoveVisibilityCheerDialog)
                             }
                         }
                     }
@@ -143,10 +134,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun onClickCheerDialogNegativeButton() = intent {
-        setVisibilityCheerDialogUseCase(true)
-    }
-
     fun onClickCompleteDialogConfirmButton() = intent {
         setVisibilityCompleteDialogUseCase(true)
     }
@@ -154,18 +141,6 @@ class HomeViewModel @Inject constructor(
     fun removeVisibilityCompleteDialogSideEffect() {
         viewModelScope.launch {
             removeVisibilityCompleteDialogUseCase()
-        }
-    }
-
-    fun removeVisibilityCheerDialogSideEffect() {
-        viewModelScope.launch {
-            removeVisibilityCheerDialogUseCase()
-        }
-    }
-
-    fun setInvisibleCheerDialogSideEffect() {
-        viewModelScope.launch {
-            setVisibilityCheerDialogUseCase(true)
         }
     }
 
@@ -189,6 +164,10 @@ class HomeViewModel @Inject constructor(
         postSideEffect(HomeSideEffect.DismissBottomSheet)
         delay(100)
         postSideEffect(HomeSideEffect.OpenToAuthBottomSheet)
+    }
+
+    fun navigateToHistoryDetailWithHomeViewModel() = intent {
+        postSideEffect(HomeSideEffect.NavigateToHistoryDetailWithHomeViewModel)
     }
 
     fun openToCheerBottomSheet() = intent {
@@ -295,8 +274,8 @@ class HomeViewModel @Inject constructor(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerFail,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerFail,
                         ),
                     )
                     return@intent
@@ -309,34 +288,34 @@ class HomeViewModel @Inject constructor(
                 createCheerUseCase(
                     commitNoRequestDomainModel = CommitNoRequestDomainModel(commitNo = commitNo),
                     cheerRequestDomainModel = CheerRequestDomainModel(cheerText = cheerText),
-                ).onSuccess {
-                    postSideEffect(
-                        HomeSideEffect.SetInVisibleCheerDialog,
-                    )
+                ).onSuccess { commitResponseDomainModel ->
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     delay(100)
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerSuccess,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerSuccess,
                         ),
                     )
                     delay(100)
-                    postSideEffect(
-                        HomeSideEffect.CallViewHomeApi,
-                    )
+                    reduce {
+                        state.copy(
+                            partnerHistoryDetailInfoUiModel =
+                            HistoryDetailInfoUiModel(
+                                ownerNickNamesUiModel = state.partnerHistoryDetailInfoUiModel.ownerNickNamesUiModel,
+                                challengeName = state.partnerHistoryDetailInfoUiModel.challengeName,
+                                infoUiModel = commitResponseDomainModel.toHistoryDetailInfoUiModel(),
+                            ),
+                        )
+                    }
                 }.onError { code, message ->
-                    postSideEffect(
-                        HomeSideEffect.RemoveVisibilityCheerDialog,
-                    )
-
                     postSideEffect(
                         HomeSideEffect.DismissBottomSheet,
                     )
                     postSideEffect(
-                        HomeSideEffect.Toast(
-                            ToastText.CheerFail,
+                        HomeSideEffect.ToastForHistoryDetail(
+                            ToastTextForHistoryDetail.CheerFail,
                         ),
                     )
                 }

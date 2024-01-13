@@ -40,10 +40,10 @@ data class HistoryItemUiModel(
 
             return HistoryItemUiModel(
                 myInfo = myCommit?.let {
-                    HistoryInfoUiModel.from(it)
+                    it.toHistoryDetailInfoUiModel()
                 } ?: HistoryInfoUiModel.empty,
                 partnerInfo = partnerCommit?.let {
-                    HistoryInfoUiModel.from(it)
+                    it.toHistoryDetailInfoUiModel()
                 } ?: HistoryInfoUiModel.empty,
                 createDate = createAt,
             )

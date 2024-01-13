@@ -20,17 +20,14 @@ fun rememberHomeSideEffectHandler(
     snackbarHostState: SnackbarHostState = remember { SnackbarHostState() },
     coroutineScope: CoroutineScope = rememberCoroutineScope(),
     navigateToHistory: (Int, String) -> Unit,
+    navigateToHistoryDetailWithHomeViewModel: () -> Unit,
     navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
-    openCheerBottomSheet: () -> Unit,
     onClickCompleteDialogConfirmButton: () -> Unit,
-    onClickCheerDialogNegativeButton: () -> Unit,
-    removeVisibilityCheerDialog: () -> Unit,
     removeVisibilityCompleteDialog: () -> Unit,
     callViewHomeApi: () -> Unit,
-    setInvisibleCheerDialog: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
     navigateToGarden: (Boolean) -> Unit,
-    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -42,14 +39,11 @@ fun rememberHomeSideEffectHandler(
             snackbarHostState = snackbarHostState,
             coroutineScope = coroutineScope,
             navigateToHistory = navigateToHistory,
+            navigateToHistoryDetailWithHomeViewModel = navigateToHistoryDetailWithHomeViewModel,
             navigateToCreateChallenge = navigateToCreateChallenge,
-            openCheerBottomSheet = openCheerBottomSheet,
             onClickCompleteDialogConfirmButton = onClickCompleteDialogConfirmButton,
-            onClickCheerDialogNegativeButton = onClickCheerDialogNegativeButton,
-            removeVisibilityCheerDialog = removeVisibilityCheerDialog,
             removeVisibilityCompleteDialog = removeVisibilityCompleteDialog,
             callViewHomeApi = callViewHomeApi,
-            setInvisibleCheerDialog = setInvisibleCheerDialog,
             setInvisibleCompleteDialog = setInvisibleCompleteDialog,
             navigateToGarden = navigateToGarden,
             openToFlowerLanguageDialog = openToFlowerLanguageDialog,
@@ -62,18 +56,15 @@ class HomeSideEffectHandler(
     val context: Context,
     val snackbarHostState: SnackbarHostState,
     val coroutineScope: CoroutineScope,
+    private val navigateToHistoryDetailWithHomeViewModel: () -> Unit,
     private val navigateToHistory: (Int, from: String) -> Unit,
     private val navigateToCreateChallenge: (BeforeChallengeState, HomeChallengeInfoModel) -> Unit,
-    private val openCheerBottomSheet: () -> Unit,
     private val onClickCompleteDialogConfirmButton: () -> Unit,
-    private val onClickCheerDialogNegativeButton: () -> Unit,
-    private val removeVisibilityCheerDialog: () -> Unit,
     private val removeVisibilityCompleteDialog: () -> Unit,
     private val callViewHomeApi: () -> Unit,
-    private val setInvisibleCheerDialog: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
     private val navigateToGarden: (Boolean) -> Unit,
-    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
@@ -101,20 +92,12 @@ class HomeSideEffectHandler(
                                 context.getString(R.string.toast_message_shot_success)
                             }
 
-                            ToastText.CheerSuccess -> {
-                                context.getString(R.string.toast_message_cheer_success)
-                            }
-
                             ToastText.LoadHomeFail -> {
                                 context.getString(R.string.toast_message_load_home_fail)
                             }
 
                             ToastText.FinishFail -> {
                                 context.getString(R.string.toast_message_finish_challenge_fail)
-                            }
-
-                            ToastText.CheerFail -> {
-                                context.getString(R.string.toast_message_cheer_fail)
                             }
 
                             ToastText.ShotFail -> {
@@ -127,6 +110,10 @@ class HomeSideEffectHandler(
                         },
                     )
                 }
+            }
+
+            is HomeSideEffect.NavigateToHistoryDetailWithHomeViewModel -> {
+                navigateToHistoryDetailWithHomeViewModel()
             }
 
             is HomeSideEffect.OpenToShotBottomSheet -> {
@@ -168,16 +155,8 @@ class HomeSideEffectHandler(
                 removeVisibilityCompleteDialog()
             }
 
-            is HomeSideEffect.RemoveVisibilityCheerDialog -> {
-                removeVisibilityCheerDialog()
-            }
-
             is HomeSideEffect.CallViewHomeApi -> {
                 callViewHomeApi()
-            }
-
-            is HomeSideEffect.SetInVisibleCheerDialog -> {
-                setInvisibleCheerDialog()
             }
 
             is HomeSideEffect.SetInVisibleCompleteDialog -> {
@@ -195,6 +174,8 @@ class HomeSideEffectHandler(
                 )
                 isFlowerLangDialogVisible = true
             }
+
+            is HomeSideEffect.ToastForHistoryDetail -> { } // Todo historyDetailViewModel에 종속되도록 분리해야햠..
         }
     }
 
@@ -205,19 +186,7 @@ class HomeSideEffectHandler(
     private fun handleDialog(type: HomeDialogType) {
         when (type) {
             HomeDialogType.Cheer -> {
-                homeDialogType = DialogContent.createHomeBothAuthDialogContent(
-                    negativeAction = {
-                        onClickCheerDialogNegativeButton()
-                        onDismissHomeDialog()
-                    },
-                    positiveAction = {
-                        onDismissHomeDialog()
-                        openCheerBottomSheet()
-                    },
-                )
-                isHomeDialogVisible = true
             }
-
             HomeDialogType.Bloom -> {
                 homeDialogType = DialogContent.createHomeBloomBothDialogContent(
                     onConfirm = {

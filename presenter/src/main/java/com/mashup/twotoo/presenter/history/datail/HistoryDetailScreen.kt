@@ -10,6 +10,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
@@ -21,15 +22,23 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.lifecycle.viewModelScope
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
+import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
+import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
+import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
 import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainWhite
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.HistoryViewModel
 import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
+import com.mashup.twotoo.presenter.home.HomeViewModel
+import com.mashup.twotoo.presenter.home.rememberHistoryDetailSideEffectHandler
+import com.mashup.twotoo.presenter.util.debounce
 import org.orbitmvi.orbit.compose.collectAsState
+import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun HistoryDetailRoute(
@@ -51,6 +60,63 @@ fun HistoryDetailRoute(
         onClickBackButton = onClickBackButton,
         onClickImage = onClickImage,
     )
+}
+
+@Composable
+fun HistoryDetailRoute(
+    homeViewModel: HomeViewModel,
+    onClickBackButton: () -> Unit,
+    onClickImage: (String) -> Unit,
+) {
+    val state by homeViewModel.collectAsState()
+    val historyDetailSideEffectHandler = rememberHistoryDetailSideEffectHandler()
+    homeViewModel.collectSideEffect { sideEffect ->
+        historyDetailSideEffectHandler.handleSideEffect(sideEffect = sideEffect)
+    }
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .navigationBarsPadding(),
+    ) {
+        HistoryDetailScreen(
+            historyDetailInfoUiModel = state.partnerHistoryDetailInfoUiModel,
+            onClickBackButton = onClickBackButton,
+            onClickImage = onClickImage,
+        )
+        with(historyDetailSideEffectHandler) {
+            SnackBarHost(
+                Modifier.align(Alignment.BottomCenter).padding(bottom = 13.dp),
+                snackbarHostState,
+            )
+            if (isBottomSheetVisible) {
+                TwoTooBottomSheet(
+                    type = bottomSheetType,
+                    onDismiss = ::onDismiss,
+                    onClickButton = debounce(
+                        300L,
+                        homeViewModel.viewModelScope,
+                        homeViewModel::onClickSendBottomSheetDataButton,
+                    ),
+                )
+            }
+        }
+
+        if (state.partnerHistoryDetailInfoUiModel.infoUiModel.partnerComment.isEmpty()) {
+            TwoTooTextButton(
+                text = stringResource(id = R.string.button_cheer),
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 54.dp)
+                    .fillMaxWidth()
+                    .height(57.dp)
+                    .align(Alignment.BottomCenter),
+                onClick = {
+                    homeViewModel.openToCheerBottomSheet()
+                },
+            )
+        }
+    }
 }
 
 @Composable
@@ -101,7 +167,8 @@ fun HistoryDetailScreen(
                         .fillMaxWidth()
                         .padding(vertical = 24.dp)
                         .aspectRatio(1f)
-                        .clip(TwoTooTheme.shape.extraSmall).clickable {
+                        .clip(TwoTooTheme.shape.extraSmall)
+                        .clickable {
                             onClickImage(historyDetailInfoUiModel.infoUiModel.photoUrl)
                         },
 
@@ -178,5 +245,30 @@ private fun PreviewHistoryDetailScreeWithoutComplimentFromPartner() {
             onClickBackButton = {},
             historyDetailInfoUiModel = HistoryDetailInfoUiModel.default,
         )
+    }
+}
+
+@Preview("칭찬하기 버튼이 있는 히스토리")
+@Composable
+private fun PreviewHistoryDetailWithCheerButton() {
+    TwoTooTheme {
+        Box(modifier = Modifier.fillMaxSize()) {
+            HistoryDetailScreen(
+                historyDetailInfoUiModel = HistoryDetailInfoUiModel.default,
+                onClickBackButton = {},
+                onClickImage = {},
+            )
+
+            TwoTooTextButton(
+                text = stringResource(id = R.string.button_cheer),
+                modifier = Modifier
+                    .padding(horizontal = 24.dp)
+                    .padding(bottom = 54.dp)
+                    .fillMaxWidth()
+                    .height(57.dp)
+                    .align(Alignment.BottomCenter),
+                onClick = {},
+            )
+        }
     }
 }
