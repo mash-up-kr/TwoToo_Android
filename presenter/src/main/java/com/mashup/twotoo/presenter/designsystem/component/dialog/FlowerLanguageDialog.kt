@@ -27,7 +27,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
@@ -38,13 +37,11 @@ fun FlowerLanguageDialog(
     flowerLanguageUiModel: FlowerLanguageUiModel,
     onClickDismiss: () -> Unit,
     onDismissRequest: () -> Unit = {},
-    properties: DialogProperties = DialogProperties(),
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp.dp
     val context = LocalContext.current
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = properties,
     ) {
         Box(
             modifier = Modifier
