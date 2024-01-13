@@ -148,7 +148,6 @@ fun HomeRoute(
             if (isCompleteCardDialogVisible) {
                 ShareChallengeDialog(
                     cardChallengeInfo = challengeCompleteModel,
-                    onClickShareButton = {},
                     onDismissRequest = { isCompleteCardDialogVisible = false },
                 )
             }

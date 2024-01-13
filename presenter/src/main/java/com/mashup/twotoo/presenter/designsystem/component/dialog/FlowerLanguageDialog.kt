@@ -1,11 +1,9 @@
 package com.mashup.twotoo.presenter.designsystem.component.dialog
 
 import android.content.Context
-import android.content.Intent
 import android.graphics.Bitmap
 import android.net.Uri
 import android.provider.MediaStore
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,7 +22,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
@@ -39,6 +36,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.FlowerLanguageUiModel
+import com.mashup.twotoo.presenter.util.shareImage
 import dev.shreyaspatil.capturable.Capturable
 import dev.shreyaspatil.capturable.controller.rememberCaptureController
 import java.io.ByteArrayOutputStream
@@ -93,20 +91,7 @@ fun FlowerLanguageDialog(
                 Capturable(
                     controller = captureController,
                     onCaptured = { bitmap, error ->
-
-                        if (bitmap != null) {
-                            val androidBitmap = bitmap.asAndroidBitmap()
-                            val path = getImageUri(context, androidBitmap)
-
-                            val share = Intent(Intent.ACTION_SEND)
-                            share.setType("image/jpeg")
-
-                            share.putExtra(Intent.EXTRA_STREAM, path)
-                            context.startActivity(Intent.createChooser(share, "Select"))
-                        }
-                        if (error != null) {
-                            Log.e("Error", error.message ?: "")
-                        }
+                        context.shareImage(bitmap, error)
                     },
                 ) {
                     ConstraintLayout(

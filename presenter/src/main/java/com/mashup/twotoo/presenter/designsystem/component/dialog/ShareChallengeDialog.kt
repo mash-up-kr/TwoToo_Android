@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.designsystem.component.dialog
 
 import android.content.Context
+import android.graphics.Bitmap
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -20,7 +21,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -39,15 +39,17 @@ import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButto
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeChallengeCompleteUiModel
 import com.mashup.twotoo.presenter.util.DateFormatter
+import com.mashup.twotoo.presenter.util.shareImage
+import dev.shreyaspatil.capturable.Capturable
+import dev.shreyaspatil.capturable.controller.rememberCaptureController
 
 @Composable
 fun ShareChallengeDialog(
     cardChallengeInfo: HomeChallengeCompleteUiModel = HomeChallengeCompleteUiModel(),
-    onClickShareButton: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     val context = LocalContext.current
-    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
+    val captureController = rememberCaptureController()
 
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -84,14 +86,21 @@ fun ShareChallengeDialog(
                         .padding(12.dp)
                         .wrapContentHeight(),
                 ) {
-                    ShareChallengeContent(
-                        context = context,
-                        cardChallengeInfo = cardChallengeInfo,
-                    )
+                    Capturable(
+                        controller = captureController,
+                        onCaptured = { bitmap, error ->
+                            context.shareImage(bitmap, error)
+                        },
+                    ) {
+                        ShareChallengeContent(
+                            context = context,
+                            cardChallengeInfo = cardChallengeInfo,
+                        )
+                    }
                     Spacer(modifier = Modifier.height(11.dp))
                     TwoTooTextButton(
                         text = stringResource(id = R.string.share),
-                        onClick = { onClickShareButton() },
+                        onClick = { captureController.capture(Bitmap.Config.ARGB_8888) },
                         modifier = Modifier.fillMaxWidth().height(56.dp),
                     )
                 }
@@ -146,7 +155,7 @@ fun ShareChallengeContent(context: Context, cardChallengeInfo: HomeChallengeComp
             TwoTooImageView(
                 modifier = Modifier
                     .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                    .fillMaxWidth().background(color = Color.Transparent,shape = TwoTooTheme.shape.medium)
                     .height(100.dp),
                 previewPlaceholder = R.drawable.image_home_background,
                 model = R.drawable.image_home_background,

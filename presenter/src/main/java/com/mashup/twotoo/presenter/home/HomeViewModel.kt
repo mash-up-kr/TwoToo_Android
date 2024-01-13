@@ -106,16 +106,14 @@ class HomeViewModel @Inject constructor(
                         }
 
                         ChallengeState.Complete -> {
-                            if (!getVisibilityCompleteDialogUseCase()) {
-                                if (isBothBloom(this)) {
-                                    postSideEffect(
-                                        HomeSideEffect.OpenToCompleteChallengeDialog(
-                                            homeViewResponseDomainModel.toCardUiModel(),
-                                        ),
-                                    )
-                                } else {
-                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
-                                }
+                            if (isBothBloom(this)) {
+                                postSideEffect(
+                                    HomeSideEffect.OpenToCompleteChallengeDialog(
+                                        homeViewResponseDomainModel.toCardUiModel(),
+                                    ),
+                                )
+                            } else {
+                                postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
                             }
                         }
 
