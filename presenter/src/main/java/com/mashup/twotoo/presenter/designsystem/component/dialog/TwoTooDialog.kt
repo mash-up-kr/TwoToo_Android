@@ -115,21 +115,6 @@ private fun isSizeTwoAndIndexZero(index: Int, size: Int): Boolean {
 
 @Preview(showBackground = true)
 @Composable
-private fun PreviewHomeBothAuthDialog() {
-    val content = DialogContent.createHomeBothAuthDialogContent(
-        negativeAction = {},
-        positiveAction = {},
-    )
-    TwoTooTheme {
-        TwoTooDialog(
-            onDismissRequest = {},
-            content = content,
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
 private fun PreviewHomeBloomBothDialog() {
     val content = DialogContent.createHomeBloomBothDialogContent(
         onConfirm = {},

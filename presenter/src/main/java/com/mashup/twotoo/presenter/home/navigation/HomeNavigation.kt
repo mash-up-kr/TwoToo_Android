@@ -15,6 +15,7 @@ import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.garden.navigation.navigateToGarden
 import com.mashup.twotoo.presenter.guid.navigation.navigateToGuide
 import com.mashup.twotoo.presenter.history.navigation.navigateToHistory
+import com.mashup.twotoo.presenter.history.navigation.navigateToHistoryDetailWithHomeViewModel
 import com.mashup.twotoo.presenter.home.HomeRoute
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.home.model.HomeChallengeInfoModel
@@ -41,6 +42,7 @@ fun NavGraphBuilder.homeGraph(
             HomeRoute(
                 homeViewModel = homeViewModel,
                 modifier = Modifier.fillMaxSize(),
+                navigateToHistoryDetailWithHomeViewModel = { navController.navigateToHistoryDetailWithHomeViewModel() },
                 navigateToHistory = { challengeNo, from -> navController.navigateToHistory(challengeNo = challengeNo, from = from) },
                 navigateToGuide = { navController.navigateToGuide(route = GuideUrlItem.UsingGuide.name) },
                 navigateToCreateChallenge = { homeState, challengeInfo ->

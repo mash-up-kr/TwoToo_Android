@@ -9,6 +9,8 @@ data class UserCommitResponseDomainModel(
     val photoUrl: String,
     val text: String,
     val userNo: Int,
+    val createdAt: String,
+    val updatedAt: String,
 ) {
     companion object {
         val default = UserCommitResponseDomainModel(
@@ -17,6 +19,8 @@ data class UserCommitResponseDomainModel(
             photoUrl = "",
             text = "오늘의 인증텍스트",
             userNo = 1,
+            createdAt = "2023-07-25T05:54:50.431Z",
+            updatedAt = "2023-07-25T05:54:50.431Z",
         )
     }
 }

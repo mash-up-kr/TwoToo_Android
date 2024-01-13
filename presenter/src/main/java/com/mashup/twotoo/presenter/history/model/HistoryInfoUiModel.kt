@@ -1,6 +1,7 @@
 package com.mashup.twotoo.presenter.history.model
 
 import com.mashup.twotoo.presenter.util.DateFormatter
+import model.challenge.response.UserCommitResponseDomainModel
 import model.commit.response.CommitResponseDomainModel
 
 data class HistoryInfoUiModel(
@@ -12,7 +13,6 @@ data class HistoryInfoUiModel(
     val createdTime: String = "",
     val partnerComment: String = "",
 ) {
-
     companion object {
         val default = HistoryInfoUiModel(
             photoUrl = "https://shop.biumfood.com/upload/1623296512image_product044.jpg",
@@ -26,34 +26,43 @@ data class HistoryInfoUiModel(
             text = "",
             userNo = 0,
         )
-
-        // Todo createdTime을 domainmodel에 추가해야함(공통으로 사용가능한지 확인 후)
-        fun from(commit: CommitResponseDomainModel): HistoryInfoUiModel {
-            return HistoryInfoUiModel(
-                photoUrl = commit.photoUrl,
-                commitNo = commit.commitNo,
-                createdDate = toCreatedDate(commit.createdAt),
-                createdTime = toCreatedTime(commit.createdAt),
-                userNo = commit.userNo,
-                text = commit.text,
-                partnerComment = commit.partnerComment,
-            )
-        }
-
-        private fun toCreatedTime(createdTime: String): String {
-            if (createdTime.isEmpty()) {
-                return createdTime
-            }
-            return DateFormatter.get24HourStrByStr(createdTime)
-        }
-
-        private fun toCreatedDate(createdDate: String): String {
-            if (createdDate.isEmpty()) {
-                return createdDate
-            }
-            val dateStr = DateFormatter.dateConvertToPlusNineTime(createdDate, "yyyy-MM-dd")
-            val (year, month, day) = dateStr.split("-")
-            return "${year}년 ${month}월 ${day}일"
-        }
     }
+}
+private fun String.toCreatedTime(): String {
+    if (this.isEmpty()) {
+        return this
+    }
+    return DateFormatter.get24HourStrByStr(this)
+}
+
+private fun String.toCreatedDate(): String {
+    if (this.isEmpty()) {
+        return this
+    }
+    val dateStr = DateFormatter.dateConvertToPlusNineTime(this, "yyyy-MM-dd")
+    val (year, month, day) = dateStr.split("-")
+    return "${year}년 ${month}월 ${day}일"
+}
+
+fun CommitResponseDomainModel.toHistoryDetailInfoUiModel(): HistoryInfoUiModel {
+    return HistoryInfoUiModel(
+        photoUrl = photoUrl,
+        commitNo = commitNo,
+        createdDate = createdAt.toCreatedDate(),
+        createdTime = createdAt.toCreatedTime(),
+        userNo = userNo,
+        text = text,
+        partnerComment = partnerComment,
+    )
+}
+fun UserCommitResponseDomainModel.toHistoryDetailInfoUiModel(): HistoryInfoUiModel {
+    return HistoryInfoUiModel(
+        photoUrl = photoUrl,
+        commitNo = commitNo,
+        createdDate = createdAt.toCreatedDate(),
+        createdTime = updatedAt.toCreatedDate(),
+        userNo = userNo,
+        text = text,
+        partnerComment = partnerComment,
+    )
 }

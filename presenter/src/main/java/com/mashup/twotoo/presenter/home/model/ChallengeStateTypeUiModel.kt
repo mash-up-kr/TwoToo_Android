@@ -3,6 +3,7 @@ package com.mashup.twotoo.presenter.home.model
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import com.mashup.twotoo.presenter.R
+import com.mashup.twotoo.presenter.history.datail.model.HistoryDetailInfoUiModel
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.EMPTY
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.REQUEST
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState.RESPONSE
@@ -21,6 +22,7 @@ data class HomeStateUiModel(
     val navigateToChallengeDetail: Boolean = true,
     val homeChallengeInfoModel: HomeChallengeInfoModel = HomeChallengeInfoModel(),
     val challengeStateUiModel: ChallengeStateTypeUiModel,
+    val partnerHistoryDetailInfoUiModel: HistoryDetailInfoUiModel = HistoryDetailInfoUiModel(),
 ) {
     companion object {
         val init = HomeStateUiModel(

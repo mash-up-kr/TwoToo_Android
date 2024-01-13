@@ -10,4 +10,7 @@ data class UserCommit(
     @Json(name = "photoUrl") val photoUrl: String,
     @Json(name = "text") val text: String,
     @Json(name = "userNo") val userNo: Int,
+    @Json(name = "createdAt") val createdAt: String,
+    @Json(name = "updatedAt") val updatedAt: String,
+
 )

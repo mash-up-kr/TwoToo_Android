@@ -12,6 +12,7 @@ import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
 import com.mashup.twotoo.presenter.history.detailImage.DetailImageRoute
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
+import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
 import com.mashup.twotoo.presenter.navigation.NavigationRoute
 import com.mashup.twotoo.presenter.util.componentProvider
 import com.mashup.twotoo.presenter.util.toIncodeUrl
@@ -22,6 +23,10 @@ fun NavController.navigateToHistory(challengeNo: Int, from: String = "twotoo") {
 
 fun NavController.navigateToHistoryDetail(commitNo: Int) {
     this.navigate(route = "${NavigationRoute.HistoryGraph.HistoryDetailScreen.route}/$commitNo")
+}
+
+fun NavController.navigateToHistoryDetailWithHomeViewModel() {
+    this.navigate(route = NavigationRoute.HistoryGraph.HistoryDetailScreenWithHomeViewModel.route)
 }
 
 private fun NavController.navigateToDetailImageScreen(url: String) {
@@ -68,6 +73,7 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             ),
         ) {
                 navBackStackEntry ->
+
             val parentRoute = "${NavigationRoute.HistoryGraph.HistoryScreen.route}/{challengeNo}/{from}"
             val parentEntry = remember {
                 navController.getBackStackEntry(parentRoute)
@@ -82,6 +88,26 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             HistoryDetailRoute(
                 commitNo = commitNo,
                 historyViewModel = historyViewModel,
+                onClickBackButton = navController::popBackStack,
+                onClickImage = navController::navigateToDetailImageScreen,
+            )
+        }
+
+        composable(
+            route = NavigationRoute.HistoryGraph.HistoryDetailScreenWithHomeViewModel.route,
+        ) {
+            val parentRoute = NavigationRoute.HomeGraph.HomeScreen.route
+            val parentEntry = remember {
+                navController.getBackStackEntry(parentRoute)
+            }
+            val viewModelStoreOwner: ViewModelStoreOwner = parentEntry
+
+            val historyComponent = componentProvider<HomeComponentProvider>().provideHomeComponent()
+            val homeViewModel = daggerViewModel(viewModelStoreOwner = viewModelStoreOwner) {
+                historyComponent.getViewModel()
+            }
+            HistoryDetailRoute(
+                homeViewModel = homeViewModel,
                 onClickBackButton = navController::popBackStack,
                 onClickImage = navController::navigateToDetailImageScreen,
             )
