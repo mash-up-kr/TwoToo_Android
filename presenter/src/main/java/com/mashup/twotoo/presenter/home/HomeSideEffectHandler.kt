@@ -30,7 +30,7 @@ fun rememberHomeSideEffectHandler(
     setInvisibleCheerDialog: () -> Unit,
     setInvisibleCompleteDialog: () -> Unit,
     navigateToGarden: (Boolean) -> Unit,
-    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ): HomeSideEffectHandler {
     return remember(
         context,
@@ -73,15 +73,17 @@ class HomeSideEffectHandler(
     private val setInvisibleCheerDialog: () -> Unit,
     private val setInvisibleCompleteDialog: () -> Unit,
     private val navigateToGarden: (Boolean) -> Unit,
-    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit
+    private val openToFlowerLanguageDialog: (Int, FlowerName) -> Unit,
 ) {
     var isBottomSheetVisible by mutableStateOf(false)
     var bottomSheetType by mutableStateOf<BottomSheetType>(BottomSheetType.Authenticate())
 
     var isHomeDialogVisible by mutableStateOf(false)
     var isFlowerLangDialogVisible by mutableStateOf(false)
+    var isCompleteCardDialogVisible by mutableStateOf(false)
     var homeDialogType by mutableStateOf(DialogContent.default)
     var flowerLanguageModel by mutableStateOf(FlowerLanguageUiModel())
+    var challengeCompleteModel by mutableStateOf(HomeChallengeCompleteUiModel())
 
     fun handleSideEffect(sideEffect: HomeSideEffect) {
         when (sideEffect) {
@@ -195,6 +197,11 @@ class HomeSideEffectHandler(
                 )
                 isFlowerLangDialogVisible = true
             }
+
+            is HomeSideEffect.OpenToCompleteChallengeDialog -> {
+                challengeCompleteModel = sideEffect.challengeInfo
+                isCompleteCardDialogVisible = true
+            }
         }
     }
 
@@ -217,17 +224,6 @@ class HomeSideEffectHandler(
                 )
                 isHomeDialogVisible = true
             }
-
-            HomeDialogType.Bloom -> {
-                homeDialogType = DialogContent.createHomeBloomBothDialogContent(
-                    onConfirm = {
-                        onClickCompleteDialogConfirmButton()
-                        onDismissHomeDialog()
-                    },
-                )
-                isHomeDialogVisible = true
-            }
-
             HomeDialogType.DoNotBloom -> {
                 homeDialogType = DialogContent.createHomeDoNotBloomBothDialogContent(
                     onConfirm = {

@@ -35,8 +35,7 @@ object DateFormatter {
         calendar.time = dateTime
         calendar.add(Calendar.HOUR_OF_DAY, 9)
         val updateDate = calendar.time
-        val test = SimpleDateFormat(formatStr, Locale.getDefault()).format(updateDate)
-        return test
+        return SimpleDateFormat(formatStr, Locale.getDefault()).format(updateDate)
     }
 
     fun dateConvertToPlusNineDate(date: String): Date {

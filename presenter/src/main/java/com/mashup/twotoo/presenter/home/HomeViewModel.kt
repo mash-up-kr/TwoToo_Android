@@ -8,6 +8,7 @@ import com.mashup.twotoo.presenter.home.mapper.toUiModel
 import com.mashup.twotoo.presenter.home.model.AuthType
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.ChallengeState
+import com.mashup.twotoo.presenter.home.model.HomeChallengeCompleteUiModel
 import com.mashup.twotoo.presenter.home.model.HomeCheerUiModel
 import com.mashup.twotoo.presenter.home.model.HomeDialogType
 import com.mashup.twotoo.presenter.home.model.HomeFlowerPartnerAndMeUiModel
@@ -15,6 +16,7 @@ import com.mashup.twotoo.presenter.home.model.HomeSideEffect
 import com.mashup.twotoo.presenter.home.model.HomeStateUiModel
 import com.mashup.twotoo.presenter.home.model.OngoingChallengeUiModel
 import com.mashup.twotoo.presenter.home.model.ToastText
+import com.mashup.twotoo.presenter.home.model.toCardUiModel
 import com.mashup.twotoo.presenter.home.model.toUiModel
 import com.mashup.twotoo.presenter.model.FlowerName
 import kotlinx.coroutines.delay
@@ -106,7 +108,11 @@ class HomeViewModel @Inject constructor(
                         ChallengeState.Complete -> {
                             if (!getVisibilityCompleteDialogUseCase()) {
                                 if (isBothBloom(this)) {
-                                    postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.Bloom))
+                                    postSideEffect(
+                                        HomeSideEffect.OpenToCompleteChallengeDialog(
+                                            homeViewResponseDomainModel.toCardUiModel(),
+                                        ),
+                                    )
                                 } else {
                                     postSideEffect(HomeSideEffect.OpenHomeDialog(HomeDialogType.DoNotBloom))
                                 }

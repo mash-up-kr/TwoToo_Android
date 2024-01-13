@@ -22,10 +22,11 @@ sealed class HomeSideEffect {
     object SetInVisibleCompleteDialog : HomeSideEffect()
     object CallViewHomeApi : HomeSideEffect()
     data class OpenToFlowerLanguageDialog(val challengeNo: Int, val flowerName: FlowerName) : HomeSideEffect()
+    data class OpenToCompleteChallengeDialog(val challengeInfo: HomeChallengeCompleteUiModel): HomeSideEffect()
 }
 
 enum class HomeDialogType {
-    Cheer, Bloom, DoNotBloom
+    Cheer, DoNotBloom
 }
 enum class ToastText {
 

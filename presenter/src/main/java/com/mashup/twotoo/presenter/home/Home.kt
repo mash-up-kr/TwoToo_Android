@@ -32,6 +32,7 @@ import com.mashup.twotoo.presenter.constant.TAG
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.dialog.FlowerLanguageDialog
+import com.mashup.twotoo.presenter.designsystem.component.dialog.ShareChallengeDialog
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
@@ -142,6 +143,13 @@ fun HomeRoute(
                 FlowerLanguageDialog(
                     flowerLanguageUiModel = flowerLanguageModel,
                     onClickDismiss = { onDismissFlowerLangDialog() },
+                )
+            }
+            if (isCompleteCardDialogVisible) {
+                ShareChallengeDialog(
+                    cardChallengeInfo = challengeCompleteModel,
+                    onClickShareButton = {},
+                    onDismissRequest = { isCompleteCardDialogVisible = false },
                 )
             }
         }
