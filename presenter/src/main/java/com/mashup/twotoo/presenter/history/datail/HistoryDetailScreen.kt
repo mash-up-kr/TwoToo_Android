@@ -63,7 +63,7 @@ fun HistoryDetailRoute(
 }
 
 @Composable
-fun HistoryDetailRouteWithHomeViewModel(
+fun HistoryDetailRoute(
     homeViewModel: HomeViewModel,
     onClickBackButton: () -> Unit,
     onClickImage: (String) -> Unit,

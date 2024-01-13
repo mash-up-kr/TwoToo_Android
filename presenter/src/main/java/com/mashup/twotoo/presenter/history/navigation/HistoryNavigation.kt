@@ -10,7 +10,6 @@ import androidx.navigation.compose.composable
 import com.mashup.twotoo.presenter.di.daggerViewModel
 import com.mashup.twotoo.presenter.history.HistoryRoute
 import com.mashup.twotoo.presenter.history.datail.HistoryDetailRoute
-import com.mashup.twotoo.presenter.history.datail.HistoryDetailRouteWithHomeViewModel
 import com.mashup.twotoo.presenter.history.detailImage.DetailImageRoute
 import com.mashup.twotoo.presenter.history.di.HistoryComponentProvider
 import com.mashup.twotoo.presenter.home.di.HomeComponentProvider
@@ -107,7 +106,7 @@ fun NavGraphBuilder.historyGraph(navController: NavController) {
             val homeViewModel = daggerViewModel(viewModelStoreOwner = viewModelStoreOwner) {
                 historyComponent.getViewModel()
             }
-            HistoryDetailRouteWithHomeViewModel(
+            HistoryDetailRoute(
                 homeViewModel = homeViewModel,
                 onClickBackButton = navController::popBackStack,
                 onClickImage = navController::navigateToDetailImageScreen,
