@@ -250,4 +250,10 @@
     <string name="invite_msg_title">[투투]에 초대합니다.\n👉 링크를 누르고 로그인하여 챌린지를 진행해보세요! %s</string>
     <string name="default_notification_channel_id">Twotoo</string>
 
+    <string name="get_card_title">%1$s 카드를 획득했어요!</string>
+    <string name="share">공유하기</string>
+    <string name="close">닫기</string>
+
+
+
 </resources>
