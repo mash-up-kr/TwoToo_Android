@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -46,16 +47,28 @@ fun ShareChallengeDialog(
     onDismissRequest: () -> Unit = {},
 ) {
     val context = LocalContext.current
+    val screenWidth = LocalConfiguration.current.screenWidthDp.dp
 
     Dialog(
         onDismissRequest = onDismissRequest,
-        properties = DialogProperties(dismissOnBackPress = false, dismissOnClickOutside = false),
+        properties = DialogProperties(
+            dismissOnBackPress = false,
+            dismissOnClickOutside = false,
+            usePlatformDefaultWidth = false,
+        ),
     ) {
         Box(
             modifier = Modifier.fillMaxWidth(),
         ) {
+            CompleteChallengeLottie(
+                modifier = Modifier.fillMaxWidth().height(350.dp).align(Alignment.TopCenter),
+            )
             Column(
-                Modifier.padding(top = 30.dp).background(Color.Transparent).wrapContentHeight(),
+                Modifier.padding(top = 30.dp)
+                    .background(Color.Transparent)
+                    .wrapContentHeight()
+                    .align(Alignment.Center)
+                    .padding(horizontal = 50.dp),
             ) {
                 Text(
                     text = stringResource(id = R.string.complete_challenge_get_card),
@@ -92,9 +105,6 @@ fun ShareChallengeDialog(
                         .clickable { onDismissRequest() },
                 )
             }
-            CompleteChallengeLottie(
-                modifier = Modifier.fillMaxWidth().height(350.dp).align(Alignment.TopCenter),
-            )
         }
     }
 }
@@ -184,6 +194,7 @@ fun CompleteChallengeLottie(
     val progress by animateLottieCompositionAsState(composition, iterations = LottieConstants.IterateForever)
     LottieAnimation(
         modifier = modifier,
+        contentScale = ContentScale.FillWidth,
         composition = composition,
         progress = { progress },
     )
