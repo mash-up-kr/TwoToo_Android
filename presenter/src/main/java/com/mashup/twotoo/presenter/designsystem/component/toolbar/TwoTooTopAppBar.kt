@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -33,7 +34,7 @@ fun TwoTooTopAppBar(
     actionIcons: (@Composable RowScope.() -> Unit)? = null,
 ) {
     Box(
-        modifier = modifier.fillMaxWidth().height(54.dp),
+        modifier = modifier.fillMaxWidth().height(54.dp).statusBarsPadding(),
     ) {
         if (titleEnabled) {
             Row(
