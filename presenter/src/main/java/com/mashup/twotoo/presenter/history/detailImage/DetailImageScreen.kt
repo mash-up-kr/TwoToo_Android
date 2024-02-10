@@ -7,11 +7,6 @@ import androidx.compose.foundation.gestures.detectTransformGestures
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableFloatStateOf
@@ -27,7 +22,6 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -36,7 +30,7 @@ import androidx.constraintlayout.compose.Dimension
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.util.saveBitmapToStorage
 import dev.shreyaspatil.capturable.Capturable
@@ -104,45 +98,24 @@ fun DetailImageScreen(
             },
     ) {
         val (topBar, image, captureWrapper, dropDownMenu, snackBar) = createRefs()
-        TwoTooBackToolbar(
+        TwoTooToolbar.DetailImageToolbar(
             modifier = Modifier.constrainAs(topBar) {
                 top.linkTo(parent.top)
                 start.linkTo(parent.start)
                 end.linkTo(parent.end)
             },
-            onClickBackIcon = {
-                onClickBackButton()
-            },
-            contentColor = Color.White,
-        ) {
-            IconButton(
-                onClick = {
-                    settingMenuVisibility = true
+            dropDownModifier = Modifier
+                .wrapContentHeight()
+                .constrainAs(dropDownMenu) {
+                    top.linkTo(topBar.bottom)
+                    end.linkTo(parent.end)
                 },
-            ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_more),
-                    contentDescription = null,
-                    tint = Color.White,
-                )
-            }
-            DropdownMenu(
-                modifier = Modifier
-                    .wrapContentHeight()
-                    .constrainAs(dropDownMenu) {
-                        top.linkTo(topBar.bottom)
-                        end.linkTo(parent.end)
-                    },
-                expanded = settingMenuVisibility,
-                onDismissRequest = { settingMenuVisibility = false },
-            ) {
-                DropdownMenuItem(text = {
-                    Text(text = stringResource(id = R.string.saveImage))
-                }, onClick = {
-                    captureController.capture(Bitmap.Config.ARGB_8888)
-                })
-            }
-        }
+            onClickBackIcon = onClickBackButton,
+            onClickActionButton = { settingMenuVisibility = true },
+            onDismiss = { settingMenuVisibility = false },
+            onClickSaveButton = { captureController.capture(Bitmap.Config.ARGB_8888) },
+            expandedState = settingMenuVisibility,
+        )
 
         Capturable(
             modifier = Modifier.constrainAs(captureWrapper) {

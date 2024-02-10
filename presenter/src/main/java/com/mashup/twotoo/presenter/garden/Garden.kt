@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -26,7 +27,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import kotlinx.coroutines.delay
 import org.orbitmvi.orbit.compose.collectAsState
@@ -68,8 +69,8 @@ fun GardenScreen(
 
     Column(modifier = modifier) {
         Spacer(modifier = Modifier.height(5.dp))
-        TwoTooMainToolbar(
-            text = stringResource(id = R.string.garden_title),
+        TwoTooToolbar.GardenToolbar(
+            modifier = Modifier.fillMaxWidth(),
             onClickHelpIcon = { navigateToGuide() },
         )
         Spacer(modifier = Modifier.height(24.dp))

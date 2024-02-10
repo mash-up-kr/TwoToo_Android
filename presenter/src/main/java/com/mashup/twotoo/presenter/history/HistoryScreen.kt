@@ -1,6 +1,5 @@
 package com.mashup.twotoo.presenter.history
 
-import androidx.compose.foundation.background
 import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.layout.Box
@@ -12,8 +11,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Divider
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -25,7 +22,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -39,7 +35,7 @@ import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import kotlinx.coroutines.launch
@@ -134,20 +130,13 @@ fun HistoryScreen(
 
         ) {
             Spacer(modifier = Modifier.padding(top = 5.dp))
-            TwoTooBackToolbar(
-                onClickBackIcon = {
-                    onClickBackButton()
-                },
-            ) {
-                IconButton(onClick = {
+            TwoTooToolbar.HistoryToolbar(
+                modifier = Modifier.fillMaxWidth(),
+                onClickBackIcon = onClickBackButton,
+                onClickActionButton = {
                     showSelectListDialog = true
-                }) {
-                    Icon(
-                        painter = painterResource(id = R.drawable.ic_more),
-                        contentDescription = null,
-                    )
-                }
-            }
+                },
+            )
             Spacer(modifier = Modifier.height(9.dp))
             if (state.loadingIndicatorState) {
                 Box(modifier = Modifier.fillMaxSize()) {

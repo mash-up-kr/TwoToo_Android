@@ -5,13 +5,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.SnackbarHostState
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -20,7 +18,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -29,7 +26,7 @@ import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.dialog.selection.SelectionDialogButtonContent
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.history.TwoTooSelectionDialog
@@ -197,29 +194,15 @@ fun CreateChallengeToolbar(
         else -> { "" }
     }
 
-    val moreIconButton: @Composable (Int) -> Unit =
-        {
-            IconButton(onClick = {
-                setDialogVisibility(true)
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_more),
-                    contentDescription = null,
-                )
-            }
-        }
-
-    TwoTooBackToolbar(
+    TwoTooToolbar.CreateChallengeToolbar(
+        modifier = Modifier.fillMaxWidth(),
         title = toolbarTitle,
-        titleModifier = Modifier.offset(x = -16.dp),
-        onClickBackIcon = {
-            onClickBackButton()
-        },
-        actionIconButton = {
+        onClickActionButton = {
             if (BeforeChallengeState.isChallengeDeletionEnabled(homeState)) {
-                moreIconButton(challengeNo)
+                setDialogVisibility(true)
             }
         },
+        onClickBackIcon = onClickBackButton,
     )
 
     if (deleteDialogVisibility) {

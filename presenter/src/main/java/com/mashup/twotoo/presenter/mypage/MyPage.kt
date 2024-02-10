@@ -37,7 +37,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.dialog.DialogContent
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.model.HomeGoalCountUiModel
 import com.mashup.twotoo.presenter.home.ongoing.components.HomeGoalCount
@@ -51,10 +51,10 @@ import org.orbitmvi.orbit.compose.collectSideEffect
 
 @Composable
 fun MyPageRoute(
-    isChangeNicknameSuccess: Boolean = false,
     userViewModel: UserViewModel,
-    navigateToRoute: (String) -> Unit,
     modifier: Modifier = Modifier,
+    isChangeNicknameSuccess: Boolean = false,
+    navigateToRoute: (String) -> Unit,
 ) {
     val lifecycleOwner = LocalLifecycleOwner.current
     LaunchedEffect(Unit) {
@@ -144,7 +144,7 @@ private fun handleSideEffect(
     sideEffect: UserSideEffect,
     toast: () -> Unit,
     navigate: (String) -> Unit,
-    action: (MyPageDialogType) -> Unit
+    action: (MyPageDialogType) -> Unit,
 ) {
     when (sideEffect) {
         is UserSideEffect.NavigateToRoute -> {
@@ -173,16 +173,15 @@ fun MyPageScreen(
     isMyPageDialogVisible: Boolean = false,
     myPageDialogContent: DialogContent = DialogContent.default,
     navigateToGuide: (String) -> Unit,
-    navigateToChangeNickName: (String) -> Unit
+    navigateToChangeNickName: (String) -> Unit,
 ) {
     Column(
         modifier = modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(5.dp))
-        TwoTooMainToolbar(
+        TwoTooToolbar.MyPageToolbar(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.mypage),
             onClickHelpIcon = { navigateToGuide(GuideUrlItem.UsingGuide.name) },
         )
         TwoTooImageView(

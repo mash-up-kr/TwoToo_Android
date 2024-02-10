@@ -31,8 +31,8 @@ fun NavGraphBuilder.userGraph(navController: NavController) {
             val isChangeNicknameSuccess = action == "success"
 
             MyPageRoute(
-                isChangeNicknameSuccess,
                 userViewModel = userViewModel,
+                isChangeNicknameSuccess = isChangeNicknameSuccess,
                 navigateToRoute = { route ->
                     when (route) {
                         MyPageItem.SignOut.route -> {
