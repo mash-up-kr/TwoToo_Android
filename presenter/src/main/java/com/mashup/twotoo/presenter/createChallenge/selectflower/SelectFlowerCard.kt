@@ -28,7 +28,7 @@ import com.mashup.twotoo.presenter.createChallenge.CreateChallengeSideEffect
 import com.mashup.twotoo.presenter.createChallenge.CreateChallengeViewModel
 import com.mashup.twotoo.presenter.createChallenge.model.ChallengeInfoModel
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
@@ -81,9 +81,12 @@ fun SelectFlowerCard(
     var flowerName by remember { mutableStateOf("") }
     Column {
         Spacer(modifier = Modifier.height(5.dp))
-        TwoTooBackToolbar(onClickBackIcon = {
-            onClickBackButton()
-        })
+        TwoTooToolbar.BackToolbar(
+            modifier = Modifier.fillMaxWidth(),
+            onClickBackIcon = onClickBackButton,
+            onClickActionButton = {},
+            actionIcons = null,
+        )
         Box {
             Column(modifier = Modifier.padding(top = 11.dp)) {
                 SelectFlowerTitle()

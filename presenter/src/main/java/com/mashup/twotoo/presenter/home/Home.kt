@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.semantics.testTagsAsResourceId
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.lifecycle.Lifecycle
@@ -36,7 +37,8 @@ import com.mashup.twotoo.presenter.designsystem.component.dialog.ShareChallengeD
 import com.mashup.twotoo.presenter.designsystem.component.dialog.TwoTooDialog
 import com.mashup.twotoo.presenter.designsystem.component.loading.FlowerLoadingIndicator
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
+import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.home.before.HomeBeforeChallenge
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeState
 import com.mashup.twotoo.presenter.home.model.BeforeChallengeUiModel
@@ -164,16 +166,17 @@ fun HomeScreen(
     onClickCompleteButton: (Int) -> Unit = {},
     state: HomeStateUiModel = HomeStateUiModel.init,
     onClickCheerButton: () -> Unit = {},
-    navigateToGuide: () -> Unit,
+    navigateToGuide: () -> Unit = {},
     onWiggleAnimationEnd: () -> Unit = {},
-    onClickFlowerTextBubble: (Int, FlowerName) -> Unit = { num, name -> },
+    onClickFlowerTextBubble: (Int, FlowerName) -> Unit = { _, _ -> },
 ) {
     Column(modifier = modifier) {
-        TwoTooMainToolbar(
+        TwoTooToolbar.CalendarToolbar(
             modifier = Modifier.padding(top = 5.dp),
             onClickHelpIcon = {
                 navigateToGuide()
             },
+            onClickCalendarIcon = {},
         )
         Crossfade(
             modifier = Modifier.fillMaxSize(),
@@ -252,5 +255,13 @@ fun HomeScreen(
                 }
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun PreviewHomeScreen() {
+    TwoTooTheme {
+        HomeScreen()
     }
 }

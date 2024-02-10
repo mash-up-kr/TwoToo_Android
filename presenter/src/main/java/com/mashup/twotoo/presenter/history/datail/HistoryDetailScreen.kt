@@ -28,7 +28,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.bottomsheet.TwoTooBottomSheet
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainWhite
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -131,13 +131,13 @@ fun HistoryDetailScreen(
         modifier = Modifier.fillMaxSize(),
     ) {
         Spacer(modifier = Modifier.height(8.dp))
-        TwoTooMainToolbar(
+        TwoTooToolbar.HistoryDetailToolbar(
+            modifier = Modifier.fillMaxWidth(),
             title = stringResource(
                 id = R.string.historyDetailTitle,
                 historyDetailInfoUiModel.ownerNickNamesUiModel.myNickName,
             ),
         )
-
         CompositionLocalProvider(
             LocalContentColor provides TwoTooTheme.color.mainBrown,
         ) {

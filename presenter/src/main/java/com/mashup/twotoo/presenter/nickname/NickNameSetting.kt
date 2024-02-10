@@ -39,8 +39,7 @@ import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
 import com.mashup.twotoo.presenter.designsystem.component.textfield.TwoTooTextField
 import com.mashup.twotoo.presenter.designsystem.component.toast.SnackBarHost
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.MainYellow
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import com.mashup.twotoo.presenter.designsystem.theme.TwotooPink
@@ -121,7 +120,7 @@ fun NickNameSetting(
     snackState: SnackbarHostState,
     startRoute: String,
     onNextButtonClick: (String) -> Unit,
-    onClickBackButton: () -> Unit
+    onClickBackButton: () -> Unit,
 ) {
     val isChangeMode = startRoute.isNotEmpty() && startRoute == "mypage"
     val buttonText =
@@ -146,9 +145,14 @@ fun NickNameSetting(
         ) {
             Spacer(modifier = Modifier.height(5.dp))
             if (isChangeMode) {
-                TwoTooBackToolbar(onClickBackIcon = { onClickBackButton() })
+                TwoTooToolbar.BackToolbar(
+                    modifier = Modifier.fillMaxWidth(),
+                    onClickBackIcon = { onClickBackButton() },
+                    onClickActionButton = {},
+                    actionIcons = null,
+                )
             } else {
-                TwoTooMainToolbar()
+                TwoTooToolbar.TitleToolbar(modifier = Modifier.fillMaxWidth())
             }
             if (state.partnerNickName.isNotEmpty() && !isChangeMode) {
                 TwoTooImageView(
@@ -264,4 +268,16 @@ private fun InviteGuidePreview() {
 @Composable
 private fun NickNameSettingPreview() {
     NickNameSetting(NickNameState(), SnackbarHostState(), "", {}, {})
+}
+
+@Preview
+@Composable
+private fun NickNameSettingIsChangePreview() {
+    NickNameSetting(
+        NickNameState(),
+        SnackbarHostState(),
+        "mypage",
+        {},
+        {},
+    )
 }

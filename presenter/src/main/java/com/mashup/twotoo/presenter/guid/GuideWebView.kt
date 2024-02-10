@@ -7,16 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.offset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooBackToolbar
-import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.mypage.model.GuideUrlItem
 
 @Composable
@@ -28,12 +25,11 @@ fun GuideRoute(
     val url = GuideUrlItem.findUrlBy(route)
     val title = GuideUrlItem.findTitleBy(route)
     Column {
-        TwoTooBackToolbar(
+        TwoTooToolbar.BackToolbar(
             modifier = Modifier.fillMaxWidth(),
-            title = title,
-            titleModifier = Modifier.offset(x = -16.dp),
-            onClickBackIcon = { onClickBackButton() },
-            color = TwoTooTheme.color.mainWhite,
+            onClickBackIcon = onClickBackButton,
+            onClickActionButton = {},
+            actionIcons = null,
         )
         GuideWebView(
             modifier = modifier.fillMaxSize().navigationBarsPadding(),

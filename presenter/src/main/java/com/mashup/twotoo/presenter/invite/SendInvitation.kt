@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
@@ -24,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import com.mashup.twotoo.presenter.R
 import com.mashup.twotoo.presenter.designsystem.component.TwoTooImageView
 import com.mashup.twotoo.presenter.designsystem.component.button.TwoTooTextButton
-import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooMainToolbar
+import com.mashup.twotoo.presenter.designsystem.component.toolbar.TwoTooToolbar
 import com.mashup.twotoo.presenter.designsystem.theme.TwoTooTheme
 import org.orbitmvi.orbit.compose.collectAsState
 import org.orbitmvi.orbit.compose.collectSideEffect
@@ -77,7 +78,7 @@ fun SendInvitation(
         verticalArrangement = Arrangement.SpaceAround,
     ) {
         Spacer(modifier = Modifier.height(5.dp))
-        TwoTooMainToolbar()
+        TwoTooToolbar.TitleToolbar(modifier = Modifier.fillMaxWidth(),)
         Text(
             text = stringResource(id = R.string.invite_title),
             modifier = Modifier.padding(top = 137.dp, bottom = 24.dp),
@@ -111,5 +112,5 @@ fun SendInvitation(
 @Preview
 @Composable
 private fun SendInvitationPreview() {
-     SendInvitation()
+    SendInvitation()
 }
